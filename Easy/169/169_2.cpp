@@ -16,6 +16,7 @@ public:
                 count--;
         }
 
+        // check if major exists more than n/2, however we can assume it always exists as mentioned in title.
         return major;
     }
 };
