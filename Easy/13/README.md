@@ -23,4 +23,10 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 ## 2. Note:
 For each character, check its' next value. If the character is less than its' next value, then reduce it, and vice versa.
 
+### Java Implementation:
+Since we cannot consider String as char array directory, we must use String.toCharArray() for changing into char array.
+Besides, when decalre a HashMap type variable, the specific type must be fed as A CLASS. For example, HashMap<Character, Integer>.
+
+Length is considered as VARIABLE in array object, and FUNCTION in map/list/queue ... etc.
+
 ## 3. [Leetcode Link](https://leetcode.com/problems/roman-to-integer/description/)
