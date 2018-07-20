@@ -1,4 +1,4 @@
-# [7] Reverse Integer
+# [13] Roman to Integer
 
 ## 1. Problem:
 Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
