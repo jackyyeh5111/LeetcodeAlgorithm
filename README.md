@@ -15,6 +15,13 @@ Practice of leetcode
 | 10| Regular Expression Matching|[10.cpp](10.cpp)|Medium|variation of LCS|
 | 22| Generate Parentheses|[22.cpp](22.cpp)|Medium|Catalan Number, could use DP or recursive(backtracking)|
 | 44| Wildcard Matching|[44.cpp](44.cpp)|Hard|DP or Greedy. **Compare to 10.**|
+| 62| Unique Paths|[62.cpp](62.cpp)|Medium|1-d dynamic, similar to combination|
+| 63| Unique Paths II|[63.cpp](63.cpp)|Medium|prob. 62 with obstacles|
+| 64| Minimum Path Sum|[64.cpp](64.cpp)|Medium|similar to prob. 62|
+| 64| Minimum Path Sum|[64.cpp](64.cpp)|Medium|similar to prob. 62 with min sum|
+| 70| Climbing Stairs|[70.cpp](70.cpp)|Easy|Fibonacci|
+| 72| Edit Distance|[72.cpp](72.cpp)|Hard|String Editing|
+| 368| Largest Divisible Subset|[368.cpp](368.cpp)|Medium|a%b==0 && b%c==0 -> a%c==0|
 | 518| Coin Change 2|[518.cpp](518.cpp)|Medium|0/1 Knapsack Problem. Backtracking will TLE|
 
 ## Searching
@@ -23,6 +30,7 @@ Practice of leetcode
 | 33| Search in Rotated Sorted Array|[33.cpp](33.cpp)|Medium|Boundary checking with binary search|
 | 34| Find First and Last Position of Element in Sorted Array|[34.cpp](34.cpp)|Medium|twice binary search|
 | 35| Search Insert Position|[35.cpp](35.cpp)|Easy||
+| 74| Search a 2D Matrix|[74.cpp](74.cpp)|Medium|Treat 2-d matrix as 1-d|
 | 392| Is Subsequence|[392.cpp](392.cpp)|Easy|LCSequence/binary search|
 | 528| Random Pick with Weight|[528.cpp](528.cpp)|Easy|binary search **REGION**|
 
@@ -39,12 +47,14 @@ Practice of leetcode
 | 47| Permutations II|[47.cpp](47.cpp)|Medium|no duplicate allowed, hashtable or **call by value**|
 | 51| N-Queens|[51.cpp](51.cpp)|Hard|recursive vs stack|
 | 52| N-Queens II|[52.cpp](52.cpp)|Hard|Don't need 2-d table to place Q. Use **diagonal flag** with 1-d bool array.|
+| 60| Permutation Sequence|[60.cpp](60.cpp)|Medium|Find formula. Notice 0-based k.|
 
 
 ## Tree
 | #    | Title             | Solution | Difficult |         Note           |
 | ---- |-------------------|----------|-----------|------------------------|
 | 226| Invert Binary Tree|[226.cpp](226.cpp)|Easy||
+| 700| Search in a Binary Search Tree|[700.cpp](700.cpp)|Easy||
 
 
 ## Divide & Conquer
@@ -59,6 +69,7 @@ Practice of leetcode
 | 21| Merge Two Sorted Lists|[21.cpp](21.cpp)|Easy||
 | 24| Swap nodes in Pairs|[24.cpp](24.cpp)|Medium|Header pointer|
 | 25| Reverse Nodes in k-Group|[25.cpp](25.cpp)|Hard||
+| 61| Rotate List|[61.cpp](61.cpp)|Medium||
 | 237| Delete Node in a Linked List|[237.cpp](237.cpp)|Easy||
 
 ## Stack
@@ -66,15 +77,18 @@ Practice of leetcode
 | ---- |-------------------|----------|-----------|------------------------|
 | 20| Valid Parentheses|[20.cpp](20.cpp)|Easy|check empty stack in iteration|
 | 32| Longest Valid Parentheses|[32.cpp](32.cpp)|Hard|**Great stack example to check**|
+| 71| Simplify Path|[71.cpp](71.cpp)|Medium|stack/word tokenizer instead of char tokenizer.|
 
 ## String
 | #    | Title             | Solution | Difficult |         Note           |
 | ---- |-------------------|----------|-----------|------------------------|
 | 12| Integer to Roman|[12.cpp](12.cpp)|Medium|Elegant dictionary|
 | 13| Roman to Integer|[13.cpp](13.cpp)|Easy|No additional dictionary entry. Inverse parsing should be ok.|
-| 28|  Implement strStr()|[28.cpp](28.cpp)|Easy|**Knuth-Morris-Pratt**|
-| 30|  Substring with Concatenation of All Words|[30.cpp](30.cpp)|Hard|Bottom up early stop instead of frequency comparison.|
-| 43|  Multiply Strings|[43.cpp](43.cpp)|Medium|basic multiplication|
+| 28| Implement strStr()|[28.cpp](28.cpp)|Easy|**Knuth-Morris-Pratt**|
+| 30| Substring with Concatenation of All Words|[30.cpp](30.cpp)|Hard|Bottom up early stop instead of frequency comparison.|
+| 43| Multiply Strings|[43.cpp](43.cpp)|Medium|basic multiplication|
+| 58| Length of Last Word|[58.cpp](58.cpp)|Easy|Notice space in back|
+| 468| Validate IP Address|[468.cpp](468.cpp)|Medium||
 
 ## Array
 | #    | Title             | Solution | Difficult |         Note           |
@@ -92,8 +106,15 @@ Practice of leetcode
 | 41| First Missing Positive|[41.cpp](41.cpp)|Hard|Correct Slot Filling|
 | 42| Trapping Rain Water|[42.cpp](42.cpp)|Hard|Greedy. Graham's Scan or **2 pointers sandwitch search**|
 | 45| Jump Game II|[45.cpp](45.cpp)|Hard|**2 pointers (start/end)**|
-| 48| Rotate Image|[48.cpp](48.cpp)|medium|clockwise / anticlockwise|
-| 49| Group Anagrams|[49.cpp](49.cpp)|medium||
+| 48| Rotate Image|[48.cpp](48.cpp)|Medium|clockwise / anticlockwise|
+| 49| Group Anagrams|[49.cpp](49.cpp)|Medium||
+| 53| Maximum Subarray|[53.cpp](53.cpp)|Easy|running accumulate, kinda dp.|
+| 54| Spiral Matrix|[54.cpp](54.cpp)|Medium|Elegant loop with 4 direction pointers.|
+| 55| Jump Game|[55.cpp](55.cpp)|Medium|compare to problem 45|
+| 59| Spiral Matrix II|[59.cpp](59.cpp)|Medium|Same as problem 54.|
+| 68| Text Justification|[68.cpp](68.cpp)|Hard||
+| 73| Set Matrix Zeroes|[73.cpp](73.cpp)|Medium|Flag+top-down+bottom-up|
+| 76| Minimum Window Substring|[76.cpp](76.cpp)|Hard|moving window<->2 pointers|
 | 406|  Queue Reconstruction by Height|[406.cpp](406.cpp)|Medium|**insert after sorting**|
 | 1029| Two City Scheduling|[1029.cpp](1029.cpp)|Easy||
 
@@ -103,10 +124,27 @@ Practice of leetcode
 | 9| Palindrome Number|[9.cpp](9.cpp)|Easy|take care of overflow INT_MAX|
 | 29| Divide Two Integers|[29.cpp](29.cpp)|Medium|bit operating|
 | 50| Pow(x, n)|[50.cpp](50.cpp)|Medium|bit operating|
-| 231| Power of Two|[231.cpp](231.cpp)|Easy|!n&(n-1)|
+| 65| Valid Number|[65.cpp](65.cpp)|Hard||
+| 66| Plus One|[66.cpp](66.cpp)|Easy|insert begin or end?|
+| 67| Add Binary|[67.cpp](67.cpp)|Easy|bit add, **XOR**|
+| 69| Sqrt(x)|[69.cpp](69.cpp)|Easy|Newton Xn+1=1/2(Xn+a/Xn), take care of overflow.|
+| 231| Power of Two|[231.cpp](231.cpp)|Easy|! n&(n-1)|
 
 ## Graph
 | #    | Title             | Solution | Difficult |         Note           |
 | ---- |-------------------|----------|-----------|------------------------|
 | 886| Possible Bipartition|[886.cpp](886.cpp)|Medium|bipartite + dfs/bfs|
 | 207| Course Schedule|[207.cpp](207.cpp)|Medium|Detect cyclic in directed graph.|
+| 787| Cheapest Flights Within K Stops|[787.cpp](787.cpp)|Medium|Bellman ford|
+
+## Sorting
+| #    | Title             | Solution | Difficult |         Note           |
+| ---- |-------------------|----------|-----------|------------------------|
+| 56| Merge Intervals|[56.cpp](56.cpp)|Medium||
+| 57| Insert Interval|[57.cpp](57.cpp)|Hard|while in for loop to avoid TLE|
+| 75| Sort Colors|[75.cpp](75.cpp)|Medium|**2 pointers** for O(n) in place.|
+
+## Design
+| #    | Title             | Solution | Difficult |         Note           |
+| ---- |-------------------|----------|-----------|------------------------|
+| 380| Insert Delete GetRandom O(1)|[380.cpp](380.cpp)|Medium|hashmap+vector|
