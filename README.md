@@ -31,8 +31,11 @@ Practice of leetcode
 | 34| Find First and Last Position of Element in Sorted Array|[34.cpp](34.cpp)|Medium|twice binary search|
 | 35| Search Insert Position|[35.cpp](35.cpp)|Easy||
 | 74| Search a 2D Matrix|[74.cpp](74.cpp)|Medium|Treat 2-d matrix as 1-d|
+| 81| Search in Rotated Sorted Array II|[81.cpp](81.cpp)|Medium|duplicated entry of rotated sorted array, l++,r-- if cannot tell where the pivot is.|
+| 275| H-Index II|[275.cpp](275.cpp)|Medium|Binary search, define mid, \<mid, \> mid criteria|
 | 392| Is Subsequence|[392.cpp](392.cpp)|Easy|LCSequence/binary search|
 | 528| Random Pick with Weight|[528.cpp](528.cpp)|Easy|binary search **REGION**|
+| 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|**Hard**|binary search to find longest length, **Rabin-Karp** to compare string|
 
 
 ## Recursive (Backtracking)
@@ -48,6 +51,8 @@ Practice of leetcode
 | 51| N-Queens|[51.cpp](51.cpp)|Hard|recursive vs stack|
 | 52| N-Queens II|[52.cpp](52.cpp)|Hard|Don't need 2-d table to place Q. Use **diagonal flag** with 1-d bool array.|
 | 60| Permutation Sequence|[60.cpp](60.cpp)|Medium|Find formula. Notice 0-based k.|
+| 77| Combinations|[77.cpp](77.cpp)|Medium|typical back tracking problem, **check**|
+| 78| Subsets|[78.cpp](78.cpp)|Medium|recursive,iteration, bit manipulation|
 
 
 ## Tree
@@ -70,6 +75,8 @@ Practice of leetcode
 | 24| Swap nodes in Pairs|[24.cpp](24.cpp)|Medium|Header pointer|
 | 25| Reverse Nodes in k-Group|[25.cpp](25.cpp)|Hard||
 | 61| Rotate List|[61.cpp](61.cpp)|Medium||
+| 82| Remove Duplicates from Sorted List II|[82.cpp](82.cpp)|Medium||
+| 83| Remove Duplicates from Sorted List|[83.cpp](83.cpp)|Easy||
 | 237| Delete Node in a Linked List|[237.cpp](237.cpp)|Easy||
 
 ## Stack
@@ -115,6 +122,10 @@ Practice of leetcode
 | 68| Text Justification|[68.cpp](68.cpp)|Hard||
 | 73| Set Matrix Zeroes|[73.cpp](73.cpp)|Medium|Flag+top-down+bottom-up|
 | 76| Minimum Window Substring|[76.cpp](76.cpp)|Hard|moving window<->2 pointers|
+| 79| Word Search|[79.cpp](79.cpp)|Medium|dfs|
+| 80| Remove Duplicates from Sorted Array II|[80.cpp](80.cpp)|Medium|check the last kth element|
+| 84| Largest Rectangle in Histogram|[84.cpp](84.cpp)|Hard|stack with index of ascending order|
+| 130| Surrounded Regions|[130.cpp](130.cpp)|Medium||
 | 406|  Queue Reconstruction by Height|[406.cpp](406.cpp)|Medium|**insert after sorting**|
 | 1029| Two City Scheduling|[1029.cpp](1029.cpp)|Easy||
 
