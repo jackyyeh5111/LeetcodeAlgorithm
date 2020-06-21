@@ -1,4 +1,6 @@
 /*
+For any bar i the maximum rectangle is of width r - l - 1 where r - is the last coordinate of the bar to the right with height h[r] >= h[i] and l - is the last coordinate of the bar to the left which height h[l] >= h[i]
+
 use a stack to save the index of each vector entry in a ascending order; once the current entry is smaller than the one with the index s.top(), then that means the rectangle with the height height[s.top()] ends at the current position, so calculate its area and update the maximum.
 Add dummy 0 to clear the stack at the end, i.e. sanity checking
 */
@@ -6,7 +8,7 @@ class Solution {
 public:
     // brute force: T:O(n^3)
     //   2 ptrs to find all compare, and 1 iterative find local min
-    // divide & conquer. T:O(n^2), eliminate the time for searching local min.
+    // divide & conquer. T:O(n), eliminate the time for searching local min.
     int largestRectangleArea(vector<int>& heights)
     {
         heights.push_back(0);

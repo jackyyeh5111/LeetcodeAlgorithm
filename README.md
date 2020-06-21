@@ -21,6 +21,7 @@ Practice of leetcode
 | 64| Minimum Path Sum|[64.cpp](64.cpp)|Medium|similar to prob. 62 with min sum|
 | 70| Climbing Stairs|[70.cpp](70.cpp)|Easy|Fibonacci|
 | 72| Edit Distance|[72.cpp](72.cpp)|Hard|String Editing|
+| 174| Dungeon Game|[174.cpp](174.cpp)|Hard|tell the scenario when should we bottom up / top down tracing|
 | 368| Largest Divisible Subset|[368.cpp](368.cpp)|Medium|a%b==0 && b%c==0 -> a%c==0|
 | 518| Coin Change 2|[518.cpp](518.cpp)|Medium|0/1 Knapsack Problem. Backtracking will TLE|
 
@@ -53,6 +54,9 @@ Practice of leetcode
 | 60| Permutation Sequence|[60.cpp](60.cpp)|Medium|Find formula. Notice 0-based k.|
 | 77| Combinations|[77.cpp](77.cpp)|Medium|typical back tracking problem, **check**|
 | 78| Subsets|[78.cpp](78.cpp)|Medium|recursive,iteration, bit manipulation|
+| 87| Scramble String|[87.cpp](87.cpp)|Hard|each scramble should consider from left or right|
+| 90| Subsets II|[90.cpp](90.cpp)|Medium|reduce to problem 87.|
+| 91| Decode Ways|[91.cpp](91.cpp)|Medium|recursive will cause TLE, using dp instead.|
 
 
 ## Tree
@@ -77,6 +81,8 @@ Practice of leetcode
 | 61| Rotate List|[61.cpp](61.cpp)|Medium||
 | 82| Remove Duplicates from Sorted List II|[82.cpp](82.cpp)|Medium||
 | 83| Remove Duplicates from Sorted List|[83.cpp](83.cpp)|Easy||
+| 86| Partition List|[86.cpp](86.cpp)|Medium||
+| 92| Reverse Linked List II|[92.cpp](92.cpp)|Medium|one pass reverse region|
 | 237| Delete Node in a Linked List|[237.cpp](237.cpp)|Easy||
 
 ## Stack
@@ -125,6 +131,8 @@ Practice of leetcode
 | 79| Word Search|[79.cpp](79.cpp)|Medium|dfs|
 | 80| Remove Duplicates from Sorted Array II|[80.cpp](80.cpp)|Medium|check the last kth element|
 | 84| Largest Rectangle in Histogram|[84.cpp](84.cpp)|Hard|stack with index of ascending order|
+| 85| Maximal Rectangle|[85.cpp](85.cpp)|Hard|**reduce to problem 84.**|
+| 88| Merge Sorted Array|[88.cpp](88.cpp)|Easy|indexing|
 | 130| Surrounded Regions|[130.cpp](130.cpp)|Medium||
 | 406|  Queue Reconstruction by Height|[406.cpp](406.cpp)|Medium|**insert after sorting**|
 | 1029| Two City Scheduling|[1029.cpp](1029.cpp)|Easy||
@@ -139,6 +147,7 @@ Practice of leetcode
 | 66| Plus One|[66.cpp](66.cpp)|Easy|insert begin or end?|
 | 67| Add Binary|[67.cpp](67.cpp)|Easy|bit add, **XOR**|
 | 69| Sqrt(x)|[69.cpp](69.cpp)|Easy|Newton Xn+1=1/2(Xn+a/Xn), take care of overflow.|
+| 89| Gray Code|[89.cpp](89.cpp)|Medium|i^i>>1|
 | 231| Power of Two|[231.cpp](231.cpp)|Easy|! n&(n-1)|
 
 ## Graph
