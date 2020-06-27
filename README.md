@@ -21,7 +21,9 @@ Practice of leetcode
 | 64| Minimum Path Sum|[64.cpp](64.cpp)|Medium|similar to prob. 62 with min sum|
 | 70| Climbing Stairs|[70.cpp](70.cpp)|Easy|Fibonacci|
 | 72| Edit Distance|[72.cpp](72.cpp)|Hard|String Editing|
+| 97| Interleaving String|[97.cpp](97.cpp)|Hard|**once we get recursive, we can have a mem recursive which is DP. the induction is as the recursive condition.**|
 | 174| Dungeon Game|[174.cpp](174.cpp)|Hard|tell the scenario when should we bottom up / top down tracing|
+| 279| Perfect Squares|[279.cpp](279.cpp)|Medium|**dp/math/graph**|
 | 368| Largest Divisible Subset|[368.cpp](368.cpp)|Medium|a%b==0 && b%c==0 -> a%c==0|
 | 518| Coin Change 2|[518.cpp](518.cpp)|Medium|0/1 Knapsack Problem. Backtracking will TLE|
 
@@ -62,6 +64,21 @@ Practice of leetcode
 ## Tree
 | #    | Title             | Solution | Difficult |         Note           |
 | ---- |-------------------|----------|-----------|------------------------|
+| 95| Unique Binary Search Trees II|[95.cpp](95.cpp)|Medium|Catalan number, be care of same ptr for each tree, thus clone one.|
+| 96| Unique Binary Search Trees|[96.cpp](96.cpp)|Medium|Catalan, refer to 95. and 22.|
+| 98| Validate Binary Search Tree|[98.cpp](98.cpp)|Medium|**Notice predecessor and successor**|
+| 99| Recover Binary Search Tree|[99.cpp](99.cpp)|Hard|**O(1) space by morris inorder traversal(similar to thread BST).**|
+| 100| Same Tree|[100.cpp](100.cpp)|Easy||
+| 101| Symmetric Tree|[101.cpp](101.cpp)|Easy||
+| 102| Binary Tree Level Order Traversal|[102.cpp](102.cpp)|Medium|NLR:preorder/levelOrder|
+| 103| Binary Tree Zigzag Level Order Traversal|[103.cpp](103.cpp)|Medium|reduce to problem 102.|
+| 104| Maximum Depth of Binary Tree|[104.cpp](104.cpp)|Easy||
+| 105| Construct Binary Tree from Preorder and Inorder Traversal|[105.cpp](105.cpp)|Medium|recursive/iteration(stack)|
+| 106| Construct Binary Tree from Inorder and Postorder Traversal |[106.cpp](106.cpp)|Medium|recursive/iteration(stack)|
+| 107| Binary Tree Level Order Traversal II|[107.cpp](107.cpp)|Easy|Zigzag|
+| 108| Convert Sorted Array to Binary Search Tree|[108.cpp](108.cpp)|Easy||
+| 129| Sum Root to Leaf Numbers|[129.cpp](129.cpp)|Medium||
+| 222| Count Complete Tree Nodes|[222.cpp](222.cpp)|Medium|O((logn)^2) instead of O(n)|
 | 226| Invert Binary Tree|[226.cpp](226.cpp)|Easy||
 | 700| Search in a Binary Search Tree|[700.cpp](700.cpp)|Easy||
 
@@ -83,6 +100,7 @@ Practice of leetcode
 | 83| Remove Duplicates from Sorted List|[83.cpp](83.cpp)|Easy||
 | 86| Partition List|[86.cpp](86.cpp)|Medium||
 | 92| Reverse Linked List II|[92.cpp](92.cpp)|Medium|one pass reverse region|
+| 94| Binary Tree Inorder Traversal|[94.cpp](94.cpp)|Medium|recursive/iterative(stack)|
 | 237| Delete Node in a Linked List|[237.cpp](237.cpp)|Easy||
 
 ## Stack
@@ -91,6 +109,7 @@ Practice of leetcode
 | 20| Valid Parentheses|[20.cpp](20.cpp)|Easy|check empty stack in iteration|
 | 32| Longest Valid Parentheses|[32.cpp](32.cpp)|Hard|**Great stack example to check**|
 | 71| Simplify Path|[71.cpp](71.cpp)|Medium|stack/word tokenizer instead of char tokenizer.|
+| 121| Best Time to Buy and Sell Stock|[121.cpp](121.cpp)|Easy|use data structure to record local min. Kind of dp.|
 
 ## String
 | #    | Title             | Solution | Difficult |         Note           |
@@ -133,7 +152,9 @@ Practice of leetcode
 | 84| Largest Rectangle in Histogram|[84.cpp](84.cpp)|Hard|stack with index of ascending order|
 | 85| Maximal Rectangle|[85.cpp](85.cpp)|Hard|**reduce to problem 84.**|
 | 88| Merge Sorted Array|[88.cpp](88.cpp)|Easy|indexing|
+| 93| Restore IP Addresses|[93.cpp](93.cpp)|Medium|0 leading ip is illegal|
 | 130| Surrounded Regions|[130.cpp](130.cpp)|Medium||
+| 287| Find the Duplicate Number|[287.cpp](287.cpp)|Medium|O(1) space. Use idx as node and val as next + problem. 142|
 | 406|  Queue Reconstruction by Height|[406.cpp](406.cpp)|Medium|**insert after sorting**|
 | 1029| Two City Scheduling|[1029.cpp](1029.cpp)|Easy||
 
@@ -148,6 +169,7 @@ Practice of leetcode
 | 67| Add Binary|[67.cpp](67.cpp)|Easy|bit add, **XOR**|
 | 69| Sqrt(x)|[69.cpp](69.cpp)|Easy|Newton Xn+1=1/2(Xn+a/Xn), take care of overflow.|
 | 89| Gray Code|[89.cpp](89.cpp)|Medium|i^i>>1|
+| 137| Single Number II|[137.cpp](137.cpp)|Medium|bit operationgive us 32 space to utilize with O(1)|
 | 231| Power of Two|[231.cpp](231.cpp)|Easy|! n&(n-1)|
 
 ## Graph
