@@ -1,3 +1,29 @@
+/************************ Second Visit ************************/
+class Solution {
+public:
+    double myPow(double x, int n)
+    {
+        /*
+            brute force: O(n)
+            think: O(logN)
+            1010
+        */
+        bool pos=n>=0;
+        long n_l = labs(n);
+        if (x==1) return 1;
+        else if (x==-1) return n_l%2? -1:1;
+        double ans=1; double k=x;
+        while (n_l) {
+            if (n_l&1) ans*=k;
+            k*=k;
+            n_l=n_l>>1;
+        }
+        if (pos) return ans;
+        else return 1/ans;
+    }
+};
+
+/************************ First Visit ************************/
 class Solution {
 public:
     double myPow(double x, int n) {

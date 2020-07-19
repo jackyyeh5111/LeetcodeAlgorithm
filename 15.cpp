@@ -1,3 +1,14 @@
+/********************** Second Visit **********************/
+// Fail
+/*
+    Notice if target<0, we can break the loop.
+    After sorting , we can sure a<b<c
+    target = -1*a = b+c
+    it target<0 -> a>0 -> b+c >0
+    there's no way b+c <0 thus we can break the loop.
+*/
+
+/********************** First Visit **********************/
 class Solution {
 public:
     // T: O(N^2)+O(NlogN) S:O(N)

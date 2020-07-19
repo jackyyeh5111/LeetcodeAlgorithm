@@ -21,11 +21,10 @@
  T:O(n), S:O(1)
  */
 
-/************* O(1) morris inorder traversal with  morris traversal *************/
+/************* O(1) morris inorder traversal  *************/
+// refers to https://youtu.be/wGXB9OWhPTg
  class Solution {
  public:
-     TreeNode *leftTarget=0, *rightTarget=0;
-     bool leftFound=false, rightFound=false;
      void recoverTree(TreeNode* root)
      {
          TreeNode *cur=root, *pred=0, *prev=0;
@@ -60,7 +59,7 @@
                          targets.push_back(prev);
                      }
                      prev=cur;
-                     pred->right=0;
+                     pred->right=0; // recover the tree.
                      cur=cur->right;
                  }
              }
@@ -72,7 +71,7 @@
      }
  };
 
-/************* O(n) inorder traversal with  morris traversal *************/
+/************* O(n) inorder traversal  *************/
 class Solution {
 public:
     TreeNode *leftTarget=0, *rightTarget=0;

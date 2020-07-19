@@ -1,3 +1,35 @@
+/************************ First Visit ************************/
+class Solution {
+public:
+    string addBinary(string a, string b)
+    {
+        if (a.length() < b.length()) swap(a,b);
+        int i=a.length()-1, j=b.length()-1;
+        int c=0;
+        string ans="";
+        while(i>=0&&j>=0) {
+            char ca=a[i], cb=b[j];
+            char sum; int tmp=0;
+            if (ca==cb) { sum='0'; tmp=ca=='1';}
+            else sum='1';
+            if (c&&sum=='1') { sum='0'; c=1; }
+            else { sum+=c; c=0; }
+            c=max(c,tmp);
+            ans+=sum;
+            --i; --j;
+        }
+        while (i>=0) {
+            if (c&&a[i]=='1') { ans+='0'; c=1; }
+            else { ans+=(a[i]+c); c=0; }
+            --i;
+        }
+        if(c) ans+='1';
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+/************************ First Visit ************************/
 class Solution {
 public:
     string addBinary(string a, string b)

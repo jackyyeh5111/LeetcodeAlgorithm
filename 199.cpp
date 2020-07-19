@@ -1,12 +1,29 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+/******************** Second Visit ********************/
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root)
+    {
+        /*
+            preorder traversal, keep update latest entry of same level.
+            T:O(n), S:O(n)
+        */
+        vector<int> ans;
+        help(root, 0, ans);
+        return ans;
+    }
+
+    void help(TreeNode *root, int level, vector<int> &ans)
+    {
+        if (!root) return;
+        if (ans.size()<=level)
+            ans.push_back(0);
+        ans[level]=root->val;
+        help(root->left, level+1, ans);
+        help(root->right, level+1, ans);
+    }
+};
+
+/******************** First Visit ********************/
 /************************* NRL traversal *************************/
 class Solution {
 public:

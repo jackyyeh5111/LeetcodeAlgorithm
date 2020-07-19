@@ -1,3 +1,30 @@
+/************************* Second Visit *************************/
+class Solution {
+public:
+    // T:O(2^n*n), 2^n for nums of subsets, n for the cost of moving each subset
+    vector<vector<int>> subsets(vector<int>& nums)
+    {
+        /*
+            1 2 3
+            []
+            [] 1
+            [] 1 2 12
+            [] 1 2 12 3 13 12 123
+        */
+        vector<vector<int>> ans={vector<int>{}};
+        for (int num:nums){
+            int size=ans.size();
+            for (int i=0; i<size; ++i) {
+                vector<int> subset=ans[i];
+                subset.push_back(num);
+                ans.push_back(subset);
+            }
+        }
+        return ans;
+    }
+};
+
+/************************* First Visit *************************/
 // recursive
 class Solution {
 public:
