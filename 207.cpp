@@ -1,3 +1,35 @@
+/************************ Second Visit ************************/
+class Solution {
+public:
+    vector<vector<int>> graph;
+    vector<int> visited;
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        graph = vector<vector<int>>(numCourses,vector<int>{});
+        visited = vector<int>(numCourses, 0);
+        for (auto req:prerequisites) {
+            graph[req[1]].push_back(req[0]);
+        }
+        for (int i=0; i<numCourses; ++i) {
+            if (visited[i]==0) {
+                if (dfs(i)) return false; // cyclic
+            }
+        }
+        return true; // acyclic
+    }
+
+    bool dfs(int u) {
+        visited[u]=1;
+        for (int v : graph[u]) {
+            if (visited[v]==1) return true; // find cyclic
+            if (visited[v]==2) continue; // already visited
+            bool cyclic = dfs(v);
+            if (cyclic) return cyclic;
+        }
+        visited[u]=2;
+        return false;
+    }
+};
 
 /************************ DFS ************************/
 class Solution {

@@ -10,6 +10,30 @@
  * };
  */
 
+/****************** Second Visit *********************/
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root)
+    {
+        help(root, 0);
+        return ans;
+    }
+
+    void help(TreeNode *root, int level)
+    {
+        if (!root) return;
+        if (ans.size()<=level)
+            ans.push_back(vector<int>{});
+        if (level%2==1)
+            ans[level].insert(ans[level].begin(), root->val);
+        else
+            ans[level].push_back(root->val);
+        if (root->left) help(root->left, level+1);
+        if (root->right) help(root->right, level+1);
+    }
+};
+/****************** First Visit *********************/
 /****************** level order traversal via queue *********************/
 class Solution {
 public:

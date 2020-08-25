@@ -1,3 +1,57 @@
+/********** Second Visit **********/
+/*
+    Use a hashmap and check count
+    T:O(n)/S:O(n)
+    -----------
+    Here we have all entry with positive value, we can use sign bit as existed
+    flag. But space complexity is O(n)
+    T:O(n)/S:O(n)
+    -----------
+    prove: induction
+    -----------
+    Treat it as linked list, next ptr is the value of entry.
+    T:O(n)/S:O(n)
+    2 pass
+    2*(x+k)=x+cm+k
+    > x+k=cm
+    > x=cm-k
+    x+k+x=x+k+cm-k=x+cm
+*/
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums)
+    {
+        int slow=nums[0],fast=nums[0];
+        bool begin=true;
+        while(begin||slow!=fast) {
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+            begin=false;
+        }
+        slow=nums[0];
+        while(slow!=fast) {
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return slow;
+    }
+};
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums)
+    {
+        for(int num : nums) {
+            num=abs(num);
+            if (nums[num-1]<0) return num;
+            nums[num-1]*=-1;
+        }
+        return -1;
+    }
+};
+
+/********** First Visit **********/
 /*
     Reduce to  Floyd's Tortoise and Hare (Cycle Detection).
     The cycle appears because nums contains duplicates. The duplicate node is a cycle entrance.

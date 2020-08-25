@@ -1,3 +1,40 @@
+/********************* Second Visit *********************/
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word)
+    {
+        /*
+            find a SINGLE word -> backtracking
+            find MULTIPLE words -> TRIE
+        */
+        int rows=board.size();
+        int cols=board[0].size();
+        for (int i=0; i<rows; ++i) {
+            for (int j=0; j<cols; ++j) {
+                bool found = dfs(board, i, j, rows, cols, 0, word);
+                if (found) return true;
+            }
+        }
+        return false;
+    }
+
+    bool dfs(vector<vector<char>>& board, int i, int j, int rows, int cols, int s, string &word)
+    {
+        if (s==word.length()) return true;
+        if (i<0||i>=rows||j<0||j>=cols) return false;
+        if (board[i][j]!=word[s]) return false;
+        char tmp = board[i][j];
+        board[i][j]='1';
+        bool found = dfs(board,i+1,j, rows, cols, s+1, word) ||
+                     dfs(board,i-1,j, rows, cols, s+1, word) ||
+                     dfs(board,i,j+1, rows, cols, s+1, word) ||
+                     dfs(board,i,j-1, rows, cols, s+1, word);
+        board[i][j]=tmp;
+        return found;
+    }
+};
+
+/********************* First Visit *********************/
 class Solution {
 public:
     bool exist(vector<vector<char>>& board, string word)

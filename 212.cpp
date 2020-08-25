@@ -1,3 +1,63 @@
+/************* Second Visit ****************/
+class Solution {
+public:
+
+    struct TrieNode {
+        TrieNode *children[26];
+        string word;
+        TrieNode()
+        {
+            for (int i=0; i<26; ++i) children[i]=0;
+            word="";
+        }
+    };
+
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
+    {
+        /*
+            Backtracking all word iteratively will make TLE.
+            Use TRIE to track all words at the same time.
+        */
+
+        // build Trie
+        TrieNode *root = new TrieNode();
+        for (string word : words) {
+            TrieNode *cur=root;
+            for (char c:word) {
+                if (!cur->children[c-'a'])
+                    cur->children[c-'a']=new TrieNode();
+                cur=cur->children[c-'a'];
+            }
+            cur->word=word;
+        }
+
+        vector<string> ans;
+        int rows=board.size(); int cols=board[0].size();
+        for (int i=0; i<rows; ++i) {
+            for (int j=0; j<cols; ++j) {
+                dfs(board,i,j,rows,cols,root,ans);
+            }
+        }
+        return ans;
+    }
+
+    void dfs(vector<vector<char>>& board, int row, int col, int rows, int cols, TrieNode *node, vector<string> &ans)
+    {
+        if (row<0||row>=rows||col<0||col>=cols||board[row][col]=='.') return;
+        node=node->children[board[row][col]-'a'];
+        if (!node) return;
+        if (node->word!="") { ans.push_back(node->word); node->word=""; }
+        char tmp=board[row][col];
+        board[row][col]='.';
+        dfs(board,row+1,col,rows,cols,node,ans);
+        dfs(board,row-1,col,rows,cols,node,ans);
+        dfs(board,row,col+1,rows,cols,node,ans);
+        dfs(board,row,col-1,rows,cols,node,ans);
+        board[row][col]=tmp;
+    }
+};
+
+/************* First Visit ****************/
 /************* Recursive TLE ****************/
 /*
     T:O(numWord * 4^wordLength)

@@ -1,3 +1,47 @@
+/********** Second Visit **********/
+/*
+    1 2 ... sqrt(n)
+    recursive with cache memorization
+    Further improve with static cache for all test cases
+*/
+
+class Solution {
+public:
+    int numSquares(int n)
+    {
+        static unordered_map<int,int> table;
+        if (table.find(n)!=table.end()) return table[n];
+        int m=sqrt(n);
+        if (m*m==n) { table[n]=1; return 1;}
+        int ans=INT_MAX;
+        for (int i=1; i<=m; ++i) {
+            // if (n<i*i) continue;
+            ans=min(ans,numSquares(n-i*i)+1);
+        }
+        table[n]=ans;
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int numSquares(int n)
+    {
+        // T:O(n^2)/S:O(1)
+        vector<int> table(n+1,INT_MAX);
+        table[0]=0;
+        for (int i=1; i<=n; ++i) {
+            int j=1;
+            while(i-j*j>=0) {
+                table[i]=min(table[i],table[i-j*j]+1);
+                j++;
+            }
+        }
+        return table[n];
+    }
+};
+
+/********** First Visit **********/
 /***** dp solve ******/
 class Solution {
 public:

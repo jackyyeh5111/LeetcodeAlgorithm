@@ -1,3 +1,43 @@
+/******************** First Visit ********************/
+class Solution {
+public:
+    vector<vector<int>> graph;
+    vector<int> visited;
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        /*
+            Return one of a topological sort
+            1. count in-degree/out-degree and return 0-indegree each iter
+            2. inverse of postDFS if asyclic
+        */
+        graph=vector<vector<int>>(numCourses, vector<int>{});
+        visited=vector<int>(numCourses,0);
+        for (auto e:prerequisites) {
+            graph[e[1]].push_back(e[0]);
+        }
+        vector<int> ans;
+        for (int i=0; i<numCourses; ++i) {
+            if (postDFS(i,ans)) return vector<int>{};
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+
+    bool postDFS(int u, vector<int> &path) // return cyclic
+    {
+        if (visited[u]==2) return false;
+        else if (visited[u]==1) return true; // cyclic
+        visited[u]=1;
+        for (int v:graph[u]) {
+            if (postDFS(v,path)) return true;
+        }
+        visited[u]=2;
+        path.push_back(u);
+        return false;
+    }
+};
+
+/******************** First Visit ********************/
 /******************** detect cyclic + reverse postDFS ********************/
 // T:O(V+E), S:O(V+E)
 class Solution {
