@@ -1,14 +1,26 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+/*
+    NLR preorder traversal with recursive comparison.
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root)
+    {
+        if (!root) return true;
+        return help(root->left,root->right);
+    }
+
+
+    bool help(TreeNode *left, TreeNode *right)
+    {
+        if (!left&&!right) return true;
+        else if (!left||!right||left->val!=right->val) return false;
+        return help(left->left, right->right)&&help(left->right,right->left);
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {

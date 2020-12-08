@@ -1,3 +1,29 @@
+/***** Second Visit *****/
+/*
+    brute force:
+    T:O(n^2)/S:O(1) that iterate over all elments.
+    -----
+    Start from left bottom and do a linear search.
+    T:O(m+n)/S:O(1)
+    -----
+*/
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return false;
+        int m=matrix.size(), n=matrix[0].size();
+        int i=m-1, j=0;
+        while (i>=0&&j<n) {
+            if (matrix[i][j]==target) return true;
+            else if (matrix[i][j]>target) i--;
+            else j++;
+        }
+        return false;
+    }
+};
+
+/***** First Visit *****/
 /*
     brute force: iterate each num
     T:O(nm)/S:O(1)

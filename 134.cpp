@@ -1,3 +1,70 @@
+/***** Third Visit *****/
+/*
+    Array: 2 ptr solutions
+    [1,  2,  3, 4, 5]
+    [3,  4,  5, 1, 2]
+    -2, -2, -2, 3, 3
+     ^             ^
+     T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
+    {
+        int l=0, r=cost.size()-1, remain=gas[r]-cost[r];
+        while (l<=r) {
+            if (remain<0&&r<1) return -1;
+            else if (remain<0) {
+                r--;
+                remain+=gas[r]-cost[r];
+            }
+            else {
+                remain+=gas[l]-cost[l];
+                l++;
+            }
+        }
+        return remain>=0?r:-1;
+    }
+};
+
+/***** Second Visit *****/
+/*
+    1  2  3  4  5
+    3  4  5  1  2
+    -------------
+    -2 -2 -2 3  3
+        ^       ^
+           ^ ^
+    ------
+    Array
+    1. could sort help?
+      -> could bucket sort help?
+    2. binary search
+    3. 2 ptr solution (V)
+    4. running ptr.
+    5. 2-D array
+      -> DP/greedy/divide&conquer
+    -----
+    We adopt 2 ptr solution, kind of greedy
+    r=n-1 means where we start, l=0 denotes our running ptr. If we have negative gas, roll back r.
+    after iteration, check the remaining gas.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
+    {
+        int l=0, r=cost.size()-1;
+        int remain=gas[r]-cost[r];
+        while (l<r) {
+            if (remain<0){r--; remain+=gas[r]-cost[r];}
+            else {remain+=gas[l]-cost[l]; l++;}
+        }
+        return remain>=0?r:-1;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(n), S:O(1)

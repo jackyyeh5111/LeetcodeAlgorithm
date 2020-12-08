@@ -1,3 +1,38 @@
+/***** Second Visit *****/
+/*
+    recurisve traverse each num. If we meet 1, there must be at least one island.
+    T:O(4^n)/S:O(n^2)
+    -----
+    constraint: 1 <= rows, cols <= 300
+    Accordance with the constraint, we dont need to worry about TLE.
+*/
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid)
+    {
+        int m=grid.size(), n=grid[0].size(), ans=0;
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (grid[i][j]=='0') continue;
+                ans++;
+                help(grid,m,n,i,j);
+            }
+        }
+        return ans;
+    }
+
+    void help(vector<vector<char>>& grid, int m, int n, int i, int j)
+    {
+        if (i<0||i>=m||j<0||j>=n||grid[i][j]=='0') return;
+        grid[i][j]='0';
+        help(grid,m,n,i+1,j);
+        help(grid,m,n,i-1,j);
+        help(grid,m,n,i,j+1);
+        help(grid,m,n,i,j-1);
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int numIslands(vector<vector<char>>& grid)

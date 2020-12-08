@@ -8,6 +8,35 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+ /***** Second Visit *****/
+ /*
+    Linked List:
+    1. header (V)
+    2. slow/fast ptr.
+    T: one pass O(n)/S:O(1)
+*/
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n)
+    {
+        ListNode *header=new ListNode();
+        header->next=head;
+        ListNode *cur=head,*prev=header;
+        for (int i=1; i<m; ++i) {prev=cur; cur=cur->next;}
+        ListNode *p=0;
+        for (int i=m; i<=n; ++i) {
+            ListNode *next=cur->next;
+            cur->next=p;
+            p=cur; cur=next;
+        }
+        prev->next->next=cur;
+        prev->next=p;
+        return header->next;
+    }
+};
+
+ /***** First Visit *****/
 class Solution {
 public:
     // T:O(n), S:O(1)

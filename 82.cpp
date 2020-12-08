@@ -8,6 +8,36 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+ 
+/***** Second Visit *****/
+/*
+    LL:
+    1. header node (V)
+    2. slow/fast ptr
+    -----
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head)
+    {
+        ListNode *header = new ListNode();
+        header->next=head;
+        ListNode *p=header, *q=0;
+        while (p) {
+            q=p->next;
+            while (q&&q->next&&q->next->val==q->val)  {
+                while (q&&q->next&&q->next->val==q->val) q=q->next;
+                q=q->next;
+            }
+            p->next=q;
+            p=p->next;
+        }
+        return header->next;
+    }
+};
+
+ /***** First Visit *****/
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head)

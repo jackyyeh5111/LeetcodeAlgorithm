@@ -1,4 +1,30 @@
-/*********** Second Visit ***********/
+/***** Third Visit *****/
+/*
+    constraint: T:O(n)/S:O(1)
+    -----
+    [ c c a d d e b e f f ]
+    k=a^b
+    k^a=b
+    k^b=a
+    k=1100111
+       ^ these bits will be in a or b exclusively.
+*/
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums)
+    {
+        int k=0;
+        for (int num:nums) k^=num;
+        int mask=k^(k&(k-1));
+        int a=0;
+        for (int num:nums) {
+            if (num&mask) a^=num;
+        }
+        return {a,k^a};
+    }
+};
+
+/***** Second Visit *****/
 /*
     1
     01
@@ -34,7 +60,7 @@ public:
     }
 };
 
-/*********** First Visit ***********/
+/***** First Visit *****/
 class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums)

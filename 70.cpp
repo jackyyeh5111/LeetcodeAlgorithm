@@ -1,3 +1,28 @@
+/***** Second Visit *****/
+/*
+    recursive f(n)=f(n-1)+f(n-2)
+    T:O(2^n)/S:(n) depth of recursion
+    -----
+    1-d dp
+    T:O(n)/S:O(n)
+    -----
+    reduce space complexity of 1-d dp
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int climbStairs(int n) {
+        int prev=1,prevprev=1;
+        for(int i=2; i<=n; ++i) {
+            int c=prev+prevprev;
+            prevprev=prev;
+            prev=c;
+        }
+        return prev;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int climbStairs(int n)

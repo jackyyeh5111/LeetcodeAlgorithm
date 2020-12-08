@@ -1,4 +1,39 @@
-/********* Second Visit *********/
+/***** Third Visit *****/
+/*
+    2: 2 4 8 16 32 64 128 256 ...
+    3: 3 9 27 ...
+    5: 5 25 125 ...
+
+    2: 1 2 3 4 5 6 [7] <-- we cannot multiply non ugly factor.
+    3: 1 2 3 4 5
+    5: 1 2 3
+    1 2 3 4 5 8 9 10 12
+    -----
+    sample from known ugly number
+      1 2
+    2 ^
+    3 ^
+    5 ^
+*/
+class Solution {
+public:
+    int nthUglyNumber(int n)
+    {
+        if (n<=1) return 1;
+        int a=0,b=0,c=0;
+        vector<int> dp(1,1);
+        for (int i=1; i<n; ++i) {
+            int ugly=min(dp[a]*2,min(dp[b]*3,dp[c]*5));
+            dp.push_back(ugly);
+            if (ugly==dp[a]*2) a++;
+            if (ugly==dp[b]*3) b++;
+            if (ugly==dp[c]*5) c++;
+        }
+        return dp.back();
+    }
+};
+
+/***** Second Visit *****/
 /*
     1-D dp approach
        1 2 3 4 5
@@ -23,7 +58,7 @@ public:
     }
 };
 
-/********* First Visit *********/
+/***** First Visit *****/
 class Solution {
 public:
     int nthUglyNumber(int n)

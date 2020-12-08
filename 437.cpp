@@ -1,14 +1,20 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+class Solution {
+public:
+    int pathSum(TreeNode* root, int sum)
+    {
+        if (!root) return 0;
+        return pathSum(root->left,sum)+pathSum(root->right,sum)+help(root,sum);
+    }
+
+    int help(TreeNode *root, int sum)
+    {
+        if (!root) return 0;
+        return (root->val==sum)+help(root->left,sum-root->val)+help(root->right,sum-root->val);
+    }
+};
+
+/***** First Visit *****/
 /*
     Use preorder traversal to traverse each node with a current sum
     if its equal to target, then plus one

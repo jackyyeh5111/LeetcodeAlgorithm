@@ -1,3 +1,102 @@
+/***** Third Visit *****/
+/*
+    Longest Increasing Subsequence
+    Find LCS with nums and sorted nums
+    This will get longest increasing nums with larger or equal values.
+    DP: T:O(n^2)/S:O(n^2)
+    -----
+    1-D dp
+    dp[i] denotes the length of LIS
+    dp[i]=max(dp[i],dp[j]+1) where nums[j]<nums[i]&&j<i
+    LIS may occur in the mid of nums, thus we need to check current max answer while looping.
+    T:O(n^2)/S:O(n)
+    -----
+    BIS ( Bucket Increasing Sequence)
+    maintain the best nums with increasing order.
+    T:O(nlogn)/S:O(n)
+*/
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> ans;
+        for (int num:nums) {
+            auto idx=lower_bound(ans.begin(),ans.end(),num);
+            if (idx==ans.end()) ans.push_back(num);
+            else *idx=num;
+        }
+        return ans.size();
+    }
+};
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size(), ans=1;
+        vector<int> dp(n,1);
+        for (int i=1; i<n; ++i) {
+            for (int j=0; j<i; ++j) {
+                if (nums[j]<nums[i])
+                    dp[i]=max(dp[i],dp[j]+1);
+                ans=max(ans,dp[i]);
+            }
+        }
+        return ans;
+    }
+};
+
+/***** Second Visit *****/
+/*
+    sorting then reduce to LCSequence
+    T:O(nlogn+n^2)/S:O(n)
+    dp[i][j]=max(dp[i-1][j],dp[i][j-1])+nums[i]==sorted[j]
+    WRONG THOUGH because we cannot handle INCREASING order.
+    Or we should apply vector to save each possible increasing length through DP.
+    -----
+    Use DP for nested 2 ptr checking
+    T:O(n^2)/S:O(n)
+    -----
+    Best Increasing Subsequence of Length K
+    BIS(k) with binary search since that BIS is an increasing order.
+    During each iteration, binary search on k length of BIS.
+    T:O(nlogn)/S:O(n)
+*/
+
+// BIS(k)
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size(), ans=0;
+        vector<int> dp(n,0);
+        auto end=dp.begin();
+        for (int num:nums) {
+            auto idx=lower_bound(dp.begin(),end,num);
+            *idx=num;
+            if (idx==end) {ans++; end++;}
+        }
+        return ans;
+    }
+};
+
+// 1-D DP with T:O(n^2), nested i,j.
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size(), ans=1;
+        vector<int> dp(n,1);
+        for (int i=1; i<n; ++i) {
+            for (int j=0; j<i; ++j) {
+                if (nums[j]<nums[i])
+                    dp[i]=max(dp[i],dp[j]+1);
+                ans=max(dp[i],ans);
+            }
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
     2 3 5 7 9 10 18 101
     2 4 3 5 1 0. 7. 6

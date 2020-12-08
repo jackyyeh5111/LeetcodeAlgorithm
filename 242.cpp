@@ -1,4 +1,23 @@
+/***** Second Visit *****/
+/*
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    bool isAnagram(string s, string t)
+    {
+        unordered_map<char,int> ss,ts;
+        int ls=s.length(),lt=t.length();
+        if (ls!=lt) return false;
+        for (int i=0; i<ls; ++i) {
+            ss[s[i]]++;
+            ts[t[i]]++;
+        }
+        return ss==ts;
+    }
+};
 
+/***** First Visit *****/
 /*
     Problem statement says that there are only lower cases, so the hashtable
     could be replaced by char[256]

@@ -1,3 +1,58 @@
+/***** Second Visit *****/
+/*
+    interleaves means all char in s3 belong to s1 or s2 IN ORDER.
+    dp[i][j] denotes s1[0~i-1]&&s2[0~j-1] interleaves s3[0~i+j-1]
+    dp[i][j]= s1[i-1]==s3[i+j-1]&&dp[i-1][j] ||
+              s2[j-1]==s3[i+j-1]&&dp[i][j-1]
+    T:O(mn)/S:O(mn) or s:O(m+n)
+*/
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3)
+    {
+        int n1=s1.length(),n2=s2.length(),n3=s3.length();
+        if(n1+n2!=n3) return false;
+        vector<vector<bool>> dp(n1+1,vector<bool>(n2+1,0));
+        for (int i=0; i<=n1; ++i) {
+            for (int j=0; j<=n2; ++j) {
+                if (i==0&&j==0) dp[i][j]=true;
+                else if (i==0)
+                    dp[i][j]=dp[i][j-1]&&s2[j-1]==s3[i+j-1];
+                else if (j==0)
+                    dp[i][j]=dp[i-1][j]&&s1[i-1]==s3[i+j-1];
+                else
+                    dp[i][j]=(dp[i][j-1]&&s2[j-1]==s3[i+j-1])||
+                             (dp[i-1][j]&&s1[i-1]==s3[i+j-1]);
+            }
+        }
+        return dp[n1][n2];
+    }
+};
+
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3)
+    {
+        int n1=s1.length(),n2=s2.length(),n3=s3.length();
+        if(n1+n2!=n3) return false;
+        vector<bool> dp(n2+1,0);
+        for (int i=0; i<=n1; ++i) {
+            for (int j=0; j<=n2; ++j) {
+                if (i==0&&j==0) dp[j]=true;
+                else if (i==0)
+                    dp[j]=dp[j-1]&&s2[j-1]==s3[i+j-1];
+                else if (j==0)
+                    dp[j]=dp[j]&&s1[i-1]==s3[i+j-1];
+                else
+                    dp[j]=(dp[j-1]&&s2[j-1]==s3[i+j-1])||
+                          (dp[j]&&s1[i-1]==s3[i+j-1]);
+            }
+        }
+        return dp[n2];
+    }
+};
+
+/***** First Visit *****/
 /**************** DP ******************/
 /*
 To implement this method, we'll make use of a 2D boolean array dpdp. In this array dp[i][j]dp[i][j] implies if it is possible to obtain a substring of length (i+j+2)(i+j+2) which is a prefix of s3s3 by some interleaving of prefixes of strings s1s1 and s2s2 having lengths (i+1)(i+1) and (j+1)(j+1) respectively.

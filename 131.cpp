@@ -1,3 +1,77 @@
+/***** Second Visit *****/
+/*
+    Directly backtracking on palindrome checking
+    T:O(2^n*n)/S:O(n)
+    ==> O(2^n) for backtracking
+    ==> O(n) for palindrom checking
+    -----
+    How to make palindrom checking in constant time complexity ?
+    s[i+1] to s[j-1] is a palindrom annd s[i]==s[j]
+    Thus we could handle a DP approach for help.
+    T:O(2^n)/S:O(n^2)
+*/
+// check palindrom in T:O(n)
+class Solution {
+public:
+    vector<vector<string>> partition(string s)
+    {
+        vector<vector<string>> ans;
+        vector<string> comb;
+        help(s,0,"",comb,ans);
+        return ans;
+    }
+
+    void help(string &s, int i, string pal, vector<string> &comb, vector<vector<string>> &ans)
+    {
+        if (i>=s.length()) {
+            if (pal=="") ans.push_back(comb);
+            return;
+        }
+        help(s,i+1,pal+s[i],comb,ans);
+        if (checkPal(pal+s[i])) {
+            comb.push_back(pal+s[i]);
+            help(s,i+1,"",comb,ans);
+            comb.pop_back();
+        }
+    }
+
+    bool checkPal(string s)
+    {
+        int l=0,r=s.length()-1;
+        while(l<r) {
+            if (s[l]!=s[r]) return false;
+            l++; r--;
+        }
+        return true;
+    }
+};
+
+// check palindrom in T:O(1)
+class Solution {
+public:
+    vector<vector<string>> partition(string s) {
+        int len = s.length();
+        vector<vector<bool>> dp (len, vector <bool> (len, false));
+        vector<vector<string>> result;
+        vector<string> currentList;
+        dfs(result, s, 0, currentList, dp);
+        return result;
+    }
+
+    void dfs(vector<vector<string>> &result, string &s, int start, vector<string> &currentList, vector<vector<bool>> &dp) {
+        if (start >= s.length()) result.push_back(currentList);
+        for (int end = start; end < s.length(); end++) {
+            if (s[start] == s[end] && (end - start <= 2 || dp[start + 1][end - 1])) {
+                dp[start][end] = true;
+                currentList.push_back(s.substr(start, end - start + 1));
+                dfs(result, s, end + 1, currentList, dp);
+                currentList.pop_back();
+            }
+        }
+    }
+};
+
+/***** First Visit *****/
 /************************ Back Tracking ***********************/
 class Solution {
 public:

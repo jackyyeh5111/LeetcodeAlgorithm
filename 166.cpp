@@ -1,3 +1,49 @@
+/***** Second Visit *****/
+/*
+    2/3
+    0.6
+    1/6
+    1,6 .
+    4,6 .1
+
+
+*/
+class Solution {
+public:
+    string fractionToDecimal(int numerator, int denominator)
+    {
+        bool neg=(numerator>=0)^(denominator>=0);
+        long num=numerator,den=denominator;
+        num=abs(num); den=abs(den);
+        string ans="";
+        bool fract=false;
+        unordered_map<string,int> m;
+        while (num!=0) {
+            string k=to_string(num)+"_"+to_string(den);
+            if (m.count(k)!=0) {
+                ans+=')';
+                ans.insert(ans.begin()+m[k]+(ans[m[k]]=='.'),'(');
+                break;
+            }
+            m[k]=ans.length();
+            if (fract) num*=10;
+            while (num<den) {
+                ans+=fract?'0':'.';
+                fract=true;
+                num*=10;
+            }
+            long divide=num/den;
+            long remain=num%den;
+            ans+=to_string(divide);
+            num=remain;
+            // if (ans.length()>=10) break;
+        }
+        if (ans.length()==0||ans[0]=='.') ans="0"+ans;
+        return (neg&&ans!="0")?"-"+ans:ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     string fractionToDecimal(int numerator, int denominator)

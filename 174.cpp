@@ -1,4 +1,32 @@
-/*************************** Second Visit ***************************/
+/***** Third Visit *****/
+/*
+    bottom-up 2-d DP would be a bad idea since we not only need to find the max remaining health in each dungeon but also need to take care if current health is down to 0 or lower. Or even calculate current MAX rest health with magic orb.
+
+    However, if we start from pricess's dungeon, we don't need to handle the current maximum remain health. Just focus on insufficient health.
+    dp[i][j] denotes the min needed health to reach pricess start from (i,j)
+    T:O(mn)/S:O(m+n)
+*/
+class Solution {
+public:
+    int calculateMinimumHP(vector<vector<int>>& dungeon)
+    {
+        int m=dungeon.size(),n=dungeon[0].size();
+        vector<int> dp(n+1,0); dp[n]=INT_MIN;
+        dp[n-1]=dungeon[m-1][n-1]>0?0:dungeon[m-1][n-1];
+        for (int j=n-2; j>=0; --j) {
+            dp[j]=min(0,dp[j+1]+dungeon[m-1][j]);
+        }
+        for (int i=m-2; i>=0; --i) {
+            for (int j=n-1; j>=0; --j) {
+                dp[j]=max(dp[j+1],dp[j])+dungeon[i][j];
+                if (dp[j]>0) dp[j]=0;
+            }
+        }
+        return max(1,-1*dp[0]+1);
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     int calculateMinimumHP(vector<vector<int>>& dungeon)
@@ -63,7 +91,7 @@ public:
         return dp[0][0];
     }
 };
-/*************************** First Visit ***************************/
+/***** First Visit *****/
 /*
 If we start from left top, in addition to minimize initial HP required to get (i,j), we also have to maximize HP left when we get (i,j) in order to decide whether we need more initial HP in the next step. It doesn't directly depend on things at (i-1,j) and (i,j-1).
 */

@@ -1,4 +1,14 @@
-/********************** Second Visit **********************/
+/***** Third Visit *****/
+class Solution {
+public:
+    bool isPowerOfTwo(int n)
+    {
+        if (n<1) return false;
+        else return !(n&(n-1));
+    }
+};
+
+/***** Second Visit *****/
 /*
     determine wheter only 1 digit in binary.
     -----
@@ -34,7 +44,7 @@ public:
         return false;
     }
 };
-/********************** First Visit **********************/
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(1)

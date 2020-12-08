@@ -1,3 +1,43 @@
+/***** Second Visit *****/
+/*
+    1 <= s1.length <= 30
+    Limited string length, which means we can adopt recursive to try out all possible scrambling.
+    T:O(2^n)/S:O(n)
+    -----
+    Cause TLE if we dont apply early stop while checking characters of each string.
+    T(n) = 2*(T(1)+T(n-1)+...+T(n-1)+T(1))
+         = 4*(T(1)+...+T:O(n-1))
+         < 4(n-1)T(n-1) = O(4n ^ n)
+*/
+class Solution {
+public:
+    bool isScramble(string s1, string s2)
+    {
+        int n=s1.length();
+        if (s1==s2) return true;
+        else if (n==1) return false;
+        else if (n==2) {
+            string k=s2; reverse(k.begin(),k.end());
+            return s1==k;
+        }
+        vector<int> counter(256,0);
+        for(char c:s1) counter[c-'a']++;
+        for(char c:s2) counter[c-'a']--;
+        for(int c:counter) {
+            if (c!=0) return false;
+        }
+        for (int i=1; i<n; ++i) {
+            string ls1=s1.substr(0,i), rs1=s1.substr(i);
+            string ls2=s2.substr(0,i), rs2=s2.substr(i);
+            if (isScramble(ls1,ls2)&&isScramble(rs1,rs2)) return true;
+            if (isScramble(s1.substr(0,i),s2.substr(n-i))&&isScramble(s1.substr(i),s2.substr(0,n-i)))
+                return true;
+        }
+        return false;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     /*

@@ -1,12 +1,45 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
+/***** Second Visit *****/
+// w.o. help function
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    {
+        if (p==q) return p;
+        else if (!root) return 0;
+        else if (root==p||root==q) return root;
+        TreeNode *left=lowestCommonAncestor(root->left,p,q);
+        TreeNode *right=lowestCommonAncestor(root->right,p,q);
+        if (left&&right) return root;
+        else if (left) return left;
+        else if (right) return right;
+        else return 0;
+    }
+};
+
+// w. help  function
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    {
+        if (p==q) return p;
+        TreeNode *ans=0;
+        help(root,p,q,&ans);
+        return ans;
+    }
+
+    bool help(TreeNode *root, TreeNode *p, TreeNode *q, TreeNode **ans)
+    {
+        if (!root) return false;
+        bool left=help(root->left,p,q,ans);
+        bool right=help(root->right,p,q,ans);
+        bool cur=(root==p)||(root==q);
+        if ((left&&right)||(left&&cur)||(right&&cur))
+            *ans=root;
+        return left||right||cur;
+    }
+};
+
+/***** First Visit *****/
 /*
     According to problem 235, we know that we can use 2 path vector to find the lowest common
     ancestor.

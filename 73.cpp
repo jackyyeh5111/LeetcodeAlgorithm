@@ -1,3 +1,41 @@
+/***** Second Visit (Fail) *****/
+/*
+    zero out rows/cols with constant space.
+    use a vector to store the position of each zero, then zero out.
+    T:O(mn)/S:O(mn)
+    -----
+    try to use a delimeter? no way, each num has range INT_MIN to INT_MAX.
+    -----
+    check row/col for each entry over right/down part.
+    T:O(mn*(m+n))/S:O(1)
+    COULD NOT HANDLE true 0 v.s. false 0.
+    -----
+    store 0 state in first row/col. since matrix[0][0] have to store both row's/col's states,
+    we use another var to store the state of col0 and let matrix[0][0] store the state of row0.
+    T:O(mn)/S:O(1)
+*/
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix)
+    {
+        int m=matrix.size(), n=matrix[0].size(),col0=1;
+        for (int i=0; i<m; ++i) {
+            if (matrix[i][0]==0) col0=0;
+            for (int j=1; j<n; ++j) {
+                if (matrix[i][j]==0) matrix[i][0]=matrix[0][j]=0;
+            }
+        }
+
+        for (int i=m-1; i>=0; --i) {
+            for (int j=n-1; j>0; --j) {
+                if (matrix[i][0]==0||matrix[0][j]==0) matrix[i][j]=0;
+            }
+            if (col0==0) matrix[i][0]=0;
+        }
+    }
+};
+
+/***** First Visit *****/
 /****************** S:O(1) ******************/
 /*
 store states of each row in the first of that row, and store states of each column in the first of that column. Because the state of row0 and the state of column0 would occupy the same cell, I let it be the state of row0, and use another variable "col0" for column0. In the first phase, use matrix elements to set states in a top-down way. In the second phase, use states to set matrix elements in a bottom-up way.

@@ -1,3 +1,34 @@
+/***** Second Visit *****/
+/*
+    Array:
+    1. sort help?
+    2. bucket sort further help?
+    3. 2 ptr
+    4. increasing index of stack
+    5. 1 running ptr with sliding window (V)
+    -----
+    Each time we meet decreasing order, sell and buy another one.
+    T:O(n) one pass / S:O(1)
+*/
+class Solution {
+public:
+    int maxProfit(vector<int>& prices)
+    {
+        int ans=0, n=prices.size();
+        if (n<=1) return ans;
+        prices.push_back(-1); n++;
+        int low=prices[0];
+        for (int i=1; i<n; ++i) {
+            if (prices[i]<prices[i-1]) {
+                ans+=prices[i-1]-low;
+                low=prices[i];
+            }
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int maxProfit(vector<int>& prices)

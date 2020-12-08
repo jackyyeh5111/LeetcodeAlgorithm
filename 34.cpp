@@ -1,3 +1,40 @@
+/***** Second Visit *****/
+/*
+    Array
+    1. 2 ptr solution
+    2. binary search
+    3. moving window
+    we are asked to have T:O(logn), thus we could think binary search first.
+    Do two binary search!!
+    T:O(logn)/S:O(1)
+*/
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target)
+    {
+        vector<int> ans;
+        int n=nums.size();
+        int l=0,r=n;
+        if (r==0) return vector<int>{-1,-1};
+        while(l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]>=target) r=mid;
+            else l=mid+1;
+        }
+        if (l>=n||nums[l]!=target) return vector<int>{-1,-1};
+        ans.push_back(l);
+        r=nums.size();
+        while(l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]!=target) r=mid;
+            else l=mid+1;
+        }
+        ans.push_back(l-1);
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target)

@@ -1,4 +1,29 @@
-/************************ Second Visit ************************/
+/***** Third Visit *****/
+/*
+    brute force
+    T:O(n)/S:O(1)
+    -----
+    treat n as bit manipulation, then cumulatively multiply x.
+    T:log(n)/S:O(1)
+*/
+class Solution {
+public:
+    double myPow(double x, int n)
+    {
+        if(n==0) return 1;
+        bool pos=n>0;
+        long ln=labs(n),i=1;
+        double k=x,ans=1;
+        while(i<=ln){
+            if(i&ln) ans*=k;
+            k*=k;
+            i=i<<1;
+        }
+        return pos?ans:1/ans;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     double myPow(double x, int n)
@@ -23,7 +48,7 @@ public:
     }
 };
 
-/************************ First Visit ************************/
+/***** First Visit *****/
 class Solution {
 public:
     double myPow(double x, int n) {

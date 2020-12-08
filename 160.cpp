@@ -1,11 +1,32 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+/***** Second Visit *****/
+/*
+    Use a hashmap to record each visited node from a/b endian.
+    T:O(n)/S:O(n)
+    -----
+    Use 2 ptr solution
+    T:2 pass O(n)/S:O(1)
+*/
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
+    {
+        ListNode *a=headA,*b=headB;
+        while (a&&b) {
+            a=a->next;
+            b=b->next;
+        }
+        if (!b) {swap(headA,headB); swap(a,b);}
+        while (b) {headB=headB->next; b=b->next;}
+        while (headA&&headB) {
+            if (headA==headB) return headA;
+            headA=headA->next;
+            headB=headB->next;
+        }
+        return 0;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)

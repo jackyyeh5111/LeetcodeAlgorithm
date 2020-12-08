@@ -1,3 +1,45 @@
+/***** Second Visit *****/
+/*
+    Each entry could be only used once and the comb should be unique.
+    sort first, then each entry could be used k times with k same number in the
+    following.
+    T:O(nlogn+2^n)/S:O(n)
+
+    1 1 1 2 2 3
+              ^
+*/
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+    {
+        vector<int> comb;
+        sort(candidates.begin(),candidates.end());
+        help(candidates,0,target,comb);
+        return ans;
+    }
+
+    void help(vector<int>& candidates, int i, int target, vector<int>& comb)
+    {
+        int n=candidates.size();
+        if (i>=n) return;
+        int val=candidates[i], k=i;
+        while(k+1<n&&candidates[k+1]==val) k++;
+        help(candidates,k+1,target,comb);
+        int j=0;
+        while(j<k-i+1) {
+            j++;
+            target-=val;
+            comb.push_back(val);
+            if(target==0) {ans.push_back(comb); break;}
+            else if (target<0) break;
+            else help(candidates,k+1,target,comb);
+        }
+        for (;j>0; --j) comb.pop_back();
+    }
+};
+
+/***** First Visit *****/
 /*
 Check duplicated case approach
     1. hashmap frequency checking.

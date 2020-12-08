@@ -9,6 +9,39 @@
  * };
  */
 
+/***** Second Visit *****/
+/*
+    use 2 ptr with header pointer
+    1 2 3 4
+    ^ ^
+    1 2 3 4 5
+        ^ ^
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head)
+    {
+        ListNode *header=new ListNode(0);
+        ListNode *cur=header, *slow=head, *fast=head, *next=0;
+        if (!fast||!fast->next) return head;
+        fast=fast->next;
+        while(fast) {
+            next=fast->next;
+            cur->next=fast;
+            fast->next=slow;
+            fast=next;
+            cur=slow;
+            if (!fast||!fast->next) break;
+            slow=fast; fast=fast->next;
+        }
+        cur->next=fast;
+        cur=header->next; delete header;
+        return cur;
+    }
+};
+
+/***** First Visit *****/
  /******************* 2 pointers *******************/
 class Solution {
 public:

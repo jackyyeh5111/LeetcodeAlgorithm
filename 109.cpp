@@ -1,24 +1,41 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+/*
+    1 2 3 4 5 6 7
+          ^
+      ^
+    ^
+    -----
+    Binary indexing
+    T(n)=2T(n/2)+O(1)
+        =O(N)
+    S:O(logn)
+*/
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head)
+    {
+        ListNode *tail=head;
+        int l=0;
+        while (tail) {l++; tail=tail->next;}
+        ListNode **header=&head;
+        return help(0,l-1,header);
+    }
+
+    TreeNode *help(int start, int end, ListNode **node)
+    {
+        if (start>end) return 0;
+        int mid=(start+end)/2;
+        TreeNode *left = help(start,mid-1,node);
+        int val=(*node)->val;
+        (*node)= (*node)->next;
+        TreeNode *tnode = new TreeNode (val);
+        TreeNode *right = help(mid+1,end,node);
+        tnode->left=left; tnode->right=right;
+        return tnode;
+    }
+};
+
+/***** First Visit *****/
 /*
     use a hashmap to save the idx of linked list, then reduce it as sorted
     ARRAY to BST. T:O(2*n), S:O(n).

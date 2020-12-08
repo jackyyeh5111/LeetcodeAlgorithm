@@ -8,7 +8,79 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
- /****************** 1 Pass with map************************/
+/***** Third Visit *****/
+/*
+    List:
+    1. header node
+    2. slow/fast ptr (V)
+    Note that k may be larger than the length of linked list.
+    Methodology:
+    First pass to seek length n.
+    Second pass to rotate k%n nodes.
+    T: 2 pass O(n)/S:O(1)
+*/
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k)
+    {
+        if (!head) return head;
+        ListNode *tail=head;
+        int n=0;
+        while(tail&&tail->next) {tail=tail->next; n++;}
+        tail->next=head; n++;
+        k=(k+1)%n;
+        ListNode *slow=head;
+        for(int i=0;i<n-k; ++i) slow=slow->next;
+        ListNode *newhead=slow->next;
+        slow->next=0;
+        return newhead;
+    }
+};
+
+/***** Second Visit *****/
+/*
+    1. Find the length of list
+    2. use fast/slow solution to get the right position.
+    3. inverse the two ptr.
+    T:2 pass O(n)/S:O(1) in-place
+    -----
+    Directly iterate k steps to find target ListNode with newTail/newHead;
+    move to the current end.
+    end->next=head, newTail->next=0, return newHead
+    T:O(1+k/n)/S:O(1)
+    -----
+    Use a hashmap, k: idx, v: ListNode*
+    First pass, fill in the hashmap, and find length.
+    Make cyclic.
+    Then count the index from k, and we can find prev as well.
+    prev->next=0;  return map[k];
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k)
+    {
+        if (!head||!head->next||k==0) return head;
+        ListNode *tail=head;
+        while(k>0) {
+            if (!tail) tail=head->next;
+            else tail=tail->next;
+            --k;
+        }
+        if(!tail) return head;
+        ListNode* newHead=head;
+        while(tail&&tail->next) {newHead=newHead->next; tail=tail->next;}
+        tail=newHead; newHead=newHead->next;
+        tail->next=0;
+        tail=newHead;
+        while(tail&&tail->next) tail=tail->next;
+        tail->next=head;
+        return newHead;
+    }
+};
+
+/***** First Visit *****/
+/****************** 1 Pass with map************************/
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k)

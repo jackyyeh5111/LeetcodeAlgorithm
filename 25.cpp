@@ -8,6 +8,43 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+/***** Second Visit *****/
+/*
+    same as problem 24.
+    use 2 ptr to check should reverse or not.
+    DIRTY code.
+    -----
+    uuse recursive approach to get neat code
+    T:O(n) 2 pass/S:O(n/k)
+*/
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k)
+    {
+        ListNode *slow=head, *fast=head;
+        for (int i=0; i<k; ++i) {
+            if (!fast) return head;
+            fast=fast->next;
+        }
+        ListNode *header=reverse(head,fast);
+        head->next=reverseKGroup(fast,k);
+        return header;
+    }
+
+    ListNode* reverse(ListNode *l, ListNode *r)
+    {
+        ListNode *prev=0;
+        while(l!=r) {
+            ListNode *tmp=l->next;
+            l->next=prev;
+            prev=l; l=tmp;
+        }
+        return prev;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T: O(2n) due to two pass iteration, S:O(1)

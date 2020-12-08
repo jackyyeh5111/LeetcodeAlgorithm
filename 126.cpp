@@ -1,3 +1,59 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    unordered_map<string,vector<string>> graph;
+    unordered_map<string,bool> visited;
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList)
+    {
+        unordered_set<string> words(wordList.begin(),wordList.end());
+        if(words.count(endWord)==0) return vector<vector<string>>{};
+        words.insert(beginWord);
+        words.insert(endWord);
+        for (string word:words) {
+            visited[word]=false;
+            graph[word]=vector<string>{};
+            for (int j=0; j<word.length(); ++j) {
+                for (int i=0; i<26; ++i) {
+                    if (word[j]==i+'a') continue;
+                    string new_word=word;
+                    new_word[j]='a'+i;
+                    if (words.count(new_word)!=0)
+                        graph[word].push_back(new_word);
+                }
+            }
+        }
+
+        unordered_map<string,vector<vector<string>>> paths;
+        queue<string> q;
+        q.push(beginWord);
+        visited[beginWord]=true;
+        paths[beginWord]=vector<vector<string>>{{beginWord}};
+        bool found=false;
+        while (!q.empty()&&!found) {
+            int k=q.size();
+            unordered_set<string> record;
+            for (int i=0; i<k; ++i) {
+                string u=q.front(); q.pop();
+                for (string v:graph[u]) {
+                    if (visited[v]) continue;
+                    auto prev_paths=paths[u];
+                    for(auto &prev_path:prev_paths)prev_path.push_back(v);
+                    paths[v].insert(paths[v].end(),prev_paths.begin(),prev_paths.end());
+
+                    if (v==endWord) found=true;
+                    if (record.count(v)==0){
+                        q.push(v);
+                        record.insert(v);
+                    }
+                }
+            }
+            for(string r:record) visited[r]=true;
+        }
+        return paths[endWord];
+    }
+};
+
+/***** First Visit *****/
 /*********************** Compare in Set to avoid TLE ******************/
 class Solution {
 public:

@@ -1,3 +1,27 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return 0;
+        int m=matrix.size(), n=matrix[0].size(),ans=0;
+        vector<int> dp(n+1,0);
+        for (int i=1; i<=m; ++i) {
+            int lu=dp[0];
+            for (int j=1; j<=n; ++j) {
+                int tmp=dp[j];
+                if (matrix[i-1][j-1]=='1')
+                    dp[j]=min(dp[j],min(lu,dp[j-1]))+1;
+                else dp[j]=0;
+                ans=max(ans,dp[j]);
+                lu=tmp;
+            }
+        }
+        return ans*ans;
+    }
+};
+
+/***** First Visit *****/
 /**************** 2-D DP ****************/
 class Solution {
 public:

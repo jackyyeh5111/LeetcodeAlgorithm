@@ -9,6 +9,49 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+/***** Second Visit *****/
+/*
+    recursive approach.
+    help(TreeNode* root): the max path sum including root node.
+    left = maxPathSum(root->left)
+    right = maxPathSum(root->right)
+    maxPathSum(root)=max(left,right,left+right-root->val,root->val
+*/
+class Solution {
+public:
+    int ans=INT_MIN;
+    int maxPathSum(TreeNode* root) {
+        help(root);
+        return ans;
+    }
+
+    int help(TreeNode* root)
+    {
+        if (!root->left&&!root->right) {
+            ans=max(ans,root->val);
+            return root->val;
+        }
+        else if (!root->left) {
+            int right=help(root->right);
+            ans=max(max(ans,right+root->val),root->val);
+            return max(right+root->val,root->val);
+        }
+        else if (!root->right) {
+            int left=help(root->left);
+            ans=max(max(ans,left+root->val),root->val);
+            return max(left+root->val,root->val);
+        }
+        else {
+            int left=help(root->left);
+            int right=help(root->right);
+            int ret=max(max(left,right)+root->val,root->val);
+            ans=max(max(max(ret,ans),max(left,right)),left+right+root->val);
+            return ret;
+        }
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int ans=INT_MIN;

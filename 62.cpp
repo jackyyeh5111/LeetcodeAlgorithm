@@ -1,4 +1,30 @@
-/******************* second visit *******************/
+/***** Third Visit *****/
+/*
+    Math calculation:
+    C^(m+n-2)_(n-1)
+    T:O(1)/S:O(1)
+    -----
+    2-D DP bottom up
+    T:O(mn)/S:O(mn)
+    -----
+    reduce to 1-D DP
+    T:O(mn)/S:O(m)
+*/
+class Solution {
+public:
+    int uniquePaths(int m, int n)
+    {
+        vector<int> dp(n,1);
+        for (int i=1; i<m; ++i) {
+            for (int j=1; j<n; ++j) {
+                dp[j]+=dp[j-1];
+            }
+        }
+        return dp[n-1];
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     int uniquePaths(int m, int n)
@@ -13,7 +39,7 @@ public:
     }
 };
 
-/******************* first visit *******************/
+/***** First Visit *****/
 /*
 combination thought
 */

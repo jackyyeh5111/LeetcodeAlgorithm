@@ -1,3 +1,26 @@
+/***** Second Visit *****/
+/*
+    sorted array
+    1. 2 ptr
+    2. binary search (v)
+    T:O(logn)/S:O(1)
+*/
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target)
+    {
+        int n=nums.size();
+        int l=0,r=n;
+        while(l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]>=target) r=mid;
+            else l=mid+1;
+        }
+        return l;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(logn)

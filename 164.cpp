@@ -1,5 +1,43 @@
+/***** Second Visit *****/
 /*
+    brute force: sort and find max difference
+    T:O(nlogn)/S:O(1)
+    -----
+    constraint: T:O(n)/S:O(n) -> bucket sort.
+    (largest-smallest) / number of gaps could gain min gap.
+    The rest possible larger gap would be the difference between max num of current bucket and min num of next bucket.
+*/
+class Solution {
+public:
+    int maximumGap(vector<int>& nums)
+    {
+        int n=nums.size();
+        if (n<2) return 0;
+        auto lu=minmax_element(nums.begin(),nums.end());
+        int gap=max((*lu.second-*lu.first)/(n-1),1);
+        int m=(*lu.second-*lu.first)/gap+1;
+        vector<int> minBucket(m,INT_MAX);
+        vector<int> maxBucket(m,INT_MIN);
+        for (int num:nums) {
+            int k=(num-*lu.first)/gap;
+            minBucket[k]=min(minBucket[k],num);
+            maxBucket[k]=max(maxBucket[k],num);
+        }
+        int i=0;
+        gap=(*lu.second-*lu.first)/(n-1);
+        while (i<m) {
+            int j=i+1;
+            while (j<m&&minBucket[j]==INT_MAX) j++;
+            if (j==m) break;
+            gap=max(gap,minBucket[j]-maxBucket[i]);
+            i=j;
+        }
+        return gap;
+    }
+};
 
+/***** First Visit *****/
+/*
 Suppose all the n elements in nums fall within [l, u], the maximum gap will not
 be smaller than gap = (u - l) / (n - 1). However, this gap may become 0 and so
 we take the maximum of it with 1 to guarantee that the gap used to create the

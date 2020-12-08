@@ -1,3 +1,38 @@
+/***** Second Visit *****/
+/*
+    dp[i][j]: s[0-i] match p[0-j] or not.
+    dp[i][j]
+        a-z s[i]==p[j] && dp[i-1][j-1]
+        .   dp[i-1][j-1]
+        *   s[i]==p[j-k] || dp[i][j-1]
+    Note for string s, we should consider empty string
+    e.g. "" "a*" -> true
+*/
+class Solution {
+public:
+    bool isMatch(string s, string p)
+    {
+        int m=s.length(),n=p.length();
+        vector<vector<bool>> dp(m+1,vector<bool>(n+1,0));
+        dp[0][0]=1;
+        for (int i=0; i<=m; ++i) {
+            for (int j=1; j<=n; ++j) {
+                if (isalpha(p[j-1])) {
+                    dp[i][j]=i&&dp[i-1][j-1]&&s[i-1]==p[j-1];
+                }
+                else if (p[j-1]=='.') {
+                    dp[i][j]=i&&dp[i-1][j-1];
+                }
+                else {
+                    dp[i][j]=dp[i][j-2]||(i&&dp[i-1][j]&&(s[i-1]==p[j-2]||p[j-2]=='.'));
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     bool isMatch(string s, string p) {

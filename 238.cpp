@@ -1,3 +1,26 @@
+/***** Second Visit *****/
+/*
+    1  2   3  4
+    1  1   2  6 [forward: ->]
+    24 12  4  1 [backward: <-]
+    T:O(n)/S:O(n)
+
+*/
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums)
+    {
+        int n=nums.size(), f=1, b=1;
+        vector<int> ans(n,1);
+        for (int i=1; i<n; ++i) {
+            f*=nums[i-1]; b*=nums[n-i];
+            ans[i]*=f; ans[n-i-1]*=b;
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
     with division:
     product over all nums then divide each.

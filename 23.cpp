@@ -8,6 +8,49 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+ 
+/***** Second Visit *****/
+ /*
+     DIVIDE & CONQUER
+     for each iteration, sort list[i],list[i+1]
+     T: k+k/2+k/4+...k/k=O(klogk*m)/S:O(1)
+     1 2 3 4 5 6 7 8 9
+     ___ ___ ___ ___ _
+       ___     ___   _
+         _______     _
+               _______
+ */
+ class Solution {
+ public:
+     ListNode* mergeKLists(vector<ListNode*>& lists)
+     {
+         int k=lists.size();
+         if(k==0) return 0;
+         for (int i=1; i<k; i*=2){
+             for (int j=0; j+i<k; j+=2*i) {
+                 lists[j]=merge2Lists(lists[j],lists[j+i]);
+             }
+         }
+         return lists[0];
+     }
+
+     ListNode* merge2Lists(ListNode* l1, ListNode* l2)
+     {
+         ListNode *header=new ListNode(0);
+         ListNode *p1=l1,*p2=l2, *cur=header;
+         while(p1&&p2) {
+             if (p1->val<=p2->val) {cur->next=p1; p1=p1->next;}
+             else {cur->next=p2; p2=p2->next;}
+             cur=cur->next;
+         }
+         if (p1) cur->next=p1;
+         else cur->next=p2;
+         cur=header->next; delete header;
+         return cur;
+     }
+ };
+
+/***** First Visit *****/
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists)

@@ -8,6 +8,39 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+ /**
+ 
+/***** Second Visit *****/
+/*
+    delete Nth node from end in one pass.
+    use slow/fast ptr solution.
+    **Note that n will always be valid**
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n)
+    {
+        if (n==0) return head;
+        ListNode *header=new ListNode(0);
+        header->next=head;
+        ListNode *slow=header, *fast=header;
+        for(int i=0; i<n; ++i) fast=fast->next;
+        ListNode *prev=0;
+        while(fast) {
+            prev=slow;
+            slow=slow->next;
+            fast=fast->next;
+        }
+        prev->next=slow->next;
+        delete slow;
+        head=header->next;
+        delete header;
+        return head;
+    }
+};
+
+ /***** First Visit *****/
 class Solution {
 public:
     // T:O(n), S:O(n)

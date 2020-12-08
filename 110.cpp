@@ -1,14 +1,25 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+/*
+    LRN traversal
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    bool isBalanced(TreeNode* root)
+    {
+        return getDepth(root).second;
+    }
+
+    pair<int,bool> getDepth(TreeNode *root)
+    {
+        if (!root) return make_pair(0,true);
+        else if (!root->left&&!root->right) return make_pair(1,true);
+        auto l=getDepth(root->left), r=getDepth(root->right);
+        return make_pair(max(l.first,r.first)+1,(abs(l.first-r.first)<=1)&&l.second&&r.second);
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     bool ans=true;

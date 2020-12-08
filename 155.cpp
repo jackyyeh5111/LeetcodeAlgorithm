@@ -1,3 +1,31 @@
+/***** Second Visit *****/
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    vector<pair<int,int>> v;
+    MinStack() {
+
+    }
+
+    void push(int x) {
+        if (v.empty()) v.push_back(make_pair(x,x));
+        else v.push_back(make_pair(x,min(x,v.back().second)));
+    }
+
+    void pop() {
+        v.pop_back();
+    }
+
+    int top() {
+        return v.back().first;
+    }
+
+    int getMin() {
+       return v.back().second;
+    }
+};
+
+/***** First Visit *****/
 /*********************** vector<int>  with T:O(1) ***********************/
 /*
     push(x):

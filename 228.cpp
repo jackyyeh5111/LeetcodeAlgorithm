@@ -1,3 +1,54 @@
+/***** Second Visit *****/
+/*
+    sorted unique list -> BINARY SEARCH
+    TC worst: log(n-1)+...+log(1)=O(nlogn)
+    TC best: O(logn)
+    SC O(1)
+*/
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums)
+    {
+        vector<string> v;
+        int n=nums.size(),i=0;
+        while (i<n) {
+            int l=i,r=n;
+            // l would be thee minimal index which doesnt satisfy the condition.
+            while (l<r) {
+                int mid=(l+r)/2;
+                if (((long)nums[mid]-(long)nums[i])==(mid-i)) l=mid+1;
+                else r=mid;
+            }
+            if (i==l-1) v.push_back(to_string(nums[i]));
+            else v.push_back(to_string(nums[i])+"->"+to_string(nums[l-1]));
+            i=l;
+        }
+        return v;
+    }
+};
+
+/*
+    naiive linear approach
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums)
+    {
+        vector<string> v;
+        int i=0, n=nums.size();
+        while (i<n) {
+            int j=i;
+            while (j<n-1&&nums[j+1]==nums[j]+1) j++;
+            if (i!=j) v.push_back(to_string(nums[i])+"->"+to_string(nums[j]));
+            else v.push_back(to_string(nums[i]));
+            i=j+1;
+        }
+        return v;
+    }
+};
+
+/***** First Visit *****/
 /*
     -----
     Iterative traverse each entry.

@@ -1,4 +1,65 @@
-/************************ Second Visit ************************/
+/***** Third Visit *****/
+/*
+    Topological order check on adjacent matrix.
+    T:O(V^2)/S:O(V+E)
+    -----
+    DFS to detect acyclic on directed graph
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        vector<int> in_degree(numCourses, 0);
+        vector<vector<int>> graph(numCourses, vector<int>{});
+        for (auto req:prerequisites) {
+            graph[req[1]].push_back(req[0]);
+            in_degree[req[0]]++;
+        }
+        for (int i=0; i<numCourses; ++i) {
+            bool found=false;
+            for (int j=0; j<numCourses; ++j) {
+                if (in_degree[j]!=0) continue;
+                in_degree[j]=-1;
+                for (int v:graph[j]) in_degree[v]--;
+                found=true;
+                break;
+            }
+            if (!found) return false;
+        }
+        return true;
+    }
+};
+
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        vector<int> visited(numCourses, 0);
+        vector<vector<int>> graph(numCourses, vector<int>{});
+        for (auto req:prerequisites)
+            graph[req[1]].push_back(req[0]);
+        for (int i=0; i<numCourses; ++i) {
+            if (!dfs(graph,visited,i)) return false;
+        }
+        return true;
+    }
+
+    bool dfs(vector<vector<int>> &graph, vector<int> &visited, int u)
+    {
+        if (visited[u]==2) return true;
+        else if (visited[u]==1) return false;
+        bool ret=true;
+        for (int v:graph[u]) {
+            visited[u]=1;
+            ret&=dfs(graph, visited, v);
+            visited[u]=2;
+        }
+        return ret;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     vector<vector<int>> graph;
@@ -31,7 +92,7 @@ public:
     }
 };
 
-/************************ DFS ************************/
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(V+E), S:O(V+E)

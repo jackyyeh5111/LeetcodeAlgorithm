@@ -1,3 +1,27 @@
+/***** Second Visit *****/
+/*
+    brute force:
+    top-down checking 0-x/2 to find max sqrt.
+    T:O(n)/S:O(1)
+    TLE!!!
+    -----
+    speed up linear finding
+    T:O(logn)/S:O(1)
+*/
+class Solution {
+public:
+    int mySqrt(int x)
+    {
+        int l=0,r=x/2+2;
+        while(l<r) {
+            int mid=(l+r)/2;
+            if((long)mid*(long)mid>x) r=mid;
+            else l=mid+1;
+        }
+        return l-1;
+    }
+};
+/***** First Visit *****/
 /*
 Newton's Method Xn+1=1/2(Xn+a/Xn), where a is target x.
 The intuition is very simple: if xn is too big (>√a), then a/xn will be too
@@ -26,16 +50,18 @@ class Solution {
 public:
     int mySqrt(int x)
     {
-        long ans = 0;
-        long bit = 1l << 16;
-        while(bit > 0) {
+        int ans = 0; // no need to define as "long"
+        int bit = 1 << 15; // no need to define as "long"
+        while (bit > 0) {
             ans |= bit;
-            if (ans * ans > x) {
+            // the original condition is "ans * ans > x" or "((long)ans) * ((long)ans) > x", this is revised version.
+            if (ans > x / ans) {
+                // if ans * ans > x, then ans = (ans | bit) ^ bit = ans | (bit ^ bit) = ans (the "previous" ans).
                 ans ^= bit;
             }
             bit >>= 1;
         }
-        return (int)ans;
+        return ans;
     }
 };
 

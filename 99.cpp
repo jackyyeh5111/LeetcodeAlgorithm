@@ -1,3 +1,95 @@
+/***** Third Visit *****/
+/*
+    BST -> inorder traversal can return increasing order.
+    constraint: SC: O(1) -> morris traversal.
+    T:O(n)
+    0 1 8 3 4 5 2
+        ^
+*/
+class Solution {
+public:
+    void recoverTree(TreeNode* root)
+    {
+        TreeNode *cur=root, *prev=0;
+        vector<TreeNode*> v;
+        while (cur) {
+            if (!cur->left) {
+                // visit cur
+                if (v.size()==0&&prev&&cur->val<prev->val) v.push_back(prev);
+                else if (v.size()!=0&&cur->val>=v[0]->val) v.push_back(prev);
+                prev=cur;
+                cur=cur->right;
+            }
+            else {
+                TreeNode *pred=cur->left;
+                while (pred->right&&pred->right!=cur) pred=pred->right;
+                if (pred->right==cur) {
+                    // visit cur
+                    if (v.size()==0&&prev&&cur->val<prev->val) v.push_back(prev);
+                    else if (v.size()!=0&&cur->val>=v[0]->val) v.push_back(prev);
+                    pred->right=0;
+                    prev=cur;
+                    cur=cur->right;
+                }
+                else {
+                    pred->right=cur;
+                    cur=cur->left;
+                }
+            }
+        }
+        if (v.size()<2) v.push_back(prev);
+        swap(v[0]->val,v[1]->val);
+    }
+};
+
+/***** Second Visit *****/
+/*
+    Constant space complexity while tree traversal: morris traversal.
+    for each node, find its inorder predecessor and link them for S:O(1) traversal.
+    iterative solution.
+    Thought: utilize all leaf's null ptr and save the O(n) stack utilization.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    void recoverTree(TreeNode* root)
+    {
+        TreeNode *cur=root, *prev=0, *nodea=0, *nodeb=0;
+        while (cur) {
+            if (!cur->left) {
+                // visit
+                if (!prev) prev=cur;
+                else {
+                    if (prev->val>=cur->val&&!nodea) nodea=prev;
+                    if (nodea&&cur->val<nodea->val) nodeb=cur;
+                    prev=cur;
+                }
+                // cout<<cur->val<<endl;
+                cur=cur->right;
+            }
+            else {
+                TreeNode *pred=cur->left;
+                while(pred&&pred->right&&pred->right!=cur) pred=pred->right;
+                if (pred->right==cur) {
+                    pred->right=0;
+                    // visit
+                    if (prev->val>=cur->val&&!nodea) nodea=prev;
+                    if (nodea&&cur->val<nodea->val) nodeb=cur;
+                    prev=cur;
+                    // cout<<cur->val<<endl;
+                    cur=cur->right;
+                }
+                else {
+                    pred->right=cur;
+                    cur=cur->left;
+                }
+            }
+        }
+        swap(nodea->val,nodeb->val);
+    }
+};
+
+/***** First Visit *****/
  /*
  inorder traversal
      record each node's ptr and the sequence, and we'll find our target
@@ -23,6 +115,7 @@
 
 /************* O(1) morris inorder traversal  *************/
 // refers to https://youtu.be/wGXB9OWhPTg
+// T:O(n)/S:O(1)
  class Solution {
  public:
      void recoverTree(TreeNode* root)
@@ -32,7 +125,7 @@
          while (cur) {
              if (!cur->left) {
                  //visit
-                 if(prev)cout<<prev->val<<endl;
+                 // if(prev)cout<<prev->val<<endl;
                  if(prev&&prev->val>cur->val&&targets.size()==0) {
                      targets.push_back(prev);
                  }
@@ -51,7 +144,7 @@
                  }
                  else { // pred->right==cur
                      //visit
-                     if(prev)cout<<prev->val<<endl;
+                     // if(prev)cout<<prev->val<<endl;
                      if(prev&&prev->val>cur->val&&targets.size()==0) {
                      targets.push_back(prev);
                      }
@@ -72,6 +165,7 @@
  };
 
 /************* O(n) inorder traversal  *************/
+// T:O(n)/S:O(n)
 class Solution {
 public:
     TreeNode *leftTarget=0, *rightTarget=0;

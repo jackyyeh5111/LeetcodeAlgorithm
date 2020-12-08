@@ -1,12 +1,13 @@
 /********** Second Visit **********/
 class Solution {
 public:
-    int titleToNumber(string s)
+    string convertToTitle(int n)
     {
-        int n=s.length();
-        int ans=0;
-        for (int i=0; i<n; ++i) {
-            ans = ans*26+(s[i]-'A'+1);
+        string ans="";
+        n--;
+        while (n>=0) {
+            ans.insert(ans.begin(),'A'+n%26);
+            n=n/26-1;
         }
         return ans;
     }

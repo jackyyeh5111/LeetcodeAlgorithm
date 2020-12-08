@@ -1,3 +1,51 @@
+/***** Third Visit *****/
+/*
+    1 1
+    2 2
+    3 3
+    4 1
+    TLE
+    -----
+    We just need to take sqare number into consideration.
+    Thus we dont need to check each num less than current i while dp iteration.
+    T:O(n^2)/S:O(n)
+*/
+class Solution {
+public:
+    int numSquares(int n)
+    {
+        vector<int> dp(n+1,0);
+
+        for (int i=1; i<=n; ++i) {
+            dp[i]=i;
+            int j=1;
+            while (i>=j*j) {
+                dp[i]=min(dp[i],dp[i-j*j]+1);
+                j++;
+            }
+        }
+        return dp[n];
+    }
+};
+
+class Solution {
+public:
+    int numSquares(int n)
+    {
+        vector<int> dp(n,0); int cur=1;
+        for (int i=1; i<=n; ++i) {
+            dp[i-1]=i;
+            if (i==pow(cur,2)) {dp[i-1]=1; cur++;}
+            else {
+                for (int j=i-1; j>=i/2; j--) {
+                    dp[i-1]=min(dp[i-1],dp[j-1]+dp[i-j-1]);
+                }
+            }
+        }
+        return dp.back();
+    }
+};
+
 /********** Second Visit **********/
 /*
     1 2 ... sqrt(n)

@@ -1,3 +1,35 @@
+/***** Secod Visit *****/
+/*
+    1-d dp solution
+    T:O(mn)/S:O(m)
+*/
+class Solution {
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict)
+    {
+        unordered_set words(wordDict.begin(),wordDict.end());
+        int n=s.length();
+        vector<vector<string>> dp(n+1,vector<string>{});
+        dp[0].push_back("");
+        for (int i=1; i<=n; ++i) {
+            for (string word:words) {
+                if ((i-(int)word.length()<0)||(dp[i-(int)word.length()].size()==0))
+                    continue;
+                string sub=s.substr(i-word.length(),word.length());
+                if (sub!=word) continue;
+                vector<string> combs=dp[i-(int)word.length()];
+                for(string &comb:combs) {
+                    if (comb!="") comb+=" "+sub;
+                    else comb+=sub;
+                }
+                dp[i].insert(dp[i].end(),combs.begin(),combs.end());
+            }
+        }
+        return dp[n];
+    }
+};
+
+/***** First Visit *****/
 /*
     Actually both algos are kind of DP. (memorize incremental small problems
     then utilize these to solve large problem.) The key is to take a forward checking to avoid TLE. Otherwise time complexity are the same.

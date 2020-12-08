@@ -1,15 +1,30 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
+/***** Third Visit *****/
+ /*
+     dfs, NLR, preorder traversal
+     T:O(n)/S:O(n)
  */
-/******************* Second Visit **********************/
+ class Solution {
+ public:
+     int sumNumbers(TreeNode* root) {
+         int ans=0;
+         help(root,0,ans);
+         return ans;
+     }
+
+     void help(TreeNode *root, int val, int &ans)
+     {
+         if (!root) return;
+         val=val*10+root->val;
+         if (!root->left&&!root->right) {
+             ans+=val;
+             return;
+         }
+         help(root->left,val,ans);
+         help(root->right,val,ans);
+     }
+ };
+
+/***** Second Visit *****/
 class Solution {
 public:
     int ans=0;
@@ -33,7 +48,7 @@ public:
     }
 };
 
-/******************* First Visit **********************/
+/***** First Visit *****/
  // T:O(n), S:O(logN)
 class Solution {
 public:

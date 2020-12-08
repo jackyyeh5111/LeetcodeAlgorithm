@@ -1,3 +1,33 @@
+/***** Second Visit *****/
+/*
+    Use a vector to store each folder
+    case   /: delimeter
+    case   .: ignore
+    case  ..: pop_back
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    string simplifyPath(string path)
+    {
+        vector<string> v;
+        int i=0, n=path.length();
+        while (i<n) {
+            string word="";
+            while (i<n&&path[i]!='/') word+=path[i++];
+            if (word=="..") {
+                if (v.size()>0) v.pop_back();
+            }
+            else if (word!=""&&word!=".") v.push_back(word);
+            ++i;
+        }
+        string ans="/";
+        for (auto word:v) ans+=word+'/';
+        return ans=="/"?ans:ans.substr(0,ans.length()-1);
+    }
+};
+
+/***** First Visit *****/
 /************* Word tokenizer ***************/
 class Solution {
 public:

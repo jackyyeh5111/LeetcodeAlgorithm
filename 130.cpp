@@ -1,4 +1,47 @@
-/*************************** Second Visit ***********************/
+/***** Third Visit *****/
+/*
+    for each inner O, steps along nearing O and see if it can reach boarder.
+    If reachable, then all O could remain the same, otherwise turn out to be X.
+    T:O(4^(n^2))/S:O(n^2) proportional to max recursive depth.
+    -----
+    Starts from the borader O, same complexity but easy coding.
+    Lets backtracking!
+*/
+class Solution {
+public:
+    void solve(vector<vector<char>>& board)
+    {
+        if (board.size()==0||board[0].size()==0) return;
+        int m=board.size(),n=board[0].size();
+        for (int i=0; i<m; ++i) {
+            if (board[i][0]=='O') help(board,i,0);
+            if (board[i][n-1]=='O') help(board,i,n-1);
+        }
+        for (int i=0; i<n; ++i) {
+            if (board[0][i]=='O') help(board,0,i);
+            if (board[m-1][i]=='O') help(board,m-1,i);
+        }
+        for(int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (board[i][j]=='O') board[i][j]='X';
+                else if (board[i][j]=='#') board[i][j]='O';
+            }
+        }
+    }
+
+    void help(vector<vector<char>>& board, int i, int j)
+    {
+        int m=board.size(),n=board[0].size();
+        if (i<0||i>=m||j<0||j>=n||board[i][j]!='O') return;
+        board[i][j]='#';
+        help(board,i+1,j);
+        help(board,i,j+1);
+        help(board,i-1,j);
+        help(board,i,j-1);
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     void solve(vector<vector<char>>& board)
@@ -45,7 +88,7 @@ public:
     }
 };
 
-/*************************** First Visit ***********************/
+/***** First Visit *****/
 class Solution {
 public:
     void solve(vector<vector<char>>& board)
@@ -55,7 +98,7 @@ public:
         start tracinig neigborhood.
         We can have flags of O, non visit:0, visited:1
 
-        improve thought, tracing only on the boardingi of border, the rest of O internal could be
+        improve thought, tracing only on the boarding of border, the rest of O internal could be
         teat as X.
         */
         // T:O(mn)

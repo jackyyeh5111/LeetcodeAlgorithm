@@ -1,4 +1,27 @@
-/************* Second Visit *************/
+/***** Third Visit *****/
+/*
+    [0,1,3,5,6]
+     0 1 2 3 4
+     5 4 3 2 1
+    T:O(nlogn+n) could. reduce linear probing to binary
+    T:O(nlogn+logn)
+    S:O(1)
+*/
+class Solution {
+public:
+    int hIndex(vector<int>& citations)
+    {
+        int n=citations.size();
+        sort(citations.begin(),citations.end());
+        for (int i=0; i<n; ++i) {
+            if (citations[i]>=n-i)
+                return n-i;
+        }
+        return 0;
+    }
+};
+
+/***** Second Visit *****/
 /*
     3 0 6 1 5
     0 1 3 5 6
@@ -34,7 +57,7 @@ public:
     }
 };
 
-/************* First Visit *************/
+/***** First Visit *****/
 /*
     3 0 6 1 5
     0 1 3 5 6

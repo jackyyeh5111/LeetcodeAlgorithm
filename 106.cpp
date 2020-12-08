@@ -1,16 +1,31 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** First Visit *****/
+/*
+    LNR v.s. LRN
+    T(n)= T(n-k-1)+T(k-1)+O(n)
+        <=T(n-1)+O(n)
+        = O(n^2)
+    S: O(n)
+*/
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder)
+    {
+        int n=inorder.size();
+        if (n==0) return 0;
+        else if (n==1) return new TreeNode(inorder[0]);
+        TreeNode *node=new TreeNode(postorder.back());
+        int i=0; while(inorder[i]!=node->val) i++;
+        vector<int> l_inorder(inorder.begin(),inorder.begin()+i);
+        vector<int> r_inorder(inorder.begin()+i+1,inorder.end());
+        vector<int> l_postorder(postorder.begin(),postorder.begin()+i);
+        vector<int> r_postorder(postorder.begin()+i,postorder.end()-1);
+        node->left=buildTree(l_inorder,l_postorder);
+        node->right=buildTree(r_inorder,r_postorder);
+        return node;
+    }
+};
 
-/****************** Second Visit ******************/
+/***** Second Visit *****/
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder)
@@ -40,7 +55,7 @@ public:
     }
 };
 
-/****************** First Visit ******************/
+/***** First Visit *****/
 class Solution {
 public:
     /*

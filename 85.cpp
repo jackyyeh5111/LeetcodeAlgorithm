@@ -1,3 +1,49 @@
+/***** Second Visit (Fail) *****/
+/*
+    1 2 4 4 4 6 1 0
+  s:            6
+    Same as problem 84.
+    while finding max area so far, look backward instead of forward.
+    Considering duplicated cases, we will only record the max idx and look
+    backward.
+    Also add 0 sanity check.
+    T:O(mn)/S:O(n)
+*/
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return 0;
+        int m=matrix.size(), n=matrix[0].size(),ans=0;
+        vector<int> heights(n,0);
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (matrix[i][j]=='0') heights[j]=0;
+                else heights[j]++;
+            }
+            ans=max(ans,maxArea(heights));
+        }
+        return ans;
+    }
+
+    int maxArea(vector<int> &heights)
+    {
+        heights.push_back(0);
+        stack<int> s;
+        int n=heights.size(),ret=0,i=0;
+        while (i<n) {
+            if (s.empty()||heights[s.top()]<heights[i]) s.push(i++);
+            else {
+                int t=s.top(); s.pop();
+                ret=max(ret,heights[t]*(s.empty()?i:(i-s.top()-1)));
+            }
+        }
+        heights.pop_back();
+        return ret;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T: O(n^2)

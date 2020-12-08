@@ -1,8 +1,75 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums)
+    {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ans;
+        int n=nums.size();
+        perm(nums,0,n,ans);
+        return ans;
+    }
+
+    void perm(vector<int> &nums, int i, int n, vector<vector<int>> &ans)
+    {
+        if (i>=n-1) {ans.push_back(nums); return;}
+        unordered_set<int> s;
+        for (int j=i; j<n; ++j) {
+            if (s.count(nums[j])!=0) continue;
+            s.insert(nums[j]);
+            swap(nums[i],nums[j]);
+            perm(nums,i+1,n,ans);
+            swap(nums[i],nums[j]);
+        }
+
+    }
+};
+
+/***** Second Visit ****/
+/*
+    permutation with duplicate nums and return unique result
+    use a set to eliminate all duplicate case.
+    Additional cost:T:O(n)/S:O(n)
+    Then reduce to normal permutation problem.
+    -----
+    use a set while swapping numbers, if the number has been swapped before, skip it.
+    Additional cost:T:O(n)/S:O(n)
+    Then reduce to normal permutation problem.
+    -----
+    sort first.
+    if the two swapping nums with different position are the same, just skip it.
+    T:O(n!)/S:O(n!)
+*/
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<vector<int>> permuteUnique(vector<int>& nums)
+    {
+        int n=nums.size();
+        help(nums,0,n);
+        return ans;
+    }
+
+    void help(vector<int>& nums, int idx, int n)
+    {
+        if (idx>=n) ans.push_back(nums);
+        else {
+            unordered_set<int> seen;
+            for (int i=idx; i<n; ++i) {
+                if (seen.count(nums[i])>0) continue;
+                seen.insert(nums[i]);
+                swap(nums[idx],nums[i]);
+                help(nums,idx+1,n);
+                swap(nums[idx],nums[i]);
+            }
+        }
+    }
+};
+
+/***** First Visit *****/
 /*
 Making it sorted can only place equal numbers together, so you can skip dup by if(i != pos && nums[i] == nums[pos]) continue;
 However, if you use swap twice and passing by reference, the array will not be sorted at some point, for example, 1,2,3,3 when pos = 0 and i = 2, you swap 1 and 3, which means now you have to get permutation of [2,1,3], it's not sorted.
-
-Thanks for the explanation! I finally figured it out.
 
 Yes, the reason of sorting is to skip duplicates. Take [1, 2, 2, 3] for example, when pos equals 0, we have below cases
 

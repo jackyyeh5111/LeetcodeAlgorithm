@@ -1,4 +1,26 @@
-/*********************** Second Visit **************************/
+/***** Third Visit *****/
+/*
+    Notice overflow in the first digit.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits)
+    {
+        digits.back()+=1;
+        int n=digits.size(),c=0;
+        for (int i=n-1; i>=0; --i) {
+            digits[i]+=c;
+            c=digits[i]/10;
+            digits[i]%=10;
+            if (c==0) break;
+        }
+        if (c) digits.insert(digits.begin(),1);
+        return digits;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     vector<int> plusOne(vector<int>& digits)
@@ -19,7 +41,7 @@ public:
     }
 };
 
-/*********************** First Visit **************************/
+/***** First Visit *****/
 /**************** Insert in the bigin *********************/
 class Solution {
 public:

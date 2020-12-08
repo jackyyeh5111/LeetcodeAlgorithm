@@ -1,4 +1,32 @@
-/************************* Second Visit *************************/
+/***** Third Visit *****/
+/*
+    iteration:
+    use a vector container, iteratively add incoming into each comb.
+    T:O(2^n)/S:O(2^n)
+    -----
+    recursive
+    backtracking approach.
+    T:O(2^n)/S:O(2^n)
+*/
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums)
+    {
+        vector<vector<int>> v{vector<int>{}};
+        int n=nums.size();
+        for (auto num:nums) {
+            int tmp=v.size();
+            for (int k=0; k<tmp; ++k) {
+                vector<int> sub=v[k];
+                sub.push_back(num);
+                v.push_back(sub);
+            }
+        }
+        return v;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     // T:O(2^n*n), 2^n for nums of subsets, n for the cost of moving each subset
@@ -24,7 +52,7 @@ public:
     }
 };
 
-/************************* First Visit *************************/
+/***** First Visit *****/
 // recursive
 class Solution {
 public:

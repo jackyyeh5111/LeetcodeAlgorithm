@@ -1,3 +1,34 @@
+/***** Second Visit *****/
+/*
+    use a hashmap, k: SORTED word, v: vector<string> of original words
+    T:2 pass O(n * klogk)/S:O(n)
+    -----
+    The problem is how to represent the anagram of str.
+    SORT:
+        1. quick sort T:(klogk)
+        2. counting sort with size 26 T:O(k)
+*/
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs)
+    {
+        unordered_map<string,vector<string>> m;
+        for (auto str:strs) {
+            string sort_str=str;
+            sort(sort_str.begin(),sort_str.end());
+            if (m.find(sort_str)==m.end())
+                m[sort_str]=vector<string>{};
+            m[sort_str].push_back(str);
+        }
+        vector<vector<string>> ans;
+        for(auto it=m.begin(); it!=m.end(); ++it) {
+            ans.push_back(it->second);
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs)

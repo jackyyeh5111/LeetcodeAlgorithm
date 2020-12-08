@@ -1,3 +1,36 @@
+/***** Second Visit *****/
+/*
+    brute force:
+    check each steps with at most n nums.
+    T:O(n^2)/S:O(1)
+    -----
+    Array:
+    1. 2 ptr
+    2. binary search
+    3. could. sort help? no.
+    4. moving window
+    5. DP/greedy/divide&conquer
+    -----
+    Use a ptr to record max position we can reach so far, and another running ptr to traverse.
+    if running ptr is larger than max pos, return false ;
+    else if max position larger than array size, return true;
+    T:1 pass O(n)/S:O(1)
+*/
+class Solution {
+public:
+    bool canJump(vector<int>& nums)
+    {
+        int i=0,n=nums.size();
+        for (int k=0; k<n; ++k) {
+            if(k>i) return false;
+            i=max(i,k+nums[k]);
+            if(i>=n-1) return true;
+        }
+        return i>=n-1; // not going to reach here.
+    }
+};
+
+/***** First Visit *****/
 /******************** Greedy **************************/
 class Solution {
 public:

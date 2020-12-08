@@ -1,5 +1,44 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    vector<vector<string>> ans;
+    vector<vector<string>> solveNQueens(int n)
+    {
+        vector<string> board(n,string(n,'.'));
+        help(board,0,0,n);
+        return ans;
+    }
+
+    void help(vector<string> &board, int i, int j, int n)
+    {
+        // cout<<i<<","<<j<<endl;
+        // for (auto s:board) cout<<s<<endl;
+        // cout<<"---"<<endl;
+        if (i>=n) return;
+        else if (j>=n) {ans.push_back(board); return;}
+        if (feasible(board,i,j,n)) {
+            board[i][j]='Q';
+            help(board,0,j+1,n);
+            board[i][j]='.';
+        }
+        help(board,i+1,j,n);
+    }
+
+    bool feasible(vector<string> &board, int i, int j, int n)
+    {
+        for (int k=0; k<n; ++k) {
+            if (board[k][j]=='Q'||board[i][k]=='Q') return false;
+        }
+        for (int k=j; k>=0; --k) {
+            if (i-j+k>=0&&board[i-j+k][k]=='Q') return false;
+            if (i+j-k<n&&board[i+j-k][k]=='Q') return false;
+        }
+        return true;
+    }
+};
+
+/***** First Visit *****/
 /************* Recursive Arrproach *************/
-/***********************************************/
 class Solution {
 public:
     std::vector<std::vector<std::string> > solveNQueens(int n) {

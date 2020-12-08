@@ -1,3 +1,28 @@
+/***** Second Visit *****/
+/*
+    use a hashmap with k:num, v:frequency
+    find the one with v >n/2
+    T:O(n)/S:O(n)
+    -----
+    MAJORITY VOTE
+    Iterate over each num and find the possible major num so far.
+    T: 1 pass O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int majorityElement(vector<int>& nums)
+    {
+        int c=0,cur=0,n=nums.size();
+        for (int i=0; i<n; ++i) {
+            if (c==0) {c=1; cur=nums[i];}
+            else if (cur==nums[i]) c++;
+            else c--;
+        }
+        return cur;
+    }
+};
+
+/***** First Visit *****/
 /******************* Boyer-Moore Voting Algorithm(DP) *******************/
 class Solution {
 public:

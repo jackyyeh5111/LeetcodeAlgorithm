@@ -1,3 +1,33 @@
+/***** Second Visit *****/
+/*
+    sort than handle each distinct value.
+    T:O(nlogn + 2^n) / S:O(2^n)
+*/
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums)
+    {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ans{{}};
+        int i=0, n=nums.size();
+        while (i<n) {
+            int c=1;
+            while(i<n-1&&nums[i+1]==nums[i]) {++i; ++c;}
+            int t=ans.size();
+            for (int k=0; k<t; ++k) {
+                vector<int> tmp=ans[k];
+                for (int u=0; u<c; ++u) {
+                    tmp.push_back(nums[i]);
+                    ans.push_back(tmp);
+                }
+            }
+            ++i;
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {

@@ -1,3 +1,27 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    typedef unsigned long long ull;
+    int widthOfBinaryTree(TreeNode* root)
+    {
+        if (!root) return 0;
+        unordered_map<int,ull> m; // depth, min
+        int ans=0;
+        help(root,1,0,m,ans);
+        return max(1,ans);
+    }
+
+    void help(TreeNode *root, ull idx, int depth, unordered_map<int,ull> &m, int &ans)
+    {
+        if (!root) return;
+        if (m.count(depth)==0) m[depth]=idx;
+        else ans=max(ans,(int)(idx-m[depth]+1));
+        help(root->left,idx*2,depth+1,m,ans);
+        help(root->right,idx*2+1,depth+1,m,ans);
+    }
+};
+
+/***** First Visit *****/
 /*
     Use level order traversal with index recording.
     However, this time we find the first node in each level, and consider it as

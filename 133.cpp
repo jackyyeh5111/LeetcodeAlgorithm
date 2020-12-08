@@ -21,7 +21,25 @@ public:
     }
 };
 */
+/***** Second Visit *****/
+/*
+    dfs -> preorder traversal
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    unordered_map<Node*,Node*> m;
+    Node* cloneGraph(Node* node) {
+        if (!node) return 0;
+        else if (m.count(node)!=0) return m[node];
+        Node *new_node=new Node(node->val);
+        m[node]=new_node;
+        for (Node *v:node->neighbors) new_node->neighbors.push_back(cloneGraph(v));
+        return new_node;
+    }
+};
 
+/***** First Visit *****/
 //BFS
 class Solution {
 public:

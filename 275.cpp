@@ -1,4 +1,31 @@
-/******* Second Visit *******/
+/***** Third Visit *****/
+/*
+    [0,1,3,5,6]
+     0 1 2 3 4
+     5 4 3 2 1
+     -----
+     [0,0,0]
+      0 1 2
+      3 2 1
+     -----
+     T:O(logn)/S:O(1)
+*/
+class Solution {
+public:
+    int hIndex(vector<int>& citations)
+    {
+        int n=citations.size(), l=0, r=n-1;
+        while (l<=r) {
+            int mid=(l+r)/2;
+            if (citations[mid]==n-mid) return n-mid;
+            else if (citations[mid]>n-mid) r=mid-1;
+            else l=mid+1;
+        }
+        return n-l;
+    }
+};
+
+/***** Second Visit *****/
 /*
     Sorted order
     0 1 3 5 6
@@ -25,7 +52,7 @@ public:
     }
 };
 
-/******* First Visit *******/
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(logn)

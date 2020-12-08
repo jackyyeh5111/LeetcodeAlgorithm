@@ -1,3 +1,117 @@
+/***** Second Visit *****/
+/*
+    Array:
+    1. 2 ptr solution
+    2. moving window
+    3. could sorting help?
+    -----
+    graham's alg
+    0 1 2 3 2 2 1
+    find concav:
+        a >=b&& c>=b
+    T:2 pass O(n)/S:O(n)
+    -----
+    2 stack approach
+    top-down & bottom up
+    if height[i] < cur_max, push to stack
+    else iteratively pop ou and add cur_max-pop(), then update cur_max.
+    T:2 pass O(n)/S:O(n)
+    -----
+*/
+// 2 stack approach
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int ans=0, cur_max=0,n=height.size();
+        stack<int> s1,s2;
+        for (int h:height) {
+            if (h<cur_max) s1.push(h);
+            else {
+                while(!s1.empty()) {
+                    ans+=cur_max-s1.top();
+                    s1.pop();
+                }
+                cur_max=h;
+            }
+        }
+        if (s1.size()==0) return ans;
+        cur_max=0;
+        for (int i=n-1; i>=n-(int)s1.size()-1; --i) {
+            if (height[i]<cur_max) s2.push(height[i]);
+            else {
+                while(!s2.empty()) {
+                    ans+=cur_max-s2.top();
+                    s2.pop();
+                }
+                cur_max=height[i];
+            }
+        }
+        return ans;
+    }
+};
+
+// graham's alg
+/*
+    Array:
+    1. 2 ptr solution
+    2. moving window
+    3. could sorting help?
+    -----
+    graham's alg
+    0 1 2 3 2 2 1
+    find concav:
+        a >=b&& c>=b
+    T:2 pass O(n)/S:O(n)
+    -----
+    2 stack approach
+    top-down & bottom up
+    if height[i] < cur_max, push to stack
+    else iteratively pop ou and add cur_max-pop(), then update cur_max.
+    T:2 pass O(n)/S:O(n)
+    -----
+*/
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int n=height.size(), i=2;
+        if (n<=2) return 0;
+        stack<int> s;
+        s.push(0); s.push(1);
+        while(i<n) {
+            int b=s.top(); s.pop();
+            int a=s.top(); s.pop();
+            while(s.size()>=1&&!isConvex(height[a],height[b],height[i]))  {
+                swap(a,b);
+                a=s.top(); s.pop();
+            }
+            s.push(a);
+            if (isConvex(height[a],height[b],height[i])) s.push(b);
+            s.push(i++);
+        }
+        int sum=0;
+        while(s.size()>=2) {
+            int b=s.top(); s.pop();
+            int a=s.top();
+            int tmp=min(height[a],height[b]);
+            a++;
+            while(a<b) {
+                sum+=max(tmp-height[a++],0);
+            }
+        }
+        return sum;
+    }
+
+    bool isConvex(int a, int b, int c)
+    {
+        if (b<=a&&b<=c) return false;
+        else return true;
+    }
+};
+
+
+/***** First Visit *****/
 // My soluction: Reduce to convex hull problem and use Graham's Scan Algorithm.
 class Solution {
 public:

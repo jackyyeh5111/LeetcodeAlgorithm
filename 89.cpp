@@ -1,4 +1,27 @@
-/************************ revisit ************************/
+/***** Second Visit *****/
+/*
+    0 0000
+    1 0001 n^(n>>1)
+    2 0011
+    3 0010
+    4 0110
+    5 0111
+    ...
+
+*/
+class Solution {
+public:
+    vector<int> grayCode(int n)
+    {
+        vector<int> ans(1,0);
+        int t=1<<n;
+        for (int i=1; i<t; ++i)
+            ans.push_back(i^(i>>1));
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     vector<int> grayCode(int n)

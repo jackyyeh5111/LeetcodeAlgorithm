@@ -1,16 +1,39 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Third Visit *****/
+/*
+    Same problem as 102.
+    Use iterative queue traversal and reverse odd level (start from 0).
+    T:2 pass O(n)/S:O(n)
+    -----
+    preorder Traversal
+    for level k, we have m nodes, than it cost O(m^2) inserting into the begin.
+    T:O(n^2)/S:O(n) but actual cost is slightly higher than queue approach.
+*/
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root)
+    {
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        if (root) q.push(root);
+        bool is_odd=false;
+        while(!q.empty()) {
+            int k=q.size();
+            vector<int> v;
+            for (int i=0; i<k; ++i) {
+                TreeNode *node=q.front(); q.pop();
+                v.push_back(node->val);
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+            if (is_odd) reverse(v.begin(),v.end());
+            ans.push_back(v);
+            is_odd = !is_odd;
+        }
+        return ans;
+    }
+};
 
-/****************** Second Visit *********************/
+/***** Second Visit *****/
 class Solution {
 public:
     vector<vector<int>> ans;
@@ -33,7 +56,7 @@ public:
         if (root->right) help(root->right, level+1);
     }
 };
-/****************** First Visit *********************/
+/***** First Visit *****/
 /****************** level order traversal via queue *********************/
 class Solution {
 public:

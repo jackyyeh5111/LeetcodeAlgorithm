@@ -1,14 +1,36 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root)
+    {
+        map<int,map<int,vector<int>>> m;
+        help(root, m, 0, 0);
+        vector<vector<int>> ans;
+        for(auto xit=m.begin(); xit!=m.end(); ++xit) {
+            ans.push_back(vector<int>{});
+            auto ymap=xit->second;
+            for (auto yit=ymap.begin(); yit!=ymap.end(); ++yit) {
+                vector<int> tmp=yit->second;
+                sort(tmp.begin(),tmp.end());
+                for (int val:tmp)
+                    ans.back().push_back(val);
+            }
+        }
+        return ans;
+    }
+
+    void help(TreeNode *root, map<int,map<int,vector<int>>> &m, int x, int y)
+     {
+         if (!root) return;
+         if (m.count(x)==0||m[x].count(y)==0)
+             m[x][y]=vector<int>{};
+         m[x][y].push_back(root->val);
+         help(root->left, m, x-1, y+1);
+         help(root->right, m, x+1, y+1);
+     }
+};
+
+/***** First Visit *****/
 /*
     traverse the tree with preorder, which guarentee that vertical order in same X.
     T:O(n)/S:O(n)

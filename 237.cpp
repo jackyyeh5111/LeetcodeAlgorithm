@@ -1,12 +1,22 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
-/******** Second Visit ********/
+/***** Third Visit *****/
+class Solution {
+public:
+    void deleteNode(ListNode* node)
+    {
+        *node=*(node->next);
+    }
+};
+
+class Solution {
+public:
+    void deleteNode(ListNode* node)
+    {
+        node->val=node->next->val;
+        node->next=node->next->next;
+    }
+};
+
+/***** Second Visit *****/
 /*
     Given only the access of the node which means we can't access its
     parent. Thus iterate to the end and modify the value.
@@ -45,7 +55,8 @@ public:
         *node=*(node->next);
     }
 };
-/******** First Visit ********/
+
+/***** First Visit *****/
 class Solution {
 public:
     void deleteNode(ListNode* node) {

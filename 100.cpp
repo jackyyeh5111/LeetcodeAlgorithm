@@ -10,7 +10,18 @@
  * };
  */
 
-/********************* Second Visit *********************/
+/***** Third Visit *****/
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q)
+    {
+        if (!p&&!q) return true;
+        else if (!p||!q) return false;
+        else return p->val==q->val&&isSameTree(p->left,q->left)&&isSameTree(p->right,q->right);
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q)
@@ -22,7 +33,7 @@ public:
     }
 };
 
-/********************* First Visit *********************/
+/***** First Visit *****/
 class Solution {
 public:
     bool isSameTree(TreeNode* p, TreeNode* q)

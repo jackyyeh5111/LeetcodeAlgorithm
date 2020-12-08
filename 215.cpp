@@ -1,3 +1,51 @@
+/***** Second Visit *****/
+/*
+    T(n)=T(n/2)+O(n) => O(n) in best case.
+    T(n)=T(n-1)+O(n)=> O(n^2) in worst case.
+    -----
+    heap sort
+    T:O(n) => best case
+    T:O(nlogn) => worst case
+*/
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        int pivot=nums[0];
+        int l=0, r=nums.size()-1, n=nums.size();
+        while (l<=r) {
+            while(l<=r&&nums[l]<=pivot) l++;
+            while(l<=r&&nums[r]>pivot) r--;
+            if (l<=r) swap(nums[l++],nums[r--]);
+        }
+        swap(nums[r],nums[0]);
+        if (n-k==r) return nums[r];
+        else if (n-k>r) {
+            vector<int> tmp(nums.begin()+r+1,nums.end());
+            return findKthLargest(tmp,k);
+        }
+        else {
+            vector<int> tmp(nums.begin(),nums.begin()+r);
+            return findKthLargest(tmp,k-n+r);
+        }
+    }
+};
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        priority_queue<int> q;
+        int n=nums.size();
+        for (int num:nums) {
+            q.push(num);
+            if (q.size()>n-k+1) q.pop();
+        }
+        return q.top();
+    }
+};
+
+/***** First Visit *****/
 /************** heap sort **************/
 /*
     T:O(n) for heap build up

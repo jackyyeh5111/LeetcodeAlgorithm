@@ -1,3 +1,17 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums)
+    {
+        int n=nums.size(), i=0, j=0;
+        for (int i=0; i<n; ++i) {
+            if (nums[i]!=0)
+                swap(nums[i],nums[j++]);
+        }
+    }
+};
+
+/***** First Visit *****/
 /*
     0  1  0  3  12
     ^  ^

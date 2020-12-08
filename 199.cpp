@@ -1,4 +1,28 @@
-/******************** Second Visit ********************/
+/***** Third Visit *****/
+/*
+    use inorder or preorder traversal, which traverse right node in the last order.
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root)
+    {
+        vector<int> ans;
+        help(root,0,ans);
+        return ans;
+    }
+
+    void help(TreeNode *root, int depth, vector<int> &ans)
+    {
+        if (!root) return;
+        if (ans.size()==depth) ans.push_back(root->val);
+        else ans[depth]=root->val;
+        help(root->left,depth+1,ans);
+        help(root->right,depth+1,ans);
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root)
@@ -23,7 +47,7 @@ public:
     }
 };
 
-/******************** First Visit ********************/
+/***** First Visit *****/
 /************************* NRL traversal *************************/
 class Solution {
 public:

@@ -1,4 +1,38 @@
-/***************** Second Visit *****************/
+/***** Third Visit *****/
+/*
+    the sky is   blue
+    eulb   si yks eht
+    ^
+    blue   si yks eht
+         ^
+    blue is   yks eht
+            ^
+    blue is sky   eht
+                ^
+    blue is sky the
+                    ^
+    -----
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    string reverseWords(string s)
+    {
+        int i=0,j=0,n=s.length();
+        if (n<=1) return s;
+        reverse(s.begin(),s.end());
+        while (i<n) {
+            while (i<n&&s[i]==' ') i++;
+            int k=0;
+            while (i<n&&s[i]!=' ') {i++;k++;}
+            reverse(s.begin()+j,s.begin()+i);
+            j+=k+1;
+        }
+        return s.substr(0,s[j-2]==' '?j-2:j-1);
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     string reverseWords(string s)
@@ -26,7 +60,7 @@ public:
         return s;
     }
 };
-/***************** First Visit *****************/
+/***** First Visit *****/
 /***************** In-place *****************/
 /*
     reverse the string, then reverse each word

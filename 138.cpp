@@ -13,6 +13,55 @@ public:
     }
 };
 */
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+/***** Second Visit *****/
+class Solution {
+public:
+    Node* copyRandomList(Node* head)
+    {
+        Node *tail=head;
+        while (tail) {
+            Node *copy=new Node(tail->val);
+            Node *next=tail->next;
+            copy->next=next;
+            tail->next=copy;
+            tail=copy->next;
+        }
+        tail=head;
+        while (tail) {
+            if (tail->random)
+                tail->next->random=tail->random->next;
+            tail=tail->next->next;
+        }
+        Node *header=new Node(0), *tailer=header;
+        tail=head;
+        while (tail) {
+            Node *next=tail->next->next;
+            tailer->next=tail->next;
+            tail->next=next;
+            tail=next;
+            tailer=tailer->next;
+        }
+        return header->next;
+    }
+};
+
+/***** First Visit *****/
 /******* 1 pass without hash *******/
 /*
     T:O(n), S:O(1)

@@ -1,4 +1,46 @@
-/**************** revisit **********************/
+/***** Third Visit *****/
+/*
+    1234
+    1243
+    1324
+    1342
+    1423
+    1432
+    2134
+    2143
+    2314 <-
+    2341
+    2413
+    2431
+    3!
+     2!
+      1!
+    -----
+    As the example above, we know how many permutations there are when we fix digit in position i.
+    Then we can calculate the index we are interesting in.
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    string getPermutation(int n, int k)
+    {
+        k--;
+        vector<int> facts(n,1);
+        for(int i=1; i<=n-1; ++i) facts[i]=facts[i-1]*i;
+        vector<int> digits(n,0);
+        for (int i=0; i<n; ++i) digits[i]=i+1;
+        string ans="";
+        for (int i=0; i<n; ++i) {
+            // cout<<digits.size()<<","<<k<<","<<k/facts[n-i-1]<<endl;
+            ans+=(digits[k/facts[n-i-1]]+'0');
+            digits.erase(digits.begin()+k/facts[n-i-1]);
+            k%=facts[n-i-1];
+        }
+        return ans;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     string getPermutation(int n, int k)
@@ -36,7 +78,7 @@ public:
     }
 };
 
-/**************** first visit ******************/
+/***** First Visit *****/
 class Solution {
 public:
     string getPermutation(int n, int k)

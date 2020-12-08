@@ -1,4 +1,31 @@
-/************************ First Visit ************************/
+/***** Third Visit *****/
+/*
+    First question: do we have leading zero?
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    string addBinary(string a, string b)
+    {
+        int l1=a.length()-1,l2=b.length()-1;
+        if(l1>l2) {swap(a,b); swap(l1,l2);}
+        int c=0;
+        while(l1>=0&&l2>=0) {
+            if (a[l1]=='1'&&b[l2]=='1') {b[l2]='0'+c;c=1;}
+            else if (a[l1]=='1'||b[l2]=='1') b[l2]=c?'0':'1';
+            else {b[l2]=c+'0'; c=0;}
+            l1--; l2--;
+        }
+        while((l2>=0)&&c) {
+            if(b[l2]=='1') b[l2]='0';
+            else {b[l2]='1';c--; }
+            l2--;
+        }
+        return c?'1'+b:b;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     string addBinary(string a, string b)
@@ -29,7 +56,7 @@ public:
     }
 };
 
-/************************ First Visit ************************/
+/***** First Visit *****/
 class Solution {
 public:
     string addBinary(string a, string b)

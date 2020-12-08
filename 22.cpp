@@ -1,3 +1,38 @@
+/***** Second Visit *****/
+/*
+    catalan number: 1/(n+1) C^2n_n
+    B0
+    B1 ()
+    B2 ()() (())
+    B3 B1B2 B2B1
+    T:O(3^n)/S:O(catalab number)
+    refers: https://stackoverflow.com/questions/27371612/catalan-numbers-recursive-function-time-complexity
+    ...
+*/
+class Solution {
+public:
+    vector<string> generateParenthesis(int n)
+    {
+        static vector<vector<string>> table(2);
+        table[0]=vector<string>{""};
+        table[1]=vector<string>{"()"};
+        if (n<=1) return table[n];
+        for (int i=2; i<=n; ++i) {
+            if (i<table.size()) continue;
+            else if (i==table.size()) table.push_back(vector<string>{});
+            for (int j=0; j<i; ++j) {
+                for (auto l:table[j]) {
+                    for (auto r:table[i-1-j]) {
+                        table[i].push_back("("+l+")"+r);
+                    }
+                }
+            }
+        }
+        return table[n];
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     vector<string> generateParenthesis(int n)

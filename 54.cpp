@@ -1,3 +1,42 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return vector<int>{};
+        return help(matrix,0,matrix.size(),0,matrix[0].size());
+    }
+
+    vector<int> help(vector<vector<int>>& matrix, int row, int rows, int col, int cols)
+    {
+        // cout<<rows<<","<<cols<<endl;
+        vector<int> ret;
+        if (rows<=0||cols<=0) return ret;
+        if (rows==1) {
+            for (int i=0; i<cols; ++i)
+                ret.push_back(matrix[row][col+i]);
+            return ret;
+        }
+        if (cols==1) {
+            for (int i=0; i<rows; ++i)
+                ret.push_back(matrix[row+i][col]);
+            return ret;
+        }
+        vector<int> internal=help(matrix,row+1,rows-2,col+1, cols-2);
+        for (int i=0; i<cols; ++i)
+            ret.push_back(matrix[row][col+i]);
+        for (int i=1; i<rows; ++i)
+            ret.push_back(matrix[row+i][col+cols-1]);
+        for (int i=1; i<cols; ++i)
+            ret.push_back(matrix[row+rows-1][col+cols-1-i]);
+        for (int i=1; i<rows-1; ++i)
+            ret.push_back(matrix[row+rows-1-i][col]);
+        ret.insert(ret.end(),internal.begin(),internal.end());
+        return ret;
+    }
+};
+
+/***** First Visit *****/
 /****************** Recursive ***************/
 class Solution {
 public:

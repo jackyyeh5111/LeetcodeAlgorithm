@@ -1,16 +1,29 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root)
+    {
+        stack<pair<TreeNode*,bool>> s;
+        vector<int> ans;
+        if (root) s.push(make_pair(root,false));
+        while (!s.empty()) {
+            auto p=s.top(); s.pop();
+            if (p.second) ans.push_back(p.first->val);
+            else {
+                p.second=true;
+                s.push(p);
+                if (p.first->right)
+                    s.push(make_pair(p.first->right,false));
+                if (p.first->left)
+                    s.push(make_pair(p.first->left,false));
+            }
+        }
+        return ans;
+    }
+};
 
- /************** Use bool flag **************/
+/***** First Visit *****/
+/************** Use bool flag **************/
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root)

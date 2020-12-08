@@ -1,3 +1,32 @@
+/***** Second Visit *****/
+/*
+    dp approach
+    buy1, profit1, buy2, profit2
+    -----
+    buy1: the cost to buy 1 stock
+    profit1: the profit when we sell the stock after buying 1.
+    buy2: the cost to buy 1 stock AFTER profit 1.
+    profit2: the profit when we sell the stock after buy 1/sell 1/buy 2.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int maxProfit(vector<int>& prices)
+    {
+        int n=prices.size(), ans=0;
+        if (n<=1) return ans;
+        int buy1=INT_MAX, sell1=0, buy2=INT_MAX, sell2=0;
+        for (int price:prices) {
+            sell2=max(sell2,price-buy2);
+            buy2=min(buy2,price-sell1);
+            sell1=max(sell1,price-buy1);
+            buy1=min(buy1,price);
+        }
+        return sell2;
+    }
+};
+
+/***** First Visit *****/
 /*
     Refer to https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/discuss/135704/Detail-explanation-of-DP-solution
 
@@ -24,7 +53,6 @@ public:
     There we go, you got the idea how we calculate twoBuy!! We just minimize
     the cost again!! The twoBuyTwoSell is just making as much profit as
     possible.
-    Hope this explanation helps other people to understand this!
     */
     int maxProfit(vector<int>& prices)
     {

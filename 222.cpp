@@ -1,26 +1,26 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
- /**
-  * Definition for a binary tree node.
-  * struct TreeNode {
-  *     int val;
-  *     TreeNode *left;
-  *     TreeNode *right;
-  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
-  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-  * };
-  */
-/******************* Second Visit *******************/
+/***** Third Visit *****/
+/*
+    T(n)=T(n/2)+O(logn)
+        =O((logn)^2)
+    S(n)=O(logn)
+*/
+class Solution {
+public:
+    int countNodes(TreeNode* root)
+    {
+        if (!root) return 0;
+        int lh=0,rh=0;
+        TreeNode *left=root->left;
+        while(left) {left=left->left; lh++;}
+        TreeNode *right=root->right;
+        while(right) {right=right->left; rh++;}
+        if (lh>rh) return countNodes(root->left)+(1<<rh);
+        else return countNodes(root->right)+(1<<lh);
+
+    }
+};
+
+/***** Second Visit *****/
 /* early stop, T:O(n/2), S:O(n) */
  class Solution {
  public:
@@ -51,7 +51,7 @@
      }
  };
 
-/******************* First Visit *******************/
+/***** First Visit *****/
 class Solution {
 public:
     int countNodes(TreeNode* root)

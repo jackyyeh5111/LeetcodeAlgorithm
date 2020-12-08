@@ -1,13 +1,41 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+/***** Second Visit *****/
+/*
+    2 pass O(n)
+    Inverse the LL from header node until mid one.
+    T:O(n)/S:O(1) 2 pass
+    [1,2,2,1]
+    [1,2,3,4,5]
+         ^   ^
+       ^ ^
+*/
+class Solution {
+public:
+    bool isPalindrome(ListNode* head)
+    {
+        ListNode *cur=head, *prev=0, *slow=head, *fast=head;
+        while (fast&&fast->next) {
+            ListNode *slow_next=slow->next;
+            ListNode *fast_next=fast->next->next;
+
+            ListNode *next=cur->next;
+            cur->next=prev;
+            prev=cur; cur=next;
+
+            slow=slow_next;
+            fast=fast_next;
+        }
+        // compare slow with prev;
+        if (fast) slow=slow->next;
+        while(slow&&prev) {
+            if (slow->val!=prev->val) return false;
+            slow=slow->next;
+            prev=prev->next;
+        }
+        return !slow&&!prev;
+    }
+};
+
+/***** First Visit *****/
 /*
     Use a hashmap to record val/index with 2 ptr for mid finding.
     T:O(n) one pass / S:O(n)

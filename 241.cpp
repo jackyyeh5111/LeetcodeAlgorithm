@@ -1,3 +1,41 @@
+/***** Second Visit *****/
+/*
+    Divide & Conquer
+    [ sub1 ] op [ sub2 ]
+*/
+class Solution {
+public:
+    unordered_map<string,vector<int>> cache;
+    vector<int> diffWaysToCompute(string input)
+    {
+        if (cache.count(input)!=0) return cache[input];
+        int n=input.length();
+        vector<int> ans;
+        for (int i=0; i<n; ++i) {
+            if (!isdigit(input[i])) {
+                auto left=diffWaysToCompute(input.substr(0,i));
+                auto right=diffWaysToCompute(input.substr(i+1));
+                for (int l:left) {
+                    for (int r:right) {
+                        ans.push_back(calc(l,r,input[i]));
+                    }
+                }
+            }
+        }
+        if (ans.size()==0) ans.push_back(stoi(input));
+        cache[input]=ans;
+        return ans;
+    }
+
+    int calc (int a, int b, char op)
+    {
+        if (op=='+') return a+b;
+        else if (op=='-') return a-b;
+        else return a*b;
+    }
+};
+
+/***** First Visit *****/
 /*
     2*3-4*5
     10

@@ -1,3 +1,30 @@
+/***** Second Visit *****/
+/*
+    unordered map comparison
+    T:O(nk)/S:O(mk)
+*/
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words)
+    {
+        vector<int> ans;
+        unordered_map<string,int> table;
+        for (auto word:words) table[word]++;
+        int n=s.length(),m=words.size(),k=words[0].length();
+        for (int i=0; i<n-m*k+1; ++i) {
+            string sub=s.substr(i,m*k);
+            unordered_map<string,int> seen;
+            for (int j=0; j<m; ++j) {
+                string subword=sub.substr(j*k,k);
+                seen[subword]++;
+            }
+            if (seen==table) ans.push_back(i);
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(M*N*k), S:O(N)

@@ -1,4 +1,51 @@
-/******************** First Visit ********************/
+/***** Third Visit *****/
+/*
+    Find Topological Order
+    -----
+    Inverse of postDFS. is one of topological order.
+    1. Apply postDFS on G and find its order
+    2. reverse postDFS order
+    T:O(V+E)/S:O(V+E)
+    -----
+    Iteratively output 0-degree node, which is one. of topological sort
+    T:O(V^2)/S:O(V+E)
+    -----
+*/
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        vector<vector<int>> G(numCourses,vector<int>{});
+        vector<int> visited(numCourses,0);
+        vector<int> ans;
+        for (auto p:prerequisites) {
+            G[p[1]].push_back(p[0]);
+        }
+        for (int i=0; i<numCourses; ++i) {
+            if (postDFS(G, visited, i, ans))
+                return vector<int>{};
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+
+    // true if cuclic.
+    bool postDFS(vector<vector<int>> &Gi, vector<int> &visited, int u, vector<int> &ret)
+    {
+        if (visited[u]==1) return true;
+        else if (visited[u]==2) return false;
+        visited[u]=1;
+        bool cyclic=false;
+        for (int v:Gi[u]) {
+            cyclic|=postDFS(Gi, visited, v, ret);
+        }
+        visited[u]=2;
+        ret.push_back(u);
+        return cyclic;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     vector<vector<int>> graph;
@@ -37,7 +84,7 @@ public:
     }
 };
 
-/******************** First Visit ********************/
+/***** First Visit *****/
 /******************** detect cyclic + reverse postDFS ********************/
 // T:O(V+E), S:O(V+E)
 class Solution {

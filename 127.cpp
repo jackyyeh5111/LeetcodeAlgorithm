@@ -1,3 +1,51 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    unordered_map<string,vector<string>> graph;
+    unordered_map<string,bool> visited;
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+    {
+        unordered_set<string> words(wordList.begin(),wordList.end());
+        if(words.count(endWord)==0) return 0;
+        words.insert(beginWord);
+        words.insert(endWord);
+        for (string word:words) {
+            visited[word]=false;
+            graph[word]=vector<string>{};
+            for (int j=0; j<word.length(); ++j) {
+                for (int i=0; i<26; ++i) {
+                    if (word[j]==i+'a') continue;
+                    string new_word=word;
+                    new_word[j]='a'+i;
+                    if (words.count(new_word)!=0)
+                        graph[word].push_back(new_word);
+                }
+            }
+        }
+
+        int ans=1;
+        queue<string> q;
+        q.push(beginWord);
+        visited[beginWord]=true;
+        bool found=false;
+        while (!q.empty()&&!found) {
+            int k=q.size();
+            for (int i=0; i<k; ++i) {
+                string u=q.front(); q.pop();
+                for (string v:graph[u]) {
+                    if (visited[v]) continue;
+                    if (v==endWord) return ans+1;
+                    q.push(v);
+                    visited[v]=true;
+                }
+            }
+            ans++;
+        }
+        return 0;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList)

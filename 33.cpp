@@ -1,3 +1,39 @@
+/***** Second Visit *****/
+/*
+    3,4,5,6,7,1,2
+    sorted nums[l]<nums[r]
+    else rotated
+    nums[mid]>nums[l] pivot lies in mid~r, left part is sorted!
+    else pivot lies in l~mid, right part is sorted!
+    T:O(logn)/S:O(1)
+*/
+class Solution {
+public:
+    int search(vector<int>& nums, int target)
+    {
+        int n=nums.size();
+        int l=0,r=n;
+        while(l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]==target) return mid;
+            else if (nums[l]<nums[r-1]) {
+                if (nums[mid]<target) l=mid+1;
+                else r=mid;
+            }
+            else if (nums[mid]>nums[l]) {
+                if (target<nums[mid]&&target>=nums[l]) r=mid;
+                else l=mid+1;
+            }
+            else {
+                if (target>nums[mid]&&target<=nums[r-1]) l=mid+1;
+                else r=mid;
+            }
+        }
+        return -1;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int search(vector<int>& nums, int target)

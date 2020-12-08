@@ -1,3 +1,84 @@
+/***** Third VIsit *****/
+/*
+    reduce 1-d to constant space
+    T:O(n)/S:O(1)
+    -----
+    1-d dp solution
+    dp[i]=max(dp[i-1], dp[i-2]+nums[i])
+*/
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int n=nums.size();
+        int prevprev=0, prev=0;
+        for (int i=0; i<n; ++i) {
+            int cur=max(prev,prevprev+nums[i]);
+            prevprev=prev;
+            prev=cur;
+        }
+        return max(prevprev,prev);
+    }
+};
+
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int n=nums.size(), ans=0;
+        if (n==0) return ans;
+        vector<int> dp(n,0);
+        dp[0]=nums[0];
+        ans=nums[0];
+        for (int i=1; i<n; ++i) {
+            if (i==1) dp[i]=max(nums[i],dp[0]);
+            else dp[i]=max(dp[i-1],dp[i-2]+nums[i]);
+            ans=max(ans,dp[i]);
+        }
+        return ans;
+    }
+};
+
+/***** Second Visit *****/
+/*
+    House robbing
+    for each position i, we have profit that
+        dp[i]=max(dp[i-2]+profit[i],dp[i-1]), where dp[i] denots max profit in
+        position i.
+    T:O(n)/S:O(n)
+    -----
+    Then we can reduce 1-D dp solution to constant space complexity.
+    T:O(n)/S:O(1)
+*/
+/* 1-D DP */
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int> dp(n+2,0);
+        for (int i=0; i<n; ++i) {
+            dp[i+2]=max(dp[i+1],dp[i]+nums[i]);
+        }
+        return dp[n+1];
+    }
+};
+
+/* 0-D DP */
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int> dp(n+2,0);
+        for (int i=0; i<n; ++i) {
+            dp[i+2]=max(dp[i+1],dp[i]+nums[i]);
+        }
+        return dp[n+1];
+    }
+};
+
+/***** First Visit *****/
 /****************** T:O(n), S:O(1) DP ******************/
 class Solution {
 public:

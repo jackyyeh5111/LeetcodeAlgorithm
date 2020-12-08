@@ -1,3 +1,24 @@
+/***** Second Visit *****/
+/*
+    Bottom-up
+    T:O(k)/S:O(1)
+    -----
+    "hello world"
+    "hello world  "
+*/
+class Solution {
+public:
+    int lengthOfLastWord(string s)
+    {
+        int n=s.length(), i=n-1;
+        int ans=0;
+        while(i>=0&&s[i]==' ') --i;
+        while(i>=0&&s[i]!=' ') {ans++; --i;}
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int lengthOfLastWord(string s)

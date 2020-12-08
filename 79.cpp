@@ -1,4 +1,69 @@
-/********************* Second Visit *********************/
+/***** Third Visit *****/
+/*
+    backtracking:
+    note that we have board with size at most. 200x200.
+    T:O(mn*k)/S:O(1)
+    -----
+    string finding
+    1. TRIE (V)
+    2. KMP
+    3. Treat it as array.
+    -----
+    We adopt TRIE here.
+    T:O(mn*k)/S:O(k)
+*/
+class Solution {
+
+    class TrieNode {
+    public:
+        TrieNode* children[255];
+        string word;
+        TrieNode()
+        {
+            for (auto &child:children) child=0;
+            word="";
+        }
+    };
+public:
+    bool exist(vector<vector<char>>& board, string word)
+    {
+        // build Trie
+        TrieNode *root=new TrieNode();
+        TrieNode *cur=root;
+        for(char c:word) {
+            if (!cur->children[c+128])
+                cur->children[c+128]=new TrieNode();
+            cur=cur->children[c+128];
+        }
+        cur->word=word;
+
+        // check exist
+        int m=board.size(), n=board[0].size();
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (help(board,i,j,root)) return true;
+            }
+        }
+        return false;
+    }
+
+    bool help(vector<vector<char>>& board, int i, int j, TrieNode *node)
+    {
+        int m=board.size(), n=board[0].size();
+        if (node&&node->word!="") return true;
+        else if (i<0||i>=m||j<0||j>=n||!node) return false;
+        node=node->children[board[i][j]+128];
+        char tmp=board[i][j];
+        board[i][j]='.';
+        if ( help(board,i+1,j,node) ||
+                  help(board,i,j+1,node) ||
+                  help(board,i-1,j,node) ||
+                  help(board,i,j-1,node) ) return true;
+        else { board[i][j]=tmp; return false; }
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
     bool exist(vector<vector<char>>& board, string word)
@@ -34,7 +99,7 @@ public:
     }
 };
 
-/********************* First Visit *********************/
+/***** First Visit *****/
 class Solution {
 public:
     bool exist(vector<vector<char>>& board, string word)

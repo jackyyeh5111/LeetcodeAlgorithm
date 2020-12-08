@@ -1,4 +1,41 @@
+/***** Second Visit *****/
+/*
+    Array:
+    1. First think about 2 ptr solution.
+    Use a running ptr to check the num which is not val, and another ptr to restore
+    non-val num.
+    T:O(n)/S:O(1)
+    -----
+    if we have few duplicated nums, swap the duplicate one to the end
+    instead.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val)
+    {
+        int i=0,n=nums.size();
+        while (i<n) {
+            if (nums[i]==val) nums[i]=nums[--n];
+            else i++;
+        }
+        return n;
+    }
+};
 
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val)
+    {
+        int i=0,n=nums.size();
+        for (int j=0; j<n; ++j) {
+            if (nums[j]!=val) swap(nums[i++],nums[j]);
+        }
+        return i;
+    }
+};
+
+/***** First Visit *****/
 /************** If most entries are duplicated *************/
 /*
 Since this question is asking us to remove all elements of the given value in-place, we have to handle it with O(1)O(1) extra space. How to solve it? We can keep two pointers ii and jj, where ii is the slow-runner while jj is the fast-runner.

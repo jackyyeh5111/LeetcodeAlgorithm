@@ -1,3 +1,29 @@
+/***** Second Visit  *****/
+/*
+    aacecaaa . aaacecaa
+    01000122 0 12234567
+    string -> KMP!
+*/
+class Solution {
+public:
+    string shortestPalindrome(string s)
+    {
+        string inv=s;
+        reverse(inv.begin(),inv.end());
+        string tmp=s+"#"+inv;
+
+        vector<int> failure(tmp.length(),0);
+        for (int i=1; i<tmp.length(); ++i) {
+            int j=failure[i-1];
+            while(j>0&&tmp[j]!=tmp[i]) j=failure[j-1];
+            if (tmp[j]==tmp[i]) failure[i]=j+1;
+        }
+        int l=s.length()-failure.back();
+        return inv.substr(0,l)+s;
+    }
+};
+
+/***** First Visit  *****/
 /**************** KMP ****************/
 class Solution {
 public:

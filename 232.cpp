@@ -1,3 +1,43 @@
+/***** Second Visit *****/ 
+class MyQueue {
+public:
+    /** Initialize your data structure here. */
+    stack<int> s1,s2;
+    MyQueue() {
+
+    }
+
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        s1.push(x);
+    }
+
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        if (s2.empty()) {
+            while (!s1.empty()) {
+                s2.push(s1.top());
+                s1.pop();
+            }
+        }
+        int ret=s2.top(); s2.pop();
+        return ret;
+    }
+
+    /** Get the front element. */
+    int peek() {
+        int ret=pop();
+        s2.push(ret);
+        return ret;
+    }
+
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return s1.empty()&&s2.empty();
+    }
+};
+
+/***** First Visit *****/
 class MyQueue {
 public:
     /** Initialize your data structure here. */

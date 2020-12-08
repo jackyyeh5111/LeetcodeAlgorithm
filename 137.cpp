@@ -1,4 +1,34 @@
-/************************* Second Visit *************************/
+/***** Third Visit *****/
+/*
+    find bit op with 0 -> 1 -> 2 -> 0
+    Note: negative int right shift can never reach 0 but -1.
+    -5 > -4 > -2 > -1 > -1 > ... > -1
+*/
+class Solution {
+public:
+    int singleNumber(vector<int>& nums)
+    {
+        vector<int> bits(32,0);
+        for(int num:nums) {
+            int i=0;
+            while(num!=0&i<32) {
+                // cout<<num<<","<<(num&1)<<"   ";
+                if(num&1) bits[i]=(bits[i]+1)%3;
+                num>>=1;
+                i++;
+            }
+            // cout<<endl;
+        }
+        int ans=0;
+        for(int i=31; i>=0; --i) {
+            ans=ans<<1;
+            ans|=bits[i];
+        }
+        return ans;
+    }
+};
+
+/***** Second Visit *****/
 // general approach
 class Solution {
 public:
@@ -38,7 +68,7 @@ public:
     }
 };
 
-/************************* First Visit *************************/
+/***** First Visit *****/
 /*
 sorting: T:O(nlogn)+O(n) S:O(1)
 ----------------------

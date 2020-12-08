@@ -1,15 +1,54 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Second Visit *****/
+/*
+    level order traversal -> use queue+iteration
+    T:O(n)/S:O(n)
+    -----
+    preorder traversal
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root)
+    {
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        if(root) q.push(root);
+        while (!q.empty()) {
+            int k=q.size();
+            vector<int> v;
+            for (int i=0; i<k; ++i) {
+                TreeNode *node=q.front(); q.pop();
+                v.push_back(node->val);
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+            ans.push_back(v);
+        }
+        return ans;
+    }
+};
 
+class Solution {
+public:
+
+    vector<vector<int>> levelOrder(TreeNode* root)
+    {
+        vector<vector<int>> ans;
+        help(root, 0, ans);
+        return ans;
+    }
+
+    void help(TreeNode *root, int depth, vector<vector<int>> &ans)
+    {
+        if (!root) return;
+        if (depth>=ans.size()) ans.push_back(vector<int>{});
+        ans[depth].push_back(root->val);
+        help(root->left,depth+1,ans);
+        help(root->right,depth+1,ans);
+    }
+};
+
+/***** First Visit *****/
  /*
     While having level order, we just need to ensure one thing:
         The root node is traced before all its child node.

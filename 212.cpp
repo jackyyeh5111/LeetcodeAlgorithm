@@ -1,4 +1,63 @@
-/************* Second Visit ****************/
+/***** Third Visit *****/
+/*
+    TRIE+backtracking
+*/
+class Solution {
+public:
+    struct TrieNode {
+        TrieNode *child[26];
+        string val="";
+        TrieNode ()
+        {
+            for (int i=0; i<26; ++i) child[i]=0;
+            val="";
+        }
+    };
+
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
+    {
+        TrieNode *root=new TrieNode();
+        for (string word:words) {
+            TrieNode *cur=root;
+            for (char c:word) {
+                if (!cur->child[c-'a'])
+                    cur->child[c-'a']=new TrieNode();
+                cur=cur->child[c-'a'];
+            }
+            cur->val=word;
+        }
+
+        vector<string> ans;
+        int m=board.size(), n=board[0].size();
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                dfs(board,ans,root,i,j,m,n);
+            }
+        }
+        return ans;
+    }
+
+    void dfs(vector<vector<char>> &board, vector<string> &ans, TrieNode *root,
+             int i, int j, int m, int n)
+    {
+        if (i<0||i>=m||j<0||j>=n||board[i][j]=='0') return;
+        if (!root->child[board[i][j]-'a']) return;
+        root=root->child[board[i][j]-'a'];
+        if (root->val!="") {
+            ans.push_back(root->val);
+            root->val="";
+        }
+        char tmp=board[i][j];
+        board[i][j]='0';
+        dfs(board,ans,root,i+1,j,m,n);
+        dfs(board,ans,root,i-1,j,m,n);
+        dfs(board,ans,root,i,j+1,m,n);
+        dfs(board,ans,root,i,j-1,m,n);
+        board[i][j]=tmp;
+    }
+};
+
+/***** Second Visit *****/
 class Solution {
 public:
 
@@ -57,7 +116,7 @@ public:
     }
 };
 
-/************* First Visit ****************/
+/***** First Visit *****/
 /************* Recursive TLE ****************/
 /*
     T:O(numWord * 4^wordLength)

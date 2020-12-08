@@ -1,3 +1,51 @@
+/***** Second Visit *****/
+/*
+    the longest possible string has length 255.255.255.255 <-- 12 digits.
+    T(n) =T(n-1)+T(n-2)+T(n-3)
+        <=3T(n-1)=O(3^n)
+    S:O(n)
+    With length constraint n<=12, we can say that time complexity is O(1)
+*/
+class Solution {
+public:
+    vector<string> ans;
+    vector<string> restoreIpAddresses(string s)
+    {
+        int n=s.length();
+        if (n>12) return ans;
+        vector<string> tokens;
+        help(s,n,0,tokens);
+        return ans;
+    }
+
+    void help(string s, int n, int idx, vector<string> &tokens)
+    {
+        if (idx==n&&tokens.size()==4){
+            string ip="";
+            for(auto t:tokens)ip+=t+".";
+            ans.push_back(ip.substr(0,ip.length()-1));
+            return;
+        }
+        else if (idx==n||tokens.size()>=4) return;
+        else {
+            tokens.push_back(s.substr(idx,1));
+            help(s,n,idx+1,tokens);
+            tokens.pop_back();
+            if (stoi(s.substr(idx,2))>=10) {
+                tokens.push_back(s.substr(idx,2));
+                help(s,n,idx+2,tokens);
+                tokens.pop_back();
+            }
+            if (stoi(s.substr(idx,3))>=100&&stoi(s.substr(idx,3))<=255) {
+                tokens.push_back(s.substr(idx,3));
+                help(s,n,idx+3,tokens);
+                tokens.pop_back();
+            }
+        }
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(27), S:O(n), notice that 0 leading illegal IP

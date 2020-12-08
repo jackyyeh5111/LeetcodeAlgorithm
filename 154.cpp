@@ -1,4 +1,34 @@
-/******************** recursive solution ********************/
+/***** Second Visit *****/
+/*
+    2 2 2 0 1
+    1 1 5 5 6
+    3 3 3 1 2
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int findMin(vector<int>& nums)
+    {
+        return binary(nums,0,nums.size()-1);
+    }
+
+    int binary(vector<int>& nums,int l, int r)
+    {
+        while (l<=r) {
+            if (l==r) return nums[l];
+            else if (l==r-1) return min(nums[l],nums[r]);
+            int mid=(l+r)/2;
+            if (nums[l]==nums[r]&&nums[r]==nums[mid])
+                return min(binary(nums,l,mid),binary(nums,mid,r));
+            else if (nums[mid]>=nums[l]&&nums[l]>=nums[r]) l=mid+1;
+            else r=mid;
+        }
+        return -1;
+    }
+};
+
+/***** First Visit *****/
+/***** Recursive *****/
 class Solution {
 public:
     int findMin(vector<int>& nums)
@@ -51,7 +81,7 @@ public:
 [3,3,3,4,5,6,6,1,2]
 */
 
-/******************** iterative solution ********************/
+/***** iterative *****/
 class Solution {
 public:
     int findMin(vector<int>& nums)

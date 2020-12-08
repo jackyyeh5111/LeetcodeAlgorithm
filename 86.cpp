@@ -8,6 +8,26 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+/***** Second Visit *****/
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x)
+    {
+        ListNode *h1=new ListNode(),*h2=new ListNode();
+        ListNode *p=head,*h1p=h1,*h2p=h2;
+        while(p){
+            if (p->val<x) {h1p->next=p; h1p=h1p->next;}
+            else {h2p->next=p; h2p=h2p->next;}
+            p=p->next;
+        }
+        h1p->next=h2->next;
+        h2p->next=0;
+        return h1->next;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     // T:O(n)

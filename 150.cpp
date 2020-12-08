@@ -1,4 +1,52 @@
-/**************** iterative ****************/
+/***** Second Visit *****/
+/*
+    Polish Notation
+    left->right: stack
+    right->left: recursive
+    T:O(n)/S:O(n)
+*/
+// iterative
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens)
+    {
+        stack<int> s;
+        for (auto token:tokens) {
+            if (token!="+"&&token!="-"&&token!="*"&&token!="/") s.push(stoi(token));
+            else {
+                int r=s.top(); s.pop();
+                int l=s.top(); s.pop();
+                if (token=="+") s.push(l+r);
+                else if (token=="-") s.push(l-r);
+                else if (token=="*") s.push(l*r);
+                else if (token=="/") s.push(l/r);
+            }
+        }
+        return s.top();
+    }
+};
+
+// recursive
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens)
+    {
+        string token=tokens.back(); tokens.pop_back();
+        if (token!="+"&&token!="-"&&token!="*"&&token!="/") return stoi(token);
+        else {
+            int r=evalRPN(tokens);
+            int l=evalRPN(tokens);
+            if (token=="+") return l+r;
+            else if (token=="-") return l-r;
+            else if (token=="*") return l*r;
+            else if (token=="/") return l/r;
+            else return -1;
+        }
+    }
+};
+
+/***** First Visit *****/
+// iterative
 class Solution {
 public:
     int evalRPN(vector<string>& tokens)
@@ -41,7 +89,7 @@ public:
     // }
 };
 
-/**************** recursive ****************/
+// recursive
 class Solution {
 public:
     int evalRPN(vector<string>& tokens)

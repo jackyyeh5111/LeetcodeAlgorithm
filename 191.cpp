@@ -1,3 +1,23 @@
+/***** Second Visit *****/
+/*
+    0010101101000
+    0010101100111
+    T:O(logn)/S:O(1) -> at most 32 bits,  T:O(1)/S:O(1)
+*/
+class Solution {
+public:
+    int hammingWeight(uint32_t n)
+    {
+        int ans=0;
+        while(n) {
+            n&=n-1;
+            ans++;
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int hammingWeight(uint32_t n)

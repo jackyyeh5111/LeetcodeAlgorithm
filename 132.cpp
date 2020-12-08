@@ -1,3 +1,32 @@
+/***** Second Visit *****/
+/*
+    FAIL, no concept.
+    backtracking will cause TLE. Use dp instead.
+    Use the concept as problem 131. Compare head/tail and see if palindrom, which starts from the mid position.
+    dp[i] denotes the min cut needed from 0 to i.
+    dp[i]=min(dp[i],dp[i-j]+1,dp[i-j-1]+1)
+    We should treat odd length/even length as 2 separate item to check.
+    T:O(n^2)/S:O(n)
+*/
+class Solution {
+public:
+    int minCut(string s)
+    {
+        int n=s.length();
+        if (n<=1) return 0;
+        vector<int> dp(n+1,0);
+        for (int i=0; i<=n; ++i) dp[i]=i-1;
+        for (int i=1; i<n; ++i) {
+            for (int j=0; i-j>=0&&i+j<n&&s[i-j]==s[i+j]; j++)
+                dp[i+j+1]=min(dp[i+j+1],dp[i-j]+1);
+            for (int j=0; i-j>=1&&i+j<n&&s[i-j-1]==s[i+j]; ++j)
+                dp[i+j+1]=min(dp[i+j+1],dp[i-j-1]+1);
+        }
+        return dp[n];
+    }
+};
+
+/***** First Visit *****/
 /********************** Manancher-like solution **********************/
 /*
     Only check those sub-strings centered at s[i], once a non-palindrome string

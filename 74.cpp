@@ -1,9 +1,70 @@
-Use binary search.
+/***** Third Visit *****/
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return false;
+        int rows=matrix.size(), cols=matrix[0].size();
+        int i=rows-1,j=0;
+        while(i>=0&&j<cols) {
+            if (matrix[i][j]==target) return true;
+            if (matrix[i][j]>target) i--;
+            else j++;
+        }
+        return false;
+    }
+};
 
-n * m matrix convert to an array => matrix[x][y] => a[x * m + y]
+/***** Second Visit *****/
+/*
+    Since the matrix is sorted in respect to each row/col.
+    We can start with left bottom position.
+    if larger, than increase j; else decrease i.
+    T:O(m+n)/S:O(1)
+    -----
+    Treat it as 1-d array and use binary search instead.
+    T:O(logmn)/S:O(1)
+*/
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return false;
+        int m=matrix.size(), n=matrix[0].size();
+        int i=m-1, j=0;
+        while(i>=0&&j<n) {
+            if (matrix[i][j]==target) return true;
+            else if (matrix[i][j]>target) --i;
+            else ++j;
+        }
+        return false;
+    }
+};
 
-an array convert to n * m matrix => a[x] =>matrix[x / m][x % m];
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return false;
+        int m=matrix.size(), n=matrix[0].size();
+        int l=0, r=m*n;
+        while(l<r) {
+            int mid=(l+r)/2;
+            int row=mid/n,col=mid%n;
+            if (matrix[row][col]==target) return true;
+            else if (matrix[row][col]>target) r=mid;
+            else l=mid+1;
+        }
+        return false;
+    }
+};
 
+/***** First Visit *****/
+/*
+    Use binary search.
+    n * m matrix convert to an array => matrix[x][y] => a[x * m + y]
+    an array convert to n * m matrix => a[x] =>matrix[x / m][x % m];
+*/
 class Solution {
 public:
     bool searchMatrix(vector<vector<int> > &matrix, int target) {

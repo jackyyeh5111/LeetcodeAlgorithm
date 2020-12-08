@@ -1,15 +1,42 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+ /***** Second Visit *****/
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root)
+    {
+        vector<int> ans;
+        stack<pair<TreeNode*,bool>> s;
+        if (root) s.push(make_pair(root,false));
+        while (!s.empty()) {
+            auto p=s.top(); s.pop();
+            if (p.second) ans.push_back((p.first)->val);
+            else {
+                if ((p.first)->right) s.push(make_pair((p.first)->right,false));
+                s.push(make_pair((p.first),true));
+                if ((p.first)->left) s.push(make_pair((p.first)->left,false));
+            }
+        }
+        return ans;
+    }
+};
 
+class Solution {
+public:
+    vector<int> ans;
+    vector<int> inorderTraversal(TreeNode* root)
+    {
+        help(root);
+        return ans;
+    }
+    void help(TreeNode *node)
+    {
+        if (!node) return;
+        help(node->left);
+        ans.push_back(node->val);
+        help(node->right);
+    }
+};
+
+ /***** First Visit *****/
  class Solution {
  public:
      // iterative T:O(n), S:O(n)

@@ -1,5 +1,28 @@
-/********************* Second Visit ***********************/
+/***** Thrid Visit *****/
+/*
+    Array -> 2 ptr solution!!
+    We have 2 ptr, say p/q.
+    p for the largest idx of 0.
+    q for the smallest idx of 2.
+    for each num, say idx c
+        case 0: swap(num[c],num[p++])
+        case 1: continue
+        case 2: swap(num[c],num[q--]) then recheck new num[c].
+*/
+class Solution {
+public:
+    void sortColors(vector<int>& nums)
+    {
+        int n=nums.size(), p=0,q=n-1;
+        for (int i=0; i<n; ++i) {
+            if (nums[i]==0) swap(nums[i],nums[p++]);
+            else if (nums[i]==2) swap(nums[i--],nums[q--]);
+            if (i==q) break;
+        }
+    }
+};
 
+/***** Second Visit *****/
 class Solution {
 public:
     void sortColors(vector<int>& nums)
@@ -23,7 +46,7 @@ public:
 001122 2,4
 */
 
-
+/***** First Visit *****/
 class Solution {
 public:
     void sortColors(vector<int>& nums)

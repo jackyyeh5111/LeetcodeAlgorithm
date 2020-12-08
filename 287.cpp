@@ -1,4 +1,57 @@
-/********** Second Visit **********/
+/***** Third Visit *****/
+/*
+    By pegeon-hole theory, there must exist one duplicate num.
+    Constraint:
+        Less than T:O(n^2), S:O(1)
+    -----
+    [1,3,4,2,2] 4 kind of values w. 5 times
+     0 1 2 3 4 <- 4 kind of values can map to index
+    Use bit manipulation could save time to T:O(n)/S:O(1)
+    WRONG ANSWER, we could have multiple times of duplicate num.
+    -----
+    Use a map to record seen values.
+    T:O(n)/S:O(n)
+    -----
+    Use sign bit to record if seen. This will alter the original value.
+    T:O(n)/S:O(1)
+    -----
+    TREAT IT AS LIST, find cyclic & intersection
+    2*(x+k)=x+k+cm
+    x+k=cm
+    x=cm-k <--- means that we can start at the slow/fast meet point.
+    [1,3,4,2,2]
+     0 1 2 3 4
+
+     0->1->3->2->4-
+              ^---|
+    [3,1,3,4,2]
+     0 1 2 3 4
+
+     0->3->4->2-
+        ^------|
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums)
+    {
+        int slow=0,fast=0;
+        bool begin=true;
+        while (begin||nums[slow]!=nums[fast]) {
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+            begin=false;
+        }
+        slow=0;
+        while (nums[slow]!=nums[fast]) {
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return nums[fast];
+    }
+};
+
+/***** Second Visit *****/
 /*
     Use a hashmap and check count
     T:O(n)/S:O(n)
@@ -51,7 +104,7 @@ public:
     }
 };
 
-/********** First Visit **********/
+/***** First Visit *****/
 /*
     Reduce to  Floyd's Tortoise and Hare (Cycle Detection).
     The cycle appears because nums contains duplicates. The duplicate node is a cycle entrance.

@@ -1,3 +1,41 @@
+/***** Second Visit *****/
+/*
+    constraint: T:O(logn)
+    T(n)=2T(n/2)+O(1) -> T:O(n)
+        = T(n/2)+O(1) -> T:O(logn)
+    -> Considering binary search
+    -----
+    1 2 3 4
+    1 2 4 3
+    1 4 2 3
+    4 1 2 3
+    By example, there must be at least one peak
+    -----
+    KEY is to find the local max
+    Conditions:
+     1. array length is 1  -> return the only index
+     2. array length is 2  -> return the bigger number's index
+     3. array length is bigger than 2 ->
+           (1) find mid, compare it with its left and right neighbors
+           (2) return mid if nums[mid] greater than both neighbors
+           (3) take the right half array if nums[mid] smaller than right neighbor
+           (4) otherwise, take the left half
+*/
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums)
+    {
+        int l=0,r=nums.size()-1;
+        while (l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]<nums[mid+1]) l=mid+1;
+            else r=mid;
+        }
+        return l;
+    }
+};
+
+/***** First Visit *****/
 /********************* worst: T:O(logN) *********************/
 class Solution {
 public:
@@ -6,7 +44,7 @@ public:
         /*
             Reduce the problem to "Finding local max"
 
-            We only take search range (l, r) if nums[l-1]<nums[l] and 
+            We only take search range (l, r) if nums[l-1]<nums[l] and
             num[r]>num[r+1]. Note that initial search range (l,r) where l=0 and
             r=len(nums)-1 holds true. Then, each step we reduce the search
             range half making sure the boundary condition holds true. Note that

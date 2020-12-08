@@ -1,20 +1,104 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-
+/***** Third Visit *****/
 /*
-    [1,2,3,null,null,4,5]
-    1     _
-    2 3   1
-    nn45  23
-
+    preorder+inorder-> unique tree
+    T:O(n) 2 pass /S:O(n)
+    -----
+    Try another approach for only 1 pass traversal
+    N1N2##N345
+    T:O(n)/S:O(n)
 */
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ans="";
+        preorder(root,ans);
+        // cout<<"encode: "<<ans<<endl;
+        return ans;
+    }
+
+    void preorder(TreeNode *root, string &ret)
+    {
+        if (!root) {ret+="#,"; return;}
+        ret+=to_string(root->val)+",";
+        preorder(root->left, ret);
+        preorder(root->right, ret);
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        int idx=0;
+        return construct(data, idx);
+    }
+
+    TreeNode *construct(string data, int &i)
+    {
+        if (data[i]=='#') {i+=2; return 0;}
+        int num=0, sign=1;
+        if (data[i]=='-') {sign=-1; ++i;}
+        while(data[i]!=',') num=num*10+(data[i++]-'0');
+        TreeNode *node=new TreeNode(sign*num);
+        i++;
+        node->left=construct(data,i);
+        node->right=construct(data,i);
+        return node;
+    }
+};
+
+/***** Second Visit *****/
+/*
+    Use preorder traversal to avoid level order traversal approach which takes null as consideration. Therefore its time complexity could be reduced from T:O(2^n)->T:O(n)
+*/
+class Codec {
+public:
+
+    void preorder(TreeNode* root, string &encode)
+    {
+        if(!root) encode+="#,";
+        else {
+            encode+=to_string(root->val)+",";
+            preorder(root->left, encode);
+            preorder(root->right, encode);
+        }
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root)
+    {
+        string encode="";
+        preorder(root,encode);
+        return encode;
+    }
+
+    TreeNode* recon(vector<TreeNode*> nodes, int &idx)
+    {
+        if (idx>=nodes.size()) return 0;
+        TreeNode *node=nodes[idx++];
+        if (!node) return 0;
+        node->left=recon(nodes,idx);
+        node->right=recon(nodes,idx);
+        return node;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data)
+    {
+        // cout<<data<<endl;
+        vector<TreeNode*> nodes;
+        int i=0, n=data.length();
+        while (i<n) {
+            string val="";
+            while(i<n&&data[i]!=',') val+=data[i++];
+            if (val!="#") nodes.push_back(new TreeNode(stoi(val)));
+            else nodes.push_back(0);
+            i++;
+        }
+        int idx=0;
+        return recon(nodes,idx);
+    }
+};
+
+/***** First Visit *****/
 class Codec {
 public:
 
@@ -68,19 +152,6 @@ public:
     }
 };
 
-// Your Codec object will be instantiated and called as such:
-// Codec codec;
-// codec.deserialize(codec.serialize(root));
-
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
 
 /*
     [1,2,3,null,null,4,5]

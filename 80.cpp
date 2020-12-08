@@ -1,3 +1,37 @@
+/***** Second Visit *****/
+/*
+    Array
+    1. sort help< bucket sort?
+    2. binary search
+    3. 2 ptr
+    4. running ptr
+    5. 2-D array:DP/greedy/divide & conquer
+    -----
+    use l to check return length, i as a running ptr.
+    1 1 1 2 2 3
+      ^
+          ^
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums)
+    {
+        int l=0,n=nums.size();
+        if (n==0) return 0;
+        for (int i=1; i<n; ++i) {
+            if (nums[i]!=nums[l]) swap(nums[i],nums[++l]);
+            else {
+                swap(nums[i++],nums[++l]);
+                while (i<n&&nums[i]==nums[l]) ++i;
+                --i;
+            }
+        }
+        return l+1;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums)

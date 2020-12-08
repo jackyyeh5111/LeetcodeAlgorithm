@@ -1,3 +1,30 @@
+/***** Second Visit *****/
+/*
+    brute force
+    enumerate all pair C^n_2 then find max area.
+    T:O(n^2)/S:O(1)
+    -----
+    use 2 ptr!
+    greedy select largest bar in left/right endian.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int maxArea(vector<int>& height)
+    {
+        int l=0,r=height.size()-1;
+        int ans=0;
+        while(l<r) {
+            int area = (r-l)*min(height[l],height[r]);
+            ans=max(ans,area);
+            if (height[r]>height[l]) l++;
+            else r--;
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int maxArea(vector<int>& height) {

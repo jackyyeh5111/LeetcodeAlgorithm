@@ -1,3 +1,43 @@
+/***** Second Visit *****/
+/*
+    brute force:
+    enumerate all possible contiguous arrays.
+    T:O(n^2 pairs * n checking)/S:O(1)
+    -----
+    Array
+    1. 2 ptr
+    2. binary search
+    3. moving window
+    4.  2-d
+        DP
+        greedy
+        divide & conquer
+    -----
+    Here we use moving window as a greedy approach, for each step we update current max/min.
+    T:O(n)/S:O(1)
+    -----
+    DP solutioin, dp[i] denotes max contiguous sum ends in position i
+    dp[i]=dp[i-1]<=0?nums[i]:dp[i-1]+nums[i];
+    then find max while ietrating.
+    T:O(n)/S:O(n) -> could be reduce to constance space complexity, as above.
+*/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        if(nums.size()==0) return 0;
+        else if(nums.size()==1) return nums[0];
+        int ans=nums[0], cmin=nums[0], acc=nums[0];
+        for (int i=1; i<nums.size(); ++i) {
+            acc+=nums[i];
+            cmin=min(cmin,acc-nums[i]);
+            ans=max(ans,cmin<0?acc-cmin:acc);
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int maxSubArray(vector<int>& nums)

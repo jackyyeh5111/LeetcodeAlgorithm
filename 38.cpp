@@ -1,3 +1,30 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    string countAndSay(int n)
+    {
+        static vector<string> v(30,"");
+        if (v[n-1]!="") return v[n-1];
+        v[0]="1";
+        for (int i=1; i<n; ++i) {
+            string prev=v[i-1];
+            string s="";
+            char c=prev[0]; int count=1;
+            for (int j=1; j<prev.length(); ++j) {
+                if (prev[j]==c) count++;
+                else {
+                    s+=to_string(count)+string(1,c);
+                    if(j<prev.length()) {c=prev[j]; count=1;}
+                }
+            }
+            if (count) s+=to_string(count)+string(1,c);
+            v[i]=s;
+        }
+        return v[n-1];
+    }
+};
+
+/***** First Visit *****/
 // Bad description
 class Solution {
 public:

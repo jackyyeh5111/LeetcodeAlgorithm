@@ -1,4 +1,42 @@
-/***************** Start from two endian *****************/
+/***** Second Visit *****/
+/*
+    [1,5,4,2,7,8,3,0,0,1,4,3,3,2,1]
+     1
+       3 2 1
+             2
+               3 2 1
+                     1
+                       2
+                         3 1
+                             3 2 1
+     1 3 2 1 2 3 2 1 1 2 3 1 3 2 1
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
+     Find each segment with decreasing sequence, then allocate needed candies.
+*/
+class Solution {
+public:
+    int candy(vector<int>& ratings)
+    {
+        int prev=1,n=ratings.size(),ans=0,i=0;
+        while (i<n) {
+            int t=i;
+            while (i<n-1&&ratings[i]>ratings[i+1]) ++i;
+            if (i==t) {
+                ans+=(t>0&&ratings[t]>ratings[t-1])?prev+1:1;
+                prev=(t>0&&ratings[t]>ratings[t-1])?prev+1:1;
+            }
+            else {
+                ans+=(2+i-t)*(1+i-t)/2;
+                ans+=((t>0&&ratings[t]>ratings[t-1])?max(0,prev-i+t):0);
+                prev=1;
+            }
+            i++;
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
     Explain about peak >= down ? -1:0
     when peak >= down, the candy for the peak still don't need to change.
@@ -6,7 +44,7 @@
     For example, [0, 1, 20, 9, 8, 7], for the first 5 number, we need to assign
     [1,2,3,2,1] candies. But when 7 comes up, we need to raise the value of the
     peak, which is 3 above, it need to be 4, [1,2,4,3,2,1]
-    This solution here, make it to be [1,2,3,1,2,4], the sum are same. 
+    This solution here, make it to be [1,2,3,1,2,4], the sum are same.
 */
 class Solution {
 public:

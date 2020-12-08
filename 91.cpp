@@ -1,3 +1,56 @@
+/***** Second Visit *****/
+/*
+    backtracking approach
+    > 1 <= s.length <= 100
+    > notice leading zero
+    limited input length could avoid TLE
+    STILL TLE
+    T:O(2^n)/S:O(n) propotion to depth of recursion
+    -----
+    1-d dp solution
+    dp[i] denotes the # of decode ways on s[0~i].
+    dp[i]=dp[i-1]+dp[i-2] if the num of last 2 digits is in the range 11-26
+          excludes 20.
+         =dp[i-1] if the num of last 2 digits > 26
+         =dp[i-2] if the num of last 2 digits == 10 or 20
+    T:O(n)/S:O(n)
+*/
+/***** 1-d DP *****/
+class Solution {
+public:
+    int numDecodings(string s)
+    {
+        // if (s=="") return 0; // input constraint
+        int n=s.length();
+        vector<int> dp(n+1,0);
+        dp[0]=1; dp[1]=s[0]!='0';
+        for (int i=2; i<=n; ++i) {
+            int num=stoi(s.substr(i-2,2));
+            if (s[i-1]!='0') dp[i]+=dp[i-1];
+            if (num>=10&&num<=26) dp[i]+=dp[i-2];
+        }
+        return dp[n];
+    }
+};
+
+/***** backtracking TLE *****/
+class Solution {
+public:
+    int numDecodings(string s)
+    {
+        if (s==""||s[0]=='0') return 0;
+        else if (s.length()==1&&s[0]>='1'&&s[0]<='9') return 1;
+        int num=stoi(s.substr(0,2));
+        if (s.length()==2&&(num==10|num==20)) return 1;
+        else if (s.length()==2&&num<=26) return 2;
+        int ret=numDecodings(s.substr(1));
+        if (num<=26) ret+=numDecodings(s.substr(2));
+        return ret;
+    }
+
+};
+
+/***** First Visit *****/
 /************************ AC ************************/
 // dp solution, T:O(n), S:O(n)
 class Solution {
