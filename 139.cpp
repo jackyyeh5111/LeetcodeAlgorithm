@@ -1,3 +1,73 @@
+/***** Fifth Visit *****/
+/*
+    dp[i] denotes if s[0-i] can be segmented into word break
+    Maintain a hashtable with
+    key: word length, value: unordered_set<string> words
+    dp[i]=dp[i-k]&&s[k~i] is in map[k]
+    T:O(n+k)/S:O(k)
+*/
+
+/***** Fourth Visit *****/
+/*
+    dp[k][i] denotes s[0-i] is wordbreak or not with wordDict[0-k]
+*/
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict)
+    {
+        unordered_set<string> sets(wordDict.begin(),wordDict.end());
+        int n=s.length();
+        vector<bool> dp(n+1,0);
+        dp[0]=true;
+        for (int i=1; i<=n; ++i) {
+            for (string word:wordDict) {
+                if (i-(int)word.length()<0) continue;
+                string sub=s.substr(i-word.length(),word.length());
+                dp[i]=(sets.count(sub)!=0)&&dp[i-word.length()];
+                if (dp[i]) break;
+            }
+        }
+        return dp[n];
+    }
+};
+
+// TRIE RECURSIVE, TLE!!!
+class Solution {
+public:
+    struct Node {
+        string val="";
+        Node *children[26]={0};
+        Node(string val="") {}
+    };
+
+    bool wordBreak(string s, vector<string>& wordDict)
+    {
+        Node *root=new Node();
+        for (string word:wordDict) {
+            Node *cur=root;
+            for (char c:word) {
+                if (!cur->children[c-'a'])
+                    cur->children[c-'a']=new Node();
+                cur=cur->children[c-'a'];
+            }
+            cur->val=word;
+        }
+        bool ans=false;
+        help(root,root,0,s,ans);
+        return ans;
+    }
+
+    void help(Node *root, Node *cur, int i, string s, bool &ans)
+    {
+        if (i==s.length()) {ans=cur->val!=""; return;}
+        else if (!cur->children[s[i]-'a']) return;
+        cur=cur->children[s[i]-'a'];
+        if (cur->val!="")
+            help(root,root,i+1,s,ans);
+        if(!ans) help(root,cur,i+1,s,ans);
+    }
+};
+
 /***** Third Visit *****/
 /*
     1-d dp solution

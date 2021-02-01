@@ -1,3 +1,67 @@
+/***** Second Visit *****/
+/*
+    brute force:
+    for i in range(n):
+      cmax=nums[i+1]
+      for j in range(i+2,n,1):
+        check if cmax>nums[j] && cmax>nums[i]
+    T:O(n^2)/S:O(1)
+    -----
+    MONO stack:
+    decreasing order from right to left
+    T:O(n)/S:O(n)
+    -----
+    binary search on right part, left cmin could be handled in one pass.
+    T:O(nlogn)/S:O(n)
+    [3,1,[2],4]
+     cmins.   binary search
+*/
+
+// stack
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums)
+    {
+        int n=nums.size();
+        stack<int> s;
+        int idx2=INT_MIN;
+        for (int i=n-1; i>=0; --i) {
+            if (nums[i]<idx2) return true;
+            while(!s.empty()&&s.top()<nums[i]) {
+                idx2=s.top(); s.pop();
+            }
+            s.push(nums[i]);
+        }
+        return false;
+    }
+};
+
+// binary search
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int> cmins;
+        int cmin=INT_MAX;
+        for (int num:nums) {
+            cmin=min(cmin,num);
+            cmins.push_back(cmin);
+        }
+        set<int> ms;
+        for (int i=n-1; i>=1; --i) {
+            if (ms.size()!=0) {
+                auto it=ms.lower_bound(nums[i]);
+                if (it!=ms.begin()) it=prev(it);
+                if (cmins[i-1]<*it&&*it<nums[i]) return true;
+            }
+            ms.insert(nums[i]);
+        }
+        return false;
+    }
+};
+
+/***** First Visit *****/
 /*
     top-down stack approach.
     We use stack to record current 3, 2 val. If we meet a larger incoming num, the num on the top of stack becomes 2. Thus we will have all valid 3,2 pair.

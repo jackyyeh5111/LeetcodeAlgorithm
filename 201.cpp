@@ -1,3 +1,50 @@
+/***** Fourth Visit *****/
+/*
+    0101 5
+    0110 6
+    0111 7
+    find how many bits we are going to modify to reach n from m
+    mask out these bits from n.
+*/
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n)
+    {
+        int diff=n-m;
+        int l=0,r=32;
+        while(l<r) {
+            int mid=(l+r)/2;
+            if ((1<<mid)<=diff) l=mid+1;
+            else r=mid;
+        }
+        int mask=l==32?0:~((1<<l)-1);
+        return m&n&mask;
+    }
+};
+
+/***** THird VIsit *****/
+/*
+    0101
+    0110
+    0111
+    1000
+*/
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        if (m==n) return m;
+        int k=n-m, t=1;
+        int l=0, r=32;
+        while (l<r) {
+            int mid=(l+r)/2;
+            if ((1<<mid)<=k) l=mid+1;
+            else r=mid;
+        }
+        int mask=l==32?0:~((1<<l)-1);
+        return m&n&mask;
+    }
+};
+
 /***** Second Visit *****/
 /*
 For number 26 to 30, their binary form are:

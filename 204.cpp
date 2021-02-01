@@ -1,3 +1,24 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    int countPrimes(int n)
+    {
+        n--;
+        if (n<2) return 0;
+        int ans=0;
+        vector<int> dp(n+1,1);
+        for (int i=2; i<=n; ++i) {
+            if (dp[i]==0) continue;
+            ans++;
+            int j=i, k=n/i;
+            while (j<=k) {
+                dp[j*i]=0; j++;
+            }
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 class Solution {
 public:

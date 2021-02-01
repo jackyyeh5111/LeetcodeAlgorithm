@@ -1,3 +1,23 @@
+/***** Third Visit *****/
+/*
+    stack approach, notice edge case like empty stack during process or in the end.
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    bool isValid(string s)
+    {
+        unordered_map<char,char> table={{')','('},{']','['},{'}','{'}};
+        stack<char> mystack;
+        for (char c:s) {
+            if (c=='(' || c=='[' || c=='{') mystack.push(c);
+            else if (mystack.size()!=0&&mystack.top()==table[c]) mystack.pop();
+            else return false;
+        }
+        return mystack.size()==0;
+    }
+};
+
 /***** Second Visit *****/
 /*
     typical stack problem

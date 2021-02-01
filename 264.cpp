@@ -1,3 +1,31 @@
+/***** Fourth Visit *****/
+/*
+      1 2 3 4
+    2     ^
+    3   ^
+    5 ^
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int nthUglyNumber(int n)
+    {
+        vector<int> dp(1,1);
+        int i2=0,i3=0,i5=0;
+        while (dp.size()<n) {
+            int num2=dp[i2]*2;
+            int num3=dp[i3]*3;
+            int num5=dp[i5]*5;
+            int c=min(num2,min(num3,num5));
+            i2+=num2==c;
+            i3+=num3==c;
+            i5+=num5==c;
+            dp.push_back(c);
+        }
+        return dp.back();
+    }
+};
+
 /***** Third Visit *****/
 /*
     2: 2 4 8 16 32 64 128 256 ...

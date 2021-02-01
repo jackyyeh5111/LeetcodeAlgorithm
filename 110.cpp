@@ -1,3 +1,22 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    bool isBalanced(TreeNode* root)
+    {
+        bool ret=true;
+        postOrder(root,ret);
+        return ret;
+    }
+     int postOrder(TreeNode *root, bool &ret)
+     {
+         if (!root) return 0;
+         int left=postOrder(root->left, ret);
+         int right=postOrder(root->right, ret);
+         if (abs(left-right)>1) ret=false;
+         return max(left,right)+1;
+     }
+};
+
 /***** Second Visit *****/
 /*
     LRN traversal

@@ -1,3 +1,43 @@
+/***** Third Visit *****/
+/*
+    Reduce to problem 84.
+    T:O(mn)/S:O(n)
+*/
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix)
+    {
+        if (matrix.size()==0||matrix[0].size()==0) return 0;
+        int m=matrix.size(), n=matrix[0].size(), ans=0;
+        vector<int> table(n+1,0);
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (matrix[i][j]=='1') table[j]++;
+                else table[j]=0;
+            }
+            ans=max(ans,maxRect(table));
+        }
+        return ans;
+    }
+
+    int maxRect(const vector<int> &table)
+    {
+        stack<pair<int,int>> s;
+        int n=table.size(), ret=0;
+        for (int i=0; i<n; ++i) {
+            int minPos=INT_MAX;
+            while (!s.empty()&&s.top().second>table[i]) {
+                auto p=s.top(); s.pop();
+                ret=max(ret,p.second*(i-p.first));
+                minPos=min(minPos,p.first);
+            }
+            if (minPos!=INT_MAX) s.push({minPos,table[i]});
+            s.push({i,table[i]});
+        }
+        return ret;
+    }
+};
+
 /***** Second Visit (Fail) *****/
 /*
     1 2 4 4 4 6 1 0

@@ -1,33 +1,35 @@
+/***** Third Visit *****/
 /*
-// Definition for a Node.
-class Node {
+    Easy to tackle it with hashmap.
+    Try to solve with S:O(1), excludes return space.
+*/
+class Solution {
 public:
-    int val;
-    Node* next;
-    Node* random;
-
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
+    Node* copyRandomList(Node* head) {
+        Node *cur=head;
+        while (cur) {
+            Node *node=new Node(cur->val);
+            node->next=cur->next;
+            cur->next=node;
+            cur=node->next;
+        }
+        cur=head;
+        while(cur) {
+            if (cur->random)
+                cur->next->random=cur->random->next;
+            cur=cur->next->next;
+        }
+        Node *newHead=0, *tail=0;
+        cur=head;
+        while(cur) {
+            if (!newHead) {newHead=cur->next; tail=cur->next;}
+            else {tail->next=cur->next; tail=tail->next;}
+            cur->next=cur->next->next;
+            cur=cur->next;
+        }
+        return newHead;
     }
 };
-*/
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* next;
-    Node* random;
-
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
-};
-*/
 
 /***** Second Visit *****/
 class Solution {

@@ -1,3 +1,51 @@
+/***** Third Visit *****/
+/*
+    Another approach is that we handle alive cells only.
+    1 pass: iterate over the matrix and find the cells alive.
+    2 pass: Modify each cell according to the result from 1st pass.
+    -----
+    Any live cell with fewer than two live neighbors dies as if caused by under-population.
+    Any live cell with two or three live neighbors lives on to the next generation.
+    Any live cell with more than three live neighbors dies, as if by over-population.
+    Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+
+    1: live
+    0: die
+
+    1->1: 2 or 3 neighbors live [1]
+    1->0: <2 neighbors live or >3 neighbors die [2]
+    0->1: 3 neighbors live [-1]
+    0->0 [0]
+*/
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& board)
+    {
+        int m=board.size(), n=board[0].size();
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                int lives=0;
+                for (int p=-1; p<=1; ++p) {
+                    for (int q=-1; q<=1; ++q) {
+                        if (i+p<0||i+p>=m||j+q<0||j+q>=n||(p==0&&q==0))
+                            continue;
+                        lives+=(board[i+p][j+q]>0);
+                    }
+                }
+                if (board[i][j]==0&&lives==3) board[i][j]=-1;
+                else if (board[i][j]==1&&(lives==3||lives==2)) board[i][j]=1;
+                else if (board[i][j]==1&&(lives<2||lives>3)) board[i][j]=2;
+            }
+        }
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (board[i][j]==2) board[i][j]=0;
+                else if (board[i][j]==-1) board[i][j]=1;
+            }
+        }
+    }
+};
+
 /***** Second Visit *****/
 /*
     DO IT SIMULTANEOUSLY

@@ -1,3 +1,51 @@
+/***** Third Visit *****/
+/*
+    Consider it as a graph problem.
+    BFS on it.
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+    {
+        wordList.push_back(beginWord);
+        int n = wordList.size();
+        unordered_set<string> wordSet(wordList.begin(),wordList.end());
+        unordered_map<string,vector<string>> graph;
+        unordered_map<string,bool> visited;
+        for (auto word:wordList) {
+            visited[word]=0;
+            for (int i=0; i<word.length(); ++i) {
+                for (int j=0; j<26; ++j) {
+                    string t=word;
+                    t[i]='a'+j;
+                    if (word!=t&&wordSet.count(t)!=0) {
+                        graph[t].push_back(word);
+                        graph[word].push_back(t);
+                    }
+                }
+            }
+        }
+        queue<string> q;
+        q.push(beginWord);
+        visited[beginWord]=1;
+        int step=1;
+        while (!q.empty()) {
+            int k=q.size();
+            for (int i=0; i<k; ++i) {
+                string u=q.front(); q.pop();
+                for (string v:graph[u]) {
+                    if (visited[v]) continue;
+                    else if (v==endWord) return step+1;
+                    else {q.push(v); visited[v]=1;}
+                }
+            }
+            step++;
+        }
+        return 0;
+    }
+};
+
 /***** Second Visit *****/
 class Solution {
 public:

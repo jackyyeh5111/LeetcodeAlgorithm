@@ -1,3 +1,30 @@
+/***** Third Visit *****/
+/*
+    num:          2 2 6
+    # of combs: 1 1 2 3
+    conduct DP solution.
+    max char consumes 2 digits, so checking 1 digit or 2 digits is enough.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int numDecodings(string s)
+    {
+        int prev=1, prevprev=0, n=s.length();
+        for (int i=0; i<n; ++i) {
+            int cur=0;
+            if (s[i]!='0') cur+=prev;
+            if (i>0&&s[i-1]!='0') {
+                int num=(s[i-1]-'0')*10+s[i]-'0';
+                if (num<=26) cur+=prevprev;
+            }
+            if (cur==0) return 0;
+            prevprev=prev; prev=cur;
+        }
+        return prev;
+    }
+};
+
 /***** Second Visit *****/
 /*
     backtracking approach

@@ -1,3 +1,25 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    Node* connect(Node* root) {
+        if (!root) return 0;
+        int k=1;
+        Node *head=root;
+        while (head->left) {
+            Node *prev=0, *cur=head;
+            for (int i=0; i<k; ++i) {
+                cur->left->next=cur->right;
+                if (prev) prev->next=cur->left;
+                prev=cur->right;
+                cur=cur->next;
+            }
+            head=head->left;
+            k*=2;
+        }
+        return root;
+    }
+};
+
 /***** Third Visit *****/
 /*
     constraint: constant space complexity

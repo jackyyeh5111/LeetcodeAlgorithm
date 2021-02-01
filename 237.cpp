@@ -1,3 +1,23 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+        ListNode *tmp=node->next;
+        *node=*(node->next);
+        delete tmp;
+    }
+};
+
+/***** Fourth Visit *****/
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+        ListNode *tmp=node->next;
+        *node=*tmp;
+        delete tmp;
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

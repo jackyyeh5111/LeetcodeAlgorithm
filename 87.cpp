@@ -1,3 +1,39 @@
+/***** Third Visit *****/
+/*
+    Could be solved by DP
+    dp[len][p1][p2] denotes if s1.substr(p1,len) & s2.substr(p2,len) is scramble
+    T:O(n^4)
+*/
+class Solution {
+public:
+    bool isScramble(string s1, string s2)
+    {
+        int n=s1.length();
+        if (n==1) return s1==s2;
+        else if (n==2) {
+            string t=s2; reverse(t.begin(),t.end());
+            return s1==s2||s1==t;
+        }
+        vector<int> counter(26,0);
+        for (char c:s1) counter[c-'a']++;
+        for (char c:s2) counter[c-'a']--;
+        for (int c:counter) {
+            if (c!=0)
+                return false;
+        }
+        for (int i=1; i<n; ++i) {
+            string ls1=s1.substr(0,i), rs1=s1.substr(i);
+            string ls2=s2.substr(0,i), rs2=s2.substr(i);
+            if (isScramble(ls1,ls2)&&isScramble(rs1,rs2)) return true;
+            else {
+                ls2=s2.substr(n-i); rs2=s2.substr(0,n-i);
+                if (isScramble(ls1,ls2)&&isScramble(rs1,rs2)) return true;
+            }
+        }
+        return false;
+    }
+};
+
 /***** Second Visit *****/
 /*
     1 <= s1.length <= 30

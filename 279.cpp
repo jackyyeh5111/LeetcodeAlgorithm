@@ -1,3 +1,21 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> dp(n+1,INT_MAX);
+        for (int i=1; i<=n; ++i) {
+            int k=sqrt(i);
+            if (k*k==i) dp[i]=1;
+            else {
+                for (int j=1; j<=k; ++j) {
+                    dp[i]=min(dp[i],dp[i-j*j]+1);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+
 /***** Third Visit *****/
 /*
     1 1
@@ -28,6 +46,7 @@ public:
     }
 };
 
+// TLE
 class Solution {
 public:
     int numSquares(int n)

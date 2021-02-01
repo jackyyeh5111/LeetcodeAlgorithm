@@ -1,3 +1,34 @@
+/***** Second Visit *****/
+/*
+    Resovour Sampling
+    proof: 1/i x i/i+1 x ... x n-1/n = 1/n
+
+    getRandom: T:O(n)
+*/
+class Solution {
+public:
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    ListNode *head=0;
+    Solution(ListNode* head)
+    {
+        this->head=head;
+    }
+
+    /** Returns a random node's value. */
+    int getRandom() {
+        int idx=1, ret=0;
+        ListNode *cur=head;
+        while (cur) {
+            int k=rand()%idx;
+            if (k==0) ret=cur->val;
+            cur=cur->next;
+            idx++;
+        }
+        return ret;
+    }
+};
+
 /***** First Visit *****/
 /*
     Resovour Sampling

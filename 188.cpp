@@ -1,3 +1,17 @@
+/***** Fourth Visit *****/
+/*
+    buy1=min(buy1,prices[i])
+    sell1=max(sell1,prices[i]-buy1)
+    buy2=min(buy2,prices[i]-sell1)
+    sell2=max(sell2,prices[i]-buy2)
+    ...
+    dp[i][j] denote ith transaction w. prices[0-j]
+    dp[i][j]=pair<int,int> // buy,sell
+
+    if i > n/2 -> i=n/2 we can have at most n/2 transactions
+    T:O(nk)/S:O(n)
+*/
+
 /***** Third Visit *****/
 /*
     try 2 bestbuy first

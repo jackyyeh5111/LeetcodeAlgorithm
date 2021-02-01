@@ -1,3 +1,60 @@
+/***** Third Visit *****/
+/*
+    min/max balance in worst case
+    addNum: T:O(nlogn)
+    findmedian: T:O(1)
+    S:O(n)
+    -----
+    online sorting in worst case
+    addNum: T:O(nlogn)
+    findmedian: T:O(1)
+    S:O(n)
+    -----
+    bucket sort
+    keep update recorded min/max with predefind k buckets
+    T:O(1)
+    findmedian: T:O(n)
+    S:O(k)
+    -----
+    tree sorting online
+    addNum: T:O(logn)
+    findmedian: T:O(logn)
+    S:O(n)
+*/
+class MedianFinder {
+public:
+    priority_queue<int,vector<int>,greater<int>> minpq;
+    priority_queue<int,vector<int>,less<int>> maxpq;
+    /** initialize your data structure here. */
+    MedianFinder() {
+
+    }
+
+    void addNum(int num) {
+        if (maxpq.size()==0) maxpq.push(num);
+        else if (num>maxpq.top()) {
+            minpq.push(num);
+            if(minpq.size()>maxpq.size()) {
+                maxpq.push(minpq.top());
+                minpq.pop();
+            }
+        }
+        else {
+            maxpq.push(num);
+            if(maxpq.size()>minpq.size()+1) {
+                minpq.push(maxpq.top());
+                maxpq.pop();
+            }
+        }
+    }
+
+    double findMedian() {
+        int total = minpq.size()+maxpq.size();
+        if (total%2) return maxpq.top();
+        else return (double)(maxpq.top() + minpq.top())/2.0;
+    }
+};
+
 /***** Second Visit *****/
 /*
     bucket sort

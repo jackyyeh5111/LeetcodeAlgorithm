@@ -1,3 +1,39 @@
+/***** Third Visit *****/
+/*
+         1
+      2     3
+    4   5 6    7
+
+    data structure: map<x,map<y,multiset>>
+*/
+typedef map<int,map<int,multiset<int>>> mymap;
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root)
+    {
+        mymap mp;
+        preorder(mp,root,0,0);
+        vector<vector<int>> ans;
+        for (auto xit=mp.begin(); xit!=mp.end(); xit++) {
+            auto y=xit->second;
+            vector<int> t;
+            for (auto yit=y.begin(); yit!=y.end(); ++yit) {
+                t.insert(t.end(),yit->second.begin(),yit->second.end());
+            }
+            ans.push_back(t);
+        }
+        return ans;
+    }
+
+    void preorder(mymap &mp, TreeNode *root, int x, int y)
+    {
+        if (!root) return;
+        mp[x][y].insert(root->val);
+        preorder(mp,root->left,x-1,y+1);
+        preorder(mp,root->right,x+1,y+1);
+    }
+};
+
 /***** Second Visit *****/
 class Solution {
 public:

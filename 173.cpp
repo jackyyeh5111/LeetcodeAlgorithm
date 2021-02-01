@@ -1,3 +1,45 @@
+/***** Third Visit *****/
+/*
+    Morris Traversal
+    T:O(n)/S:O(1)
+*/
+class BSTIterator {
+public:
+    TreeNode *cur=0;
+    BSTIterator(TreeNode* root) {
+        cur=root;
+    }
+
+    int next() {
+        while (cur) {
+            if (!cur->left) {
+                int ret=cur->val;
+                cur=cur->right;
+                return ret;
+            }
+            else {
+                TreeNode *pred=cur->left;
+                while (pred->right&&pred->right!=cur) pred=pred->right;
+                if (pred->right==cur) {
+                    pred->right=0;
+                    int ret=cur->val;
+                    cur=cur->right;
+                    return ret;
+                }
+                else {
+                    pred->right=cur;
+                    cur=cur->left;
+                }
+            }
+        }
+        return -1;
+    }
+
+    bool hasNext() {
+        return cur;
+    }
+};
+
 /***** Second Visit *****/
 /*
     constraint: T:O(1)/S:O(logn) in average of next() & hasNext()

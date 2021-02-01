@@ -1,3 +1,33 @@
+/***** Second Visit *****/
+/*
+    T:O(n^2)/S:O(1)
+*/
+class Solution {
+public:
+    string longestPalindrome(string s)
+    {
+        int n=s.length(), curL=0;
+        string ans="";
+        for (int i=0; i<n; ++i) {
+            int j=i, k=i;
+            while(k<n&&j>=0&&s[j]==s[k]) {j--; k++;}
+            if (k-j-1>curL) {
+                curL=k-j-1;
+                ans=s.substr(j+1,k-j-1);
+            }
+            j=i;k=i+1;
+            if (k>=n||s[j]!=s[k]) continue;
+            while(k<n&&j>=0&&s[j]==s[k]) {j--; k++;}
+            if (k-j-1>curL) {
+                curL=k-j-1;
+                ans=s.substr(j+1,k-j-1);
+            }
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
     brute force
     enumerate all substring then check palindrom
@@ -19,12 +49,15 @@
     for s + 1 = e,  if str[s] == str[e]
     for s + 2 <= e, if str[s] == str[e] && state(s + 1, e - 1) is true
     T:O(n^2)/S:O(1)
+    WRONG ANS!!
+    "aacabdkacaa"
     -----------
     use a moving window (hashmap, k:char,v:idx)
     T:O(n^2)/S:O(n)
     WRONG ANS!!
 */
 
+// Wrong Ans
 class Solution {
 public:
     string longestPalindrome(string s)

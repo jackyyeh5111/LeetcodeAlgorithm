@@ -1,3 +1,69 @@
+/***** Fourth Visit *****/
+/*
+    T:O(n^n*O(check))/S:O(n)
+    use a vector<bool> for O(1) checking
+    \ i-j
+    - i
+    / i+j
+*/
+
+/***** Third Visit *****/
+/*
+    DFS (Backtacking)
+    T:O(4^9 * O(check))
+    question is about how to check if feasible?
+
+    Check: T:O(n)
+    horizontal
+    \: i-j
+    /: i+j
+
+    We can only use 1-D vector for saving the pos we put queen.
+    i.e. [3,1,4,2]
+*/
+
+/***** Second Visit *****/
+/*
+    Typical backtracking problem.
+    Try out all possible placements, n^n.
+    For feasible checking, it takes another O(n)
+
+    Since n is small, i.e. 1<n<9, we dont need to worry about TLE.
+    Note that we only need to return the num of possible combs, we just need to maintain 1-d array for placement checking.
+    T:O(n^(n+1))/S:O(n)
+*/
+class Solution {
+public:
+    int totalNQueens(int n)
+    {
+        vector<int> table(n,-1);
+        int ans=0;
+        help(table,0,ans, n);
+        return ans;
+    }
+
+    void help(vector<int> &table, int col, int &ans, int n)
+    {
+        if (col==n) ans++;
+        for (int i=0; i<n; ++i) {
+            if (!isfeasible(table,i,col)) continue;
+            table[col]=i;
+            help(table,col+1,ans,n);
+        }
+    }
+
+    bool isfeasible(vector<int> &table, int row, int col)
+    {
+        for (int i=0; i<col; ++i) {
+            if (table[i]==row) return false;
+            if (table[i]-i==row-col) return false;
+            if (table[i]+i==row+col) return false;
+        }
+        return true;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     int count = 0;

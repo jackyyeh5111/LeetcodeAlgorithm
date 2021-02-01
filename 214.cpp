@@ -1,3 +1,34 @@
+/***** Third Visit *****/
+/*
+    string comparison: KMP
+    "adding characters in front of it"
+    aacecaaa # aaacecaa
+               12234567
+
+    abcd # dcba
+           0001
+   T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    string shortestPalindrome(string s)
+    {
+        string invs=s;
+        reverse(invs.begin(),invs.end());
+        string k=s+"#"+invs;
+        int n=k.length();
+        vector<int> dp(n,0);
+        dp[0]=0;
+        for (int i=1; i<n; ++i) {
+            int j=dp[i-1];
+            while (j!=0&&k[j]!=k[i]) j=dp[j-1];
+            if (j!=0) dp[i]=j+1;
+            else dp[i]=k[0]==k[i];
+        }
+        return invs+s.substr(dp.back());
+    }
+};
+
 /***** Second Visit  *****/
 /*
     aacecaaa . aaacecaa

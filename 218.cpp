@@ -1,3 +1,14 @@
+/***** Fourth Visit *****/
+/*
+    multiset<pair<int,int>> // x coord, height
+    pos height: involve this building
+    neg height: kick off this building
+
+    multiset<int> heights
+    record all heights we need to take care so far.
+    T:O(nlogn)/S:O(n)
+*/
+
 /***** Third Visit *****/
 /*
     sort x coord first, we will handle each point in x-increasing/y-decreasing order.

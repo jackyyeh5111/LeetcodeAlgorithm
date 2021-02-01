@@ -1,3 +1,57 @@
+/***** Fourth Visit *****/
+/*
+    find nodes in the order of 0-degree
+    T:O(V^2)/S:O(V+E)
+    -----
+    inverse of postorder is one of its topological sort.
+    We dont need to take in-degree into consideration.
+    Just apply postDFS from anyorder then reverse it, it would for topologic.
+    1->2->3->4->5
+          ^ [5,4,3]
+    ^ [5,4,3,2,1]
+    reverse -> [1,2,3,4,5]
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        vector<int> visited(numCourses,0);
+        vector<vector<int>> graph(numCourses,vector<int>{});
+        vector<int> indegrees(numCourses,0);
+        for (auto p:prerequisites) {
+            graph[p[1]].push_back(p[0]);
+            indegrees[p[0]]++;
+        }
+        vector<int> ans;
+        for (int u=0; u<numCourses; ++u) {
+            if (indegrees[u]==0) {
+                if (!postDFS(graph,visited,u,ans))
+                    return {};
+            }
+        }
+        if (ans.size()!=numCourses) return {};
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+
+    // true if topological exist
+    bool postDFS(vector<vector<int>> &graph, vector<int> &visited, int u,
+                 vector<int> &ans)
+    {
+        if (visited[u]==2) return true;
+        else if (visited[u]==1) return false;
+        visited[u]=1;
+        for (int v:graph[u]) {
+            if (!postDFS(graph,visited,v,ans))
+                return false;
+        }
+        visited[u]=2;
+        ans.push_back(u);
+        return true;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Find Topological Order

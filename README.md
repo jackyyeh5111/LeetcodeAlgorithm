@@ -14,16 +14,18 @@ Practice of leetcode
 | 64| Minimum Path Sum|[64.cpp](64.cpp)|Medium|similar to prob. 62 with min sum|
 | 70| Climbing Stairs|[70.cpp](70.cpp)|Easy|Fibonacci|
 | 72| Edit Distance|[72.cpp](72.cpp)|Hard|String Editing|
+| 87| Scramble String|[87.cpp](87.cpp)|Hard|each scramble should consider from left or right|
 | 91| Decode Ways|[91.cpp](91.cpp)|Medium|recursive will cause TLE, using dp instead.|
 | 97| Interleaving String|[97.cpp](97.cpp)|Hard|**once we get recursive, we can have a mem recursive which is DP. the induction is as the recursive condition.**|
 | 115| Distinct Subsequences|[115.cpp](115.cpp)|Hard|**Noticie the string indexing in DP**|
 | 121| Best Time to Buy and Sell Stock|[121.cpp](121.cpp)|Easy|One transaction. use data structure to record local min. Kind of dp.|
 | 122| Best Time to Buy and Sell Stock II|[122.cpp](122.cpp)|Easy|Many transactions.|
 | 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|Hard|Only two transactions|
+| 131| Palindrome Partitioning|[131.cpp](131.cpp)|Medium|back tracking with step: size of a plindrome.|
 | 132| Palindrome Partitioning II|[132.cpp](132.cpp)|Hard|back tracking: TLE. 2D-DP: TLE. Use **Manancher-like solution**.|
 | 134| Gas Station|[134.cpp](134.cpp)|Medium|2 ptr|
 | 139| Word Break|[139.cpp](139.cpp)|Medium||
-| 140| Word Break II|[140.cpp](140.cpp)|Hard|reduce to problem. 138 / Add forward check(early stop) to avoid TLE.|
+| 140| Word Break II|[140.cpp](140.cpp)|Hard|reduce to problem. 139 / Add forward check(early stop) to avoid TLE.|
 | **152**| Maximum Product Subarray|[152.cpp](152.cpp)|Medium|imax/imin denotes max/min contiguous products at position i.|
 | 169| Majority Element|[169.cpp](169.cpp)|Easy|**Boyer-Moore Voting Algorithm, T:O(n, S:O(1))**|
 | 174| Dungeon Game|[174.cpp](174.cpp)|Hard|tell the scenario when should we bottom up / top down tracing|
@@ -38,15 +40,21 @@ Practice of leetcode
 | 279| Perfect Squares|[279.cpp](279.cpp)|Medium|**dp/math/graph/cache recursive**|
 | **300**| Longest Increasing Subsequence|[300.cpp](300.cpp)|Medium|LCS/LIS. Find LIS so far in each current position with binary search. T:O(nlogn)|
 | 309| Best Time to Buy and Sell Stock with Cooldown|[309.cpp](309.cpp)|Medium|State Machine Thinking|
+| 312| Burst Balloons|[312.cpp](312.cpp)|Hard|bottom-up DP|
 | 368| Largest Divisible Subset|[368.cpp](368.cpp)|Medium|a%b==0 && b%c==0 -> a%c==0|
-| 416| Partition Equal Subset Sum|[416.cpp](416.cpp)|Medium|0/1 Knapsack|
+| 416| Partition Equal Subset Sum|[416.cpp](416.cpp)|Medium|0/1 Knapsack / bit manipulation|
+| 494| Target Sum|[494.cpp](494.cpp)|Medium|0/1 Knapsack|
 | 518| Coin Change 2|[518.cpp](518.cpp)|Medium|0/1 Knapsack Problem. Backtracking will TLE|
 | 673| Number of Longest Increasing Subsequence|[673.cpp](673.cpp)|Medium||
 | 799| Champagne Tower|[799.cpp](799.cpp)|Medium|bottom-up DP|
 | 983| Minimum Cost For Tickets|[983.cpp](983.cpp)|Medium|top down DP|
 | 1035| Uncrossed Lines|[1035.cpp](1035.cpp)|Medium|Longest Common Sequence|
 | 1041| Robot Bounded In Circle|[1041.cpp](1041.cpp)|Medium|check direction and position.|
+| 1277| Count Square Submatrices with All Ones|[1277.cpp](1277.cpp)|Medium||
+| 1463| Cherry Pickup II|[1463.cpp](1463.cpp)|Hard|bottom up thinking|
+| 1504| Count Submatrices With All Ones|[1504.cpp](1504.cpp)|Medium|check horizontal first, then vertical. T:O(n^3)|
 | 1510| Stone Game IV|[1510.cpp](1510.cpp)|Hard|T:O(n^(3/2))|
+| 1745| Palindrome Partitioning IV|[1745.cpp](1745.cpp)|Hard|Make a table to check if palindrom from i to j, then iterate over all posisble pairs to check if feasible. T:O(n^2)/S:O(n^2)|
 
 ## Searching
 | #    | Title             | Solution | Difficult |         Note           |
@@ -76,7 +84,9 @@ Practice of leetcode
 | 704| Binary Search|[704.cpp](704.cpp)|Easy||
 | 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|**Hard**|binary search to find longest length, **Rabin-Karp** to compare string|
 | 1103| Distribute Candies to People|[1103.cpp](1103.cpp)|Easy|binary search to find n(n+1)/2<=m, then do math calculation|
+| 1237| Find Positive Integer Solution for a Given Equation|[1237.cpp](1237.cpp)|Medium|monotonic increasing -> binary search|
 | 1283| Find the Smallest Divisor Given a Threshold|[1283.cpp](1283.cpp)|Medium|binary search on all possible dividor|
+| 1539| Kth Missing Positive Number|[1539.cpp](1539.cpp)|Easy|binary search|
 
 
 ## Recursive / Backtracking
@@ -95,18 +105,20 @@ Practice of leetcode
 | 60| Permutation Sequence|[60.cpp](60.cpp)|Medium|Find formula. Notice 0-based k.|
 | 77| Combinations|[77.cpp](77.cpp)|Medium|typical back tracking problem, **check**|
 | 78| Subsets|[78.cpp](78.cpp)|Medium|recursive,iteration, bit manipulation|
-| 87| Scramble String|[87.cpp](87.cpp)|Hard|each scramble should consider from left or right|
 | 90| Subsets II|[90.cpp](90.cpp)|Medium|reduce to problem 87.|
-| 131| Palindrome Partitioning|[131.cpp](131.cpp)|Medium|back tracking with step: size of a plindrome.|
 | 200| Number of Islands|[200.cpp](200.cpp)|Medium||
 | 216| Combination Sum III|[216.cpp](216.cpp)|Medium|unique number in each comb|
 | 273| Integer to English Words|[273.cpp](273.cpp)|Hard|recursive on divisor and remainder, notice edge case!!|
 | 282| Expression Add Operators|[282.cpp](282.cpp)|Hard|For * OP, we should keep previout value. ```cv-pv+pv*r```|
+| 526| Beautiful Arrangement|[526.cpp](526.cpp)|Medium||
+| 556| Next Greater Element III|[556.cpp](556.cpp)|Medium|Reduce to problem 31.|
 | 949| Largest Time for Given Digits|[949.cpp](949.cpp)|Easy|permutation then check validation|
 | 967| Numbers With Same Consecutive Differences|[967.cpp](967.cpp)|Medium|greedy recursive|
 | 980| Unique Paths III|[980.cpp](980.cpp)|Hard||
 | 994| Rotting Oranges|[994.cpp](994.cpp)|Medium|greedy approach|
 | 1286| Iterator for Combination|[1286.cpp](1286.cpp)|Medium|recursive + call by value / 2 ptr dynamically|
+| 1718| Construct the Lexicographically Largest Valid Sequence|[1718.cpp](1718.cpp)|Medium|buggy implementation|
+| 1723| Find Minimum Time to Finish All Jobs|[1723.cpp](1723.cpp)|Hard|recursive + prunning / multi 0/1 knapsack DP.|
 
 
 ## Tree
@@ -149,6 +161,7 @@ Practice of leetcode
 | 404| Sum of Left Leaves|[404.cpp](404.cpp)|Easy||
 | 437| Path Sum III|[437.cpp](437.cpp)|Medium|recursive with/without hashmap sum|
 | 450| Delete Node in a BST|[450.cpp](450.cpp)|Medium|replace with predecessor or successor|
+| 501| Find Mode in Binary Search Tree|[501.cpp](501.cpp)|Easy|running ptr|
 | 508| Most Frequent Subtree Sum|[508.cpp](508.cpp)|Medium||
 | 538| Convert BST to Greater Tree|[538.cpp](538.cpp)|Medium|reverse inorder|
 | 563| Binary Tree Tilt|[563.cpp](563.cpp)|Easy||
@@ -158,6 +171,7 @@ Practice of leetcode
 | 700| Search in a Binary Search Tree|[700.cpp](700.cpp)|Easy||
 | 701| Insert into a Binary Search Tree|[701.cpp](701.cpp)|Medium||
 | 863| All Nodes Distance K in Binary Tree|[863.cpp](863.cpp)|Medium|dfs+postDFS|
+| 865| Smallest Subtree with all the Deepest Nodes|[865.cpp](865.cpp)|Medium||
 | 894| All Possible Full Binary Trees|[894.cpp](894.cpp)|Medium|Catalan Number|
 | 951| Flip Equivalent Binary Trees|[951.cpp](951.cpp)|Medium||
 | 971| Flip Binary Tree To Match Preorder Traversal|[971.cpp](971.cpp)|Medium||
@@ -170,8 +184,11 @@ Practice of leetcode
 | 1305| All Elements in Two Binary Search Trees|[1305.cpp](1305.cpp)|Medium|iterative inorder traversal, stack without flag|
 | 1339| Maximum Product of Splitted Binary Tree|[1339.cpp](1339.cpp)|Medium|preorder|
 | 1372| Longest ZigZag Path in a Binary Tree|[1372.cpp](1372.cpp)|Medium|postorder|
+| 1379| Find a Corresponding Node of a Binary Tree in a Clone of That Tree|[1379.cpp](1379.cpp)|Medium|preorder|
 | 1448| Count Good Nodes in Binary Tree|[1448.cpp](1448.cpp)|Medium|preorder|
+| 1457| Pseudo-Palindromic Paths in a Binary Tree|[1457.cpp](1457.cpp)|Medium|preorder + bit manipulation|
 | 1609| Even Odd Tree|[1609.cpp](1609.cpp)|Medium||
+| 1649| Create Sorted Array through Instructions|[1649.cpp](1649.cpp)|Hard|Binary Indexed Tree, i.e. Segment Tree|
 
 
 ## Divide & Conquer
@@ -216,6 +233,7 @@ Practice of leetcode
 | 20| Valid Parentheses|[20.cpp](20.cpp)|Easy|check empty stack in iteration|
 | **32**| Longest Valid Parentheses|[32.cpp](32.cpp)|Hard|use stack to store index rather than '()'. Or use bi-directional checking|
 | 71| Simplify Path|[71.cpp](71.cpp)|Medium|stack/word tokenizer instead of char tokenizer.|
+| 84| Largest Rectangle in Histogram|[84.cpp](84.cpp)|Hard|stack with index of ascending order|
 | 150| Evaluate Reverse Polish Notation|[150.cpp](150.cpp)|Medium|recursive/iterative|
 | 155| Min Stack|[155.cpp](155.cpp)|Easy|Record local min so far as well. push/pop/top/getMin T:O(1)|
 | 224| Basic Calculator|[224.cpp](224.cpp)|Hard|2 stack, infix->postfix->value|
@@ -224,7 +242,9 @@ Practice of leetcode
 | 232| Implement Queue using Stacks|[232.cpp](232.cpp)|Easy|2 stacks|
 | 239| Sliding Window Maximum|[239.cpp](239.cpp)|Hard|**Greedy** double ended queue T:O(n) / hashmap T:O(nlogn)|
 | 295| Find Median from Data Stream|[295.cpp](295.cpp)|Hard|2 priority Q|
+| 456| 132 Pattern|[456.cpp](456.cpp)|Medium|binary search T:O(nlogn) / tricky stack T:O(n)|
 | 1438| Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit|[1438.cpp](1438.cpp)|Medium|Reduce to problem 239. Use deque to record local min/max|
+| 1673| Find the Most Competitive Subsequence|[1673.cpp](1673.cpp)|Medium|mono increasing stack, |
 
 
 ## String
@@ -256,8 +276,12 @@ Practice of leetcode
 | 763| Partition Labels|[763.cpp](763.cpp)|Medium|treat is as array. moving anchor to check overlap region.|
 | 824| Goat Latin|[824.cpp](824.cpp)|Easy||
 | 859| Buddy Strings|[859.cpp](859.cpp)|Easy|running ptr|
+| 880| Decoded String at Index|[880.cpp](880.cpp)|Medium|Forward/Backward.|
 | 1032| Stream of Characters|[1032.cpp](1032.cpp)|Hard|inverse TRIE|
 | 1446| Consecutive Characters|[1446.cpp](1446.cpp)|Easy||
+| 1657| Determine if Two Strings Are Close|[1657.cpp](1657.cpp)|Medium||
+| 1662| Check If Two String Arrays are Equivalent|[1662.cpp](1662.cpp)|Easy|2 ptr|
+| 1704| Determine if String Halves Are Alike|[1704.cpp](1704.cpp)|Easy||
 
 ## Array
 | #    | Title             | Solution | Difficult |         Note           |
@@ -287,7 +311,6 @@ Practice of leetcode
 | 76| Minimum Window Substring|[76.cpp](76.cpp)|Hard|moving window<->2 pointers|
 | 79| Word Search|[79.cpp](79.cpp)|Medium|dfs|
 | 80| Remove Duplicates from Sorted Array II|[80.cpp](80.cpp)|Medium|check the last kth element|
-| 84| Largest Rectangle in Histogram|[84.cpp](84.cpp)|Hard|stack with index of ascending order|
 | 85| Maximal Rectangle|[85.cpp](85.cpp)|Hard|**reduce to problem 84.**|
 | 88| Merge Sorted Array|[88.cpp](88.cpp)|Easy|indexing|
 | 93| Restore IP Addresses|[93.cpp](93.cpp)|Medium|0 leading ip is illegal|
@@ -296,6 +319,7 @@ Practice of leetcode
 | 120| Triangle|[120.cpp](120.cpp)|Medium|**top down DP v.s. bottom up DP**|
 | 130| Surrounded Regions|[130.cpp](130.cpp)|Medium||
 | 135| Candy|[135.cpp](135.cpp)|Hard|S:O(1) top/down peak analysis. S:O(n) 2 endian traverse.|
+| 163| Missing Ranges|[163.cpp](163.cpp)|Easy||
 | 167| Two Sum II - Input array is sorted|[167.cpp](167.cpp)|Easy|2ptr|
 | 189| Rotate Array|[189.cpp](189.cpp)|Easy|Reverse and reverse|
 | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|Medium|accumulate+2ptr: T:O(n), note that sanity check is needed in the begin|
@@ -305,12 +329,15 @@ Practice of leetcode
 | 287| Find the Duplicate Number|[287.cpp](287.cpp)|Medium|O(1) space. Floyd's Tortoise and Hare ALG.|
 | 289| Game of Life|[289.cpp](289.cpp)|Medium|in-place|
 | 290| Word Pattern|[290.cpp](290.cpp)|Easy|2 hashmap/1 hashmap|
+| 303| Range Sum Query - Immutable|[303.cpp](303.cpp)|Easy||
+| 334| Increasing Triplet Subsequence|[334.cpp](334.cpp)|Medium|2 endian stack check. / DP!!|
 | 406| Queue Reconstruction by Height|[406.cpp](406.cpp)|Medium|**insert after sorting**|
 | 442| Find All Duplicates in an Array|[442.cpp](442.cpp)|Medium|1 ≤ a\[i\] ≤ n|
+| 454| 4Sum II|[454.cpp](454.cpp)|Medium|break down T:O(n^2)|
 | 452| Minimum Number of Arrows to Burst Balloons|[452.cpp](452.cpp)|Medium|sort + greedy to find min-enclosed range|
-| 456| 132 Pattern|[456.cpp](456.cpp)|Medium|binary search T:O(nlogn) / tricky stack T:O(n)|
 | 463| Island Perimeter|[463.cpp](463.cpp)|Easy|4*count edge-2*repeat edge|
 | 495| Teemo Attacking|[495.cpp](495.cpp)|Medium|runing ptr|
+| 498| Diagonal Traverse|[498.cpp](498.cpp)|Medium||
 | 525| Contiguous Array|[525.cpp](525.cpp)|Medium|Use map to record index of accumulated sum|
 | 532| K-diff Pairs in an Array|[532.cpp](532.cpp)|Medium|Notice the default value of hashmap|
 | 605| Can Place Flowers|[605.cpp](605.cpp)|Easy|Greedy|
@@ -320,16 +347,37 @@ Practice of leetcode
 | 835| Image Overlap|[835.cpp](835.cpp)|Medium|indexing|
 | 845| Longest Mountain in Array|[845.cpp](845.cpp)|Medium|2 ptr solution|
 | 849| Maximize Distance to Closest Person|[849.cpp](849.cpp)|Medium||
+| 881| Boats to Save People|[881.cpp](881.cpp)|Medium|sort + 2 ptr solution|
 | 905| Sort Array By Parity|[905.cpp](905.cpp)|Easy|2 ptr method/sorting|
+| 908| Smallest Range I|[908.cpp](908.cpp)|Easy|T:O(n)|
+| 910| Smallest Range II|[910.cpp](910.cpp)|Medium|greedy running ptr|
+| 941| Valid Mountain Array|[941.cpp](941.cpp)|Easy|2 ptr|
 | 948| Bag of Tokens|[948.cpp](948.cpp)|Meedium|2 ptr|
+| 977| Squares of a Sorted Array|[977.cpp](977.cpp)|Easy|2 ptr|
 | 1007| Minimum Domino Rotations For Equal Row|[1007.cpp](1007.cpp)|Medium||
+| 1010| Pairs of Songs With Total Durations Divisible by 60|[1010.cpp](1010.cpp)|Medium||
 | 1029| Two City Scheduling|[1029.cpp](1029.cpp)|Easy||
 | 1094| Car Pooling|[1094.cpp](1094.cpp)|Medium|comparison/bucket sort|
 | 1217| Minimum Cost to Move Chips to The Same Position|[1217.cpp](1217.cpp)|Easy||
+| 1229| Meeting Scheduler|[1229.cpp](1229.cpp)|Medium||
 | 1288| Remove Covered Intervals|[1288.cpp](1288.cpp)|Medium|sort|
-| 1306| Jump Game III|[1306.cpp](1306.cpp)|Medium|graph|
+| 1329| Sort the Matrix Diagonally|[1329.cpp](1329.cpp)|Medium|heap sort|
+| 1423| Maximum Points You Can Obtain from Cards|[1423.cpp](1423.cpp)|Medium|sliding window.|
+| 1437| Check If All 1's Are at Least Length K Places Away|[1437.cpp](1437.cpp)|Easy||
+| 1477| Find Two Non-overlapping Sub-arrays Each With Target Sum|[1477.cpp](1477.cpp)|Medium|sliding window.|
 | 1480| Running Sum of 1d Array|[1480.cpp](1480.cpp)|Easy||
 | 1512| Number of Good Pairs|[1512.cpp](1512.cpp)|Easy|C^k_2, k=2,3,,,etc.|
+| 1640| Check Array Formation Through Concatenation|[1640.cpp](1640.cpp)|Easy|hash table|
+| 1646| Get Maximum in Generated Array|[1646.cpp](1646.cpp)|Easy||
+| 1658| Minimum Operations to Reduce X to Zero|[1658.cpp](1658.cpp)|Medium|hash table / 2 ptr|
+| 1675| Minimize Deviation in Array|[1675.cpp](1675.cpp)|Hard|priority queue, similar to **problem\ 910**|
+| 1679| Max Number of K-Sum Pairs|[1679.cpp](1679.cpp)|Medium|hash map|
+| 1710| Maximum Units on a Truck|[1710.cpp](1710.cpp)|Easy||
+| 1712| Ways to Split Array Into Three Subarrays|[1712.cpp](1712.cpp)|Medium|binary search T:O(nlogn)/linear probing T:O(n)|
+| 1717| Maximum Score From Removing Substrings|[1717.cpp](1717.cpp)|Medium|cumulative counter, same as bulls/cows concept.|
+| 1726| Tuple with Same Product|[1726.cpp](1726.cpp)|Medium|running hashmap|
+| 1727| Largest Submatrix With Rearrangements|[1727.cpp](1727.cpp)|Medium|Reduce to problem 84. and 85.|
+| 1742| Maximum Number of Balls in a Box|[1742.cpp](1742.cpp)|Easy||
 
 ## Numeric
 | #    | Title             | Solution | Difficult |         Note           |
@@ -368,6 +416,7 @@ Practice of leetcode
 | 470| Implement Rand10() Using Rand7()|[470.cpp](470.cpp)|Medium|multiply scalar for boundary will return limit option, which is wrong!|
 | 593| Valid Square|[593.cpp](593.cpp)|Medium||
 | 621| Task Scheduler|[621.cpp](621.cpp)|Medium|Take examples!|
+| 754| Reach a Number|[754.cpp](754.cpp)|Medium|Take examples!|
 | 858| Mirror Reflection|[858.cpp](858.cpp)|Medium|geometry|
 | 902| Numbers At Most N Given Digit Set|[902.cpp](902.cpp)|Hard|iterative|
 | 957| Prison Cells After N Days|[957.cpp](957.cpp)|Medium|**state machine**|
@@ -375,6 +424,10 @@ Practice of leetcode
 | 1015| Smallest Integer Divisible by K|[1015.cpp](1015.cpp)|Medium|Pigeonhole Principle|
 | 1344| Angle Between Hands of a Clock|[1344.cpp](1344.cpp)|Medium||
 | 1492| The kth Factor of n|[1492.cpp](1492.cpp)|Medium|linear probing|
+| 1641| Count Sorted Vowel Strings|[1641.cpp](1641.cpp)|Medium|combination|
+| 1711| Count Good Meals|[1711.cpp](1711.cpp)|Medium|running window|
+| 1716| Calculate Money in Leetcode Bank|[1716.cpp](1716.cpp)|Easy||
+| 1744| Can You Eat Your Favorite Candy on Your Favorite Day?|[1744.cpp](1744.cpp)|Medium||
 
 ## Graph
 | #    | Title             | Solution | Difficult |         Note           |
@@ -384,6 +437,8 @@ Practice of leetcode
 | 133| Clone Graph|[133.cpp](133.cpp)|Medium|BFS/DFS with seen map.|
 | 207| Course Schedule|[207.cpp](207.cpp)|Medium|Detect cyclic in directed graph.|
 | 210| Course Schedule II|[210.cpp](210.cpp)|Medium|topological sort. inverse of postDFS if acyclic|
+| 261| Graph Valid Tree|[261.cpp](261.cpp)|Medium|cyclic detection on undirected graph, i.e. spanning tree verification.|
+| 269| Alien Dictionary|[269.cpp](269.cpp)|Hard|topologic sort on directed graph.|
 | 310| Minimum Height Trees|[310.cpp](310.cpp)|Medium|topologic order + MST|
 | 322| Reconstruct Itinerary|[322.cpp](322.cpp)|Medium|Euler path. use priority queue for lexical order.|
 | 399| Evaluate Division|[399.cpp](399.cpp)|Medium|DFS|
@@ -391,6 +446,11 @@ Practice of leetcode
 | 797| All Paths From Source to Target|[797.cpp](797.cpp)|Medium|dfs+backtracking|
 | 886| Possible Bipartition|[886.cpp](886.cpp)|Medium|bipartite + dfs/bfs|
 | 938| Range Sum of BST|[938.cpp](938.cpp)|Easy|Utilize BST property for O(h)|
+| 1306| Jump Game III|[1306.cpp](1306.cpp)|Medium|DFS|
+| 1345| Jump Game IV|[1345.cpp](1345.cpp)|Hard|BFS, pruning continuous num to avoid TLE|
+| 1466| Reorder Routes to Make All Paths Lead to the City Zero|[1466.cpp](1466.cpp)|Medium|undirected+directed graph/dfs|
+| 1631| Path With Minimum Effort|[1631.cpp](1631.cpp)|Medium|Dijastra / binary search|
+| 1743| Restore the Array From Adjacent Pairs|[1743.cpp](1743.cpp)|Medium|DFS on the begin node, which has in-degree 1|
 
 
 ## Sorting
@@ -402,6 +462,8 @@ Practice of leetcode
 | 164| Maximum Gap|[164.cpp](164.cpp)|Hard|**Radix Sort with buckets**|
 | 179| Largest Number|[179.cpp](179.cpp)|Medium|customize comparison|
 | 215| Kth Largest Element in an Array|[215.cpp](215.cpp)|Medium|partition/priority q|
+| 252| Meeting Rooms|[252.cpp](252.cpp)|Easy|sort/REGIONS|
+| 253| Meeting Rooms II|[253.cpp](253.cpp)|Medium|separate start/end time and sort|
 | 347| Top K Frequent Elements|[347.cpp](347.cpp)|Medium|priority Q|
 | 969| Pancake Sorting|[969.cpp](969.cpp)|Medium|bubble sort. 2(n-1) flips|
 
@@ -420,7 +482,9 @@ Practice of leetcode
 | #    | Title             | Solution | Difficult |         Note           |
 | ---- |-------------------|----------|-----------|------------------------|
 | 128| Longest Consecutive Sequence|[128.cpp](128.cpp)|Hard|require. T: O(n)|
+| 323| Number of Connected Components in an Undirected Graph|[323.cpp](323.cpp)|Medium|dfs or union/find.|
 | 952| Largest Component Size by Common Factor|[952.cpp](952.cpp)|Hard|graph solution will TLE while building graph. Use union instead.|
+| 1722| Minimize Hamming Distance After Swap OperationsMinimize Hamming Distance After Swap Operations|[1722.cpp](1722.cpp)|Medium|DFS on graph to find cconnected component / union to find group (same as connected component concept).|
 
 ## HashMap
 | #    | Title             | Solution | Difficult |         Note           |
@@ -436,6 +500,16 @@ Practice of leetcode
 
 
 ## Combo
-Array(current min/max/median): 239, 295, 1438
-Tree Ancestor: 235, 236
-LL Cyclic: 141, 142, 287
+ - Array(current min/max/median): 239, 295, 1438
+ - stack index: 84, 85
+ - Tree Ancestor: 235, 236
+ - LL Cyclic: 141, 142, 287
+ - str match DP: 10, 44, 97, 115
+     - mid way DP / Divide&Conquer: 241
+ - Perm: 31, 47
+ - **Palindrome Partition: 131, 132, 1745**
+ - LIS (increasing & equal): 300, 334
+ - Min Range: 908, 910, 1675
+ - Possible expression num w./w.o. parentheses: 241, 282
+ - Mono Stack: 456, 1673, 316, 1081, \[76\]
+ - Regions: 252, 253, 56, 57

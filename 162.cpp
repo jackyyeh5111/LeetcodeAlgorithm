@@ -1,3 +1,27 @@
+/***** Third Visit *****/
+/*
+    linear probing
+    T:O(n)/S:O(1)
+    -----
+    T:O(logn) -> binary search
+    Basically we just need to go to the larger side, then we'll find in the end.
+*/
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums)
+    {
+        int n=nums.size(), l=0, r=n;
+        while (l<r) {
+            int mid=(l+r)/2;
+            if ((mid==n-1||nums[mid]>nums[mid+1])&&
+                (mid==0||nums[mid]>nums[mid-1])) return mid;
+            else if (nums[mid]>nums[mid-1]) l=mid+1;
+            else r=mid;
+        }
+        return l;
+    }
+};
+
 /***** Second Visit *****/
 /*
     constraint: T:O(logn)

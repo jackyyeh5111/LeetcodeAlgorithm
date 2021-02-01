@@ -1,3 +1,92 @@
+/***** Fourth Visit *****/
+/*
+    2 ptr solution
+    say we have 2 ptr, l and r.
+    l: take 1 step per num
+    r: max pos we can reach so far.
+    keep update l and r until reach the end.
+    For each num, if we can reach farer than r, then step++;
+    T:O(n)/S:O(1)
+    -----
+    TO BE BRIEF, we take BFS in terms of index
+      [..............]
+    0 ^
+    1  ^   ^
+    2       ^    ^
+    3             ^     ^
+    T:O(n)/S:O(1)
+*/
+
+/***** Third Visit *****/
+/*
+    [2,3,1,1,4]
+     0 1 2 3 4
+     0: 1,2
+     1: 2,3,4
+     2: 3
+     3: 4
+     4: -
+     Build a graph and apply BFS
+     T:O(V+E), E is equal to the sum over 0~n-1
+     TLE
+     -----
+     2 ptr solution.
+     Seems like queue traversal. Though we keep tracking next num(node), we
+     need to figure out we are in the same level or not.
+     T:O(n)/S:O(1)
+*/
+
+// BFS TLE
+class Solution {
+public:
+    int jump(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<vector<int>> graph(n,vector<int>{});
+        vector<bool> visited(n,0);
+        for (int i=0; i<n; ++i) {
+            for (int j=1; j<=nums[i]; ++j) {
+                if (i+j<n) graph[i].push_back(i+j);
+            }
+        }
+        queue<int> q;
+        q.push(0);
+        int ans=0;
+        while (!q.empty()) {
+            int k=q.size();
+            ans++;
+            for (int i=0; i<k; ++i) {
+                int u=q.front(); q.pop();
+                for (int v:graph[u]) {
+                    if (v==n-1) return ans;
+                    if (!visited[v]) q.push(v);
+                    visited[v]=true;
+                }
+            }
+        }
+        return 0;
+    }
+};
+
+// 2 ptr with same level checking
+class Solution {
+public:
+    int jump(vector<int>& nums)
+    {
+        int n=nums.size(), l=0, r=0, step=0, prev=-1;
+        if (n==1) return 0;
+        for (int num:nums) {
+            if (l+num>r) {
+                if (l>prev) {prev=r; step++;}
+                r=l+num;
+            }
+            if (r>=n-1) return step;
+            l++;
+        }
+        return -1;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Array:
@@ -17,7 +106,6 @@
     check current max stop position.
     Greedy approach:
     T:O(n)/S:O(1)
-
 */
 class Solution {
 public:

@@ -1,3 +1,32 @@
+/***** Third Visit *****/
+/*
+    Typical dp problem as before.
+    dp[i][j] denotes s[0-i] matches p[0-j] or not.
+    dp[i][j] = dp[i-1][j-1] if s[i]==p[j]
+             = true if p[j]=='*'
+             = dp[i-1][j-1] if p[j]=='?'
+    '?' Matches any single character.
+    '*' Matches any sequence of characters (including the empty sequence).
+    T:O(mn)/S:O(mn), could be reduced to linear space.
+*/
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m=s.length(), n=p.length();
+        vector<vector<bool>> dp(m+1,vector<bool>(n+1,0));
+        dp[0][0]=1;
+        for (int i=1; i<=n; ++i) dp[0][i]=dp[0][i-1]&&(p[i-1]=='*');
+        for (int i=1; i<=m; ++i) {
+            for (int j=1; j<=n; ++j) {
+                if (p[j-1]=='*') dp[i][j]=dp[i-1][j]||dp[i][j-1];
+                else if (p[j-1]=='?') dp[i][j]=dp[i-1][j-1];
+                else dp[i][j]=dp[i-1][j-1]&&s[i-1]==p[j-1];
+            }
+        }
+        return dp[m][n];
+    }
+};
+
 /***** Second Visit *****/
 /*
     string:

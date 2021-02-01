@@ -1,3 +1,45 @@
+/***** Third Visit *****/
+/*
+    "2*3-4*5"
+    w.o. memo DP
+    T(n) = CATALAN NUMBER * O(n)
+    w. memo DP
+    T(n) = CATALAN NUMBER
+*/
+class Solution {
+public:
+    unordered_map<string, vector<int>> m;
+    vector<int> diffWaysToCompute(string input)
+    {
+        if (m.count(input)!=0) return m[input];
+        int n=input.length();
+        bool isNum=true;
+        vector<int> ret;
+        for (int i=0; i<n; ++i) {
+            if (!isdigit(input[i])) {
+                isNum=false;
+                auto left = diffWaysToCompute(input.substr(0,i));
+                auto right = diffWaysToCompute(input.substr(i+1));
+                for (int l:left) {
+                    for (int r:right) {
+                        ret.push_back(calc(l,r,input[i]));
+                    }
+                }
+            }
+        }
+        if (isNum) ret=vector<int>{stoi(input)};
+        m[input]=ret;
+        return ret;
+    }
+
+    int calc(int a, int b, char op)
+    {
+        if (op=='+') return a+b;
+        else if (op=='-') return a-b;
+        else return a*b;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Divide & Conquer

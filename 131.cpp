@@ -1,3 +1,79 @@
+/***** Fourth Visit(FAIL) *****/
+/*
+    recursive dfs
+    dfs(int idx, string s, vector<string> &cur, vector<vector<string>> &ans)
+    if s.substr(0,idx) is palindrome
+        cur.push_back(s.substr(0,idx))
+        dfs(0,s.substr(idx),cur,ans)
+        cur.pop_back()
+    dfs(idx+1,s,cur,ans);
+    T(n) = T:O(2^n) * palindrome checking T:O(n)
+    -----
+    divide & conquer
+    for i=1~n-1
+      string left=s.substr(0,i)
+      string right=s.substr(i+1)
+      combine partition(left) and partition(right)
+    if s is palindrome: add s
+    check palindrome O(n)
+    -----
+    dp[i][j] denotes if s[i-j] is palindrome or not
+    dp[i][j] = dp[i+1][j-1] && s[i]==s[j]
+    -----
+    SEE SECOND VISIT
+*/
+
+/***** Third Visit *****/
+/*
+      a a b a a c
+      . . . . . .
+    . v v v v v v
+    . v x x v x
+    . x v x x
+    . x x x
+    . v x
+    . x
+
+    KEY:
+    s=left+mid+right, s is palindrom if mid is palindrom and left==right.
+    Take O(1) to check palindrom during DP.
+
+    It will take O(n^2) to build the table
+    T:O(n!) to traverse
+
+    a a b a a c
+    aa b a a c
+    aa b aa c
+    a a b aa c
+    a aba a c
+    aabaa c
+*/
+class Solution {
+public:
+    vector<vector<string>> ans;
+    vector<string> cur;
+    vector<vector<string>> partition(string s)
+    {
+        int n=s.length();
+        vector<vector<bool>> dp(n,vector<bool>(n,0));
+        help(s,0,dp);
+        return ans;
+    }
+
+    void help(string s, int idx, vector<vector<bool>> &dp)
+    {
+        if (idx==s.length()) {ans.push_back(cur); return;}
+        for (int i=idx; i<s.length(); ++i) {
+            if (s[i]==s[idx]&&(idx+2>=i||dp[idx+1][i-1])) {
+                dp[idx][i]=true;
+                cur.push_back(s.substr(idx,i-idx+1));
+                help(s,i+1,dp);
+                cur.pop_back();
+            }
+        }
+    }
+};
+
 /***** Second Visit *****/
 /*
     Directly backtracking on palindrome checking

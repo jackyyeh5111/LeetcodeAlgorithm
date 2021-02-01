@@ -1,3 +1,36 @@
+/***** Fourth Visit *****/
+/*
+    [1,1,2]
+
+    [1,1,2]
+    [1,2,1]
+    [2,1,1]
+    perm without recover via call by value
+    Kind similar to problem 31, Next Permutation.
+    Allow strict increasing nums swap only, and perm the rest nums.
+    T:O(n!)/S:O(n!)
+*/
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ans;
+        perm(nums,0,ans);
+        return ans;
+    }
+
+    void perm(vector<int> nums, int idx, vector<vector<int>> &ans)
+    {
+        int n=nums.size();
+        if (idx==n) ans.push_back(nums);
+        for (int i=idx; i<n; ++i) {
+            if (i!=idx&&nums[idx]>=nums[i]) continue;
+            swap(nums[idx],nums[i]);
+            perm(nums,idx+1,ans);
+        }
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

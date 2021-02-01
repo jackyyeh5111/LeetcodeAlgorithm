@@ -1,13 +1,53 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
+/***** Fourth Visit *****/
+/*
+    1st pass: find length n and calculate group length n/k
+    2st pass: reverse k nodes in n/k times
+
+    How to reverse each group?
+    Use recursive function
+
+    template if k=2l=
+    ListNode *invert(ListNode* head)
+    {
+        ListNode *p1=head->next, *p2=head->next->next;
+        ListNode *next=head->next->next->next;
+        p2->next=p1;
+        p1->next=invert(next);
+        return p2;
+    }
+*/
+
+/***** Third Visit *****/
+ /*
+     2 pass
+     First pass: max length checking N
+     Second pass: Reverse first N/k*k nodes.
+     T:O(n)/S:O(1)
  */
+ class Solution {
+ public:
+     ListNode* reverseKGroup(ListNode* head, int k)
+     {
+         int n=0;
+         ListNode *cur=head;
+         while (cur) {cur=cur->next; n++;}
+         cur=head;
+         ListNode *newHead=0, *newTail=0;
+         for (int i=0; i<n/k; ++i) {
+             ListNode *prevTail=newTail, *prev=0;
+             newTail=cur;
+             for (int j=0; j<k; ++j) {
+                 ListNode *t=cur->next;
+                 cur->next=prev;
+                 prev=cur; cur=t;
+             }
+             if (!newHead) newHead=prev;
+             else prevTail->next=prev;
+         }
+         if (newTail&&cur) newTail->next=cur;
+         return newHead?newHead:head;
+     }
+ };
 
 /***** Second Visit *****/
 /*

@@ -1,3 +1,133 @@
+/***** Fifth Visit *****/
+
+/***** Fourth Visit *****/
+/*
+    sort
+    T:O(nlogn)/S:O(1)
+    -----
+    partition
+    T:O(n^2)
+    -----
+    max heap
+    T:O(n)/S:O(n)
+*/
+/*
+    sorting then find kth largest num.
+    T:O(nlogn)/S:O(1)
+    -----
+    partition
+    T:O(n^2)/S:O(1)
+    -----
+    heap sort
+    build heap: T:O(n)/S:O(k)
+    find kth element: T:O(klogn)/S:O(1)
+    [1,2,3,4,5,6] k=3
+           ^ ^
+*/
+// max heap T:O(klogn)/S:O(n)
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) 
+    {
+        priority_queue<int,vector<int>,less<int>> pq(nums.begin(),nums.end());
+        for (int i=0; i<k-1; ++i) 
+            pq.pop();
+        return pq.top();
+    }
+};
+
+// partition T:O(n^2)/S:O(1)
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) 
+    {
+        int pivot=nums[0];
+        int l=1, r=nums.size()-1, n=nums.size();
+        while (l<=r) {
+            while (l<=r&&nums[l]<=pivot) l++;
+            while (l<=r&&nums[r]>pivot) r--;
+            if (l<=r) swap(nums[l++],nums[r--]);
+        }
+        swap(nums[0],nums[r]);
+        if (r==n-k) return pivot;
+        else if (n-r<k) {
+            // left
+            vector<int> left(nums.begin(),nums.begin()+r);
+            return findKthLargest(left,k-n+r);
+        }
+        else {
+            // right
+            vector<int> right(nums.begin()+r+1,nums.end());
+            return findKthLargest(right,k);
+        }
+    }
+};
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        priority_queue<int> pq(nums.begin(),nums.end());
+        for (int i=1; i<k; ++i) pq.pop();
+        return pq.top();
+    }
+};
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        int n=nums.size();
+        int pivot=nums[0];
+        int l=1, r=n-1;
+        while (l<=r) {
+            while (l<=r&&nums[l]<=pivot) l++;
+            while (l<=r&&nums[r]>pivot) r--;
+            if (l<=r) swap(nums[l++],nums[r--]);
+        }
+        swap(nums[0],nums[r]);
+        if (r==n-k) return pivot;
+        else if (n-r<k) {
+            vector<int> left(nums.begin(),nums.begin()+r);
+            return findKthLargest(left,k-n+r);
+        }
+        else {
+            vector<int> right(nums.begin()+r+1,nums.end());
+            return findKthLargest(right,k);
+        }
+    }
+};
+
+/***** Third Visit *****/
+/*
+    quick sort partition
+    T:O(n^2)
+*/
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        int pivot=nums[0];
+        int l=1, r=nums.size()-1;
+        while (l<=r) {
+            while (l<=r&&nums[l]<=pivot) l++;
+            while (l<=r&&nums[r]>pivot) r--;
+            if (l<=r) swap(nums[l],nums[r]); // KEY: seap condition
+        }
+        swap(nums[0],nums[r]);
+        int n=nums.size();
+        if (n-r==k) return pivot;
+        else if (n-r>k) {
+            vector<int> t(nums.begin()+r+1,nums.end());
+            return findKthLargest(t,k);
+        }
+        else {
+            vector<int> t(nums.begin(),nums.begin()+r);
+            return findKthLargest(t,k-n+r);
+        }
+    }
+};
+
 /***** Second Visit *****/
 /*
     T(n)=T(n/2)+O(n) => O(n) in best case.

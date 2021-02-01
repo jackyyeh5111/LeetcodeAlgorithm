@@ -1,3 +1,66 @@
+/***** Second Visit *****/
+/*
+    Random DFS from a node with 0 in-degree
+    start from the other endian.
+
+    1. the path of random dfs will intersect with diameter (largest path).
+    2. The intersection point is one of the largest path's endian.
+    two dfs -> T:O(V+E)/S:O(V+E)
+    =========================
+    a----b--c
+         |
+    d----e-----f
+    ac is the farthest path from a, df is the longest path of G.
+    There must exist a pth be connecting with them.
+    SAY ab>bc, de>ef
+    > ab+be+max(de,ef)<ab+bc -> be+max(de,ef)<bc
+    > ef > be+ab
+    > bc > de+be
+    > de+ef>"be+ab+de">ab+bc>"ab+de+be"
+    contradiction!!!
+    =========================
+    a------  --c
+           \/
+    d-------e-----f
+    > ae+max(de,ef)<ae+ec -> max(de,ef)<ec -> de<ec
+    > ec+ef>de+ef contradiction!!
+
+*/
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges)
+    {
+        vector<vector<int>> graph(n,vector<int>{});
+        vector<bool> visited(n,0);
+        for (auto edge:edges) {
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
+        }
+        vector<int> cur,cmax;
+        dfs(graph,visited,0,cur,cmax);
+        int new_start=cmax.back();
+        cur.clear(); cmax.clear();
+        dfs(graph,visited,new_start,cur,cmax);
+        int k=cmax.size();
+        if (k%2==0) return {cmax[k/2-1],cmax[k/2]};
+        else return {cmax[k/2]};
+    }
+
+    void dfs(vector<vector<int>> &graph, vector<bool> &visited, int u,
+             vector<int> &cur, vector<int> &cmax)
+    {
+        if (visited[u]) return;
+        visited[u]=true;
+        cur.push_back(u);
+        for (int v:graph[u]) {
+            dfs(graph,visited,v,cur,cmax);
+        }
+        if (cur.size()>cmax.size()) cmax=cur;
+        cur.pop_back();
+        visited[u]=false;
+    }
+};
+
 /***** First Visit *****/
 /*
     For minimum spanning tree, there's only one longest path.

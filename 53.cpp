@@ -1,3 +1,94 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int csum=0,cmin=0,ans=INT_MIN;
+        for (int num:nums) {
+            csum+=num;
+            if (cmin<0) ans=max(ans,csum-cmin);
+            else ans=max(ans,csum);
+            cmin=min(cmin,csum);
+        }
+        return ans;
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    brute force:
+    T:O(n^2)/S:O(1)
+    -----
+    DP to keep tracking current min/max
+    T:O(n)
+    -----
+    Divide & Conquer
+    left = maxSubArray(0,mid)
+    right = maxSubArray(mid+1,n)
+    combine midL ~ mid ~ mid R via 2 while loop
+    T:O(n)=2TO(n/2)+O(N)
+    T:O(nlogn)/S:O(logn)
+*/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int csum=0, ans=INT_MIN;
+        for (int num:nums) {
+            csum=max(csum+num,num);
+            ans=max(ans,csum);
+        }
+        return ans;
+    }
+};
+
+/***** Third Visit *****/
+/*
+    Calculatet the running sum and brute force finding the largest contiguous sum.
+    T:O(n^2)/S:O(n)
+    -----
+    Divide and conquer.
+    T(n)=2T(n/2)+O(n) -> T:O(nlogn)/S:O(logn)
+    -----
+    dp?
+    dp[i] denotes the largest contiguous sum from 0~i.
+    T:O(n)/S:O(n)
+*/
+
+// DP w. T:O(n)/S:O(n)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int> dp(n,0);
+        int ans=nums[0];
+        for (int i=0; i<n; ++i) {
+            if(i<1) dp[i]=nums[i];
+            else {
+                dp[i]=max(dp[i-1]+nums[i],nums[i]);
+            }
+            ans=max(ans,dp[i]);
+        }
+        return ans;
+    }
+};
+
+// DP w. T:O(n)/S:O(1)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int n=nums.size(), cmin=0, cur=0, ans=nums[0];
+        for (int num:nums) {
+            cur+=num;
+            ans=max(ans,max(num,cur-cmin));
+            cmin=min(cmin,cur);
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     brute force:

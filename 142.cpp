@@ -1,3 +1,27 @@
+/***** Fifth Visit *****/
+/*
+    fast: a+c+k*d
+    slow: a+c
+    2a+2c=a+c+k*d
+    a+c=k*d
+    a=k*d-c
+    if we start p1 on 0 and p2 on a+c
+    when p1 meets p2 by both moving 1 step, p1=a, p2=a+c+k*d-c=a+k*d
+    then we can find the meeting point a.
+*/
+
+
+/***** Fourth Visit *****/
+/*
+    slow: a+b
+    fast: a+b+kc
+    2*(a+b)=a+b+kc
+    a+b=kc
+    a=kc-b
+    If we let slow ptr walk from a, and expect slow/fast meet in the cyclic node, we have to let fast ptr start from a+b, which is the met node in first slow/fast moving.
+    T:O(n) 2 pass
+*/
+
 /***** Third Visit  *****/
 /*
     Linked List: slow/fast ptr.

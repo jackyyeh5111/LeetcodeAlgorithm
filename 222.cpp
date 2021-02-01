@@ -1,3 +1,22 @@
+/***** Fourth Visit *****/
+/*
+    T(n)=T(n/2)+O(logn)
+        =O((logn)^2)
+    S:O(logn)
+*/
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if (!root) return 0;
+        TreeNode *left=root->left, *right=root->right;
+        int lh=0, rh=0;
+        while (left) {left=left->left; lh++;}
+        while (right) {right=right->left; rh++;}
+        if (lh==rh) return (1<<lh)+countNodes(root->right);
+        else return (1<<rh)+countNodes(root->left);
+    }
+};
+
 /***** Third Visit *****/
 /*
     T(n)=T(n/2)+O(logn)

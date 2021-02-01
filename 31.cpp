@@ -1,3 +1,73 @@
+/***** Fifth Visit *****/
+/*
+    1 2 3 4
+    1 2 4 3
+    1 3 2 4
+    1 3 4 2
+    1 4 2 3
+    1 4 3 2
+*/
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums)
+    {
+        int n=nums.size(), l=-1, r=-1;
+        for (int i=0; i<n-1; ++i) {
+            if (nums[i]<nums[i+1]) l=i;
+        }
+        if (l==-1) {
+            reverse(nums.begin(),nums.end());
+            return;
+        }
+        for (int i=n-1; i>l; --i) {
+            if (nums[i]>nums[l]) {r=i; break;}
+        }
+        swap(nums[l],nums[r]);
+        reverse(nums.begin()+l+1,nums.end());
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    strict increasing order
+    [... a b c d e] a<b, b>c>d>e
+
+    1. find last strict increase pair a,b
+    2. find the min num larger than a
+    3. swap(a,b)
+    4. reverse b ~ e
+    T:O(n)/S:O(1)
+*/
+
+/***** Third Visit *****/
+/*
+    Constraint: S:O(1)
+    1. Find the index which have strict decreasing nums following. This means that nums[index] is done for the perm index starts from nums[idx]
+    2. If we cant find this index, it means that the overall nums are all done, then it should be inverse increasing order.
+    3. If we find the index, then we are going to next larger number. Find the min num larger than nums[index] which is in the following nums.
+    4. swap them, and the following decreasing nums(done) should reverse to increasing (begin).
+
+    Refers: https://www.youtube.com/watch?v=quAS1iydq7U
+*/
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n=nums.size(),j=-1,k=-1;
+        for (int i=n-2; i>=0; i--) {
+            if (nums[i]<nums[i+1]) {j=i; break;}
+        }
+        if (j==-1) {
+            reverse(nums.begin(),nums.end());
+            return;
+        }
+        for (int i=n-1;  i>j; --i) {
+            if (nums[i]>nums[j]) {k=i; break;}
+        }
+        swap(nums[j],nums[k]);
+        reverse(nums.begin()+j+1,nums.end());
+    }
+};
+
 /***** Second Visit *****/
 /*
     1 2 3

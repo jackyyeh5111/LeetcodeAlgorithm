@@ -1,3 +1,38 @@
+/***** Third Visit *****/
+/*
+    0123456789012
+    ADOBECODEBANC ABC
+    ^    ^
+     ^    ^
+     ^        ^
+          ^    ^
+          ^     ^
+               ^  ^
+    01234567890123456789
+    aaaaaaaaaaaabbbbbcdd
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        unordered_map<char,int> m;
+        for (char c:t) m[c]++;
+        int l=0,r=0,n=s.length(),counter=t.length();
+        int minl=0,minLen=INT_MAX;
+        while (r<n) {
+            if (m[s[r]]>0) counter--;
+            m[s[r++]]--;
+            while (counter==0) {
+                if (r-l<minLen) {minLen=r-l; minl=l;}
+                m[s[l]]++;
+                if (m[s[l]]>0) counter++;
+                l++;
+            }
+        }
+        return minLen==INT_MAX?"":s.substr(minl,minLen);
+    }
+};
+
 /***** Second Visit *****/
 /*
     string

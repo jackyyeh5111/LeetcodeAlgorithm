@@ -1,3 +1,65 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
+    {
+        int p=nums1.size()-1;
+        m--; n--;
+        for (int i=p; i>=0; i--) {
+            if (m>=0&&n>=0&&nums1[m]>=nums2[n]) nums1[i]=nums1[m--];
+            else if (n>=0) nums1[i]=nums2[n--];
+            else break;
+        }
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    Top down linear probing
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n)
+    {
+        int idx1=m-1,idx2=n-1;
+        for (int i=m+n-1; i>=0; --i) {
+            if (idx1>=0&&idx2>=0&&nums1[idx1]<=nums2[idx2])
+                nums1[i]=nums2[idx2--];
+            else if (idx1>=0&&idx2>=0&&nums1[idx1]>nums2[idx2])
+                nums1[i]=nums1[idx1--];
+            else if (idx1<0)
+                nums1[i]=nums2[idx2--];
+            else
+                nums1[i]=nums1[idx1--];
+        }
+    }
+};
+
+/***** Third Visit *****/
+/*
+    [1,2,3,0,0,0]
+       ^
+    [2,5,6]
+     ^
+    [1,2,2,3,5,6]
+       ^
+    Top-down 2 ptr
+    T:O(m+n)/S:O(1)
+*/
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int k=m+n-1;
+        while (n>0&&m>0) {
+            if (nums1[m-1]>nums2[n-1])
+                nums1[k--]=nums1[--m];
+            else nums1[k--]=nums2[--n];
+        }
+        while (n>0) nums1[k--]=nums2[--n];
+    }
+};
+
 /***** Second Visit *****/
 /*
     Insertion sort

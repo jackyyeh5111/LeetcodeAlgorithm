@@ -1,3 +1,53 @@
+/***** Fourth Visit *****/
+/*
+    C^n_k + C^n_k-1 = C^n+1_k
+*/
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k)
+    {
+        vector<vector<int>> ans;
+        vector<int> cur;
+        help(n,k,0,cur,ans);
+        return ans;
+    }
+
+    void help(int n, int k, int idx,
+              vector<int> &cur, vector<vector<int>> &ans)
+    {
+        if (cur.size()==k) {
+            ans.push_back(cur);
+            return;
+        }
+        for (int i=idx; i<n; ++i) {
+            cur.push_back(i+1);
+            help(n,k,i+1,cur,ans);
+            cur.pop_back();
+        }
+    }
+};
+
+/***** Third Visit *****/
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> ans;
+        vector<int> comb;
+        perm(n,k,1,comb,ans);
+        return ans;
+    }
+
+    void perm(int n, int k, int idx, vector<int> &comb, vector<vector<int>> &ans)
+    {
+        if (comb.size()==k) {ans.push_back(comb); return;}
+        for (int i=idx; i<=n; ++i) {
+            comb.push_back(i);
+            perm(n,k,i+1,comb,ans);
+            comb.pop_back();
+        }
+    }
+};
+
 /***** Second Visit *****/
 /*
     C^n_k

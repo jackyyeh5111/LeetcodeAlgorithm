@@ -1,3 +1,62 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    int maxAncestorDiff(TreeNode* root)
+    {
+        int ans=0;
+        if (root) post(root,ans);
+        return ans;
+    }
+
+    // min, max
+    pair<int,int> post(TreeNode *root, int &ans)
+    {
+        if (!root->left&&!root->right)
+            return {root->val,root->val};
+        pair<int,int> l={root->val,root->val};
+        pair<int,int> r={root->val,root->val};
+        if (root->left) l=post(root->left,ans);
+        if (root->right) r=post(root->right,ans);
+        int cmaxdiff = max(abs(root->val-min(l.first,r.first)),
+                           abs(root->val-max(l.second,r.second)));
+        ans=max(ans,cmaxdiff);
+        return {min(root->val,min(l.first,r.first)),
+                max(root->val,max(l.second,r.second))};
+    }
+};
+
+/***** Second Visit *****/
+class Solution {
+public:
+    int maxAncestorDiff(TreeNode* root)
+    {
+        int ans=0;
+        postOrder(root,ans);
+        return ans;
+    }
+
+    // max, min
+    pair<int,int> postOrder(TreeNode *root, int &ans)
+    {
+        if (!root->left&&!root->right) return {root->val,root->val};
+        pair<int,int> ret={root->val,root->val};
+        if (root->left) {
+            auto left=postOrder(root->left,ans);
+            ret.first=max(ret.first,left.first);
+            ret.second=min(ret.second,left.second);
+            ans=max(ans,max(abs(root->val-ret.first),abs(root->val-ret.second)));
+        }
+        if (root->right) {
+            auto right=postOrder(root->right,ans);
+            ret.first=max(ret.first,right.first);
+            ret.second=min(ret.second,right.second);
+            ans=max(ans,max(abs(root->val-ret.first),abs(root->val-ret.second)));
+        }
+        return ret;
+    }
+};
+
+/***** First Visit *****/
 /*
     A binary tree, rather than binary search tree.
     bottom-up postorder traversal. In each recursive, maintain <min,max> which are the smallest and

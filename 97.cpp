@@ -1,3 +1,85 @@
+/***** Sixth Visit *****/
+/*
+    dp[0][0]=1
+    dp[i][j] true if s1[0-i-1] and s2[0-j-1] forms interleaving on s3[0-i+j-1]
+    dp[i][j] = dp[i-1][j]&&s1[i-1]==s3[i+j-1] ||
+               dp[i][j-1]&&s2[j-1]==s3[i+j-1]
+    T:O(mn)/S:O(mn)
+    -----
+    1-d dp reduce SC
+    T:O(mn)/S:O(n)
+*/
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3)
+    {
+        int n1=s1.length(), n2=s2.length(), n3=s3.length();
+        if (n1+n2!=n3) return false;
+        vector<bool> dp(n2+1,0);
+        for (int i=0; i<=n1; ++i) {
+            for (int j=0; j<=n2; ++j) {
+                if (i==0&&j==0) dp[j]=1;
+                else if (i==0) dp[j]=dp[j-1]&&s2[j-1]==s3[i+j-1];
+                else if (j==0) dp[j]=dp[j]&&s1[i-1]==s3[i+j-1];
+                else {
+                    dp[j]=dp[j-1]&&s2[j-1]==s3[i+j-1]||
+                          dp[j]&&s1[i-1]==s3[i+j-1];
+                }
+            }
+        }
+        return dp[n2];
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    recursive:
+
+    dfs(int idx1, int idx2, string s1, string s2, string s3, bool &ans)
+    worst case:
+    s1= aaa
+    s2= aaaa
+    s3= aaaaaaa
+    T:O(2^m+n)
+    -----
+    dp[i][j] denotes s1[0~i] and s2[0~j] forms the interleaving of s3[0~i+j]
+    transition:
+    dp[i][j] s3[i+j]==s1[i]&&dp[i-1][j] ||
+             s3[i+j]==s2[j]&&dp[i][j-1]
+    T:O(mn)/S:O(m+n)
+*/
+
+/***** Third Visit *****/
+/*
+    dp[k][i][j] denotes s3[0-k] is interleave of s1[0-i] and s2[0-j]
+                        where k=i+j, combines k with i, j
+    dp[i][j] denotes s3[0-i+j-1] is interleave of s1[0-i] and s2[0-j]
+
+    dp[i][j]=dp[i][j-1]&&s2[j]==s3[i+k-1] or
+             dp[i-1][j]&&s1[j]==s3[i+k-1]
+
+    T:O(n^2)/S:O(n)
+*/
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        int n1=s1.length(), n2=s2.length();
+        if (n1+n2!=s3.length()) return false;
+        vector<bool> dp(n2+1,false);
+        dp[0]=true;
+        for (int i=1; i<=n2; ++i)
+            dp[i]=dp[i-1]&&s2[i-1]==s3[i-1];
+        for (int i=1; i<=n1; ++i) {
+            dp[0]=s1[0]==s3[0];
+            for (int j=1; j<=n2; ++j)  {
+                dp[j]=(dp[j]&&s1[i-1]==s3[i+j-1]) ||
+                      (dp[j-1]&&s2[j-1]==s3[i+j-1]);
+            }
+        }
+        return dp[n2];
+    }
+};
+
 /***** Second Visit *****/
 /*
     interleaves means all char in s3 belong to s1 or s2 IN ORDER.

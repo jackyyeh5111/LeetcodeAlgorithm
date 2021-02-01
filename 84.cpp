@@ -1,3 +1,53 @@
+/***** Fourth Visit *****/
+/*
+    mono sack
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights)
+    {
+        stack<pair<int,int>> s; //idx, h
+        heights.push_back(0);
+        int n=heights.size(),ans=0;
+        for (int i=0; i<n; ++i) {
+            int t=i;
+            while (!s.empty()&&s.top().second>=heights[i]) {
+                auto p=s.top(); s.pop();
+                ans=max(ans,p.second*(i-p.first));
+                t=p.first;
+            }
+            s.push({t, heights[i]});
+        }
+        return ans;
+    }
+};
+
+/***** Third Visit *****/
+/*
+    Use a stack to store increasing order with <pos, height>
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        heights.push_back(0);
+        int n=heights.size(), ans=0;
+        stack<pair<int,int>> s;
+        for (int i=0; i<n; ++i) {
+            int minpos=INT_MAX;
+            while(!s.empty()&&s.top().second>heights[i]) {
+                auto p=s.top(); s.pop();
+                ans=max(ans,p.second*(i-p.first));
+                minpos=min(minpos,p.first);
+            }
+            if (minpos!=INT_MAX) s.push({minpos,heights[i]});
+            s.push({i,heights[i]});
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Array:

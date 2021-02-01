@@ -1,3 +1,23 @@
+/***** Third Visit *****/
+/*
+    postOrder traversal
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
+    {
+        if (!root) return 0;
+        if (root==p||root==q) return root;
+        TreeNode *left=lowestCommonAncestor(root->left,p,q);
+        TreeNode *right=lowestCommonAncestor(root->right,p,q);
+        if (left&&right) return root;
+        else if(!left&&!right) return 0;
+        else return left?left:right;
+
+    }
+};
+
 /***** Second Visit *****/
 // w.o. help function
 class Solution {

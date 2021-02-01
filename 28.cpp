@@ -1,3 +1,47 @@
+/***** Third Visit *****/
+/*
+    String Comparison
+    brute force:
+        enumerate all possible substring and do string comparison
+        T:O(n^2*k) where k is the length of needle.
+    -----
+    KMP
+        T:O(m+n)
+*/
+class Solution {
+public:
+    int strStr(string haystack, string needle)
+    {
+        if (needle=="") return 0;
+        vector<int> failure=getFailure(needle);
+        int i=0,j=0,m=haystack.length(),n=needle.length();
+        while (n-j<=m-i) {
+            if (haystack[i]==needle[j]) {j++; i++;}
+            else if (j==0) i++;
+            else j=failure[j-1];
+            // cout<<i<<","<<j<<endl;
+            if (j==n) return i-n;
+        }
+        return -1;
+    }
+
+    // failure[i]=k denotes s[0~k]==s[i-k~i]
+    // failure[i]= failure[i-1]+1 if s[i]==s[failure[i]+1]
+    //             else check failure[failure[i-1]]
+    vector<int> getFailure(string s)
+    {
+        int n=s.length();
+        vector<int> failure(n,0);
+        for (int i=1; i<n; ++i) {
+            int j=failure[i-1];
+            while (j!=0&&s[j]!=s[i]) j=failure[j-1];
+            if (s[j]==s[i]) failure[i]=j+1;
+            else failure[i]=0;
+        }
+        return failure;
+    }
+};
+
 /***** Second Visit *****/
 /*
     knuth morris pattern

@@ -1,14 +1,30 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- *
+/***** Third Visit *****/
+/*
+    Vavlidate BST or not.
+    If we apply top down, i.e. preorder, we may miss the one with larger pred .
+    Apply bottom up, i.e. postorder. Carry current min/max while backtracking.
+    T:O(n)/S:O(n), use morris traversal for further reduce space complexity.
+*/
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if (!root) return true;
+        bool ans=true;
+        postOrder(root,ans);
+        return ans;
+    }
+
+    // min, max
+    pair<long,long> postOrder(TreeNode *root, bool &ans)
+    {
+        if (!root) return {(long)INT_MAX+1,(long)INT_MIN-1};
+        auto left=postOrder(root->left, ans);
+        auto right=postOrder(root->right, ans);
+        if (left.second>=root->val||right.first<=root->val) ans=false;
+        return {min(left.first,(long)root->val),max(right.second,(long)root->val)};
+
+    }
+};
 
 /***** Second Visit *****/
 /*

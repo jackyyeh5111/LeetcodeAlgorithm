@@ -1,3 +1,100 @@
+/***** Sixth Visit *****/
+/*
+         2 3 -2 4
+   pos 0 2 6  0 0
+   neg 0 0 0 -12-48
+*/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums)
+    {
+        int pos=0,neg=0,n=nums.size(),ans=0;
+        if (n==1) return nums[0];
+        else ans=nums[0];
+        for (int num:nums) {
+            if (num>=0) {
+                pos=max(pos*num,num);
+                neg=min(neg*num,num);
+            }
+            else {
+                swap(pos,neg);
+                pos=max(pos*num,num);
+                neg=min(neg*num,num);
+            }
+            ans=max(ans,pos);
+        }
+        return ans;
+    }
+};
+
+/***** Fifth Visit *****/
+/*
+    2  3  -2  4  -2
+    2  6   0  4   96
+    0  0  -12 -48 -8
+*/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums)
+    {
+        if (nums.size()==0) return 0;
+        int cmax=nums[0], cmin=nums[0], ans=nums[0];
+        for (int i=1; i<nums.size(); ++i) {
+            int num=nums[i];
+            if (num==0) {cmin=0; cmax=0;}
+            else {
+                if (num<0) swap(cmax,cmin);
+                cmax=max(cmax*num,num);
+                cmin=min(cmin*num,num);
+            }
+            ans=max(ans,cmax);
+        }
+        return ans;
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    pos: max product with right endian nums[i]
+    neg: min product with right endian nums[i]
+
+    2 3 -2  4 -2
+    2 6 0   4  -48
+    0 0 -12 -48 4
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums)
+    {
+        if (nums.size()==1) return nums[0]; // init pos/neg as fiirst element.
+        int pos=0,neg=0,ans=0;
+        for (int num:nums) {
+            if (num==0) {pos=0; neg=0;} // could be ignored
+            if (num<0) swap(pos,neg);
+            pos=max(pos*num,num);
+            neg=min(neg*num,num);
+            ans=max(ans,pos);
+        }
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums)
+    {
+        int pos=nums[0],neg=nums[0],ans=nums[0];
+        for (int i=1; i<nums.size(); ++i) {
+            if (nums[i]<0) swap(pos,neg);
+            pos=max(pos*nums[i],nums[i]);
+            neg=min(neg*nums[i],nums[i]);
+            ans=max(ans,pos);
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 // FAIL AGAIN
 

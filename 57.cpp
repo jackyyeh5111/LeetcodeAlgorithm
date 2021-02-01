@@ -1,3 +1,30 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval)
+    {
+        vector<vector<int>> ans;
+        int n=intervals.size();
+        for (int i=0; i<n; ++i) {
+            if (intervals[i][1]<newInterval[0])
+                ans.push_back(intervals[i]);
+            else if (intervals[i][0]>newInterval[1]) {
+                ans.push_back(newInterval);
+                while (i<n) ans.push_back(intervals[i++]);
+                return ans;
+            }
+            else {
+                int minl=min(intervals[i][0],newInterval[0]);
+                int maxr=max(intervals[i][1],newInterval[1]);
+                newInterval={minl,maxr};
+            }
+        }
+        ans.push_back(newInterval);
+        return ans;
+
+    }
+};
+
 /***** Third Visit *****/
 /*
     brute force:

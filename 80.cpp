@@ -1,3 +1,26 @@
+/***** Third Visit *****/
+/*
+    Apply 2 ptr solution, the right is for dropped num.
+    [0,0,1,1,1,1,2,3,3]
+     ^               ^
+     T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums)
+    {
+        int n=nums.size(), l=0;
+        for (int i=0; i<n; ++i) {
+            int t=nums[i];
+            swap(nums[l++],nums[i]);
+            if (i+1<n&&nums[i+1]==t)
+                swap(nums[l++],nums[++i]);
+            while (i+1<n&&nums[i+1]==t) i++;
+        }
+        return l;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Array

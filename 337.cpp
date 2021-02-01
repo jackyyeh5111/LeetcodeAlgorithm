@@ -1,3 +1,56 @@
+/***** Second Visit *****/
+/*
+    1-d dp on each path?
+    No, we should take all paths into consideration.
+    -----
+    preorder backtracking
+    TLE T:O(2^n)
+    -----
+    postorder backtracking
+    T:O(n)/S:O(n)
+*/
+
+// PostOrder
+class Solution {
+public:
+    int rob(TreeNode* root)
+    {
+        auto t=postorder(root);
+        return max(t.first,t.second);
+    }
+
+    // <hasrob, norob>
+    pair<int,int> postorder(TreeNode *root)
+    {
+        if (!root) return {0,0};
+        auto left=postorder(root->left);
+        auto right=postorder(root->right);
+        return {root->val+left.second+right.second,
+                max(left.first,left.second)+max(right.first,right.second)};
+    }
+};
+
+// Preorder TLE
+class Solution {
+public:
+    int rob(TreeNode* root)
+    {
+        return rob(root,true);
+    }
+
+    int rob(TreeNode* root, bool available)
+    {
+        if (!root) return 0;
+        int norob=rob(root->left,true)+rob(root->right,true);
+        int hasrob=0;
+        if (available)
+            hasrob=root->val+rob(root->left,false)+rob(root->right,false);
+
+        return max(hasrob,norob);
+    }
+};
+
+/***** Firsrt Visit *****/
 /*
     treat each path as a house robber I problem, but may fail on siblings
        > 3

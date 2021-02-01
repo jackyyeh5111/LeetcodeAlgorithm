@@ -1,3 +1,50 @@
+/***** Fifth Visit *****/
+/*
+    FAIL, SEE THIRD VISIT.
+*/
+
+/***** Fourth Visit *****/
+/*
+    FAIL, SEE THIRD VISIT.
+*/
+
+/***** Third Visit *****/
+/*
+    dp[i][j] denotes minCuts from i to j
+    dp[i][j]=min(dp[i][k-1]+dp[k+1][j]+1)
+    Recursive?
+    T(n)= (T(n-2)+T(1)+...+T(1)+T(n-2))*n + O(n)
+        = (T(1)+...+T(n-2))*2 + O(n)
+        = O(n^3)
+    -----
+    dp[i] denotes minCut from 0-i, compare head and tail for palindrom checking.
+    Same as problem 131.
+*/
+class Solution {
+public:
+    int minCut(string s)
+    {
+        int n=s.length();
+        vector<int> dp(n,0);
+        for (int i=0; i<n; ++i) dp[i]=i+1;
+        for (int i=0; i<n; ++i) {
+            int j=i, k=i;
+            while (j>=0&&k<n&&s[j]==s[k]) {
+                int left=j>0?dp[j-1]+1:0;
+                dp[k]=min(dp[k],left);
+                j--; k++;
+            }
+            j=i, k=i+1;
+            while (j>=0&&k<n&&s[j]==s[k]) {
+                int left=j>0?dp[j-1]+1:0;
+                dp[k]=min(dp[k],left);
+                j--; k++;
+            }
+        }
+        return dp[n-1];
+    }
+};
+
 /***** Second Visit *****/
 /*
     FAIL, no concept.
@@ -35,7 +82,6 @@ public:
 */
 class Solution {
 public:
-    vector<vector<string>> ret;
     unordered_map<string,bool> cache;
     int minCut(string s)
     {
@@ -60,7 +106,6 @@ public:
 /*************************** DP TLE ***************************/
 class Solution {
 public:
-    vector<vector<string>> ret;
     unordered_map<string,bool> cache;
     int minCut(string s)
     {

@@ -1,3 +1,49 @@
+/***** Fourth Visit *****/
+/*
+    Brute force:
+    Use a hashset to track all visited DNA seq.
+    substring gather + hashset comparison: O(10n^2)=T:O(n^2)
+    Constraints: 0 <= s.length <= 105
+    It will cause TLE.
+    -----
+    Use encoder to reduce string comparison cost to T:O(1)
+*/
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s)
+    {
+        int mask=(1<<20)-1;
+        int n=s.length(), i=0;
+        int cur=0;
+        for (;i<10; ++i) {
+            cur=cur<<2;
+            cur|=encode(s[i]);
+        }
+        unordered_map<int,bool> seen;
+        vector<string> ans;
+        seen[cur]=0;
+        for (; i<n; ++i) {
+            cur=cur<<2;
+            cur|=encode(s[i]);
+            cur&=mask;
+            if (seen.count(cur)!=0&&!seen[cur]) {
+                ans.push_back(s.substr(i-9,10));
+                seen[cur]=1;
+            }
+            else if (seen.count(cur)==0) seen[cur]=0;
+        }
+        return ans;
+    }
+
+    int encode(char c)
+    {
+        if (c=='A') return 0;
+        else if (c=='C') return 1;
+        else if (c=='G') return 2;
+        else return 3;
+    }
+};
+
 /***** Third Visit *****/
 /*
     DNA: 10-letter-long

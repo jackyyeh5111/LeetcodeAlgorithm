@@ -1,3 +1,79 @@
+/***** Third Visit *****/
+/*
+        [2,1,4,7,3,2,5]
+    up   0 0 1 2 0 0 1  0   1
+    down 0 1 0 0 1 2 0  1   0
+    ans.     2     5
+
+         [7,4,8]
+    up    0 0 1  0
+    down  0 1 0  1
+    ans
+         [0,0,1,0,0,1,1,1,1,1]
+    up    0 0 1 1
+    down  0 0 0 1
+
+*/
+class Solution {
+public:
+    int longestMountain(vector<int>& arr) {
+        int up=0, down=0, n=arr.size(), ans=0;
+        for (int i=1; i<n; ++i) {
+            if (arr[i]<arr[i-1]) down++;
+            else if (arr[i]>arr[i-1]) up++;
+            else up=down=0;
+            if (arr[i]<arr[i-1]&&(i==n-1||arr[i]<=arr[i+1])) {
+                if (up>0&&down>0)
+                    ans=max(ans,up+down+1);
+                up=down=0;
+            }
+        }
+        return ans;
+    }
+};
+
+/***** Second Visit *****/
+/*
+          [2, 1, 4, 7, 3, 2, 5]
+    up:    0  0  1  2  2  2
+    down:  0  1  0  0  1  2
+*/
+
+class Solution {
+public:
+    int longestMountain(vector<int>& arr)
+    {
+        int n=arr.size(), ans=0;
+        vector<int> inc(n,0);
+        vector<int> dec(n,0);
+        for (int i=1; i<n; ++i) {
+            if (arr[i]>arr[i-1]) inc[i]=inc[i-1]+1;
+            if (arr[n-1-i]>arr[n-i]) dec[n-1-i]=dec[n-i]+1;
+            if (inc[i]>0&&dec[i]>0)
+                ans=max(ans,inc[i]+dec[i]+1);
+            if (inc[n-1-i]>0&&dec[n-i-1]>0)
+                ans=max(ans,inc[n-1-i]+dec[n-1-i]+1);
+        }
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int longestMountain(vector<int>& arr)
+    {
+        int n=arr.size(), up=0,down=0,ans=0;
+        for (int i=1; i<n; ++i) {
+            if ((down>0&&arr[i]>arr[i-1])||arr[i]==arr[i-1]) {down=0; up=0;}
+            up+=arr[i]>arr[i-1];
+            down+=arr[i]<arr[i-1];
+            if (up&&down) ans=max(ans,up+down+1);
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
     2,1,4,7,3,2,5
     1 1 2 3 1 1 2 >> a

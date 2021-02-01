@@ -1,3 +1,82 @@
+/***** Tourth Visit *****/
+/*
+    LIS (strictly)
+    src  : 0 1 0 3 2 3
+    sort : 0 0 1 2 3 3
+
+    Since we are going to find strictly increasing order,
+    we should keep tracking cur max.
+
+    sort: T:O(nlogn)
+    compare: T:O(n^2)
+    -----
+    Still 1-D DP, but skip sort process.
+    Just enumerate all possible pair i,j and conduct dp to find accumulated MAX increasing length so far.
+    T:O(n^2)
+    -----
+    BIS (Best Increasing Subsequence)
+    T:O(nlogn)/S:O(n)
+*/
+
+// BIS
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        vector<int> LIS;
+        int n=nums.size();
+        for (int num:nums) {
+            auto start=LIS.begin();
+            auto found=lower_bound(LIS.begin(),LIS.end(),num);
+            if (found==LIS.end()) LIS.push_back(num);
+            else *found=num;
+        }
+        return LIS.size();
+    }
+};
+
+// 1-d DP with pair comparison
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size(),ans=1;
+        vector<int> dp(n,1);
+        for (int i=0; i<n; ++i){
+            for (int j=i+1; j<n; ++j) {
+                if (nums[j]>nums[i])
+                    dp[j]=max(dp[i]+1,dp[j]);
+                ans=max(ans,dp[j]);
+            }
+        }
+        return ans;
+    }
+};
+
+// 1-d DP reduce to LIS
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        vector<int> sorted(nums.begin(),nums.end());
+        sort(sorted.begin(),sorted.end());
+        int n=nums.size(), ans=0;
+        vector<int> dp(n+1,0);
+        for (int i=1; i<=n; ++i) {
+            int prev=dp[0];
+            for (int j=1; j<=n; ++j) {
+                int t=dp[j];
+                if (sorted[i-1]==nums[j-1]&&(i<2||sorted[i-1]!=sorted[i-2]))
+                    dp[j]=prev+1;
+                else dp[j]=max(dp[j],dp[j-1]);
+                prev=t;
+                ans=max(ans,dp[j]);
+            }
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Longest Increasing Subsequence

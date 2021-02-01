@@ -1,3 +1,28 @@
+/***** Second Visit *****/
+/*
+    abcabcbb
+           ^
+           ^
+    sliding window.
+    T:O(n)/S:O(26)
+*/
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s)
+    {
+        int table[256], n=s.length(), ans=0, l=0;
+        for (int i=0; i<256; ++i) table[i]=-1;
+        for (int r=0; r<n; ++r) {
+            if (table[s[r]]>=0)
+                l=max(l,table[s[r]]+1);
+            table[s[r]]=r;
+            ans=max(ans,r-l+1);
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
     Note that we are searching longest SUBSTRING, which is consecutive.
     brute force

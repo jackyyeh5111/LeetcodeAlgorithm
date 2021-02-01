@@ -1,13 +1,49 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+/***** Fifth Visit *****/
+/*
+    1 pass to find length
+    2 pass with fast/slow ptr to reach new head ptr, i.e. slow, with prev(slow), fast.
+        fast->next=head; prev(slow)->next=0; return slow;
+    T:O(n)/S:O(1)
+*/
+
+/***** Fourth Visit *****/
+/*
+    1 2 3 4 5
+    5 4 3 2 1 inverse all path
+    4 5 1 2 3 separately inverse first k and the rest.
+    T:O(n) 3 pass, actually we can combine n calc while all paths inverse.
+*/
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k)
+    {
+        if (!head) return 0;
+        int n=0;
+        ListNode *cur=head;
+        while (cur) {cur=cur->next; n++;}
+        k%=n;
+        if (k==0) return head;
+        auto p1=inverse(head,n);
+        auto p2=inverse(p1[0],k);
+        auto p3=inverse(p2[2],n-k);
+        p2[1]->next=p3[0];
+        return p2[0];
+    }
+
+    // <head,tail,next>
+    vector<ListNode*> inverse(ListNode *head, int k)
+    {
+        if (!head) return {0,0,0};
+        ListNode *prev=0, *cur=head;
+        for (int i=0; i<k; ++i) {
+            ListNode *next=cur->next;
+            cur->next=prev;
+            prev=cur; cur=next;
+        }
+        return {prev,head,cur};
+    }
+};
+
 /***** Third Visit *****/
 /*
     List:

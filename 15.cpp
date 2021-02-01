@@ -1,3 +1,40 @@
+/***** Fourth Visit *****/
+/*
+    Reduce to 2Sum problem
+    Sort helps, could not apply bucket sort.
+    sorting [-1,0,1,2,-1,-4]
+    [-4,-1,-1,0,1,2]
+      ^  ^--------^
+         ^  ^-----^
+              ^  ^^
+    For 2Sum, apply 2 ptr solution.
+    T:O(n^2+nlogn)/S:O(n)
+*/
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        for (int i=0; i<n; ++i) {
+            if (i>0&&nums[i]==nums[i-1]) continue;
+            else if (nums[i]>0) break;
+            int target=-nums[i], j=i+1, k=n-1;
+            while (j<k) {
+                if (nums[j]+nums[k]==target) {
+                    ans.push_back({nums[i],nums[j],nums[k]});
+                    while (j<k&&nums[j+1]==nums[j]) j++;
+                    while (j<k&&nums[k-1]==nums[k]) k--;
+                    j++; k--;
+                }
+                else if (nums[j]+nums[k]>target) k--;
+                else j++;
+            }
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     find UNIQUE triplets

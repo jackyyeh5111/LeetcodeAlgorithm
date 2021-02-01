@@ -1,13 +1,42 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
+/***** Third Visit *****/
+/*
+    0 1 2 3 4 5 6 7 8
+    1 2 3 4 5 6 7 8 9
+    ___ ___ ___ ___    len=1
+    _______ _______    len=2
+    _______________    len=4
+    _________________  len=8
+*/
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists)
+    {
+        int n=lists.size(), len=1;
+        if (n==0) return 0;
+        while (len<n) {
+            for (int i=0; i+len<n; i+=2*len) {
+                ListNode *t=merge(lists[i],lists[i+len]);
+                lists[i]=t;
+            }
+            len*=2;
+        }
+        return lists[0];
+    }
+
+    ListNode* merge(ListNode *l1, ListNode *l2)
+    {
+        ListNode *header=new ListNode(), *tail=header;
+        ListNode *p1=l1,*p2=l2;
+        while (p1&&p2) {
+            if (p1->val<p2->val) {tail->next=p1; p1=p1->next;}
+            else {tail->next=p2; p2=p2->next;}
+            tail=tail->next;
+        }
+        if (p1) tail->next=p1;
+        else tail->next=p2;
+        return header->next;
+    }
+};
  
 /***** Second Visit *****/
  /*

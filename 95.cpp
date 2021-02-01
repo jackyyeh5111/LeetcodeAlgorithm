@@ -1,3 +1,52 @@
+/***** Third Visit *****/
+/*
+    Catalan Number
+    T(n):1/(n+1)*C^2n_n
+    B0=0
+    B1=1
+    B2=B1B0, B0B1
+    B3=B0B2, B1B1, B2B0
+*/
+class Solution {
+public:
+    vector<TreeNode*> generateTrees(int n)
+    {
+        if (n==0) return {};
+        vector<vector<TreeNode*>> dp(n+1,vector<TreeNode*>{});
+        dp[0]={0};
+        dp[1]={new TreeNode()};
+        for (int i=2; i<=n; ++i) {
+            for (int j=0; j<i; ++j) {
+                auto lefts=dp[j];
+                auto rights=dp[i-j-1];
+                for (auto l:lefts) {
+                    for (auto r:rights) {
+                        TreeNode *node=new TreeNode();
+                        node->left=l; node->right=r;
+                        dp[i].push_back(node);
+                    }
+                }
+            }
+        }
+        for (auto &tree:dp[n]) {
+            int val=1;
+            tree=clone(tree,val);
+        }
+        return dp[n];
+    }
+
+    TreeNode *clone(TreeNode *root, int &val)
+    {
+        if (!root) return 0;
+        TreeNode *left=clone(root->left,val);
+        TreeNode *node=new TreeNode(val++);
+        TreeNode *right=clone(root->right,val);
+        node->left=left; node->right=right;
+        return node;
+    }
+};
+
+/***** Second Visit *****/
 /*
     catalan number: (1/n+1 C^2n_n)
     B0=1
@@ -9,7 +58,6 @@
     Actually we can ensure that left part starts from 0-j, and the root value is j+1. Thus all the right subtrees need to be added by offset j+1.
     Accordingly, we just nened to clone right subtree with offset, instread of whole tree.
 */
-/***** Second Visit *****/
 class Solution {
 public:
     vector<TreeNode*> generateTrees(int n)

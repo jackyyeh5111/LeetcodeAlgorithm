@@ -1,3 +1,55 @@
+/***** Third Visit *****/
+/*
+    Graham's Scan w.o. sorting.
+    Use a stack to record all convex points.
+    concave: p1>p2 && p2 < p3
+    T:O(n)/S:O(n)
+    -----
+    bi-direction checking since we dontt know the min restored rains are from left or right checking
+    Try T:O(n)/S:O(1)
+    -----
+    Actually we can know it!! We just need to check the smaller one.
+    T:O(n)/S:O(1)
+*/
+
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int n=height.size(), ans=0;
+        int lmax=0,rmax=0;
+        vector<int> v(n,INT_MAX);
+        for (int i=0; i<n; ++i) {
+            lmax=max(lmax,height[i]);
+            rmax=max(rmax,height[n-i-1]);
+            v[i]=min(v[i],lmax-height[i]);
+            v[n-i-1]=min(v[n-i-1],rmax-height[n-i-1]);
+        }
+        for (int num:v) ans+=num;
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int n=height.size(), ans=0;
+        int lmax=0,rmax=0,l=0,r=n-1;
+        while (l<r) {
+            if (height[l]<height[r]) {
+                if (height[l]<=lmax) ans+=lmax-height[l++];
+                else lmax=height[l++];
+            }
+            else {
+                if (height[r]<=rmax) ans+=rmax-height[r--];
+                else rmax=height[r--];
+            }
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Array:

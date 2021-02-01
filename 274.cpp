@@ -1,3 +1,37 @@
+/***** Fourth Visit *****/
+/*
+    [3,0,6,1,5]
+    [0,1,3,5,6]
+     1 2 3 4 5
+        <--- checking
+    sort: T:O(nlogn)
+    sorted: T:O(n)/S:O(1)
+    -----
+    If sort could help, check bucket sort.
+    1: 2
+    2:
+    3: 1
+    4:
+    5: 2
+*/
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        int n=citations.size();
+        vector<int> count(n+1,0);
+        for (int num:citations) {
+            if (num>n) count[n]++;
+            else count[num]++;
+        }
+        int c=0;
+        for (int i=n; i>=0; --i) {
+            c+=count[i];
+            if (c>=i) return i;
+        }
+        return 0;
+    }
+};
+
 /***** Third Visit *****/
 /*
     [0,1,3,5,6]

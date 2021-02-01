@@ -70,6 +70,7 @@ def binary_search(array) -> int:
  -
 
 ## Stack and Queue
+ - mono stack. E.g. 456, 1673, 316, 1081
 
 
 ## String
@@ -85,7 +86,7 @@ def binary_search(array) -> int:
           - e.g. [164](https://leetcode.com/problems/maximum-gap/)
   - binary search.
   - 2 ptr solution, i.e. left/right or start/end ptr.
-  - Use a stack to record increasing index. (Greedy Approach)
+  - Use a stack to record increasing index, i.e. mono stack. \[Greedy\]
     - e.g. [84](https://leetcode.com/problems/largest-rectangle-in-histogram)
     - e.g. [316](https://leetcode.com/problems/remove-duplicate-letters)
   - running ptr
@@ -116,7 +117,7 @@ def binary_search(array) -> int:
 
 ## Union
  - find/union O(1)
- - During find (parent), we need to update its parent also for speed up. With frequently update its parent, we can have amortized complexity O(1)
+ - During find (parent), we need to update its parent also for speed up. With frequently updating its parent, we can have amortized complexity O(1)
 
 
  ## HashMap
