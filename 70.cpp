@@ -1,3 +1,23 @@
+/***** Third Visit *****/
+/*
+    1 1 2 3 5 8 13
+    ^ ^
+    p c
+*/
+class Solution {
+public:
+    int climbStairs(int n)
+    {
+        int prev=1,cur=1;
+        for (int i=2;i<=n; ++i) {
+            int t=cur;
+            cur+=prev;
+            prev=t;
+        }
+        return cur;
+    }
+};
+
 /***** Second Visit *****/
 /*
     recursive f(n)=f(n-1)+f(n-2)

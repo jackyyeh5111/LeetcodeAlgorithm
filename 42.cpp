@@ -1,3 +1,30 @@
+/***** Fourth Visit *****/
+/*
+    bi-direction mono stack
+    T:O(n)/S:O(n)
+    -----
+    2 ptr solution
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int l=0,r=height.size()-1,ans=0,cur=0;
+        while (l<=r) {
+            if (height[l]<height[r]) {
+                ans+=max(0,cur-height[l]);
+                cur=max(cur,height[l++]);
+            }
+            else {
+                ans+=max(0,cur-height[r]);
+                cur=max(cur,height[r--]);
+            }
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Graham's Scan w.o. sorting.

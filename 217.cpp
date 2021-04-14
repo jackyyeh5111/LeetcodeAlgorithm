@@ -1,3 +1,21 @@
+/***** Third Visit *****/
+/*
+    sort T:O(nlogn)/S:O(1)
+    unordered_set T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums)
+    {
+        unordered_set<int> us;
+        for (int num:nums) {
+            if (us.count(num)) return true;
+            us.insert(num);
+        }
+        return false;
+    }
+};
+
 /***** Second Visit *****/
 /*
     brute force: T:O(n^2)/S:O(1) enumerate all pairs

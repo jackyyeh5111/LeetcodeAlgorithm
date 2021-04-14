@@ -1,6 +1,27 @@
+/***** Second Visit *****/
+/*
+    fast/slow ptr.
+    T:O(n)/S:O(1)
+*/
 class Solution {
 public:
-    ListNode* swapNodes(ListNode* head, int k) 
+    ListNode* swapNodes(ListNode* head, int k) {
+        ListNode *fast=head,*slow=head, *a=0;
+        for (int i=1; i<k; ++i) fast=fast->next;
+        a=fast;
+        while (fast->next) {
+            fast=fast->next;
+            slow=slow->next;
+        }
+        swap(a->val,slow->val);
+        return head;
+    }
+};
+
+/***** First Visit *****/
+class Solution {
+public:
+    ListNode* swapNodes(ListNode* head, int k)
     {
         ListNode *cur=head;
         for (int i=1; i<k; ++i) cur=cur->next;

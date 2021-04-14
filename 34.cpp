@@ -1,3 +1,27 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int l=0,r=nums.size();
+        while (l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]<target) l=mid+1;
+            else r=mid;
+        }
+        if (l==nums.size()||l<0||nums[l]!=target)
+            return {-1,-1};
+        vector<int> ans={l};
+        l=0,r=nums.size();
+        while (l<r) {
+            int mid=(l+r)/2;
+            if (nums[mid]>target) r=mid;
+            else l=mid+1;
+        }
+        ans.push_back(l-1);
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Array

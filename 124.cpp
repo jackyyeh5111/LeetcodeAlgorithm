@@ -1,14 +1,23 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+/***** Third Visit *****/
+class Solution {
+public:
+    int maxPathSum(TreeNode* root)
+    {
+        int ans=INT_MIN;
+        postDFS(root,ans);
+        return ans;
+    }
+
+    int postDFS (TreeNode *root, int &ans)
+    {
+        if (!root) return 0;
+        int left=max(postDFS(root->left,ans),0);
+        int right=max(postDFS(root->right,ans),0);
+        int cmax=max(left,right)+root->val;
+        ans=max(ans,root->val+left+right);
+        return cmax;
+    }
+};
 /***** Second Visit *****/
 /*
     recursive approach.

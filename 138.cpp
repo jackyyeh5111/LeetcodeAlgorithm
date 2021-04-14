@@ -1,3 +1,33 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    Node* copyRandomList(Node* head)
+    {
+        Node *cur=head;
+        while (cur) {
+            Node *next=cur->next;
+            Node *newNode=new Node(cur->val);
+            newNode->next=next;
+            cur->next=newNode;
+            cur=next;
+        }
+        cur=head;
+        while(cur) {
+            Node *next=cur->next->next;
+            cur->next->random=cur->random?cur->random->next:0;
+            cur=next;
+        }
+        Node *newHead=head?head->next:0;
+        while(head) {
+            Node *next=head->next->next;
+            head->next->next=next?next->next:0;
+            head->next=next;
+            head=head->next;
+        }
+        return newHead;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Easy to tackle it with hashmap.

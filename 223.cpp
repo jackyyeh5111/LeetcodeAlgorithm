@@ -1,3 +1,29 @@
+/*
+    ---
+    |-|-
+    ---|
+     ___
+
+
+     ---
+    ---|
+    |-|-
+    ---
+*/
+class Solution {
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H)
+    {
+        int tr[2]={min(C,G),min(D,H)};
+        int bl[2]={max(A,E),max(B,F)};
+        int intersect=0;
+        if (tr[0]>bl[0]&&tr[1]>bl[1])
+            intersect=(tr[1]-bl[1])*(tr[0]-bl[0]);
+        return (C-A)*(D-B)+(G-E)*(H-F)-intersect;
+
+    }
+};
+
 class Solution {
 public:
     int computeArea(int A, int B, int C, int D, int E, int F, int G, int H)

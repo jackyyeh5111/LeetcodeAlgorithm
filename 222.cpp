@@ -1,3 +1,11 @@
+/***** Fifth Visit *****/
+/*
+    Divide and conquer
+    T(n)=T(n/2)+O(logn)
+        =O((logn)^2)
+    S:O(logn)
+*/
+
 /***** Fourth Visit *****/
 /*
     T(n)=T(n/2)+O(logn)

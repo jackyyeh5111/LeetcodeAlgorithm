@@ -1,3 +1,28 @@
+/***** Fourth Visit *****/
+/*
+    preorder traversal: make sure that right node will be visited in the last order.
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root)
+    {
+        vector<int> ans;
+        int depth=0;
+        preorder(root,depth,ans);
+        return ans;
+    }
+
+    void preorder(TreeNode *root, int depth, vector<int> &ans)
+    {
+        if (!root) return;
+        if (ans.size()==depth) ans.push_back(0);
+        ans[depth]=root->val;
+        preorder(root->left,depth+1,ans);
+        preorder(root->right,depth+1,ans);
+    }
+};
+
 /***** Third Visit *****/
 /*
     use inorder or preorder traversal, which traverse right node in the last order.

@@ -1,3 +1,33 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites)
+    {
+        vector<vector<int>> graph(numCourses,vector<int>{});
+        vector<int> visited(numCourses,0);
+        for (auto pre:prerequisites) {
+            graph[pre[1]].push_back(pre[0]);
+        }
+        for (int i=0; i<numCourses; ++i) {
+            if (!dfs(graph,visited,i)) return false;
+        }
+        return true;
+    }
+
+    // false if cyclic
+    bool dfs(vector<vector<int>> &graph, vector<int> &visited, int u)
+    {
+        if (visited[u]==1) return false;
+        else if (visited[u]==2) return true;
+        visited[u]=1;
+        for (int v:graph[u]) {
+            if (!dfs(graph,visited,v)) return false;
+        }
+        visited[u]=2;
+        return true;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Topological order check on adjacent matrix.

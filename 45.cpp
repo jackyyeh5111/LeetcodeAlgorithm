@@ -1,3 +1,21 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int jump(vector<int>& nums)
+    {
+        int l=0,r=0,step=0;
+        while (r<nums.size()-1) {
+            int k=r;
+            for (int i=l; i<=r; ++i)
+                k=max(k,nums[i]+i);
+            if (k==r) return -1;
+            else step++;
+            l=r+1; r=k;
+        }
+        return step;
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     2 ptr solution

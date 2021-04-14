@@ -1,3 +1,33 @@
+/******* Fourth Visit *******/
+class Solution {
+public:
+    void reorderList(ListNode* head)
+    {
+        ListNode *slow=head,*fast=head,*prev=0;
+        while(fast&&fast->next) {
+            fast=fast->next->next;
+            prev=slow;
+            slow=slow->next;
+        }
+        if (prev) prev->next=0;
+        prev=0;
+        while (slow) {
+            ListNode *next=slow->next;
+            slow->next=prev;
+            prev=slow; slow=next;
+        }
+        ListNode *header=new ListNode(),*tail=header;
+        while (prev&&head&&prev!=head) {
+            ListNode *next=head->next;
+            tail->next=head;
+            tail->next->next=prev;
+            head=next;
+            prev=prev->next;
+            tail=tail->next->next;
+        }
+    }
+};
+
 /******* Third Visit *******/
 /*
     Use a vector with indexing

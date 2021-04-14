@@ -1,3 +1,29 @@
+/***** Third Visit *****/
+/*
+    invert the first left part, then do comparison
+    T:O(n) 1 pass / S:O(1)
+*/
+class Solution {
+public:
+    bool isPalindrome(ListNode* head)
+    {
+        ListNode *prev=0, *slow=head, *fast=head;
+        while (fast&&fast->next) {
+            fast=fast->next->next;
+            ListNode *next=slow->next;
+            slow->next=prev;
+            prev=slow; slow=next;
+        }
+        if (fast) slow=slow->next;
+        while (slow&&prev) {
+            if (slow->val!=prev->val) return false;
+            slow=slow->next;
+            prev=prev->next;
+        }
+        return true;
+    }
+};
+
 /***** Second Visit *****/
 /*
     2 pass O(n)

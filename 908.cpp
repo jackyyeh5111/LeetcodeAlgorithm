@@ -1,3 +1,18 @@
+/***** Second Visit *****/
+/*
+    1 2 3 4 5 6
+*/
+class Solution {
+public:
+    int smallestRangeI(vector<int>& A, int K)
+    {
+        auto t=minmax_element(A.begin(),A.end());
+        if (*t.second-K<=*t.first+K) return 0;
+        else return *t.second-*t.first-2*K;
+    }
+};
+
+/***** First Visit *****/
 /*
     Find the min/max num and see if they are overlap.
     If so, then theie diff could be 0, else max-min.

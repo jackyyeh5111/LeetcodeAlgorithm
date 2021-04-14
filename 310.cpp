@@ -1,3 +1,136 @@
+/***** Fifth Visit *****/
+/*
+    dfs from arbitary node
+    the end node is one of the endian of longest path.
+    T:O(V+E) 2 pass/S:O(V+E)
+*/
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges)
+    {
+        vector<vector<int>> graph(n,vector<int>{});
+        vector<bool> visited(n,0);
+        for (auto e:edges) {
+            graph[e[0]].push_back(e[1]);
+            graph[e[1]].push_back(e[0]);
+        }
+        vector<int> longest,path;
+        dfs(graph,visited,0,path,longest);
+        for (int i=0; i<n; ++i) visited[i]=false;
+        dfs(graph,visited,longest.back(),path,longest);
+        int k=longest.size();
+        vector<int> ret;
+        if (k%2) ret={longest[k/2]};
+        else ret={longest[k/2],longest[k/2-1]};
+        return ret;
+
+    }
+
+    void dfs(vector<vector<int>> &graph, vector<bool> &visited, int u,
+             vector<int> &path, vector<int> &longest)
+    {
+        if (visited[u]) return;
+        visited[u]=true;
+        path.push_back(u);
+        for (int v:graph[u])
+            dfs(graph,visited,v,path,longest);
+        if (path.size()>longest.size())
+            longest=path;
+        path.pop_back();
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    dfs from arbitary node
+    the end node is one of the endian of longest path.
+    T:O(V+E) 2 pass/S:O(V+E)
+*/
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges)
+    {
+        vector<vector<int>> graph(n,vector<int>{});
+        vector<bool> visited(n,0);
+        for (auto e:edges) {
+            graph[e[0]].push_back(e[1]);
+            graph[e[1]].push_back(e[0]);
+        }
+        vector<int> longest,path;
+        dfs(graph,visited,0,path,longest);
+        for (int i=0; i<n; ++i) visited[i]=false;
+        dfs(graph,visited,longest.back(),path,longest);
+        int k=longest.size();
+        vector<int> ret;
+        if (k%2) ret={longest[k/2]};
+        else ret={longest[k/2],longest[k/2-1]};
+        return ret;
+
+    }
+
+    void dfs(vector<vector<int>> &graph, vector<bool> &visited, int u,
+             vector<int> &path, vector<int> &longest)
+    {
+        if (visited[u]) return;
+        visited[u]=true;
+        path.push_back(u);
+        for (int v:graph[u])
+            dfs(graph,visited,v,path,longest);
+        if (path.size()>longest.size())
+            longest=path;
+        path.pop_back();
+    }
+};
+
+/***** Third Visit *****/
+/*
+    1. dfs from any node, the end point would be one of the longest path's endian node
+    2. dfs from the endian point and return the mid one of longest path
+    -----
+    Proof: [Contradiction]
+    1. the longest path of dfs wilil intersect with longest path of the graph.
+    2. the intersection is one of the endian point.
+
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges)
+    {
+        vector<vector<int>> graph(n,vector<int>());
+        for (auto e:edges) {
+            graph[e[0]].push_back(e[1]);
+            graph[e[1]].push_back(e[0]);
+        }
+        vector<bool> visited(n,0);
+        vector<int> cur_path, longest_path;
+        dfs(graph,visited,0,cur_path,longest_path);
+        int endian=longest_path.back();
+        cur_path.clear(); longest_path.clear();
+        visited=vector<bool>(n,0);
+        dfs(graph,visited,endian,cur_path,longest_path);
+        int k=longest_path.size();
+        vector<int> ans;
+        if (k%2) ans.push_back(longest_path[k/2]);
+        else ans={longest_path[k/2],longest_path[k/2-1]};
+        return ans;
+    }
+
+    void dfs(vector<vector<int>> &graph, vector<bool> &visited, int u,
+             vector<int> &cur_path, vector<int> &longest_path)
+    {
+        if (visited[u]) return;
+        visited[u]=true;
+        cur_path.push_back(u);
+        if (cur_path.size()>longest_path.size())
+            longest_path=cur_path;
+        for (int v:graph[u]) {
+            dfs(graph,visited,v,cur_path,longest_path);
+        }
+        cur_path.pop_back();
+    }
+};
+
 /***** Second Visit *****/
 /*
     Random DFS from a node with 0 in-degree

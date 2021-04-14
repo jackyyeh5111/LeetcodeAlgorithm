@@ -1,3 +1,45 @@
+/***** Fifth Visit *****/
+/*
+    i*i + i*k -> n equals to
+    i + k ->n/i
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int countPrimes(int n)
+    {
+        vector<bool> dp(n,1);
+        int ans=0;
+        for (int i=2; i<n; ++i) {
+            ans+=dp[i];
+            int j=i, k=n/i;
+            while(j<=k) {
+                dp[j*i]=false;
+                j++;
+            }
+        }
+        return ans;
+    }
+};
+
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int countPrimes(int n) {
+        vector<bool> table(n,1);
+        int ans=n-2;
+        for (int i=2; i<n; ++i) {
+            long k=(long)i*(long)i;
+            while (k<(long)n) {
+                ans-=table[k];
+                table[k]=0;
+                k+=(long)i;
+            }
+        }
+        return max(ans,0);
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

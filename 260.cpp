@@ -1,3 +1,27 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums)
+    {
+        long k=0;
+        for (long num:nums) k^=num;
+        long mask=(k&(k-1))^k;
+        long a=0,b=0;
+        for (long num:nums) {
+            if (num&mask) a^=num;
+            else b^=num;
+        }
+        return {(int)a,(int)b};
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    xor all nums, we'll get the xor of two elements, say k.
+    The bits 1 inside k canbe used to separate into two groups with exactly one disitinct num.
+    T:O(n) w. 2 pass / S:O(1)
+*/
+
 /***** Third Visit *****/
 /*
     constraint: T:O(n)/S:O(1)

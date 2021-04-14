@@ -1,3 +1,31 @@
+/***** Fourth Visit *****/
+/*
+    dp[i][j] denotes s[0-i] matches p[0-j]
+    if (p[j]=='*')
+        dp[i][j]=dp[i][j-1]||p[j-1]=='.'||dp[i-1][j-1]&&s[i]==p[j-1]
+*/
+class Solution {
+public:
+    bool isMatch(string s, string p)
+    {
+        int m=s.length(), n=p.length();
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        dp[0][0]=1;
+        for (int i=1; i<=n; ++i) dp[0][i]=(p[i-1]=='*')&&dp[0][i-2];
+        for (int i=1; i<=m; ++i) {
+            for (int j=1; j<=n; ++j) {
+                if (isalpha(p[j-1]))
+                    dp[i][j]=dp[i-1][j-1]&&(s[i-1]==p[j-1]);
+                else if (p[j-1]=='.')
+                    dp[i][j]=dp[i-1][j-1];
+                else // '*'
+                    dp[i][j]=dp[i][j-2]||(dp[i][j-2]&&p[j-2]=='.')||(dp[i-1][j]&&(s[i-1]==p[j-2]||p[j-2]=='.'));
+            }
+        }
+        return dp[m][n];
+    }
+};
+
 /***** Third Visit *****/
 /*
     '.' Matches any single character.

@@ -1,3 +1,29 @@
+/***** Fifth Visit *****/
+/*
+    recursive
+    T:O(n)/S:O(n/k)
+*/
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *nextHead=head;
+        int n=k;
+        while (n>0) {
+            if (!nextHead) return head;
+            nextHead=nextHead->next;
+            n--;
+        }
+        ListNode *prev=0,*cur=head;
+        while (cur!=nextHead) {
+            ListNode *t=cur->next;
+            cur->next=prev;
+            prev=cur; cur=t;
+        }
+        head->next=reverseKGroup(nextHead,k);
+        return prev;
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     1st pass: find length n and calculate group length n/k

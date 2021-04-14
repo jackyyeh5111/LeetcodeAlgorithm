@@ -1,3 +1,37 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root,LONG_MIN,LONG_MAX);
+    }
+
+    bool isValidBST(TreeNode* root, long lower, long upper)
+    {
+        if (!root) return true;
+        else if ((long)root->val>=upper||(long)root->val<=lower) return false;
+        return isValidBST(root->left,lower,root->val)&&
+               isValidBST(root->right,root->val,upper);
+    }
+};
+
+/***** Third Visit *****/
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        if (preorder.size()==0) return 0;
+        int val=preorder[0], i=0;
+        while(inorder[i]!=val) i++;
+        vector<int> pl(preorder.begin()+1,preorder.begin()+i+1);
+        vector<int> pr(preorder.begin()+i+1,preorder.end());
+        vector<int> il(inorder.begin(),inorder.begin()+i);
+        vector<int> ir(inorder.begin()+i+1,inorder.end());
+        TreeNode *node=new TreeNode(val);
+        node->left=buildTree(pl,il);
+        node->right=buildTree(pr,ir);
+        return node;
+    }
+};
+
 /***** Second Visit *****/
 /*
     inorder:  [3,9,20,15,7] LNR

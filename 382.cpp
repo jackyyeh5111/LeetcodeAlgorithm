@@ -1,3 +1,31 @@
+/***** Third Visit *****/
+/*
+    1/i * i/(i+1) * (i+1)/(i+2) * ... = 1/n
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    ListNode *head=0;
+    Solution(ListNode* head) {
+        this->head=head;
+    }
+
+    /** Returns a random node's value. */
+    int getRandom() {
+        ListNode *cur=head;
+        int ret=0,counter=1;
+        while (cur) {
+            if (rand()%counter==0)
+                ret=cur->val;
+            counter++;
+            cur=cur->next;
+        }
+        return ret;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Resovour Sampling

@@ -1,3 +1,30 @@
+/***** Second Visit *****/
+/*
+    sort -> T:O(nlogn)/S:O(1) -> bucket sort -> T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k)
+    {
+        int n=nums.size();
+        vector<vector<int>> table(n+1,vector<int>{});
+        unordered_map<int,int> mp;
+        for (int num:nums) mp[num]++;
+        for (auto it:mp) {
+            table[it.second].push_back(it.first);
+        }
+        vector<int> ans;
+        for (int i=n; i>0; --i) {
+            if (ans.size()==k) break;
+            if (table[i].size()!=0) {
+                for (auto t:table[i]) ans.push_back(t);
+            }
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /************************** T:O(nlogk), S:O(n) **************************/
 class Solution {
 public:

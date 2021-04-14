@@ -1,3 +1,48 @@
+/***** Second Visit *****/
+/*
+    dfs to find connected component
+    T:O(V+E)/S:O(V+E)
+    -----
+    union find
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    int countComponents(int n, vector<vector<int>>& edges) {
+        int *parents=new int[n];
+        memset(parents,-1,n*4);
+        for (auto edge:edges) {
+            if (myunion(parents,edge[0],edge[1]))
+                n--;
+        }
+        return n;
+    }
+
+    int find(int *parents, int x)
+    {
+        int root=x;
+        while (parents[root]>=0)
+            root=parents[root];
+        while (x!=root) {
+            int next=parents[x];
+            parents[x]=root;
+            x=next;
+        }
+        return root;
+    }
+
+    // true if unioned, false if in the same component.
+    bool myunion(int *parents, int x, int y)
+    {
+        int rx=find(parents, x),ry=find(parents, y);
+        if (rx==ry) return false;
+        if (rx<ry) parents[ry]=rx;
+        else parents[rx]=ry;
+        return true;
+    }
+};
+
+/***** First Visit *****/
 /*
     Union/Find
     [1,2,2,4,4]
@@ -35,7 +80,7 @@ public:
         while(parents[j]!=i) {
             int t=parents[j];
             parents[j]=i;
-            j=parents[t];
+            j=parents[t]; //j=t
         }
         return i;
     }

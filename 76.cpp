@@ -1,3 +1,27 @@
+/***** First Visit *****/
+class Solution {
+public:
+    string minWindow(string s, string t)
+    {
+        unordered_map<char,int> mp;
+        for (char c:t) mp[c]++;
+        int cnt=t.length(),l=0,r=0,n=s.length();
+        string ans="";
+        while (r<n) {
+            mp[s[r]]--;
+            if (mp[s[r]]>=0) cnt--;
+            while(cnt==0) {
+                if (ans==""||ans.length()>r-l+1) ans=s.substr(l,r-l+1);
+                mp[s[l]]++;
+                if (mp[s[l]]>0) cnt++;
+                l++;
+            }
+            r++;
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     0123456789012

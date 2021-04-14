@@ -1,3 +1,27 @@
+/***** Sixth Visit *****/
+/*
+    dp[i] denotes if s[0-i] canbe segmented into word break
+    T:O(nkm)/S:O(km)
+*/
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict)
+    {
+        int n=s.length();
+        vector<bool> dp(n+1,0); dp[0]=1;
+        unordered_set<string> words(wordDict.begin(),wordDict.end());
+        for (int i=1; i<=n; ++i) {
+            for (auto word:words) {
+                int k=word.size();
+                if (i-k<0) continue;
+                string t=s.substr(i-k,k);
+                if (t==word) dp[i]=dp[i]||dp[i-k];
+            }
+        }
+        return dp.back();
+    }
+};
+
 /***** Fifth Visit *****/
 /*
     dp[i] denotes if s[0-i] can be segmented into word break

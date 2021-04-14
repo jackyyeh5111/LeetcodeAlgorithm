@@ -1,3 +1,24 @@
+/***** Fourth Visit *****/
+/*
+    0 1 3 5 6
+    5 4 3 2 1
+    binary search to find the first element where n-idx<=num[idx]
+    T:O(logn)/S:O(n)
+*/
+class Solution {
+public:
+    int hIndex(vector<int>& citations)
+    {
+        int l=0, r=citations.size(), n=r;
+        while (l<r) {
+            int mid=l+(r-l)/2;
+            if (citations[mid]<n-mid) l=mid+1;
+            else r=mid;
+        }
+        return n-l;
+    }
+};
+
 /***** Third Visit *****/
 /*
     [0,1,3,5,6]

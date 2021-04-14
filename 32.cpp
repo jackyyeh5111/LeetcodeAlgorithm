@@ -1,3 +1,29 @@
+/***** Third Visit *****/
+/*
+    stack approach
+    stack<pair<char,int>> // char, index
+    T:O(n)/S:O(1)
+*/
+
+class Solution {
+public:
+    int longestValidParentheses(string s)
+    {
+        stack<pair<char,int>> mystack;
+        int ans=0,n=s.length();
+        for (int i=0; i<n; ++i) {
+            if (s[i]=='(') mystack.push({'(',i});
+            else if (!mystack.empty()&&mystack.top().first=='(') {
+                mystack.pop();
+                if (!mystack.empty()) ans=max(ans,i-mystack.top().second);
+                else ans=max(ans,i+1);
+            }
+            else mystack.push({')',i});
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     check paranthes valid or not, use a running counter.

@@ -1,3 +1,17 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums)
+    {
+        int p=-1,n=nums.size();
+        for (int i=0; i<n; ++i) {
+            if (p==-1||nums[i]!=nums[p])
+                swap(nums[++p],nums[i]);
+        }
+        return p+1;
+    }
+};
+
 /***** Second Visit *****/
 /*
     SORTED ARRAY

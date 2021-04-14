@@ -1,3 +1,26 @@
+/***** Second Visit *****/
+/*
+    The below code will fail in this case:
+    [3,15] [6,20] [8,9] [16,17] [18,19]
+*/
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals)
+    {
+        sort(intervals.begin(),intervals.end(),[](auto a, auto b){
+            if (a[0]!=b[0]) return a[0]<b[0];
+            else return a[1]>b[1];
+        });
+        int ans=0, n=intervals.size(), i=0;
+        while (i<n)
+            int end=intervals[i][1], j=i+1, rooms=0;
+            while(j<n&&intervals[j][0]<end) {rooms++; j++;}
+            ans=max(ans,rooms);
+        }
+        return ans;
+    }
+};
+/***** First Visit *****/
 /*
     counting all overlay regions
     -----
@@ -10,6 +33,7 @@
     +: means we are going up -> start the meeting
     -: means we are going down -> end the meeting
     find the max accumulate sum which denotes the max rooms we need
+    T:O(nlogn)/S:O(n)
 */
 class Solution {
 public:

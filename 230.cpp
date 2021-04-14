@@ -1,3 +1,21 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        return help(root,k);
+    }
+
+    int help(TreeNode* root, int &k)
+    {
+        if (!root) return INT_MIN;
+        int left=help(root->left,k);
+        if (left!=INT_MIN) return left;
+        k--;
+        if (k==0) return root->val;
+        return help(root->right,k);
+    }
+};
+
 /***** Second Visit *****/
 /*
     search kth smallest on BST

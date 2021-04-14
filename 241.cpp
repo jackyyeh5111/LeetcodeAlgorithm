@@ -1,3 +1,79 @@
+/***** Sixth Visit *****/
+/*
+    Divide and Conquer
+    T:1/(n+1)C^2n_n, i.e. catalan number in worst case.
+*/
+class Solution {
+public:
+    unordered_map<string,vector<int>> mp;
+    vector<int> diffWaysToCompute(string input)
+    {
+        if (mp.count(input)!=0) return mp[input];
+        int n=input.size();
+        vector<int> ans;
+        for (int i=0; i<n; ++i) {
+            if (isdigit(input[i])) continue;
+            else {
+                auto lefts=diffWaysToCompute(input.substr(0,i));
+                auto rights=diffWaysToCompute(input.substr(i+1));
+                for (int l:lefts) {
+                    for (int r:rights) {
+                        ans.push_back(calc(l,r,input[i]));
+                    }
+                }
+            }
+        }
+        if (ans.empty()) ans.push_back(stoi(input));
+        mp[input]=ans;
+        return ans;
+    }
+
+    int calc(int a, int b, char op)
+    {
+        if (op=='-') return a-b;
+        else if (op=='+') return a+b;
+        else return a*b;
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    "2*3-4*5"
+     6 -1 20
+     2,-2 -17,-5
+     -----
+     Recursively enumerate all possible parentheses combination.
+*/
+class Solution {
+public:
+    unordered_map<string,vector<int>> mp;
+    vector<int> diffWaysToCompute(string input) {
+        if (mp.count(input)!=0) return mp[input];
+        int n=input.size();
+        vector<int> combs;
+        for (int i=0; i<n; ++i) {
+            if (isdigit(input[i])) continue;
+            auto left =diffWaysToCompute(input.substr(0,i));
+            auto right=diffWaysToCompute(input.substr(i+1));
+            for (int l:left){
+                for (int r:right) {
+                    combs.push_back(calc(l,r,input[i]));
+                }
+            }
+        }
+        if (combs.empty()) mp[input]={stoi(input)};
+        else mp[input]=combs;
+        return mp[input];
+    }
+
+    int calc (int a, int b, char c)
+    {
+        if (c=='+') return a+b;
+        else if (c=='-') return a-b;
+        else return a*b;
+    }
+};
+
 /***** Third Visit *****/
 /*
     "2*3-4*5"

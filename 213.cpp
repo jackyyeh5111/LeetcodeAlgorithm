@@ -1,3 +1,20 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int lprevprev=0,lprev=0,rprevprev=0,rprev=0,n=nums.size();
+        if (n==1) return nums[0];
+        for (int i=1; i<n; ++i) {
+            int lcur=max(lprev,lprevprev+nums[i]);
+            lprevprev=lprev; lprev=lcur;
+            int rcur=max(rprev,rprevprev+nums[n-i-1]);
+            rprevprev=rprev; rprev=rcur;
+        }
+        return max(lprev,rprev);
+    }
+};
+
 /***** Third Visit *****/
 // T:O(n)/S:O(1)
 class Solution {

@@ -1,3 +1,41 @@
+/***** Third Visit *****/
+// DP T:O(n*k)/S:O(k), n denotes # of nums and k denotes max possible num.
+class Solution {
+public:
+    bool canPartition(vector<int>& nums)
+    {
+        int n=nums.size(), tgt=0;
+        for (int num:nums) tgt+=num;
+        if (tgt%2) return false;
+        else tgt/=2;
+        vector<bool> dp(20001,0);
+        dp[0]=1;
+        for (int i=0; i<n; ++i) {
+            for (int j=20000; j>=1; --j) {
+                if (j>=nums[i])
+                    dp[j]=dp[j]||dp[j-nums[i]];
+            }
+        }
+        return dp[tgt];
+    }
+};
+
+// bitset T:O(n*k)/S:O(k), n denotes # of nums and k denotes max possible num.
+class Solution {
+public:
+    bool canPartition(vector<int>& nums)
+    {
+        int tgt=accumulate(nums.begin(),nums.end(),0);
+        if (tgt%2) return false;
+        else tgt/=2;
+        bitset<200001> bs;
+        bs[0]=1;
+        for (int num:nums)
+            bs=bs|(bs<<num);
+        return bs[tgt];
+    }
+};
+
 /***** Second Visit *****/
 /*
     1 2 3 4 5 6

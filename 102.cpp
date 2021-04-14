@@ -1,3 +1,47 @@
+/***** Third Visit *****/
+/*
+    queue/preorder
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        queue<TreeNode*> q;
+        if (root) q.push(root);
+        while (!q.empty()) {
+            int k=q.size();
+            ans.push_back({});
+            for (int i=0; i<k; ++i) {
+                auto node=q.front(); q.pop();
+                ans.back().push_back(node->val);
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+        }
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root)
+    {
+        vector<vector<int>> ans;
+        preorder(root,ans,0);
+        return ans;
+    }
+
+    void preorder(TreeNode *root, vector<vector<int>> &ans, int depth)
+    {
+        if (!root) return;
+        if (ans.size()==depth) ans.push_back({});
+        ans[depth].push_back(root->val);
+        preorder(root->left,ans,depth+1);
+        preorder(root->right,ans,depth+1);
+    }
+};
+
 /***** Second Visit *****/
 /*
     level order traversal -> use queue+iteration

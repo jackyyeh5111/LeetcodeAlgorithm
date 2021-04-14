@@ -1,3 +1,21 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k)
+    {
+        int acc=accumulate(cardPoints.begin(),cardPoints.begin()+k,0);
+        int n=cardPoints.size();
+        if (k==n) return acc;
+        int ans=acc;
+        for (int i=1; i<=k; ++i) {
+            acc+=cardPoints[n-i]-cardPoints[k-i];
+            ans=max(ans,acc);
+        }
+        return ans;
+    }
+};
+
+/***** First Visit *****/
 /*
      Greedy take larger num from begin/end?
      Fail on [2,3,4,4,100,100,1], K=3

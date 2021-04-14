@@ -1,3 +1,75 @@
+/***** Sixth Visit *****/
+/*
+    sort
+    0 1 3 5 6
+    <-- 3 2 1
+    T:O(nlogn)/S:O(1)
+    -----
+    sort helps, could bucket sort further help?
+    0
+    1 0
+    2
+    3 2
+    4
+    5 2
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int hIndex(vector<int>& citations)
+    {
+        int n=citations.size();
+        vector<int> table(n+1,0);
+        for (int c:citations) {
+            if (c>=n) table.back()+=1;
+            else table[c]++;
+        }
+        int csum=0;
+        for (int i=n; i>=0; --i) {
+            csum+=table[i];
+            if (csum>=i) return i;
+        }
+        return 0;
+    }
+};
+
+/***** Fifth Visit *****/
+/*
+    citations: 0 1 3 5 6
+    indices:   5 4 3 2 1
+    --->
+    Check from right to find the first one that citation>index
+    T:O(nlogn)/S:O(1)
+    -----
+    if sort can help, could buccket sort further help !?
+    T:O(n)/S:O(1)
+
+    0 1
+    1 1
+    2
+    3 1
+    4
+    5 2
+*/
+class Solution {
+public:
+    int hIndex(vector<int>& citations)
+    {
+        int n=citations.size();
+        vector<int> table(n+1,0);
+        for (int cit:citations) {
+            if (cit>=n) table.back()++;
+            else table[cit]++;
+        }
+        int csum=0;
+        for (int i=n; i>=0; --i) {
+            csum+=table[i];
+            if (csum>=i) return i;
+        }
+        return 0;
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     [3,0,6,1,5]

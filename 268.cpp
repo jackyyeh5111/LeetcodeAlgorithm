@@ -1,3 +1,53 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n=nums.size(),ans=0;
+        for (int i=0; i<n; ++i) {
+            ans^=i;
+            ans^=nums[i];
+        }
+        return ans==0?n:(ans^n);
+    }
+};
+
+/***** Third Visit *****/
+/*
+    bitwise XOR OP in terms of index and corresponding num.
+    [9,6,4,2,3,5,7,0,1]
+     0 1 2 3 4 5 6 7 8
+    T:O(n)/S:O(1)
+    -----
+    swapping base on index/num
+*/
+class Solution {
+public:
+    int missingNumber(vector<int>& nums)
+    {
+        int ans=0, n=nums.size();
+        for (int i=0; i<n; ++i) {
+            ans^=(i^nums[i]);
+        }
+        return ans==0? n:ans^n;
+    }
+};
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums)
+    {
+        int n=nums.size();
+        for (int i=0; i<n; ++i) {
+            while (nums[i]<n&&nums[i]!=i&&nums[i]!=nums[nums[i]])
+                swap(nums[i],nums[nums[i]]);
+        }
+        for (int i=0; i<n; ++i) {
+            if (nums[i]!=i) return i;
+        }
+        return n;
+    }
+};
+
 /***** Second Visit *****/
 /*
     T:O(n)/S:O(1)

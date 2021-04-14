@@ -1,3 +1,90 @@
+/***** Fourth Visit *****/
+/*
+    for each i , find the min one, k, larget than nums[i] from right to left,
+    then keep find if any mum larget than k
+    T:O(n^2)
+    -----
+    find the current min for each i from left to right.
+    For each num from right to left, treat it as "3" and binary search on the seen nums to check if "2" exists
+    T:O(nlogn)/S:O(n)
+    -----
+    mono stack [decresing]
+    the top of stack is always the largest we've seen so far.
+    T:O(n)/S:O(n)
+*/
+// T:O(n)
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums)
+    {
+        stack<int> s;
+        int n=nums.size(),second=INT_MIN;
+        for (int i=n-1; i>=0; --i) {
+            if (nums[i]<second) return true;
+            while (!s.empty()&&s.top()<nums[i]) {
+                second=s.top();
+                s.pop();
+            }
+            s.push(nums[i]);
+        }
+        return false;
+    }
+};
+
+// T:O(nlogn)
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums)
+    {
+        int n=nums.size(),cur=INT_MAX;
+        vector<int> cmins;
+        for (int num:nums) {
+            cur=min(cur,num);
+            cmins.push_back(cur);
+        }
+        set<int> ms;
+        for (int i=n-1; i>=1; --i) {
+            if (ms.size()>0) {
+                auto it=ms.lower_bound(nums[i]);
+                if (it!=ms.begin()) it=prev(it);
+                if (*it>cmins[i-1]&&nums[i]>*it) return true;
+            }
+            ms.insert(nums[i]);
+        }
+        return false;
+    }
+};
+
+/***** Third Visit *****/
+/*
+    1. Maintain a current min array to check "1"32 from left to right.
+    2. Maintain an online sorting from right to left and conduct a binary search to find 1"3""2".
+    T:O(nlogn+n)/S:O(n)
+    -----
+    Conduct a monostack from right to left with decreasing order.
+    The top of stack indicates 1"3"2, use another variable to record the num we poped eachc time, it indicates the best 13"2".
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums)
+    {
+        int n=nums.size(),second=INT_MIN;
+        stack<int> s;
+        for (int i=n-1; i>=0; --i) {
+            if (nums[i]<second) return true;
+            else {
+                while(!s.empty()&&nums[i]>s.top()) {
+                    second=s.top();
+                    s.pop();
+                }
+                s.push(nums[i]);
+            }
+        }
+        return false;
+    }
+};
+
 /***** Second Visit *****/
 /*
     brute force:

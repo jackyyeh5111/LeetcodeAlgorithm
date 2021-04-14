@@ -1,3 +1,28 @@
+/***** Fourth Visit *****/
+/*
+      1 3 4 2 2
+      0 1 2 3 4
+      detect cyclic on linked list
+      T:O(n) 2 pass/S:O(1)
+*/
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums)
+    {
+        int slow=0,fast=0;
+        while (slow!=fast||(slow==fast&&slow==0)) {
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+        }
+        slow=0;
+        while(slow!=fast) {
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return slow;
+    }
+};
+
 /***** Third Visit *****/
 /*
     By pegeon-hole theory, there must exist one duplicate num.

@@ -1,9 +1,32 @@
+/*
+    i ^ i>>1
+    0  0000 0000
+    1  0001 0001
+    2  0010 0011
+    3  0011 0010
+    4  0100 0110
+    5  0101 0111
+    T:O(2^n)/S:O(2^n)
+*/
+class Solution {
+public:
+    vector<int> grayCode(int n)
+    {
+        vector<int> ans;
+        int k=1<<n;
+        for (int i=0; i<k; ++i) {
+            ans.push_back(i^(i>>1));
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Let's denote i^(i>>1) as f(i). To proof f(i) is the ith gray code, we only need to prove the following statements:
 
     f(0) = 0
-    (i) and f(i+1) only differs in one digit
+    f(i) and f(i+1) only differs in one digit
     f(i) is bijective, e.g. f(i) = f(j) if and only if i = j.
     The first one is obvious.
 

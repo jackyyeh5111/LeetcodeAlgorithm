@@ -1,3 +1,25 @@
+/***** Second Visit *****/
+/*
+    Greater tree is to change the original key plus sum of all keys greater than the original key in BST.
+    This indicates to traverse in RNL, which is inverse inorder.
+
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int csum=0;
+    TreeNode* convertBST(TreeNode* root)
+    {
+        if (!root) return 0;
+        convertBST(root->right);
+        csum+=root->val;
+        root->val=csum;
+        convertBST(root->left);
+        return root;
+    }
+};
+
+/***** First Visit *****/
 class Solution {
 public:
     TreeNode* convertBST(TreeNode* root)

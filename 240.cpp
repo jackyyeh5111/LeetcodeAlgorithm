@@ -1,3 +1,25 @@
+/***** Third Visit *****/
+/*
+    If we start from left bottom, just go right or top
+        right: num<target
+        top: num>target
+    T:O(m+n)/S:O(1)
+    -----
+*/
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m=matrix.size(), n=matrix[0].size();
+        int i=0,j=n-1;
+        while(i<m&&j>=0) {
+            if (matrix[i][j]==target) return true;
+            else if (matrix[i][j]>target) j--;
+            else i++;
+        }
+        return false;
+    }
+};
+
 /***** Second Visit *****/
 /*
     brute force:

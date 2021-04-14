@@ -1,3 +1,36 @@
+/***** Fourth Visit *****/
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root)
+    {
+        if (!root) return "#";
+        return to_string(root->val)+","+serialize(root->left)+","+serialize(root->right);
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        int i=0;
+        return deserialize(data,i);
+    }
+
+    TreeNode* deserialize(string data, int &i) {
+        if (i>=data.length()||data[i]=='#') {i++; return 0;}
+        int val=0; bool neg=data[i]=='-';
+        if (neg) i++;
+        while (i<data.length()&&isdigit(data[i]))
+            val=val*10+(data[i++]-'0');
+        if (neg) val*=-1;
+        TreeNode *node=new TreeNode(val);
+        i++;
+        node->left=deserialize(data,i);
+        i++;
+        node->right=deserialize(data,i);
+        return node;
+    }
+};
+
 /***** Third Visit *****/
 /*
     preorder+inorder-> unique tree

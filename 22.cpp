@@ -1,3 +1,30 @@
+/***** Third Visit *****/
+/*
+    B0=""
+    B1=(B0)
+    B2=(B0)B1,(B1)B0
+    B3=(B0)B2,(B1)B1,(B2)B0
+    T: catalan number 1/(n+1) C^2n_n
+*/
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<vector<string>> dp(n+1,vector<string>{});
+        dp[0].push_back("");
+        dp[1].push_back("()");
+        for (int i=2; i<=n; ++i) {
+            for (int j=0; j<i; ++j) {
+                for (auto left:dp[j]) {
+                    for (auto right:dp[i-j-1]) {
+                        dp[i].push_back("("+left+")"+right);
+                    }
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+
 /***** Second Visit *****/
 /*
     catalan number: 1/(n+1) C^2n_n

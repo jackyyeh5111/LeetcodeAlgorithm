@@ -1,3 +1,24 @@
+/***** Third Visit *****/
+/*
+    If input contains unicode, it means we have unlimited range. Then change vector into map.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    bool isAnagram(string s, string t)
+    {
+        int cnt=s.length();
+        vector<int> v(26,0);
+        for (char c:s) v[c-'a']++;
+        for (char c:t) {
+            if (v[c-'a']<=0) return false;
+            v[c-'a']--;
+            cnt--;
+        }
+        return cnt==0;
+    }
+};
+
 /***** Second Visit *****/
 /*
     T:O(n)/S:O(n)

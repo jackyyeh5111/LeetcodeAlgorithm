@@ -1,3 +1,46 @@
+/***** Second Visit *****/
+/*
+    shortest path -> Dijastra?
+    use a priority queue (min heap)
+    T:O(V+VlogE)
+*/
+typedef pair<int,vector<int>> pivi; // edge w, <new x,new y, prevdist>
+class Solution {
+public:
+    int minimumEffortPath(vector<vector<int>>& heights)
+    {
+        unordered_map<int,unordered_map<int,int>> dist;
+        int DIRS[4]={-1,-2,1,2};
+        int m=heights.size(), n=heights[0].size();
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                dist[i][j]=INT_MAX;
+            }
+        }
+        priority_queue<pivi,vector<pivi>,greater<pivi>> pq;
+        pq.push({0,{0,0,0}});
+        while (!pq.empty()) {
+            auto t=pq.top(); pq.pop();
+            int w=t.first, x=t.second[0], y=t.second[1], prevDist=t.second[2];
+            if (max(prevDist,w)<dist[x][y]) {
+                dist[x][y]=max(prevDist,w);
+                for (int &d:DIRS) {
+                    if (!check(x+d/2,y+d%2,m,n)) continue;
+                    pq.push({abs(heights[x+d/2][y+d%2]-heights[x][y]),{x+d/2,y+d%2,dist[x][y]}});
+                }
+            }
+        }
+        return dist[m-1][n-1];
+    }
+
+    bool check(int i, int j, int m, int n)
+    {
+        if (i<0||i>=m||j<0||j>=n) return false;
+        return true;
+    }
+};
+
+/***** First Visit *****/
 /*
     A route's effort is the maximum absolute difference in heights between two consecutive cells of the route.
     dp[i][j] min effort so far from top left to i,j.

@@ -1,3 +1,18 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int numDecodings(string s) {
+        int prevprev=1, prev=s[0]!='0', n=s.length();
+        for (int i=1; i<n; ++i) {
+            int cur=s[i]!='0'?prev:0;
+            int num=stoi(string(1,s[i-1])+string(1,s[i]));
+            if (num>=10&&num<=26) cur+=prevprev;
+            prevprev=prev; prev=cur;
+        }
+        return prev;
+    }
+};
+
 /***** Third Visit *****/
 /*
     num:          2 2 6

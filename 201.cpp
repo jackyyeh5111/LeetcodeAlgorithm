@@ -1,3 +1,24 @@
+/***** Fifth Visit *****/
+/*
+    0101
+    0110
+    0111
+*/
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n)
+    {
+        int k=n-m;
+        int l=0, r=31;
+        while (l<=r) {
+            int mid=(l+r)/2;
+            if ((1<<mid)<k) l=mid+1;
+            else r=mid-1;
+        }
+        return l==32?0:(m&n&~((1<<l)-1));
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     0101 5

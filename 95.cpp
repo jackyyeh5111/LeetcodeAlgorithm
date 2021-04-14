@@ -1,3 +1,49 @@
+/***** Fourth Visit *****/
+/*
+    B0
+    B1
+    B2=B1N NB1
+    B3=B2N NB2 B1NB1
+*/
+class Solution {
+public:
+    vector<TreeNode*> generateTrees(int n)
+    {
+        vector<vector<TreeNode*>> dp(n+1,vector<TreeNode*>{});
+        dp[0].push_back(0);
+        dp[1].push_back(new TreeNode());
+        for (int i=2; i<=n; ++i) {
+            for (int j=0; j<i; ++j) {
+                auto lefts=dp[j];
+                auto rights=dp[i-j-1];
+                for (auto l:lefts) {
+                    for (auto r:rights) {
+                        TreeNode *node=new TreeNode();
+                        node->left=l;
+                        node->right=r;
+                        dp[i].push_back(node);
+                    }
+                }
+            }
+        }
+        for (auto &tree:dp[n]) {
+            int val=1;
+            tree=deepCopy(tree,val);
+        }
+        return dp[n];
+    }
+
+    TreeNode* deepCopy(TreeNode *root, int &val)
+    {
+        if (!root) return 0;
+        TreeNode *node=new TreeNode();
+        node->left=deepCopy(root->left,val);
+        node->val=val++;
+        node->right=deepCopy(root->right,val);
+        return node;
+    }
+};
+
 /***** Third Visit *****/
 /*
     Catalan Number

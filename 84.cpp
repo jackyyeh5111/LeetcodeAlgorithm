@@ -1,3 +1,29 @@
+/***** Fifth Visit *****/
+/*
+    mono stack!
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights)
+    {
+        heights.push_back(0);
+        // height, idx
+        stack<pair<int,int>> s;
+        int n=heights.size(), ans=0;
+        for (int i=0; i<n; ++i) {
+            int idx=i;
+            while (!s.empty()&&s.top().first>heights[i]) {
+                auto p=s.top(); s.pop();
+                ans=max(ans,p.first*(i-p.second));
+                idx=p.second;
+            }
+            s.push({heights[i],idx});
+        }
+        return ans;
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     mono sack

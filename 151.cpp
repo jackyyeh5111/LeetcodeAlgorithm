@@ -1,3 +1,23 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    string reverseWords(string s)
+    {
+        if (s=="") return s;
+        reverse(s.begin(),s.end());
+        int i=0, j=0, n=s.length();
+        while (i<n) {
+            while (i<n&&s[i]==' ') i++;
+            int k=i;
+            while (k<n&&s[k]!=' ') k++;
+            if (i==k) break;
+            reverse(s.begin()+j, s.begin()+k);
+            j+=k-i+1; i=k;
+        }
+        return s.substr(0,s[j-1]==' '?j-1:j);
+    }
+};
+
 /***** Third Visit *****/
 /*
     the sky is   blue

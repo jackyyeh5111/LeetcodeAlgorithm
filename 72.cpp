@@ -1,3 +1,24 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    int minDistance(string word1, string word2)
+    {
+        int m=word1.size(), n=word2.size();
+        vector<int> dp(n+1,0);
+        for (int j=1; j<=n; ++j) dp[j]=dp[j-1]+1;
+        for (int i=1; i<=m; ++i) {
+            int prev=dp[0]; dp[0]+=1;
+            for (int j=1; j<=n; ++j) {
+                int k=dp[j];
+                dp[j]=min(min(dp[j-1],dp[j])+1,
+                          prev+(word1[i-1]!=word2[j-1]));
+                prev=k;
+            }
+        }
+        return dp[n];
+    }
+};
+
 /***** Second Visit *****/
 /*
     string editting

@@ -1,3 +1,27 @@
+/***** Fourth Visit *****/
+/*
+    aacecaaa#aaacecaa
+    abcd#dcba
+*/
+class Solution {
+public:
+    string shortestPalindrome(string s)
+    {
+        int n=s.length();
+        string rs=s;
+        reverse(rs.begin(),rs.end());
+        string tgt=s+"#"+rs;
+        vector<int> failure(2*n+1,0);
+        for (int i=1; i<2*n+1; ++i) {
+            int j=failure[i-1];
+            while (j!=0&&tgt[j]!=tgt[i]) j=failure[j-1];
+            if (j==0) failure[i]=tgt[0]==tgt[i];
+            else failure[i]=j+1;
+        }
+        return rs.substr(0,n-failure.back())+s;
+    }
+};
+
 /***** Third Visit *****/
 /*
     string comparison: KMP

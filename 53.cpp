@@ -1,3 +1,34 @@
+/***** Seventh Visit *****/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int csum=0,ans=INT_MIN;
+        for (int num:nums) {
+            csum+=num;
+            if (csum<num) csum=num;
+            ans=max(ans,csum);
+        }
+        return ans;
+    }
+};
+
+/***** Sixth Visit *****/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        if (nums.size()==0) return 0;
+        int csum=nums[0],cmin=nums[0],ans=nums[0];
+        for (int i=1; i<nums.size(); ++i) {
+            csum+=nums[i];
+            ans=max(ans,csum-min(0,cmin));
+            cmin=min(cmin,csum);
+        }
+        return ans;
+    }
+};
+
 /***** Fifth Visit *****/
 class Solution {
 public:

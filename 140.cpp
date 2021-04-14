@@ -1,3 +1,62 @@
+/***** Third Visit *****/
+/*
+    recursive on TRIE
+    T:O(2^n)/S:O(n)
+    -----
+    dp[i] denotes possible word break from s[0] to s[i]
+*/
+// DP TLE
+class Solution {
+public:
+    vector<string> wordBreak(string s, vector<string>& wordDict)
+    {
+        unordered_set<string> words(wordDict.begin(),wordDict.end());
+        int n=s.length();
+        vector<vector<string>> dp(n+1,vector<string>{});
+        dp[0].push_back("");
+        for (int i=1; i<=n; ++i) {
+            for (string word:words) {
+                int len=word.length();
+                if (i<len||s.substr(i-len,len)!=word) continue;
+                for (auto prev:dp[i-len]) {
+                    if (prev=="") dp[i].push_back(word);
+                    else dp[i].push_back(prev+" "+word);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+
+// forward check
+class Solution {
+public:
+    unordered_map<string,vector<string>> cache;
+    vector<string> wordBreak(string s, vector<string>& wordDict)
+    {
+        unordered_set<string> words(wordDict.begin(),wordDict.end());
+        return dfs(s,words);
+    }
+
+    vector<string> dfs(string s, unordered_set<string> &words)
+    {
+        if (cache.count(s)!=0) return cache[s];
+        vector<string> result;
+        if (words.count(s)!=0) result.push_back(s);
+        for (int i=1; i<s.size(); ++i) {
+            string after=s.substr(i);
+            if (words.count(after)!=0) {
+                vector<string> befores=dfs(s.substr(0,i),words);
+                for (string before:befores) {
+                    result.push_back(before+" "+after);
+                }
+            }
+        }
+        cache[s]=result;
+        return result;
+    }
+};
+
 /***** Secod Visit *****/
 /*
     1-d dp solution

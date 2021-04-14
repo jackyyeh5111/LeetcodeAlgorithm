@@ -1,3 +1,37 @@
+/***** Fifth Visit *****/
+/*
+    call by value
+    1 2 4 3 3 3 4 5
+    1 2 5 3 3 3 4 4
+        ^         ^
+    T:O(n!)/S:O(n!)
+*/
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums)
+    {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ans;
+        dfs(nums,0,ans);
+        return ans;
+    }
+
+    void dfs(vector<int> nums, int idx, vector<vector<int>> &ans)
+    {
+        if (idx==nums.size()) {
+            ans.push_back(nums);
+            return;
+        }
+        int cur=nums[idx];
+        for (int i=idx; i<nums.size(); ++i) {
+            if (cur==nums[i]&&i!=idx) continue;
+            cur=nums[i];
+            swap(nums[i],nums[idx]);
+            dfs(nums,idx+1,ans);
+        }
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     [1,1,2]

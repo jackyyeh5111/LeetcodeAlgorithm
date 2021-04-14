@@ -5,10 +5,12 @@
     a->z
 
     a->c ca     acb
-    b-^b
+    b--^
+
+    topologic order ->  postDFS over ALL NODES then reverse to ensure aboce ex.
     -----
     Intution: every 2 pair can give us at most 1 edge if we found the order of 2 different char.
-    
+
     Construct the graph which node u -> node v denotes u is smaller than v in lexicon order.
     Apply topological sort to find the smallest lexicon order.
     T:O(V+E)/S:O(V+E)

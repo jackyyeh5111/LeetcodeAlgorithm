@@ -1,3 +1,50 @@
+/***** Sixth Visit *****/
+/*
+    multiset<pair<int,int>> coords // <index, height>
+    multiset<int> height
+    T:O(nlogn)/S:O(n)
+*/
+class Solution {
+public:
+    vector<vector<int>> getSkyline(vector<vector<int>>& buildings)
+    {
+        vector<vector<int>> ans;
+        vector<pair<int,int>> coords;
+        for (auto b:buildings) {
+            coords.push_back({b[0],b[2]});
+            coords.push_back({b[1],-1*b[2]});
+        }
+        sort(coords.begin(),coords.end(),[](auto a, auto b){
+            if (a.first==b.first) return a.second>=b.second;
+            else return a.first<=b.first;
+        });
+        multiset<int> heights;
+        int cur=0;
+        heights.insert(0);
+        for (auto c:coords) {
+            if (c.second>0) heights.insert(c.second);
+            else heights.erase(heights.find(-1*c.second));
+            if (*heights.rbegin()!=cur) {
+                ans.push_back({c.first,*heights.rbegin()});
+                cur=*heights.rbegin();
+            }
+        }
+        return ans;
+    }
+};
+
+/***** Fifth Visit *****/
+/*
+    points: multiset<pair<int,int>>
+        <x coord, +-height>
+        +: start of building
+        -: end of building
+    heights: multiset<int> current involving heights.
+
+    record points each time the max height in heights changes.
+    T:O(nlogn)/S:O(n)
+*/
+
 /***** Fourth Visit *****/
 /*
     multiset<pair<int,int>> // x coord, height

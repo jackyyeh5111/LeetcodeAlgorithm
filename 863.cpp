@@ -1,3 +1,51 @@
+/***** Third Visit *****/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int K)
+    {
+        vector<int> ans;
+        dfs1(root,target,K,-1,ans);
+        return ans;
+    }
+
+    int dfs1(TreeNode *root, TreeNode *target, int K, int idx,
+                  vector<int> &ans)
+    {
+        int dst=-1;
+        if (!root) return -1;
+        if (target==root) {idx=0; dst=1;}
+        if (K==idx) {ans.push_back(root->val); return -1;}
+        int left=dfs1(root->left,target,K,idx<0?idx:idx+1,ans);
+        int right=dfs1(root->right,target,K,idx<0?idx:idx+1,ans);
+        if (left>0) {
+            if (left==K) {ans.push_back(root->val); return -1;}
+            else {dfs2(root->right,K, left+1,ans); return left+1;}
+        }
+        if (right>0) {
+            if (right==K) {ans.push_back(root->val); return -1;}
+            else {dfs2(root->left,K, right+1,ans); return right+1;}
+        }
+        return dst;
+    }
+
+    void dfs2(TreeNode *root, int K, int idx, vector<int> &ans)
+    {
+        if (!root) return;
+        else if (K==idx) {ans.push_back(root->val); return;}
+        dfs2(root->left,K,idx+1,ans);
+        dfs2(root->right,K,idx+1,ans);
+    }
+};
+
 /***** Second Visit *****/
 /*
     Thought 1:

@@ -1,3 +1,40 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    vector<vector<string>> partition(string s)
+    {
+        int n=s.length();
+        vector<vector<bool>> dp(n,vector<bool>(n,0));
+        for (int len=1; len<=n; ++len) {
+            for (int i=0; i+len-1<n; ++i) {
+                int j=i+len-1;
+                if (len==1||s[i]==s[j]&&(len==2||dp[i+1][j-1]))
+                    dp[i][j]=true;
+            }
+        }
+        vector<vector<string>> ans;
+        vector<string> cur;
+        dfs(s,dp,0,cur,ans);
+        return ans;
+    }
+
+    void dfs(string &s, vector<vector<bool>> &dp, int idx, vector<string> &cur,
+             vector<vector<string>> &ans)
+    {
+        if (idx==s.length()) {
+            ans.push_back(cur);
+            return;
+        }
+        for (int i=idx; i<s.length(); ++i) {
+            if (dp[idx][i]) {
+                cur.push_back(s.substr(idx,i-idx+1));
+                dfs(s,dp,i+1,cur,ans);
+                cur.pop_back();
+            }
+        }
+    }
+};
+
 /***** Fourth Visit(FAIL) *****/
 /*
     recursive dfs

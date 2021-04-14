@@ -1,4 +1,123 @@
-/***** Tourth Visit *****/
+/***** Seventh Visit *****/
+/*
+    brute force
+    T(n)=T(n-1)+...+T(1)+O(1)
+        =2T(n-2)+..+2T(1)
+        =O(2^n)
+*/
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size();
+        int ret=1;
+        for (int i=0; i<n; ++i) {
+            ret=max(ret,dfs(nums,i));
+        }
+        return ret;
+
+    }
+
+    int dfs(vector<int>& nums, int idx)
+    {
+        if (idx==0) return 1;
+        int ret=1;
+        for (int i=0; i<idx; ++i) {
+            if (nums[i]<nums[idx])
+                ret=max(ret,dfs(nums,i)+1);
+        }
+        return ret;
+    }
+};
+
+/***** Sixth Visit *****/
+/*
+    2-d dp T:O(n^2)/S:O(n)
+    -----
+    BIS T:O(nlogn)/S:O(n)
+    BIS[i] denotes the best tail num while we have length i LIS so far.
+*/
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        vector<int> bis;
+        for (int num:nums) {
+            auto it=lower_bound(bis.begin(),bis.end(),num);
+            if (it==bis.end()) bis.push_back(num);
+            else *it=num;
+        }
+        return bis.size();
+    }
+};
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size(),ans=1;
+        vector<int> dp(n,1);
+        for (int i=0; i<n; ++i) {
+            for (int j=i+1; j<n; ++j) {
+                if (nums[i]<nums[j])
+                    dp[j]=max(dp[j],dp[i]+1);
+                ans=max(ans,dp[j]);
+            }
+        }
+        return ans;
+    }
+};
+
+/***** Fifth Visit *****/
+/*
+    LIS for non-strictly increasing subsequence
+    T:O(nlogn+n^2)/S:O(n^2)
+    -----
+    dp[i] denotes length of LIS ends with nums[i]
+    dp[i]=max(dp[k]+1 for all nums[k]<nums[i])
+    FIND THE MAX IN THE PROCESS
+    T:O(n^2)/S:O(n)
+    -----
+    BIS
+    Form a best increasing subsequence by binary search.
+    T:O(nlogn)/S:O(n)
+*/
+
+// T:O(nlogn) Greedy
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int> bis;
+        for (int num:nums) {
+            auto it=lower_bound(bis.begin(),bis.end(),num);
+            if (it==bis.end()) bis.push_back(num);
+            else *it=num;
+        }
+        return bis.size();
+    }
+};
+
+// T:O(n^2) DP
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums)
+    {
+        int n=nums.size(), ans=1;
+        vector<int> dp(n,1);
+        for (int i=0; i<n; ++i) {
+            for (int j=0; j<i; ++j) {
+                if (nums[j]<nums[i])
+                    dp[i]=max(dp[i],dp[j]+1);
+            }
+            ans=max(ans,dp[i]);
+        }
+        return ans;
+    }
+};
+
+/***** Fourth Visit *****/
 /*
     LIS (strictly)
     src  : 0 1 0 3 2 3

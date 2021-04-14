@@ -1,3 +1,33 @@
+/***** Sixth Visit *****/
+/*
+    dp[i] denotes min cut of s[0-i]
+    T:O(n^2)/S:O(n)
+*/
+class Solution {
+public:
+    int minCut(string s)
+    {
+        int n=s.length();
+        vector<int> dp(n+1,0);
+        for (int i=0; i<=n; ++i) dp[i]=i-1;
+        for (int k=1; k<=n; ++k) {
+            int i=k,j=k;
+            while(i>0&&j<=n&&s[i-1]==s[j-1]) {
+                dp[j]=min(dp[i-1]+1,dp[j]);
+                j++; i--;
+            }
+            i=k; j=k+1;
+            while(i>0&&j<=n&&s[i-1]==s[j-1]) {
+                dp[j]=min(dp[i-1]+1,dp[j]);
+                j++; i--;
+            }
+            // for (int p:dp) cout<<p<<",";
+            // cout<<endl;
+        }
+        return dp[n];
+    }
+};
+
 /***** Fifth Visit *****/
 /*
     FAIL, SEE THIRD VISIT.

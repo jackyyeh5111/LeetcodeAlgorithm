@@ -1,3 +1,17 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    int maxProfit(vector<int>& prices)
+    {
+        int buy=INT_MAX,sell=0;
+        for (int price:prices) {
+            buy=min(buy,price-sell);
+            sell=max(sell,price-buy);
+        }
+        return sell;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Array:

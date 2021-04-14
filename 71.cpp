@@ -1,3 +1,24 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    string simplifyPath(string path)
+    {
+        vector<string> v;
+        int i=0, n=path.length();
+        while (i<n) {
+            string dir="";
+            i++;
+            while (i<n&&path[i]!='/') dir+=path[i++];
+            if (dir=="."||dir=="") continue;
+            else if (dir==".."&&!v.empty()) v.pop_back();
+            else if (dir!="..") v.push_back(dir);
+        }
+        string ans="";
+        for (string s:v) ans+=("/"+s);
+        return ans==""?"/":ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Use a vector to store each folder

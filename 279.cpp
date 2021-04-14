@@ -1,3 +1,40 @@
+/***** Fifth Visit *****/
+// recursive T:O(nlogn)
+class Solution {
+public:
+    unordered_map<int,int> table;
+    int numSquares(int n)
+    {
+        if (table.count(n)!=0) return table[n];
+        int k=sqrt(n), ans=n;
+        for (int i=1; i<=k; ++i) {
+            ans=min(ans,numSquares(n-i*i)+1);
+        }
+        table[n]=ans;
+        return ans;
+    }
+};
+
+// dp T:O(nlogn)
+class Solution {
+public:
+    int numSquares(int n)
+    {
+        vector<int> dp(n+1);
+        for (int i=1; i<=n; ++i) {
+            int k=sqrt(i);
+            if (i==k*k) dp[i]=1;
+            else {
+                dp[i]=i;
+                for (int j=1; j<=k; ++j) {
+                    dp[i]=min(dp[i],dp[i-j*j]+1);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

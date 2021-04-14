@@ -1,3 +1,18 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head)
+    {
+        ListNode *prev=0;
+        while (head) {
+            ListNode *next=head->next;
+            head->next=prev;
+            prev=head; head=next;
+        }
+        return prev;
+    }
+};
+
 /***** Second Visit *****/
 class Solution {
 public:

@@ -1,3 +1,28 @@
+/***** Seventh Visit *****/
+/*
+           2 3 -2  4
+    pos  1 2 6 1
+    neg  1 1 1 -12 -48
+
+    use pos/neg to find largest/smallest product subarray ends up to ith.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums)
+    {
+        if (nums.size()==0) return -1;
+        int pos=1,neg=1,ans=nums[0];
+        for (int num:nums) {
+            if (num<0) swap(pos,neg);
+            pos=max(pos*num,num);
+            neg=min(neg*num,num);
+            ans=max(pos,ans);
+        }
+        return ans;
+    }
+};
+
 /***** Sixth Visit *****/
 /*
          2 3 -2 4

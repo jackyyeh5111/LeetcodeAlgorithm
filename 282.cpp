@@ -1,3 +1,39 @@
+/***** Sixth Visit *****/
+/*
+    dfs on each digit
+    T:O(4^n)
+*/
+class Solution {
+public:
+    vector<string> addOperators(string num, int target)
+    {
+        vector<string> ans;
+        dfs(num,0,ans,0,0,"",target);
+        return ans;
+    }
+
+    void dfs(string &num, int idx, vector<string> &ans, long prev, long cur,
+             string s, int target)
+    {
+        if (idx==num.size()) {
+            if (target==cur) ans.push_back(s);
+            return;
+        }
+        for (int i=idx; i<num.length(); ++i) {
+            if (num[idx]=='0'&&i!=idx) continue;
+            string k_s=num.substr(idx,i-idx+1);
+            long k=stol(k_s);
+            if (idx==0) {
+                dfs(num,i+1,ans,k,k,k_s,target);
+                continue;
+            }
+            dfs(num,i+1,ans,k,cur+k,s+"+"+k_s,target);
+            dfs(num,i+1,ans,-1*k,cur-k,s+"-"+k_s,target);
+            dfs(num,i+1,ans,prev*k,cur-prev+prev*k,s+"*"+k_s,target);
+        }
+    }
+};
+
 /***** Fifth Visit *****/
 /*
     T(N) = Total Number of Valid Expressions

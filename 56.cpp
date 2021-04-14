@@ -1,3 +1,23 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals)
+    {
+        sort(intervals.begin(),intervals.end());
+        vector<vector<int>> ans;
+        int i=0, n=intervals.size();
+        while (i<n) {
+            int j=i+1, up=intervals[i][1];
+            while (j<n&&intervals[j][0]<=up) {
+                up=max(up,intervals[j++][1]);
+            }
+            ans.push_back({intervals[i][0],up});
+            i=j;
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     2 ptr greedy approach

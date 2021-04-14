@@ -1,3 +1,72 @@
+/***** Third Visit *****/
+/*
+    hashmap<int,ListNode*> map
+*/
+struct Node {
+    Node *left=0,*right=0;
+    int val=0;
+    Node(int val=0, Node *left=0, Node *right=0)
+    {
+        this->val=val;
+        this->left=left;
+        this->right=right;
+    }
+};
+
+class LRUCache {
+public:
+    unordered_map<int,pair<Node*,int>> mp; //Node saves key, int means val
+    Node *head=0;
+    int capacity=0;
+    LRUCache(int capacity) {
+        this->capacity=capacity;
+    }
+
+    int get(int key) {
+        if (mp.count(key)==0) return -1;
+        Node *target=mp[key].first;
+        if (target!=head) {
+            target->left->right=target->right;
+            target->right->left=target->left;
+            target->left=head->left;
+            target->right=head;
+            Node *tail=head->left;
+            head->left=target;
+            tail->right=target;
+        }
+        head=target;
+        return mp[key].second;
+    }
+
+    void put(int key, int value) {
+        if (mp.count(key)) {
+            mp[key].second=value;
+            get(key); return;
+        }
+
+        Node *node=new Node(key);
+        node->left=node; node->right=node;
+        if (!head) head=node;
+        else {
+            node->right=head;
+            node->left=head->left;
+            Node *tail=head->left;
+            head->left=node;
+            tail->right=node;
+            head=node;
+        }
+        mp[key]={node,value};
+
+        if (mp.size()>capacity) {
+            Node *node=head->left;
+            head->left=node->left;
+            node->left->right=head;
+            mp.erase(node->val);
+            delete node;
+        }
+    }
+};
+
 /***** Second Visit *****/
 /*
     data stucture:

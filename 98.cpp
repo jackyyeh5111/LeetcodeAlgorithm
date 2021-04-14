@@ -1,3 +1,19 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        return preorder(root,(long)INT_MIN-1,(long)INT_MAX+1);
+    }
+
+    bool preorder(TreeNode *root, long lower,long upper)
+    {
+        if (!root) return true;
+        if (root->val<=lower||root->val>=upper) return false;
+        return preorder(root->left,lower,root->val)&&
+               preorder(root->right,root->val,upper);
+    }
+};
+
 /***** Third Visit *****/
 /*
     Vavlidate BST or not.

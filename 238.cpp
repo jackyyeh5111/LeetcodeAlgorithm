@@ -1,3 +1,29 @@
+/***** Third Visit *****/
+/*
+    division 2 pass T:O(n)
+    -----
+    brute force T:O(n^2)
+    -----
+    2 ptr solution
+    [1,2,3,4]
+     ^     ^
+     T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums)
+    {
+        int n=nums.size();
+        vector<int> dp(n,1);
+        int left=1,right=1;
+        for (int i=0; i<n; ++i) {
+            dp[i]*=left; dp[n-i-1]*=right;
+            left*=nums[i]; right*=nums[n-i-1];
+        }
+        return dp;
+    }
+};
+
 /***** Second Visit *****/
 /*
     1  2   3  4
