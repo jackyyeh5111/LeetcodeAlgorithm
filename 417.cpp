@@ -1,3 +1,37 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int dirs[4]={1,2,-1,-2};
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights)
+    {
+        int m=heights.size(), n=heights[0].size();
+        vector<vector<int>> table(m,vector<int>(n,0));
+        vector<vector<int>> ans;
+        for (int i=0;i<m; ++i) {
+            dfs(heights,table,i,0,INT_MIN,1,ans);
+            dfs(heights,table,i,n-1,INT_MIN,2,ans);
+        }
+        for (int j=0; j<n; ++j) {
+            dfs(heights,table,0,j,INT_MIN,1,ans);
+            dfs(heights,table,m-1,j,INT_MIN,2,ans);
+        }
+        return ans;
+    }
+
+    void dfs(vector<vector<int>> &heights, vector<vector<int>>&table, int i, int j, int prev, int ocean, vector<vector<int>> &ans)
+    {
+        int m=heights.size(), n=heights[0].size();
+        if (i<0||i>=m||j<0||j>=n||prev>heights[i][j]) return;
+        else if (table[i][j]==ocean||table[i][j]==3) return;
+        table[i][j]=table[i][j]|ocean;
+        if (table[i][j]==3) ans.push_back({i,j});
+        for (int dir:dirs)
+            dfs(heights,table,i+dir%2,j+dir/2,heights[i][j],ocean,ans);
+
+    }
+
+};
+
 /***** Third Visit *****/
 
 // combine ocean 1 and 2 into 1 dfs function

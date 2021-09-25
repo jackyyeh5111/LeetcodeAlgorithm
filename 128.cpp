@@ -1,3 +1,52 @@
+/***** Sixth Visit *****/
+/*
+    union/find
+    union: T:O(logn)
+    find: T:O(logn)
+
+    unordered_map<int,pair<int,bool>>
+    k: cur node, v.first is size or parent depends on v.second
+        true if root, else false
+*/
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_map<int,pair<int,bool>> parents;
+        int ans=0;
+        for (int &num:nums) {
+            if (parents.count(num)) continue;
+            parents[num]={1,true};
+            int t=1;
+            if (parents.count(num+1)) t=max(t,myunion(parents,num,num+1));
+            if (parents.count(num-1)) t=max(t,myunion(parents,num,num-1));
+            ans=max(ans,t);
+        }
+        return ans;
+    }
+
+    int find(unordered_map<int,pair<int,bool>> &parents, int x)
+    {
+        int root=x;
+        while (!parents[root].second)
+            root=parents[root].first;
+        while (x!=root) {
+            int next=parents[x].first;
+            parents[x].first=root;
+            x=next;
+        }
+        return root;
+    }
+
+    int myunion(unordered_map<int,pair<int,bool>> &parents, int x, int y)
+    {
+        int rx=find(parents,x), ry=find(parents,y);
+        if (rx>ry) swap(rx,ry);
+        parents[rx].first+=parents[ry].first;
+        parents[ry].first=rx; parents[ry].second=false;
+        return parents[rx].first;
+    }
+};
+
 /***** Fifth Visit *****/
 /*
     union/find

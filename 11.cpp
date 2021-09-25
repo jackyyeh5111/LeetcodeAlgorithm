@@ -1,3 +1,32 @@
+/***** Sixth Visit *****/
+class Solution {
+public:
+    int maxArea(vector<int>& height)
+    {
+        int l=0,r=height.size()-1,ans=0;
+        while (l<r) {
+            ans=max(ans,min(height[r],height[l])*(r-l));
+            if (height[l]<=height[r]) l++;
+            else r--;
+        }
+        return ans;
+    }
+};
+
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int n=height.size(),l=0,r=n-1,ans=0;
+        while (l<r) {
+            ans=max(min(height[l],height[r])*(r-l),ans);
+            if (height[l]<height[r]) l++;
+            else r--;
+        }
+        return ans;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

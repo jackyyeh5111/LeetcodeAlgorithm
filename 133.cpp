@@ -1,3 +1,20 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    unordered_map<Node*,Node*> mp;
+    Node* cloneGraph(Node* node)
+    {
+        if (mp.count(node)) return mp[node];
+        else if (!node) return 0;
+        Node *t=new Node(node->val);
+        mp[node]=t;
+        for (auto neighbor:node->neighbors) {
+            t->neighbors.push_back(cloneGraph(neighbor));
+        }
+        return t;
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

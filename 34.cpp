@@ -1,3 +1,43 @@
+/***** Fourth Visit *****/
+/*
+    Binary search on >= and >.
+    T:O(logn)/S:O(1)
+*/
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target)
+    {
+        // first >=
+        int lb=0,r=nums.size();
+        while (lb<r) {
+            int mid=(lb+r)/2;
+            if (nums[mid]>=target) r=mid;
+            else lb=mid+1;
+        }
+
+        // first >
+        int ub=0; r=nums.size();
+        while (ub<r) {
+            int mid=(ub+r)/2;
+            if (nums[mid]>target) r=mid;
+            else ub=mid+1;
+        }
+        if (lb==ub) return {-1,-1};
+        else return {lb,ub-1};
+    }
+};
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target)
+    {
+        auto lb=lower_bound(nums.begin(),nums.end(),target); // >=target
+        auto ub=upper_bound(nums.begin(),nums.end(),target); // > target
+        if (lb==ub) return {-1,-1};
+        else return {(int)(lb-nums.begin()),(int)(ub-nums.begin())-1};
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

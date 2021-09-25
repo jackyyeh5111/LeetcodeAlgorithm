@@ -1,3 +1,61 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        vector<double> dp(target+1,0);
+        dp[0]=1;
+        for (int i=1; i<=target; ++i) {
+            for (int &num:nums) {
+                if (i<num) continue;
+                dp[i]+=dp[i-num];
+            }
+        }
+        return dp[target];
+    }
+};
+
+/***** Third Visit *****/
+/*
+    T:O(target*n)/S:O(target)
+    -----
+    if numbers are negative, add a new criteria for pos/neg target range
+    modify our range from target to
+*/
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target)
+    {
+        double dp[1001]={0};
+        dp[0]=1;
+        for (int i=1; i<=target; ++i) {
+            for (const int &num:nums) {
+                // modify here for pos/neg dp, e.g. i=1, check +- 1
+                if (i<num) continue;
+                dp[i]+=dp[i-num];
+            }
+        }
+        return dp[target];
+    }
+};
+
+/***** Second Visit *****/
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target)
+    {
+        vector<double> dp(target+1,0);
+        dp[0]=1;
+        for (int i=1; i<=target; ++i) {
+            for (int num:nums) {
+                if (i<num) continue;
+                dp[i]+=dp[i-num];
+            }
+        }
+        return dp[target];
+    }
+};
+
+/***** First Visit *****/
 /*
     dp problem, similar to wordbreak problem 139.
     [1 2 3], t=4

@@ -1,3 +1,36 @@
+/***** Sixth Visit *****/
+/*
+    k  (a) 1(0)
+    ~k (a')0(1) +1
+    -k (a')1(0)
+
+    k&(-k) (0)1(0)
+*/
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int ans=0;
+        while (n) {
+            ans++;
+            n-=n&(-n);
+        }
+        return ans;
+    }
+};
+
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int ans=0;
+        while (n) {
+            ans++;
+            n=n&(n-1);
+        }
+        return ans;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

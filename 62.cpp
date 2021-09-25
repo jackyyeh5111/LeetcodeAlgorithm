@@ -1,3 +1,34 @@
+/***** Fifth Visit *****/
+/*
+    2-d dp
+    dp[i][j]=dp[i-1][j]+dp[i][j-1]
+    T:O(mn)/S:O(mn)
+    -----
+    1-d dp
+    dp[i]+=dp[i-1]
+    T:O(mn)/S:O(mn)
+    -----
+    C^(m+n)_n
+    1
+    11
+    121
+    1331
+    14641
+    10 9 8/321
+*/
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        if (m<n) swap(m,n);
+        vector<int> dp(n,1);
+        for (int i=0; i<m-1; ++i) {
+            for (int j=1; j<n; ++j)
+                dp[j]+=dp[j-1];
+        }
+        return dp.back();
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     C^8_2

@@ -1,3 +1,40 @@
+/***** Fourth Visit *****/
+/*
+    "abcabcbb"
+     ^
+        ^
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        bool table[256]={0};
+        int l=0,ans=0,n=s.length();
+        for (int i=0; i<n; ++i) {
+            while (table[s[i]])
+                table[s[l++]]=0;
+            table[s[i]]=1;
+            ans=max(ans,i-l+1);
+        }
+        return ans;
+    }
+};
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char,int> mp;
+        int n=s.length(), ans=0, l=0;
+        for (int i=0; i<n; ++i) {
+            if (mp.count(s[i]))
+                l=max(l,mp[s[i]]+1);
+            mp[s[i]]=i;
+            ans=max(ans,i-l+1);
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

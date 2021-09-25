@@ -1,3 +1,43 @@
+/******* Fifth Visit *******/
+/*
+    T:O(n^2) by insert n-1, n-2, ... etc.
+    -----
+    12 43
+    12345
+    123 54
+    123
+     ^
+      ^
+*/
+class Solution {
+public:
+    void reorderList(ListNode* head)
+    {
+        ListNode *slow=head,*fast=head;
+        while (fast->next&&fast->next->next) {
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        fast=slow->next;
+        slow->next=0;
+        ListNode *prev=0;
+        while (fast) {
+            ListNode *next=fast->next;
+            fast->next=prev;
+            prev=fast; fast=next;
+        }
+        ListNode *l1=head,*l2=prev;
+        ListNode *header=new ListNode(),*tail=header;
+        while (l1&&l2) {
+            ListNode *next1=l1->next,*next2=l2->next;
+            tail->next=l1; l1->next=l2;
+            tail=l2;
+            l1=next1; l2=next2;
+        }
+        tail->next=l1;
+    }
+};
+
 /******* Fourth Visit *******/
 class Solution {
 public:

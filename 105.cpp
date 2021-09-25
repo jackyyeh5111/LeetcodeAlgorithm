@@ -1,3 +1,30 @@
+/***** Fifth Visit *****/
+/*
+    pre: [3,9,20,15,7]
+    in : [9,3,15,20,7]
+    skew T(n)=T(n-1)+O(n)=T:O(n^2)
+    balance T(n)=2T(n/2)+O(n)=T:O(nlogn)
+*/
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder)
+    {
+        if (preorder.empty()) return 0;
+        TreeNode *root = new TreeNode(preorder[0]);
+        if (preorder.size()==1) return root;
+        int p=0;
+        while (inorder[p]!=preorder[0]) p++;
+        vector<int> lpre,lin,rprev,rin;
+        lin=vector<int>(inorder.begin(),inorder.begin()+p);
+        rin=vector<int>(inorder.begin()+p+1,inorder.end());
+        lpre=vector<int>(preorder.begin()+1,preorder.begin()+1+lin.size());
+        rprev=vector<int>(preorder.begin()+1+lin.size(),preorder.end());
+        root->left=buildTree(lpre,lin);
+        root->right=buildTree(rprev,rin);
+        return root;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

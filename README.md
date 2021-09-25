@@ -59,6 +59,7 @@ Practice of leetcode
 | 983| Minimum Cost For Tickets|[983.cpp](983.cpp)|Medium|top down DP|
 | 1035| Uncrossed Lines|[1035.cpp](1035.cpp)|Medium|Longest Common Sequence|
 | 1041| Robot Bounded In Circle|[1041.cpp](1041.cpp)|Medium|check direction and position.|
+| 1048| Longest String Chain|[1048.cpp](1048.cpp)|Medium|sort in terms of length first and use 1-d dp.|
 | 1277| Count Square Submatrices with All Ones|[1277.cpp](1277.cpp)|Medium||
 | 1463| Cherry Pickup II|[1463.cpp](1463.cpp)|Hard|bottom up thinking|
 | 1504| Count Submatrices With All Ones|[1504.cpp](1504.cpp)|Medium|check horizontal first, then vertical. T:O(n^3)|
@@ -197,6 +198,7 @@ Practice of leetcode
 | 545| Boundary of Binary Tree|[545.cpp](545.cpp)|Medium|preorder+postorder hybrid T:O(n) 1 pass|
 | 563| Binary Tree Tilt|[563.cpp](563.cpp)|Easy||
 | 572| Subtree of Another Tree|[572.cpp](572.cpp)|Easy|separate 2 function|
+| 589| N-ary Tree Preorder Traversal|[589.cpp](589.cpp)|Easy|stack|
 | 623| Add One Row to Tree|[623.cpp](623.cpp)|Medium|level order/postorder|
 | 637| Average of Levels in Binary Tree|[637.cpp](637.cpp)|Easy||
 | 652| Find Duplicate Subtrees|[652.cpp](652.cpp)|Medium|postorder with node encoding|
@@ -208,6 +210,7 @@ Practice of leetcode
 | 865| Smallest Subtree with all the Deepest Nodes|[865.cpp](865.cpp)|Medium||
 | 894| All Possible Full Binary Trees|[894.cpp](894.cpp)|Medium|Catalan Number|
 | 951| Flip Equivalent Binary Trees|[951.cpp](951.cpp)|Medium||
+| 968| Binary Tree Cameras|[968.cpp](968.cpp)|Hard|DP, 3 conditions|
 | 971| Flip Binary Tree To Match Preorder Traversal|[971.cpp](971.cpp)|Medium||
 | 979| Distribute Coins in Binary Tree|[979.cpp](979.cpp)|Medium|postOrder|
 | 987| Vertical Order Traversal of a Binary Tree|[987.cpp](987.cpp)|Medium|nested map|
@@ -284,10 +287,13 @@ Practice of leetcode
 | 295| Find Median from Data Stream|[295.cpp](295.cpp)|Hard|2 priority Q|
 | 341| Flatten Nested List Iterator|[341.cpp](341.cpp)|Medium|stack|
 | 456| 132 Pattern|[456.cpp](456.cpp)|Medium|binary search T:O(nlogn) / tricky stack T:O(n)|
+| 630| Course Schedule III|[630.cpp](630.cpp)|Hard|priority queue|
 | 739| Daily Temperatures|[739.cpp](739.cpp)|Medium|stack|
 | 856| Score of Parentheses|[856.cpp](856.cpp)|Medium|stack usage/level counting|
 | 895| Maximum Frequency Stack|[895.cpp](895.cpp)|Hard|max heap / stack of stack|
+| 1209| Remove All Adjacent Duplicates in String II|[1209.cpp](1209.cpp)|Medium|stack T:O(n)/S:O(n)|
 | 1438| Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit|[1438.cpp](1438.cpp)|Medium|Reduce to problem 239. Use deque to record local min/max|
+| 1642| Furthest Building You Can Reach|[1642.cpp](1642.cpp)|Medium|min heap|
 | 1673| Find the Most Competitive Subsequence|[1673.cpp](1673.cpp)|Medium|mono increasing stack, |
 | 1776| Car Fleet II|[1776.cpp](1776.cpp)|Hard|mono increasing stack w. the increasing speed. |
 | 1801| Number of Orders in the Backlog|[1801.cpp](1801.cpp)|Medium|2 priority queues|
@@ -325,6 +331,8 @@ Practice of leetcode
 | 468| Validate IP Address|[468.cpp](468.cpp)|Medium||
 | 524| Longest Word in Dictionary through Deleting|[524.cpp](524.cpp)|Medium||
 | 647| Palindromic Substrings|[647.cpp](647.cpp)|Medium| palindrome checkcing by left/right ptr.|
+| 696| Count Binary Substrings|[696.cpp](696.cpp)|Easy|GROUP 0s and 1s|
+| 745| Prefix and Suffix Search|[745.cpp](745.cpp)|Hard||
 | 763| Partition Labels|[763.cpp](763.cpp)|Medium|treat is as array. moving anchor to check overlap region.|
 | 792| Number of Matching Subsequences|[792.cpp](792.cpp)|Medium|subsequence matching|
 | 820| Short Encoding of Words|[820.cpp](820.cpp)|Medium|TRIE on inverse string|
@@ -412,6 +420,7 @@ Practice of leetcode
 | 498| Diagonal Traverse|[498.cpp](498.cpp)|Medium||
 | 525| Contiguous Array|[525.cpp](525.cpp)|Medium|Use map to record index of accumulated sum|
 | 532| K-diff Pairs in an Array|[532.cpp](532.cpp)|Medium|Notice the default value of hashmap|
+| 554| Brick Wall|[554.cpp](554.cpp)|Medium|unordered set|
 | 575| Distribute Candies|[575.cpp](575.cpp)|Easy|hashset|
 | 581| Shortest Unsorted Continuous Subarray|[581.cpp](581.cpp)|Medium|2 ptr|
 | 605| Can Place Flowers|[605.cpp](605.cpp)|Easy|Greedy|
@@ -434,16 +443,19 @@ Practice of leetcode
 | 941| Valid Mountain Array|[941.cpp](941.cpp)|Easy|2 ptr|
 | 948| Bag of Tokens|[948.cpp](948.cpp)|Meedium|2 ptr|
 | 950| Reveal Cards In Increasing Order|[950.cpp](950.cpp)|Meedium|find the rule|
+| 970| Powerful Integers|[970.cpp](970.cpp)|Medium|brute force|
 | 977| Squares of a Sorted Array|[977.cpp](977.cpp)|Easy|2 ptr|
 | 1007| Minimum Domino Rotations For Equal Row|[1007.cpp](1007.cpp)|Medium||
 | 1010| Pairs of Songs With Total Durations Divisible by 60|[1010.cpp](1010.cpp)|Medium||
 | 1029| Two City Scheduling|[1029.cpp](1029.cpp)|Easy||
+| 1074| Number of Submatrices That Sum to Target|[1074.cpp](1074.cpp)|Hard|prefix sum, optimized: T:O(n^3)|
 | 1094| Car Pooling|[1094.cpp](1094.cpp)|Medium|comparison/bucket sort|
 | 1217| Minimum Cost to Move Chips to The Same Position|[1217.cpp](1217.cpp)|Easy||
 | 1229| Meeting Scheduler|[1229.cpp](1229.cpp)|Medium||
 | 1288| Remove Covered Intervals|[1288.cpp](1288.cpp)|Medium|sort|
 | 1329| Sort the Matrix Diagonally|[1329.cpp](1329.cpp)|Medium|heap sort|
 | 1337| The K Weakest Rows in a Matrix|[1337.cpp](1337.cpp)|Easy|heap sort|
+| 1352| Product of the Last K Numbers|[1352.cpp](1352.cpp)|Medium|take care of 0|
 | 1423| Maximum Points You Can Obtain from Cards|[1423.cpp](1423.cpp)|Medium|sliding window.|
 | 1437| Check If All 1's Are at Least Length K Places Away|[1437.cpp](1437.cpp)|Easy||
 | 1477| Find Two Non-overlapping Sub-arrays Each With Target Sum|[1477.cpp](1477.cpp)|Medium|sliding window.|
@@ -505,6 +517,7 @@ Practice of leetcode
 | 258| Add Digits|[258.cpp](258.cpp)|Easy|digital root, %9|
 | 260| Single Number III|[260.cpp](260.cpp)|Medium|find last bit 1 n&~(n-1). Use last bit of xor nums to separate 2 target.|
 | 292| Nim Game|[292.cpp](292.cpp)|Easy||
+| 326| Power of Three|[326.cpp](326.cpp)|Easy|loge will generate round error.|
 | 342| Power of Four|[342.cpp](342.cpp)|Easy|no loop/recursive|
 | 371| Sum of Two Integers|[371.cpp](371.cpp)|Medium|2's complement|
 | 421| Maximum XOR of Two Numbers in an Array|[421.cpp](421.cpp)|Medium|Greedy bit mannipulation / TRIE|
@@ -515,6 +528,7 @@ Practice of leetcode
 | 621| Task Scheduler|[621.cpp](621.cpp)|Medium|Take examples!|
 | 645| Set Mismatch|[645.cpp](645.cpp)|Easy|Similar to problem 260.|
 | 754| Reach a Number|[754.cpp](754.cpp)|Medium|Take examples!|
+| 836| Rectangle Overlap|[836.cpp](836.cpp)|Easy||
 | 858| Mirror Reflection|[858.cpp](858.cpp)|Medium|geometry|
 | 902| Numbers At Most N Given Digit Set|[902.cpp](902.cpp)|Hard|iterative|
 | 957| Prison Cells After N Days|[957.cpp](957.cpp)|Medium|**state machine**|
@@ -554,6 +568,7 @@ Practice of leetcode
 | 938| Range Sum of BST|[938.cpp](938.cpp)|Easy|Utilize BST property for O(h)|
 | 1306| Jump Game III|[1306.cpp](1306.cpp)|Medium|DFS|
 | 1345| Jump Game IV|[1345.cpp](1345.cpp)|Hard|BFS, pruning continuous num to avoid TLE|
+| 1376| Time Needed to Inform All Employees|[1376.cpp](1376.cpp)|Medium|DFS|
 | 1466| Reorder Routes to Make All Paths Lead to the City Zero|[1466.cpp](1466.cpp)|Medium|undirected+directed graph/dfs|
 | 1631| Path With Minimum Effort|[1631.cpp](1631.cpp)|Medium|Dijastra / binary search|
 | 1743| Restore the Array From Adjacent Pairs|[1743.cpp](1743.cpp)|Medium|DFS on the begin node, which has in-degree 1|

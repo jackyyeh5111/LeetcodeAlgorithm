@@ -1,3 +1,35 @@
+/***** Eighth Visit *****/
+/*
+    Find the contiguous max sum of subarray
+    T:O(n)/S:O(1)
+*/
+// without length comparison
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int csum=0, ans=INT_MIN, n=nums.size();
+        for (int i=0; i<n; ++i) {
+            csum=max(csum+nums[i],nums[i]);
+            ans=max(ans,csum);
+        }
+        return ans;
+    }
+};
+
+// with length comparison
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int cmin=INT_MAX,csum=0,ans=INT_MIN, n=nums.size();
+        for (int i=0; i<n; ++i) {
+            cmin=min(cmin,csum); // we can determin index by here.
+            csum+=nums[i];
+            ans=max(ans,max(csum,csum-cmin)); // update latest range
+        }
+        return ans;
+    }
+};
+
 /***** Seventh Visit *****/
 class Solution {
 public:

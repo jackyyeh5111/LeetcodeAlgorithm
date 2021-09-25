@@ -1,3 +1,23 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    int characterReplacement(string s, int k)
+    {
+        unordered_map<char,int> mp;
+        int wsize=0,cmax=0,n=s.length();
+        for (int i=0; i<n; ++i) {
+            cmax=max(cmax,++mp[s[i]]);
+            wsize++;
+            if (wsize-cmax>k) {
+                mp[s[i-wsize+1]]--;
+                wsize--;
+            }
+        }
+        return wsize;
+    }
+};
+
+/***** First Visit *****/
 /*
     brute force:
     treat each char as the beginning char and go right to check if k changes needed.
@@ -10,7 +30,7 @@
     Considering the sliding window, maintain the max frequent char inside.
     The changes we need is window size - max frequency, say t.
 
-    If the t is less than k, it means we should shrink the window size as we dont have enough changes to form repeating string of current size. Note we should reduce the frequency of left char while shrinking.
+    If the t is larger than k, it means we should shrink the window size as we dont have enough changes to form repeating string of current size. Note we should reduce the frequency of left char while shrinking.
 
     otherwise, increase the window size.
     T:O(n)/S:O(26)

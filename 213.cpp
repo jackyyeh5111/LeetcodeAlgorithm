@@ -1,3 +1,28 @@
+/***** Fifth Visit *****/
+/*
+    condition:
+    1 <= nums.length <= 100
+    0 <= nums[i] <= 1000
+    -----
+    [1,2,3,1]
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int n=nums.size();
+        int lprevprev=0,lprev=nums[0],rprevprev=0,rprev=nums[n-1];
+        for (int i=1; i<n-1; ++i) {
+            int lt=max(lprevprev+nums[i],lprev);
+            lprevprev=lprev; lprev=lt;
+            int rt=max(rprevprev+nums[n-i-1],rprev);
+            rprevprev=rprev; rprev=rt;
+        }
+        return max(max(lprevprev,lprev),max(rprevprev,rprev));
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

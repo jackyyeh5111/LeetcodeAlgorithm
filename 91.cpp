@@ -1,3 +1,37 @@
+/***** Fifth Visit *****/
+/*
+    condition:
+    1 <= s.length <= 100
+    -----
+    "  12"
+     [112]
+    'A' -> "1"
+    'B' -> "2"
+    ...
+    'Z' -> "26"
+
+    '0' must be mapped with 2 chars.
+    sliding window to check current position i and the previous one.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int numDecodings(string s)
+    {
+        int prevprev=1,prev=s[0]!='0',n=s.length();
+        int cur=s[0]-'0';
+        for (int i=1; i<n; ++i) {
+            int t=0;
+            if (s[i]!='0') t=prev;
+            cur=cur%10*10+s[i]-'0';
+            if (cur>=10&&cur<=26) t+=prevprev;
+            if (t==0) return 0;
+            prevprev=prev; prev=t;
+        }
+        return prev;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

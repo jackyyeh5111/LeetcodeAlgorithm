@@ -116,8 +116,13 @@ def binary_search(array) -> int:
 
 
 ## Union
- - find/union O(1)
+ - find O(logn) / union O(1)
  - During find (parent), we need to update its parent also for speed up. With frequently updating its parent, we can have amortized complexity O(1)
 
 
  ## HashMap
+
+ ## IOU Calculation
+  - w: min(larger x of rec1 and rec2) - max(smaller x of rec1 and rec2)
+  - h: min(larger x of rec1 and rec2) - max(smaller x of rec1 and rec2)
+  - check if w>0 && h>0

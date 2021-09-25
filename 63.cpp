@@ -1,3 +1,59 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
+    {
+        int m=obstacleGrid.size(), n=obstacleGrid[0].size();
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        dp[0][1]=1;
+        for (int i=1; i<=m; ++i) {
+            for (int j=1; j<=n; ++j) {
+                if (obstacleGrid[i-1][j-1]==1) dp[i][j]=0;
+                else dp[i][j]=dp[i-1][j]+dp[i][j-1];
+            }
+        }
+        return dp[m][n];
+    }
+};
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
+    {
+        int m=obstacleGrid.size(), n=obstacleGrid[0].size();
+        vector<int> dp(n,0);
+        dp[0]=1;
+        for (int i=0; i<m; ++i) {
+            dp[0]=dp[0]&&obstacleGrid[i][0]==0;
+            for (int j=1; j<n; ++j) {
+                if (obstacleGrid[i][j]==1) dp[j]=0;
+                else dp[j]+=dp[j-1];
+            }
+        }
+        return dp[n-1];
+    }
+};
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
+    {
+        int m=obstacleGrid.size(), n=obstacleGrid[0].size();
+        vector<vector<int>> dp(m,vector<int>(n,-1));
+        return dfs(obstacleGrid,dp,0,0);
+    }
+
+    int dfs(vector<vector<int>> &obstacleGrid, vector<vector<int>> &dp, int i, int j)
+    {
+        int m=obstacleGrid.size(), n=obstacleGrid[0].size();
+        if (i<0||i>=m||j<0||j>=n) return 0;
+        else if (dp[i][j]!=-1) return dp[i][j];
+        else if (obstacleGrid[i][j]==1) return dp[i][j]=0;
+        else if (i==m-1&&j==n-1) return dp[i][j]=1;
+        else return dp[i][j]=dfs(obstacleGrid,dp,i+1,j)+dfs(obstacleGrid,dp,i,j+1);
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     recursive approach

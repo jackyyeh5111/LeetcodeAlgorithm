@@ -1,3 +1,33 @@
+/***** Fourth Visit *****/
+/*
+    preorder to find max path sum start from root node
+    left=preorder(root->left)
+    right=preorder(root->right)
+    max(left,right)+val
+    -----
+    post order to get max path sum from the current root
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    int maxPathSum(TreeNode* root)
+    {
+        int ans=INT_MIN;
+        postDFS(root,ans);
+        return ans;
+    }
+
+    int postDFS(TreeNode *root, int &ans)
+    {
+        if (!root) return 0;
+        int left=postDFS(root->left,ans);
+        int right=postDFS(root->right,ans);
+        int ret=max(root->val,max(left,right)+root->val);
+        ans=max(ans,max(ret,left+right+root->val));
+        return ret;
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

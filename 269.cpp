@@ -1,3 +1,55 @@
+/***** Second Visit *****/
+class Solution {
+public:
+    string alienOrder(vector<string>& words)
+    {
+        unordered_map<char,unordered_set<char>> graph;
+        unordered_map<char,int> visited;
+        for (auto &word:words) {
+            for (char c:word) {
+                graph[c]={};
+                visited[c]=0;
+            }
+        }
+        int n=words.size();
+        for (int i=0; i<n; ++i) {
+            string str1=words[i];
+            for (int j=i+1; j<n; ++j) {
+                string str2=words[j];
+                int x=0,y=0;
+                while (x<str1.length()&&y<str2.length()) {
+                    if (str1[x]==str2[y]) {x++; y++; continue;}
+                    graph[str1[x]].insert(str2[y]);
+                    break;
+                }
+                if (x<str1.length()&&y>=str2.length()) return "";
+            }
+        }
+        string ans="";
+        for (auto it=visited.begin(); it!=visited.end(); ++it) {
+            if (postDFS(graph,visited,it->first,ans)) return "";
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+
+    // true if cyclic
+    bool postDFS(unordered_map<char,unordered_set<char>> &graph,
+                 unordered_map<char,int> &visited, char u, string &ans)
+    {
+        if (visited[u]==1) return true;
+        else if (visited[u]==2) return false;
+        visited[u]=1;
+        for (char v:graph[u]) {
+            if (postDFS(graph,visited,v,ans)) return true;
+        }
+        ans+=u;
+        visited[u]=2;
+        return false;
+    }
+};
+
+/***** First Visit *****/
 /*
     w->e t->f r->t e->r
     w->e->r->t->f

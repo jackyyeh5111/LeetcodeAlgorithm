@@ -1,3 +1,32 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *prev=0,*cur=head;
+        while (cur) {
+            ListNode *next=cur->next;
+            cur->next=prev;
+            prev=cur; cur=next;
+        }
+        return prev;
+    }
+};
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head)
+    {
+        return help(0,head);
+    }
+
+    ListNode *help(ListNode *prev, ListNode *cur) {
+        if (!cur) return prev;
+        ListNode *next=cur->next;
+        cur->next=prev;
+        return help(cur,next);
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

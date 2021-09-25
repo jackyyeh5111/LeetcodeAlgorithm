@@ -1,3 +1,20 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> mystack;
+        for (char c:s) {
+            if (c=='('||c=='['||c=='{')
+                mystack.push(c);
+            else if (c==')'&&!mystack.empty()&&mystack.top()=='(') mystack.pop();
+            else if (c=='}'&&!mystack.empty()&&mystack.top()=='{') mystack.pop();
+            else if (c==']'&&!mystack.empty()&&mystack.top()=='[') mystack.pop();
+            else return false;
+        }
+        return mystack.empty();
+    }
+};
+
 /***** Third Visit *****/
 /*
     stack approach, notice edge case like empty stack during process or in the end.

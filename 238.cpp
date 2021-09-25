@@ -1,3 +1,57 @@
+/***** Fifth Visit *****/
+/*
+      [1, 2, 3,4]
+    l: 1  1  2 6
+    r: 24 12 4 1
+    use 2 variable l/r to maintain left/right conseccutive product.
+*/
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums)
+    {
+        int l=1,r=1,n=nums.size();
+        vector<int> ans(n,1);
+        for (int i=0; i<n; ++i) {
+            ans[i]*=l; ans[n-i-1]*=r;
+            l*=nums[i]; r*=nums[n-i-1];
+        }
+        return ans;
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    prefix product?
+    [1,2,3,4]
+    -----
+    O(n) time complexity and without using division
+    O(1) constant space complexity
+    -----
+    [1,2,3,4]
+    2 ptr?
+    [1, 2, 3, 4]
+     1  1  2  6
+     24 12 4  1
+  -> combine
+    init: left=1, right=1
+
+    T:O(n)/S:O(n)
+*/
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums)
+    {
+        int l=1,r=1, n=nums.size();
+        vector<int> ans(n,1);
+        for (int i=0; i<n; ++i) {
+            ans[i]*=l;
+            ans[n-i-1]*=r;
+            l*=nums[i]; r*=nums[n-i-1];
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 /*
     division 2 pass T:O(n)

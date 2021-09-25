@@ -1,3 +1,26 @@
+/***** Third Visit *****/
+/*
+    [[1,2],[1,3],[2,3],[3,4]]
+    [[1,6],[2,3],[3,4]]
+     ^       ^
+*/
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals)
+    {
+        sort(intervals.begin(),intervals.end());
+        int n=intervals.size(),ub=INT_MIN,ans=0;
+        for (int i=0; i<n; ++i) {
+            if (ub<=intervals[i][0]) ub=intervals[i][1];
+            else {
+                ub=min(ub,intervals[i][1]);
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     [1,2],[1,3],[2,3],[3,4]

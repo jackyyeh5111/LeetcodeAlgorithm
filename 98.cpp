@@ -1,3 +1,46 @@
+/***** Fifth Visit *****/
+/*
+    BST <-> inorder: increasing
+    inorder traversal recursive
+    T:O(n)/S:O(n)
+    -----
+    morris traversal
+*/
+class Solution {
+public:
+    bool isValidBST(TreeNode* root)
+    {
+        TreeNode *prev=0, *cur=root;
+        bool valid=true;
+        while (cur) {
+            if (!cur->left) {
+                //visit
+                if (!prev) prev=cur;
+                else if (cur->val<=prev->val) valid=false;
+                prev=cur;
+                cur=cur->right;
+            }
+            else {
+                TreeNode *pred=cur->left;
+                while (pred->right&&pred->right!=cur) pred=pred->right;
+                if (pred->right==cur) {
+                    // visit
+                    pred->right=0;
+                    if (!prev) prev=cur;
+                    else if (cur->val<=prev->val) valid=false;
+                    prev=cur;
+                    cur=cur->right;
+                }
+                else {
+                    pred->right=cur;
+                    cur=cur->left;
+                }
+            }
+        }
+        return valid;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

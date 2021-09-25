@@ -1,3 +1,35 @@
+/***** Second Visit *****/
+/*
+    [4,1,3,null,null,2], val=5
+
+    append to the last position
+
+    construcc: LNR, N is the largest
+    if val < N, go right
+    else if val > N:  val->left=N
+
+    preorder traversal
+    T:O(n)/S:O(n)
+*/
+
+class Solution {
+public:
+    TreeNode* insertIntoMaxTree(TreeNode* root, int val)
+    {
+        if (!root) return new TreeNode(val);
+        else if (val>root->val) {
+            TreeNode *node=new TreeNode(val);
+            node->left=root;
+            return node;
+        }
+        else {
+            root->right=insertIntoMaxTree(root->right,val);
+            return root;
+        }
+    }
+};
+
+/***** First Visit *****/
 /*
     As description, we know the tree is constructed in in-order.
     Thus the appended val will always go right.

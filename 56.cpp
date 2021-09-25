@@ -1,3 +1,23 @@
+/***** Sixth Visit *****/
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals)
+    {
+        vector<vector<int>> ans;
+        sort(intervals.begin(),intervals.end());
+        int n=intervals.size();
+        for (int i=0; i<n; ++i) {
+            int rb=intervals[i][1];
+            int j=i+1;
+            while (j<n&&rb>=intervals[j][0])
+                rb=max(rb,intervals[j++][1]);
+            ans.push_back({intervals[i][0],rb});
+            i=j-1;
+        }
+        return ans;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

@@ -1,3 +1,80 @@
+/***** Third Visit *****/
+/*
+    If this is a treenode structure, we can simply adapt preorder traversal
+    T:O(n)/S:O(n)
+
+    problem: transform triangle to tree, if we have i rows, start from j=0 (col index)
+             left: j, j+1
+    [[2],
+     [3,4],
+     [6,5,7],
+     [4,1,8,3]]
+
+    do we have empty triangle? if so, what should we return?
+        no, so ans could be init as INT_MAX.
+    If we apply preorder, we will have duplicate traverse and get TLE.
+    T: n+3n+5n+...+nn=n(1+3+5+..+n)=T:O(n^2)/S:O(n)
+    -----
+    postorder + dp
+    T:O(n)/S:O(n)
+*/
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle)
+    {
+        int n=triangle.size();
+        vector<int> dp(n,INT_MAX);
+        dp[0]=triangle[0][0];
+        for (int i=1; i<n; ++i) {
+            int prev=INT_MAX;
+            for (int j=0; j<=i; ++j) {
+                int t=dp[j];
+                dp[j]=min(prev,dp[j])+triangle[i][j];
+                prev=t;
+            }
+        }
+        return *min_element(dp.begin(),dp.end());
+    }
+};
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle)
+    {
+        int n=triangle.size();
+        vector<int> dp=triangle.back();
+        for (int i=0; i<n-1; ++i) {
+            for (int j=0; j<n-i-1; ++j) {
+                dp[j]=min(dp[j],dp[j+1])+triangle[n-i-2][j];
+            }
+        }
+        return dp[0];
+    }
+};
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle)
+    {
+        int rows=triangle.size();
+        vector<int> table;
+        return dfs(triangle,table,0,0);
+    }
+
+    int dfs(vector<vector<int>> &triangle, vector<int> &table, int i, int j)
+    {
+        if (table.size()==i) table.push_back(0);
+        if (i==triangle.size()-1) return table[i]=triangle[i][j];
+        int left=INT_MAX,right=INT_MAX;
+        if (table.size()>=i+2) left=table[i+1];
+        else left=dfs(triangle,table,i+1,j);
+
+        right=dfs(triangle,table,i+1,j+1);
+        return table[i]=min(left,right)+triangle[i][j];
+    }
+};
+
 /***** Second Visit *****/
 /*
     Same thought as problem 119.

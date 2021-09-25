@@ -1,3 +1,30 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int dirs[4]={1,2,-1,-2};
+
+    int numIslands(vector<vector<char>>& grid) {
+        int m=grid.size(), n=grid[0].size();
+        int ans=0;
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                if (grid[i][j]=='0') continue;
+                ans++;
+                dfs(grid,i,j,m,n);
+            }
+        }
+        return ans;
+    }
+
+    void dfs(vector<vector<char>> &grid, int i, int j, int m, int n)
+    {
+        if (i<0||i>=m||j<0||j>=n||grid[i][j]=='0') return;
+        grid[i][j]='0';
+        for (int dir:dirs)
+            dfs(grid,i+dir/2,j+dir%2,m,n);
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

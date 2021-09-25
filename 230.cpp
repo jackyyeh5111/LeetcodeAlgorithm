@@ -1,3 +1,64 @@
+/***** Fourth Visit *****/
+
+class Node {
+public:
+    int val,cnt;
+    Node *left,*right;
+    Node(int val)
+    {
+        this->val=val;
+        cnt=1;
+        left=0,right=0;
+    }
+};
+
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        Node *head=copy(root);
+        return find(head,k);
+    }
+
+    Node *copy(TreeNode *root)
+    {
+        if (!root) return 0;
+        Node *n=new Node(root->val);
+        n->left=copy(root->left);
+        n->right=copy(root->right);
+        if (n->left) n->cnt+=n->left->cnt;
+        if (n->right) n->cnt+=n->right->cnt;
+        return n;
+    }
+
+    int find(Node *root, int k)
+    {
+        if (root->left) {
+            if (root->left->cnt>=k) return find(root->left,k);
+            else if (root->left->cnt==k-1) return root->val;
+            return find(root->right,k-root->left->cnt-1);
+        }
+        else if (k==1) return root->val;
+        else return find(root->right,k-1);
+    }
+};
+
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        return inorder(root,k);
+    }
+
+    int inorder(TreeNode *root, int &k)
+    {
+        if (!root) return INT_MIN;
+        int ret=INT_MIN;
+        ret=inorder(root->left,k);
+        if (ret!=INT_MIN) return ret;
+        if (k--==1) return root->val;
+        return inorder(root->right,k);
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

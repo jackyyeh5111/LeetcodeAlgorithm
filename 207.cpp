@@ -1,3 +1,40 @@
+/***** Fifth Visit *****/
+/*
+    find its topological sort
+    apply postDFS and inverse it
+
+    T:O(V+E)/S:O(V+E)
+*/
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> visited(numCourses,0); //0:non visited, 1:visiting, 2:visited
+        vector<vector<int>> graph(numCourses,vector<int>{});
+        for (auto &pre:prerequisites)
+            graph[pre[1]].push_back(pre[0]);
+        vector<int> ans;
+        for (int i=0; i<numCourses; ++i) {
+            if (postDFS(graph,visited,i,ans)) return false;
+        }
+        reverse(ans.begin(),ans.end());
+        return true;
+    }
+
+    // true if cyclic, false if acyclic
+    bool postDFS(vector<vector<int>> &graph, vector<int> &visited, int u, vector<int> &ans)
+    {
+        if (visited[u]==1) return true;
+        else if (visited[u]==2) return false;
+        visited[u]=1;
+        for (int &v:graph[u]) {
+            if (postDFS(graph,visited,v,ans)) return true;
+        }
+        visited[u]=2;
+        ans.push_back(u);
+        return false;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

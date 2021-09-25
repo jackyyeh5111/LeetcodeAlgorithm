@@ -1,3 +1,45 @@
+/***** Eighth Visit *****/
+/*
+    dp
+    T:O(n^2)/S:O(n)
+    -----
+    BIS
+    BIS[i]: best(smallest) number with len: i+1
+    T:O(nlogn)/S:O(n)
+
+*/
+// dp T:O(n^2)/S:O(n)
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> dp(n,1);
+        int ans=1;
+        for (int i=0; i<n; ++i) {
+            for (int j=i+1; j<n; ++j) {
+                if (nums[j]>nums[i])
+                    dp[j]=max(dp[j],dp[i]+1);
+                ans=max(ans,dp[j]);
+            }
+        }
+        return ans;
+    }
+};
+
+// BIS T:O(nlogn)
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> bis;
+        for (int num:nums) {
+            auto it=lower_bound(bis.begin(),bis.end(),num);
+            if (it==bis.end()) bis.push_back(num);
+            else *it=num;
+        }
+        return bis.size();
+    }
+};
+
 /***** Seventh Visit *****/
 /*
     brute force

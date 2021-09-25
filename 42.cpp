@@ -1,3 +1,20 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int trap(vector<int>& height)
+    {
+        int n=height.size(),l=0,r=n-1,ans=0,cmax=0;
+        while (l<=r) {
+            cmax=max(cmax,min(height[l],height[r]));
+            if (height[l]<=height[r])
+                ans+=max(0,cmax-height[l++]);
+            else
+                ans+=max(0,cmax-height[r--]);
+        }
+        return ans;
+    }
+};
+
 /***** Fourth Visit *****/
 /*
     bi-direction mono stack

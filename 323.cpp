@@ -1,3 +1,69 @@
+/*
+    find / union
+    vector<int> parents(n,-1);
+*/
+class Solution {
+public:
+    int countComponents(int n, vector<vector<int>>& edges) {
+        vector<int> parents(n,-1);
+        for (auto edge:edges) {
+            if (myunion(parents,edge[0],edge[1])) n--;
+        }
+
+        return n;
+    }
+
+    int find(vector<int> &parents, int x)
+    {
+        int root=x;
+        while (parents[root]>=0)
+            root=parents[root];
+        while (root!=x) {
+            int next=parents[x];
+            parents[x]=root;
+            x=next;
+        }
+        return root;
+    }
+
+    // true if merge
+    bool myunion(vector<int> &parents, int x, int y)
+    {
+        int rx=find(parents,x),ry=find(parents,y);
+        if (rx>ry) swap(rx,ry);
+        parents[ry]=rx;
+        parents[rx]=-1;
+        return rx!=ry;
+    }
+};
+
+/***** Third Visit *****/
+class Solution {
+public:
+    int countComponents(int n, vector<vector<int>>& edges) {
+        vector<bool> visited(n,0);
+        vector<vector<int>> graph(n,vector<int>{});
+        for (auto edge:edges) {
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
+        }
+        int ans=0;
+        for (int i=0; i<n; ++i) {
+            if (visited[i]) continue;
+            ans++;
+            dfs(graph,visited,i);
+        }
+        return ans;
+    }
+    void dfs(vector<vector<int>> &graph, vector<bool> &visited, int u)
+    {
+        if (visited[u]) return;
+        visited[u]=1;
+        for (int v:graph[u])
+            dfs(graph,visited,v);
+    }
+};
+
 /***** Second Visit *****/
 /*
     dfs to find connected component

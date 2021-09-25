@@ -1,3 +1,49 @@
+/***** Fourth Visit *****/
+struct TrieNode {
+    TrieNode *children[256]={0};
+    string val="";
+    TrieNode(string val=""){this->val=val;}
+};
+
+class Solution {
+public:
+    int dirs[4]={1,2,-1,-2};
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        TrieNode *root=new TrieNode();
+        for (auto &word:words) {
+            TrieNode *cur=root;
+            for (char &c:word) {
+                if (!cur->children[c]) cur->children[c]=new TrieNode();
+                cur=cur->children[c];
+            }
+            cur->val=word;
+        }
+        vector<string> ans;
+        int m=board.size(), n=board[0].size();
+        for (int i=0; i<m; ++i) {
+            for (int j=0; j<n; ++j) {
+                dfs(board,root,i,j,ans);
+            }
+        }
+        return ans;
+    }
+
+    void dfs(vector<vector<char>> &board, TrieNode *node, int i, int j,
+             vector<string> &ans)
+    {
+        int m=board.size(), n=board[0].size();
+        if (i<0||i>=m||j<0||j>=n||board[i][j]=='.') return;
+        else if (!node->children[board[i][j]]) return;
+        node=node->children[board[i][j]];
+        if (node->val!="") {ans.push_back(node->val); node->val="";}
+        char t=board[i][j];
+        board[i][j]='.';
+        for (int dir:dirs)
+            dfs(board,node,i+dir/2,j+dir%2,ans);
+        board[i][j]=t;
+    }
+};
+
 /***** Third Visit *****/
 /*
     TRIE+backtracking

@@ -1,3 +1,29 @@
+/***** Third Visit *****/
+/*
+    [[0,30],[5,10],[15,20]]
+
+    sort first and use a stack
+    MONO STACK TO ALWAYS TRACKD END TIME IN DEREASING ORDER
+    -----
+    stack is a wrong choise, we need to adopt a min queue ot always find the smallest end time.
+    T:O(nlogn)/S:O(n)
+*/
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals)
+    {
+        sort(intervals.begin(),intervals.end());
+        priority_queue<int,vector<int>,greater<int>> pq;
+        int ans=0,n=intervals.size();
+        for (int i=0; i<n; ++i) {
+            while (!pq.empty()&&pq.top()<=intervals[i][0]) pq.pop();
+            pq.push(intervals[i][1]);
+            ans=max(ans,(int)pq.size());
+        }
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     The below code will fail in this case:

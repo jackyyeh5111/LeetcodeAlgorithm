@@ -1,3 +1,34 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int climbStairs(int n) {
+        int prev=1,cur=1;
+        for (int i=2; i<=n; ++i) {
+            int t=prev+cur;
+            prev=cur; cur=t;
+        }
+        return cur;
+    }
+};
+
+/***** Fourth Visit *****/
+/*
+    F(0) = 0, F(1) = 1
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int fib(int n) {
+        if (n<=1) return n;
+        int prev=0,cur=1;
+        for (int i=2; i<=n; ++i) {
+            int t=cur+prev;
+            prev=cur; cur=t;
+        }
+        return cur;
+    }
+};
+
 /***** Third Visit *****/
 /*
     1 1 2 3 5 8 13

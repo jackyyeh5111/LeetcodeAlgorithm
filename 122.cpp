@@ -1,3 +1,35 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    int maxProfit(vector<int>& prices)
+    {
+        int buy=INT_MAX,ans=0;
+        for (int p:prices) {
+            if (p>buy) {ans+=p-buy; buy=p;}
+            else buy=min(buy,p);
+        }
+        return ans;
+    }
+};
+
+/*
+    buy: A
+    sell: B-A
+    buy: C-(B-A)
+    sell: D-(C-(B-A))=D-C+B-A
+*/
+class Solution {
+public:
+    int maxProfit(vector<int>& prices)
+    {
+        int buy=INT_MAX, sell=0;
+        for (int p:prices) {
+            buy=min(buy,p-sell);
+            sell=max(sell,p-buy);
+        }
+        return sell;
+    }
+};
 /***** Third Visit *****/
 class Solution {
 public:

@@ -1,3 +1,38 @@
+/***** Third Visit *****/
+/*
+    preorder traversal to meet voyage
+    [1,2,3,4,5]
+     ^
+    [1,3,4,5,2]
+     ^
+*/
+
+class Solution {
+public:
+    vector<int> flipMatchVoyage(TreeNode* root, vector<int>& voyage)
+    {
+        int idx=0;
+        vector<int> ans;
+        if (!preorder(root,voyage,idx,ans)) return {-1};
+        return ans;
+    }
+
+    bool preorder(TreeNode *root, vector<int>& voyage, int &idx, vector<int> &ans)
+    {
+        if (idx>=voyage.size()) return !root;
+        else if (!root) return true;
+        else if (root->val!=voyage[idx]) return false;
+        if (root->left&&idx+1<voyage.size()&&root->left->val!=voyage[idx+1]) {
+            swap(root->left,root->right);
+            ans.push_back(root->val);
+        }
+        idx++;
+        if (!preorder(root->left,voyage,idx,ans)) return false;
+        if (!preorder(root->right,voyage,idx,ans)) return false;
+        return true;
+    }
+};
+
 /***** Second Visit *****/
 /*
     Given a tree, return the min flip times to make this tree's preorder same as voyage.

@@ -1,3 +1,22 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    string longestPalindrome(string s)
+    {
+        string ans="";
+        int n=s.length();
+        for (int i=0; i<n; ++i) {
+            int j=i,k=i;
+            while (j>=0&&k<n&&s[j]==s[k]) {j--; k++; }
+            if (ans.length()<k-j-1) ans=s.substr(j+1,k-j-1);
+            j=i; k=i+1;
+            while (j>=0&&k<n&&s[j]==s[k]) {j--; k++; }
+            if (ans.length()<k-j-1) ans=s.substr(j+1,k-j-1);
+        }
+        return ans;
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

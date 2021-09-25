@@ -1,3 +1,23 @@
+/***** Third Visit *****/
+class Solution {
+public:
+    bool isSubtree(TreeNode* s, TreeNode* t) {
+        if (!s&&!t) return true;
+        else if (!s||!t) return false;
+
+        return isSubtree(s->left,t)||isSubtree(s->right,t)||help(s,t);
+
+    }
+
+    bool help(TreeNode *s, TreeNode *t)
+    {
+        if (!s&&!t) return true;
+        else if (!s||!t) return false;
+        else if (s->val!=t->val) return false;
+        else return help(s->left,t->left)&&help(s->right,t->right);
+    }
+};
+
 /***** Second Visit *****/
 class Solution {
 public:

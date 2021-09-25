@@ -1,3 +1,18 @@
+/***** Fourth Visit *****/
+class Solution {
+public:
+    bool canJump(vector<int>& nums)
+    {
+        int n=nums.size(),cmax=0;
+        for (int i=0; i<n; ++i) {
+            if (cmax>=i) cmax=max(cmax,i+nums[i]);
+            if (cmax>=n-1) return true;
+            else if (cmax<i) return false;
+        }
+        return -1;//not gonna reach here
+    }
+};
+
 /***** Third Visit *****/
 class Solution {
 public:

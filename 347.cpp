@@ -1,3 +1,53 @@
+/***** Third Visit *****/
+/*
+    Top K Frequent
+
+    1st pass
+    T:O(n)/S:O(n)
+
+    2st pass max heap
+    T:O(nlogn)/S:O(n)
+
+    3st pass
+    T:O(klogn)
+    -----
+    1st pass
+    T:O(n)/S:O(n)
+
+    2st pass min heap, max size=k
+    T:O(nlogk)/S:O(k)
+
+    3rd pass
+    T:O(klogk)
+
+    4th pass
+    T:O(k)
+
+    better than O(nlogn) where n = nums.size()
+*/
+
+typedef pair<int,int> pii;
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k)
+    {
+        unordered_map<int,int> mp;
+        for (int num:nums) mp[num]++;
+
+        priority_queue<pii,vector<pii>,greater<pii>> pq;
+        for (auto it=mp.begin(); it!=mp.end(); ++it) {
+            pq.push({it->second,it->first});
+            if (pq.size()>k) pq.pop();
+        }
+        vector<int> ans;
+        while (!pq.empty()) {
+            ans.push_back(pq.top().second); pq.pop();
+        }
+        // reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+
 /***** Second Visit *****/
 /*
     sort -> T:O(nlogn)/S:O(1) -> bucket sort -> T:O(n)/S:O(n)

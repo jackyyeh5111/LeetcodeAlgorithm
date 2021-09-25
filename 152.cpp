@@ -1,3 +1,55 @@
+/***** Nineth Visit *****/
+/*
+    max product subarray
+           2,3,-2,4  -1
+    pos: 1 2 6 -2 4  48
+    neg: 1 2 3 -12-48 -4
+*/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums)
+    {
+        int pos=1,neg=1,ans=INT_MIN;
+        for (int &num:nums) {
+            if (num<0) swap(pos,neg);
+            pos=max(pos*num,num);
+            neg=min(neg*num,num);
+            ans=max(ans,pos);
+        }
+        return ans;
+    }
+};
+
+/***** Eighth Visit *****/
+/*
+    product: pos neg
+         [2,3,-2, 4   -1  ]
+    pos 1 2 6 1.  4   48
+    neg 1 1 1 -12 -48 -4
+
+          [-2]
+    pos 1  -2
+    neg 1  -2
+
+    pos: if we step into POS value and look backward, how larger we can gain?
+    neg: if we step into NEG value and look backward, how smaller we can gain?
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int pos=1,neg=1,ans=INT_MIN;
+        for (int &num:nums) {
+            if (num==0) pos=neg=0;
+            else if (num<0) swap(pos,neg);
+            neg=min(neg*num,num);
+            pos=max(pos*num,num);
+            ans=max(ans,pos);
+        }
+        return ans;
+    }
+};
+
 /***** Seventh Visit *****/
 /*
            2 3 -2  4

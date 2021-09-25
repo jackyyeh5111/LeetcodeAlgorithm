@@ -1,3 +1,17 @@
+/***** Fifth Visit *****/
+class Solution {
+public:
+    int rob(vector<int>& nums)
+    {
+        int prevprev=0,prev=nums[0],n=nums.size();
+        for (int i=1; i<n; ++i) {
+            int t=max(prev,prevprev+nums[i]);
+            prevprev=prev; prev=t;
+        }
+        return max(prevprev,prev);
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

@@ -1,3 +1,39 @@
+/***** Sixth Visit *****/
+/*
+    [0,n] -> n+1 nums, with only length n array
+    find the missing one.
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int missingNumber(vector<int>& nums)
+    {
+        int t=0,n=nums.size();
+        for (int i=0; i<n; ++i)
+            t=t^i^nums[i];
+        return t==0?n:(t^n);
+    }
+};
+
+/***** Fifth Visit *****/
+/*
+    [0, n], len=n **ONLY ONE MISSING NUMBER**
+    T:O(n)/S:O(1)
+    [0,1,2], [1,2,3]
+
+*/
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int ans=0,n=nums.size();
+        for (int i=0; i<n; ++i) {
+            ans^=i;
+            ans^=nums[i];
+        }
+        return ans^n;
+    }
+};
+
 /***** Fourth Visit *****/
 class Solution {
 public:

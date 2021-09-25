@@ -1,3 +1,21 @@
+/***** Sixth Visit *****/
+/*
+    keep tracking current min, and update max profit
+    T:O(n)/S:O(1)
+*/
+class Solution {
+public:
+    int maxProfit(vector<int>& prices)
+    {
+        int cmin=prices[0], n=prices.size(),cmax=0;
+        for (int i=1; i<n; ++i) {
+            cmax=max(cmax,prices[i]-cmin);
+            cmin=min(cmin,prices[i]);
+        }
+        return cmax;
+    }
+};
+
 /***** Fifth Visit *****/
 class Solution {
 public:
