@@ -2,8 +2,8 @@
 Practice of leetcode
 
 ## Dynamic Programming
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 5| Longest Palindromic Substring|[5.cpp](5.cpp)|Medium|LCS with corner case. Another DP derives p(i,j)=p(i+1,j-1)&s\[i\]==s\[j\]|
 | 10| Regular Expression Matching|[10.cpp](10.cpp)|Medium|variation of LCS. check empty string also!|
 | 22| Generate Parentheses|[22.cpp](22.cpp)|Medium|Catalan Number, could use DP or recursive(backtracking)|
