@@ -70,8 +70,8 @@ Practice of leetcode
 | 1798| Maximum Number of Consecutive Values You Can Make|[1798.cpp](1798.cpp)|Medium|keep tracking l/r boundary for each sorted num|
 
 ## Searching
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 4| Median of Two Sorted Arrays|[4.cpp](4.cpp)|Hard|binary search on first vector to split num1/num2|
 | 33| Search in Rotated Sorted Array|[33.cpp](33.cpp)|Medium|find pivot and utilize the other part which is sorted|
 | 34| Find First and Last Position of Element in Sorted Array|[34.cpp](34.cpp)|Medium|twice binary search|
@@ -107,8 +107,8 @@ Practice of leetcode
 
 
 ## Recursive / Backtracking
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 17| Letter Combinations of a Phone Number|[17.cpp](17.cpp)|Medium| iterative/recursive|
 | **31**| Next Permutation|[31.cpp](31.cpp)|Medium|backtracking may TLE, Narayana Pandita's permutationn ALG|
 | 37| Sudoku Solver|[37.cpp](37.cpp)|Hard|ROW MAJOR Top Down Backtracking, mind end up criteria.|
@@ -148,8 +148,8 @@ Practice of leetcode
 
 
 ## Tree
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 95| Unique Binary Search Trees II|[95.cpp](95.cpp)|Medium|Catalan number, be care of same ptr for each tree, thus clone one.|
 | 96| Unique Binary Search Trees|[96.cpp](96.cpp)|Medium|Catalan, refer to 95. and 22.|
 | 98| Validate Binary Search Tree|[98.cpp](98.cpp)|Medium|**Notice predecessor and successor**|
@@ -234,15 +234,15 @@ Practice of leetcode
 
 
 ## Divide & Conquer
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 23| Merge k Sorted Lists|[23.cpp](23.cpp)|Hard|**Iterative split arrays equally in 2^n**|
 | 241| Different Ways to Add Parentheses|[241.cpp](241.cpp)|Medium|recursive + memorized DP (CACHE)|
 | 395| Longest Substring with At Least K Repeating Characters|[395.cpp](395.cpp)|Medium|divide & conquer|
 
 ## LinkedList
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 2| Add Two Numbers|[2.cpp](2.cpp)|Medium|notice carry|
 | 19| Remove Nth Node From End of List|[19.cpp](19.cpp)|Medium|slow/fast ptr|
 | 21| Merge Two Sorted Lists|[21.cpp](21.cpp)|Easy||
@@ -271,8 +271,8 @@ Practice of leetcode
 
 
 ## Stack and Queue
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 20| Valid Parentheses|[20.cpp](20.cpp)|Easy|check empty stack in iteration|
 | **32**| Longest Valid Parentheses|[32.cpp](32.cpp)|Hard|use stack to store index rather than '()'. Or use bi-directional checking|
 | 71| Simplify Path|[71.cpp](71.cpp)|Medium|stack/word tokenizer instead of char tokenizer.|
@@ -302,8 +302,8 @@ Practice of leetcode
 
 
 ## String
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 12| Integer to Roman|[12.cpp](12.cpp)|Medium|Elegant dictionary|
 | 13| Roman to Integer|[13.cpp](13.cpp)|Easy|No additional dictionary entry needed.|
 | **28**| Implement strStr()|[28.cpp](28.cpp)|Easy|KMP, failure function / while loop criteria|
@@ -362,8 +362,8 @@ Practice of leetcode
 | 1816| Truncate Sentence|[1816.cpp](1816.cpp)|Easy||
 
 ## Array
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 1| Two Sum|[1.cpp](1.cpp)|Easy||
 | 3| Longest Substring Without Repeating Characters|[3.cpp](3.cpp)|Medium|one pass hashmap|
 | 6| ZigZag Conversion|[6.cpp](6.cpp)|Medium||
@@ -380,7 +380,7 @@ Practice of leetcode
 | 45| Jump Game II|[45.cpp](45.cpp)|Hard|**2 pointers (start/end)**|
 | 48| Rotate Image|[48.cpp](48.cpp)|Medium|clockwise / anticlockwise|
 | 49| Group Anagrams|[49.cpp](49.cpp)|Medium||
-| 53| Maximum Subarray|[53.cpp](53.cpp)|Easy|moving sum DP or divide & conquer|
+| 53| Maximum Subarray|[53.cpp](53.cpp)|Easy|moving sum DP or divide & conquer| y|
 | 54| Spiral Matrix|[54.cpp](54.cpp)|Medium|Elegant loop with 4 direction pointers.|
 | 55| Jump Game|[55.cpp](55.cpp)|Medium|compare to problem 45|
 | 59| Spiral Matrix II|[59.cpp](59.cpp)|Medium|Same as problem 54.|
@@ -488,8 +488,8 @@ Practice of leetcode
 | 1822| Sign of the Product of an Array|[1822.cpp](1822.cpp)|Easy||
 
 ## Numeric
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 7| Reverse Integer|[7.cpp](7.cpp)|Easy|runtime checking INT_MAX/INT_MIN|
 | 8| String to Integer (atoi)|[8.cpp](8.cpp)|Medium||
 | 9| Palindrome Number|[9.cpp](9.cpp)|Easy|reverse half num! handle odd/even length|
@@ -546,8 +546,8 @@ Practice of leetcode
 | 1785| Minimum Elements to Add to Form a Given Sum|[1785.cpp](1785.cpp)|Medium|greedy|
 
 ## Graph
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 126| Word Ladder II|[126.cpp](126.cpp)|Hard|Notice TLE while building graph. BFS find all shortest PATHS|
 | 127| Word Ladder|[127.cpp](127.cpp)|Medium|Notice TLE while building graph. BFS find shortest LENGTH|
 | 133| Clone Graph|[133.cpp](133.cpp)|Medium|BFS/DFS with seen map.|
@@ -578,8 +578,8 @@ Practice of leetcode
 
 
 ## Sorting
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 56| Merge Intervals|[56.cpp](56.cpp)|Medium|greedy|
 | 57| **Insert Interval**|[57.cpp](57.cpp)|Hard|while in for loop to avoid TLE|
 | 75| Sort Colors|[75.cpp](75.cpp)|Medium|**2 pointers** for O(n) in place.|
@@ -595,8 +595,8 @@ Practice of leetcode
 | 1754| Largest Merge Of Two Strings|[1754.cpp](1754.cpp)|Medium|merge sort needs to be done in sorted order.|
 
 ## Design
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 146| LRU Cache|[146.cpp](146.cpp)|Medium|hashmap+single linked list|
 | 173| Binary Search Tree Iterator|[173.cpp](173.cpp)|Medium|practice of morris traversal|
 | 284| Peeking Iterator|[284.cpp](284.cpp)|Medium|Utilize copy constructor|
@@ -613,23 +613,23 @@ Practice of leetcode
 ## Union
  - find/union O(1)
  - During find (parent), we need to update its parent also for speed up. With frequently update its parent, we can have amortized complexity O(1)
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 128| Longest Consecutive Sequence|[128.cpp](128.cpp)|Hard|require. T: O(n)|
 | 323| Number of Connected Components in an Undirected Graph|[323.cpp](323.cpp)|Medium|dfs or union/find.|
 | 952| Largest Component Size by Common Factor|[952.cpp](952.cpp)|Hard|graph solution will TLE while building graph. Use union instead.|
 | 1722| Minimize Hamming Distance After Swap OperationsMinimize Hamming Distance After Swap Operations|[1722.cpp](1722.cpp)|Medium|DFS on graph to find cconnected component / union to find group (same as connected component concept).|
 
 ## HashMap
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 187| Repeated DNA Sequences|[187.cpp](187.cpp)|Medium|Saving substr time with bit operation due to limited char|
 | 706| Design HashMap|[706.cpp](706.cpp)|Easy|linear probing|
 | 804| Unique Morse Code Words|[804.cpp](804.cpp)|Easy||
 
 ## Random Algorithm
-| #    | Title             | Solution | Difficult |         Note           |
-| ---- |-------------------|----------|-----------|------------------------|
+| #    | Title             | Solution | Difficult |         Note           | Done |
+| ---- |-------------------|----------|-----------|------------------------| ---- |
 | 382| Linked List Random Node|[382.cpp](382.cpp)|Medium|Online random alg which doesn't need to know the length. RESOVOUR SAMPLING|
 | 497| Random Point in Non-overlapping Rectangles|[497.cpp](497.cpp)|Medium|random should take area of each rect into consideration, using totalSum & binary search|
 
