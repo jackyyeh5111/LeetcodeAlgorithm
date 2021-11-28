@@ -436,6 +436,7 @@ Practice of leetcode
 | 849| Maximize Distance to Closest Person|[849.cpp](849.cpp)|Medium||
 | 853| Car Fleet|[853.cpp](853.cpp)|Medium|sort|
 | 881| Boats to Save People|[881.cpp](881.cpp)|Medium|sort + 2 ptr solution|
+| 904| Fruit Into Baskets|[904.cpp](904.cpp)|Medium|2 ptr method / map record| y|
 | 905| Sort Array By Parity|[905.cpp](905.cpp)|Easy|2 ptr method/sorting|
 | 908| Smallest Range I|[908.cpp](908.cpp)|Easy|T:O(n)|
 | 910| Smallest Range II|[910.cpp](910.cpp)|Medium|greedy running ptr|
