@@ -326,7 +326,7 @@ Practice of leetcode
 | 409| Longest Palindrome|[409.cpp](409.cpp)|Easy|hashmap|
 | 412| Fizz Buzz|[412.cpp](412.cpp)|Easy||
 | 423| Reconstruct Original Digits from English|[423.cpp](423.cpp)|Medium|find out distinct char ...|
-| 424| Longest Repeating Character Replacement|[424.cpp](424.cpp)|Medium|sliding window|
+| 424| Longest Repeating Character Replacement|[424.cpp](424.cpp)|Medium|sliding window, 在移動 left pointer 時，不需要update max_char_freq，因為 best result 已經固定是 (maxLetter + k) | 1|
 | 459| Repeated Substring Pattern|[459.cpp](459.cpp)|Easy|KMP|
 | 468| Validate IP Address|[468.cpp](468.cpp)|Medium||
 | 524| Longest Word in Dictionary through Deleting|[524.cpp](524.cpp)|Medium||
@@ -365,7 +365,7 @@ Practice of leetcode
 | #    | Title             | Solution | Difficult |         Note           | Done |
 | ---- |-------------------|----------|-----------|------------------------| ---- |
 | 1| Two Sum|[1.cpp](1.cpp)|Easy||
-| 3| Longest Substring Without Repeating Characters|[3.cpp](3.cpp)|Medium|one pass hashmap|
+| 3| Longest Substring Without Repeating Characters|[3.cpp](3.cpp)|Medium|one pass hashmap| 1|
 | 6| ZigZag Conversion|[6.cpp](6.cpp)|Medium||
 | 11| Container With Most Water|[11.cpp](11.cpp)|Medium|two pointer|
 | 14| Longest Common Prefix|[14.cpp](14.cpp)|Easy||
