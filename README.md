@@ -255,7 +255,7 @@ Practice of leetcode
 | 92| Reverse Linked List II|[92.cpp](92.cpp)|Medium|one pass reverse region|
 | 94| Binary Tree Inorder Traversal|[94.cpp](94.cpp)|Medium|recursive/iterative(stack)|
 | 138| Copy List with Random Pointer|[138.cpp](138.cpp)|Medium|Optima: T:O(n),S:O(1) with 3 pass|
-| 141| Linked List Cycle|[141.cpp](141.cpp)|Easy|2ptr One pass T:O(n),S:O(1)|
+| 141| Linked List Cycle|[141.cpp](141.cpp)|Easy|2ptr One pass T:O(n),S:O(1)| 1|
 | 142| Linked List Cycle II|[142.cpp](142.cpp)|Medium|2 ptr, L1=(C-L2)|
 | 143| Reorder List|[143.cpp](143.cpp)|Medium|3 pass(separate in the middle)/2 pass(hashmap)/1 pass(recursive). |
 | 147| Insertion Sort List|[147.cpp](147.cpp)|Medium|User a header ptr to store sorted list|
@@ -364,7 +364,7 @@ Practice of leetcode
 ## Array
 | #    | Title             | Solution | Difficult |         Note           | Done |
 | ---- |-------------------|----------|-----------|------------------------| ---- |
-| 1| Two Sum|[1.cpp](1.cpp)|Easy||
+| 1| Two Sum|[1.cpp](1.cpp)|Easy|| 1|
 | 3| Longest Substring Without Repeating Characters|[3.cpp](3.cpp)|Medium|one pass hashmap| 1|
 | 6| ZigZag Conversion|[6.cpp](6.cpp)|Medium||
 | 11| Container With Most Water|[11.cpp](11.cpp)|Medium|two pointer|
