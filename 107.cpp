@@ -90,22 +90,6 @@ class Solution1_1 {
   }
 };
 
-TreeNode *initTreeNodes(vector<TreeNode *> nodes) {
-  
-  // assign child to each nodes
-  int len = nodes.size();
-  for (int i = 0; i < len; i++) {
-    if (!nodes[i]) continue;
-
-    int left_child_idx = 2 * i + 1;
-    int right_child_idx = 2 * i + 2;
-    if (left_child_idx < len) nodes[i]->left = nodes[left_child_idx];
-    if (right_child_idx < len) nodes[i]->right = nodes[right_child_idx];
-  }
-
-  return nodes[0];
-}
-
 int main(int argc, char **argv) {
   vector<TreeNode *> vals{new TreeNode(3), new TreeNode(9), new TreeNode(20),
                           nullptr,         nullptr,         new TreeNode(15),

@@ -12,7 +12,9 @@ struct ListNode {
 };
 
 int main() {
-  ListNode node(3);
-  delete node.next;
+  std::vector<std::vector<int>> a{};
+  std::cout << "a: " << a.size() << '\n';
+  // ListNode node(3);
+  // delete node.next;
   return 0;
 }
