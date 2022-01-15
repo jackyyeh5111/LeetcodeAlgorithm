@@ -1,6 +1,32 @@
 # LeetcodeAlgorithm
 Practice of leetcode
 
+## Pattern: Subsets，子集类型，一般都是使用多重DFS
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 78| Subsets|[78.cpp](78.cpp)|Medium|recursive,iteration, bit manipulation|  |
+| 416| Partition Equal Subset Sum|[416.cpp](416.cpp)|Medium|recursive, dp, bit manipulation|   | <3 |
+
+## Binary search
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 744| Find Smallest Letter Greater Than Target|[744.cpp](744.cpp)|Easy| binary search|  |
+
+## Stack
+- 以後看到 circular 要有直覺可以用 modulo operator
+- 看到 next greater/smaller element, 就要有直覺用 stack
+- 看到 paraentheses, 就要有直覺用 stack
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 496| Next Greater Element I|[496.cpp](496.cpp)| Easy| Stack|  | 
+| 503| Next Greater Element II|[503.cpp](503.cpp)| Medium| Stack|  | 
+| 856| Score of Parentheses|[856.cpp](856.cpp)| Medium| Stack, stack as tree| | <3 |
+| 901| Online Stock Span|[901.cpp](901.cpp)| Medium| Stack| | |
+| 907| Sum of Subarray Minimums|[907cpp](907cpp)| Medium| Double Stack to decide number of subarray | | |
+
+---------------------------------------
+
 ## Dynamic Programming
 | #    | Title             | Solution | Difficult |         Note           | Done |
 | ---- |-------------------|----------|-----------|------------------------| ---- |
