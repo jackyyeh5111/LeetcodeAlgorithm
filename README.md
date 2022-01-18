@@ -25,6 +25,22 @@ Practice of leetcode
 | 901| Online Stock Span|[901.cpp](901.cpp)| Medium| Stack| | |
 | 907| Sum of Subarray Minimums|[907cpp](907cpp)| Medium| Double Stack to decide number of subarray | | |
 
+## Top K Elements
+注意这种模式下，咱们不需要去排序数组，因为堆具有这种良好的局部有序性，这对咱们需要解决问题就够了
+- 用 heap (In c++, By default a max heap is created ordered by first element of pair.)
+- 如果你需要求最大/最小/最频繁的前K个元素
+- 如果你需要通过排序去找一个特定的数
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  | 
+| 215| Kth Smallest Number|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
+
+## Pattern: K-way merge，多路归并
+- 该问题的输入是排好序的数组，链表或是矩阵
+- 如果问题让咱们合并多个排好序的集合，或是需要找这些集合中最小的元素
+
+
 ---------------------------------------
 
 ## Dynamic Programming
