@@ -40,6 +40,95 @@ Practice of leetcode
 - 该问题的输入是排好序的数组，链表或是矩阵
 - 如果问题让咱们合并多个排好序的集合，或是需要找这些集合中最小的元素
 
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 21| Merge Two Sorted Lists|[21.cpp](21.cpp)| Easy| dummy node|  | 
+| 23| Merge k Sorted Lists|[23.cpp](23.cpp)| Hard| min heap, divide & conquer|  | <3<3 |
+| 378| Kth Smallest Element in a Sorted Matrix|[378.cpp](378.cpp)| Medium| |  | <3 |
+
+## Sort 
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 148| Sort List|[148.cpp](148.cpp)| Medium| | n | 
+
+## Dynamic programming
+- 动态规划的套路：从入门到精通到弃坑: https://docs.google.com/presentation/d/1oMZLZK8hpUNAUStWZmonG6lZQ4kl3lna3cWI_2yWLBg/edit#slide=id.p
+- Thinking template: https://hackmd.io/5rkBMkh1TqisTJ3LAIb-Pg
+- ref: https://leetcode.com/discuss/study-guide/1308617/Dynamic-Programming-Patterns
+- 之前儲存的欄位若沒有需要用到，space 都可以再壓縮。比如 dp[i][j] = min({dp[i - 1][j], ...})，因為先後狀態可以存到同一個欄位裡
+    - 見 [322.cpp](322.cpp)
+- 只要在 access index 有做運算的，(ex:  dp[j - coins[i]])，都要檢查邊界
+
+### Basic
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 121| Best Time to Buy and Sell Stock|[121.cpp](121.cpp)|E|||
+| 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|H| 好難！狀態轉移方程| Q | <3|
+
+### Basic II
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 368| Largest Divisible Subset|[368.cpp](368.cpp)|M|| <3|
+
+### 0/1 Knapsack Problem
+- 背包問題就是選擇一個最理想的物品子集合(subset)
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 416| Partition Equal Subset Sum|[416.cpp](416.cpp)|Medium|recursive, dp, bit 
+| 494| Target Sum|[494.cpp](494.cpp)|Medium| dp, offset| | <3 |
+
+### Unbounded Knapsack
+- 按照順序迭代，很自然就會是 combination
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 322| Coin Change|[322.cpp](322.cpp)|Medium| | | <3|
+| 518| Coin Change 2|[518.cpp](518.cpp)|Medium| | | |
+
+### Fibonacci numbers (dual status)
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 509| Fibonacci Number|[509.cpp](509.cpp)|Easy| | | |
+| 198| House Robber|[198.cpp](198.cpp)|Medium| | y(要多練習)| |
+| 213| House Robber II|[213.cpp](213.cpp)|Medium| | | |
+
+### Palindromic Subsequence
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
+| 5| Longest Palindromic Substring|[5.cpp](5.cpp)|M| 還有另一個O(n)的演算法還沒搞懂| y| <3 |
+
+## Tree
+- BST 用 inorder traversal 一定是排序的
+- edges.length == n - 1
+- Tree 是沒有 cycle 的，可以結合 topological sort
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 530| Minimum Absolute Difference in BST|[530.cpp](530.cpp)|Easy| bst| | |
+| 1818| Minimum Absolute Sum Difference|[1818.cpp](1818.cpp)|Medium| bst| | |
+
+## Hash
+### Rolling Hash
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|Hard| Rolling hash|  | <3|
+| 1554| Strings-Differ-by-One-Character|[1554.cpp](1554.cpp)|Hard| Rolling hash(Google interview)| | <3|
+
+## Topological Sort
+[link](https://leetcode.com/tag/topological-sort/)
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 207| Course Schedule|[207.cpp](207.cpp)|Medium| |  | <3|
+| 210| Course Schedule II|[210.cpp](210.cpp)|Medium| |  | |
+| 310| Minimum Height Trees|[310.cpp](310.cpp)|Medium| 不要從中心往外走，反過來從外走向裡面, level traversal|  |  <3|
+| 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
 
 ---------------------------------------
 

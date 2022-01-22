@@ -23,6 +23,9 @@ class Solution {
   int findTargetSumWays(vector<int>& nums, int target) {
     int n = nums.size();
     int sum = std::accumulate(nums.begin(), nums.end(), 0);
+
+    if (sum < abs(target)) return 0;  // important
+
     vector<vector<int>> dp(n + 1, vector<int>(2 * sum + 1, 0));
 
     // init
@@ -31,6 +34,7 @@ class Solution {
 
     // dp implement
     for (int i = 0; i < n; i++) {
+      // j start from nums[i] in case of out of boundary.
       for (int j = nums[i]; j < 2 * sum + 1 - nums[i]; j++) {
         if (dp[i][j]) {
           dp[i + 1][j + nums[i]] += dp[i][j];
@@ -46,14 +50,15 @@ class Solution {
 int main(int argc, char** argv) {
   vector<int> nums{1, 1, 1, 1, 1};
   int target = 3;
-  bool ans;
+
   Solution sol;
-  ans = sol.findTargetSumWays(nums, target);
+  int ans = sol.findTargetSumWays(nums, target);
   std::cout << "ans: " << ans << '\n';
 
-  //   vector<int> nums3{1, 2, 3, 5};
-  //   ans = sol.canPartition(nums3);
-  //   std::cout << "ans: " << ans << '\n';
+  vector<int> nums2{1};
+  target = 2;
+  ans = sol.findTargetSumWays(nums2, target);
+  std::cout << "ans: " << ans << '\n';
 
   return 0;
 }
