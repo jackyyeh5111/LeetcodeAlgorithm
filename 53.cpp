@@ -2,6 +2,97 @@
 #include <iostream>
 #include <vector>
 
+/*
+     nums:   X X X
+  presums: 0 S S S
+             i   j
+
+  sum of nums[i, j]: presums[j] - presums[i-1]
+ */
+class Solution3 {
+ public:
+  int maxSubArray(vector<int>& nums) {
+    int n = nums.size();
+    presums.resize(n + 1, 0);
+    for (int i = 0; i < n; i++) {
+      presums[i + 1] = presums[i] + nums[i];
+    }
+
+    divideAndConquer(1, n);
+    return max_sum;
+  }
+
+ private:
+  int max_sum = INT_MIN;
+  vector<int> presums;
+  void divideAndConquer(int start, int end) {
+    if (start > end) return;
+    if (start == end) {
+      max_sum = max(max_sum, presums[start] - presums[start - 1]);
+      return;
+    }
+
+    int mid = (start + end) / 2;
+    divideAndConquer(start, mid);
+    divideAndConquer(mid + 1, end);
+
+    int left_sum = INT_MIN;
+    for (int i = mid; i >= start; i--) {
+      left_sum = max(left_sum, presums[mid] - presums[i - 1]);
+    }
+
+    int right_sum = INT_MIN;
+    for (int i = mid + 1; i <= end; i++) {
+      right_sum = max(right_sum, presums[i] - presums[mid]);
+    }
+
+    max_sum = max(max_sum, left_sum + right_sum);
+  }
+};
+
+/*
+     nums:   X X X
+  presums: 0 S S S
+             i   j
+
+  sum of nums[i, j]: presums[j] - presums[i-1]
+ */
+class Solution2 {
+ public:
+  int maxSubArray(vector<int>& nums) {
+    int n = nums.size();
+    presums.resize(n + 1, 0);
+    for (int i = 0; i < n; i++) {
+      presums[i + 1] = presums[i] + nums[i];
+    }
+
+    divideAndConquer(1, n);
+    return max_sum;
+  }
+
+ private:
+  int max_sum = INT_MIN;
+  vector<int> presums;
+  void divideAndConquer(int start, int end) {
+    if (start > end) return;
+    if (start == end) {
+      max_sum = max(max_sum, presums[start] - presums[start - 1]);
+      return;
+    }
+
+    int mid = (start + end) / 2;
+    divideAndConquer(start, mid);
+    divideAndConquer(mid + 1, end);
+
+    /* 用雙層 for 浪費時間，只要從中間開始往兩邊展開即可 */
+    for (int i = start; i <= mid; i++) {
+      for (int j = mid + 1; j <= end; j++) {
+        max_sum = max(max_sum, presums[j] - presums[i - 1]);
+      }
+    }
+  }
+};
+
 /* Divide and conquer
     ref:
     https://leetcode.com/problems/maximum-subarray/discuss/540951/C%2B%2B-divide-and-conquer-solution

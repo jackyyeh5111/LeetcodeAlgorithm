@@ -1,6 +1,42 @@
 # LeetcodeAlgorithm
 Practice of leetcode
 
+## Question
+- How to tell which method is the most suitable for the question? dp or divide and conquer?
+
+## Note
+- lower_bound & upper_bound (範例：[315.cpp](315.cpp))
+```
+【用途】針對「已經排序」的資料進行binary search。
+vector <int> v;
+sort(v.begin(), v.end());
+lower_bound：找出vector中「大於或等於」val的「最小值」的位置：
+auto it = lower_bound(v.begin(), v.end(), val);
+upper_bound：找出vector中「大於」val的「最小值」的位置：
+auto it = upper_bound(v.begin(), v.end(), val);
+```
+- range sum / subarray sum
+```
+XXXXXXXXXX
+   i    j
+要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
+```
+- 區間是有排列，欲求得在此區間 [lower, upper] 的 num 數量
+```c++
+for (int i = start; i <= middle; i++) {
+    auto a = lower_bound(presums.begin() + middle + 1,
+                        presums.begin() + end + 1, presums[i] + lower_);
+    auto b = upper_bound(presums.begin() + middle + 1,
+                        presums.begin() + end + 1, presums[i] + upper_);
+    count += b - a;
+}
+```
+
+## Two pointers
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  |
+
 ## Pattern: Subsets，子集类型，一般都是使用多重DFS
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
@@ -166,6 +202,7 @@ for (int i=1; i <= srt_len;i++) {
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|Hard| Rolling hash|  | <3|
 | 1554| Strings-Differ-by-One-Character|[1554.cpp](1554.cpp)|Hard| Rolling hash(Google interview)| | <3|
+| 49| Group Anagrams|[49.cpp](49.cpp)|M| | | <3|
 
 ## Topological Sort
 [link](https://leetcode.com/tag/topological-sort/)
@@ -177,7 +214,8 @@ for (int i=1; i <= srt_len;i++) {
 | 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
 
 ## Bit Manipulation
-- __builtin_popcount(bit_mask) // count the number of one’s(set bits) in an integer. 
+- __builtin_popcount(bit_mask) // count the number of one’s(set bits) in an integer.
+    - std::bitset<32>(bit_mask).count() // same as above.
 
 ### XOR
 
@@ -196,4 +234,12 @@ for (int i=1; i <= srt_len;i++) {
 ### Bit Mask
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 1239| Maximum Length of a Concatenated String with Unique Characters|[1239.cpp](1239.cpp)|Medium| |  | |
+| 1239| Maximum Length of a Concatenated String with Unique Characters|[1239.cpp](1239.cpp)|Medium| 錯了非常多次 |  | <3|
+| 1284| Minimum Number of Flips to Convert Binary Matrix to Zero Matrix|[1284.cpp](1284.cpp)|Hard| 史上錯最多次，我對 matrix 操作還要再熟練！|  |  <3|
+
+## Divide and Conquer
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 315| Count of Smaller Numbers After Self|[315.cpp](315.cpp)|H|  |  | |
+| 327| Count of Range Sum|[327.cpp](327.cpp)|H| pass on local; but fail on leetcode?|  y| |
+| 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |

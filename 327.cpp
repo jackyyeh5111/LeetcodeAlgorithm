@@ -1,0 +1,150 @@
+#include "utils.hpp"
+
+/*
+  XXXXXXXXXX
+   i    j
+  要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
+
+  XXXXXYYYYY
+  XXXXX  YYYYY
+
+    nums =    X X X X X
+  presum =  0 Y Y Y Y Y (記得補零)
+
+  i => s.t.
+   presum[j] >= presum[i-1] + lower => count of larger number of self (315.cpp)
+   presum[j] <= presum[i-1] + upper
+ */
+class Solution2 {
+ public:
+  int countRangeSum(vector<int>& nums, int lower, int upper) {
+    int n = nums.size();
+    lower_ = lower, upper_ = upper;
+    presums.resize(n + 1);
+
+    for (int i = 0; i < n; i++) {
+      presums[i + 1] = presums[i] + nums[i];
+    }
+    divideAndConquer(1, n);
+    return count;
+  }
+
+ private:
+  int count = 0;
+  vector<int> presums;
+  int lower_, upper_;
+  void divideAndConquer(int start, int end) {
+    if (start >= end) return;
+
+    int middle = (start + end) / 2;
+    divideAndConquer(start, middle);
+    divideAndConquer(middle + 1, end);
+
+    for (int i = start; i <= middle; i++) {
+      auto a = lower_bound(presums.begin() + middle + 1,
+                           presums.begin() + end + 1, presums[i] + lower_);
+      auto b = upper_bound(presums.begin() + middle + 1,
+                           presums.begin() + end + 1, presums[i] + upper_);
+      count += b - a;
+    }
+
+    // sort
+    int left = start, right = middle + 1;
+    int range_len = end - start + 1;
+    vector<int> temp(range_len);
+    for (int i = 0; i < range_len; i++) {
+      if (right > end) {
+        temp[i] = presums[left];
+        left++;
+
+      } else if (left > middle) {
+        temp[i] = presums[right];
+        right++;
+      } else if (presums[left] < presums[right]) {
+        temp[i] = presums[left];
+        left++;
+      } else {
+        temp[i] = presums[right];
+        right++;
+      }
+    }
+
+    for (int i = 0; i < range_len; i++) {
+      presums[start + i] = temp[i];
+    }
+
+    print (presums);
+  }
+};
+
+/*
+    Calculate range sum of XYZ ==>
+    1. X Y Z
+    2. XY Z
+       X YZ <== Skipped
+    3. XYZ
+ */
+
+/* 這樣會有大錯！！！！
+    ex:
+    [100, 200, 300] 經過以下 divide and conquer，會沒有計算到 [1, 2] 區間！！
+    divideAndConquer(nums, 0, 2)
+    ==> [0, 0]
+    ==> [1, 1]
+    ==> [2, 2]
+    ==> [0, 1]
+    ==> [0, 2]
+ */
+class Solution {
+ public:
+  int countRangeSum(vector<int>& nums, int lower, int upper) {
+    int n = nums.size();
+    /* Should not decalrae member variables twice here */
+    // int lower_ = lower, upper_ = upper;
+    lower_ = lower, upper_ = upper;
+    divideAndConquer(nums, 0, n - 1);
+    return count;
+  }
+
+ private:
+  int count = 0;
+  int lower_, upper_;
+  int divideAndConquer(vector<int>& nums, int start, int end) {
+    if (start > end) return 0;
+    cout << "----------\n";
+    print(nums);
+    if (start == end) {
+      if (nums[start] >= lower_ && nums[start] <= upper_) count += 1;
+      cout << "start : " << start << " | end: " << end << '\n';
+      cout << "sum: " << nums[start] << '\n';
+      cout << "count: " << count << '\n';
+      return nums[start];
+    }
+
+    int mid = (start + end) / 2;
+    int sum = divideAndConquer(nums, start, mid) +
+              divideAndConquer(nums, mid + 1, end);
+    if (sum >= lower_ && sum <= upper_) count += 1;
+
+    cout << "lower_ : " << lower_ << " | upper_: " << upper_ << '\n';
+    cout << "start : " << start << " | end: " << end << '\n';
+    cout << "sum: " << sum << '\n';
+    cout << "count: " << count << '\n';
+    return sum;
+  }
+};
+
+// A: [XXXXXYYYYY]
+// B: [XXXXX] C:[YYYYY]
+
+int main() {
+  vector<int> nums{0, -3, -3, 1, 1, 2};
+  Solution2 sol;
+  int ans = sol.countRangeSum(nums, 3, 5);
+  cout << "ans: " << ans << '\n';
+
+  nums = vector<int>{-2, 5, -1};
+  ans = sol.countRangeSum(nums, -2, 2);
+  cout << "ans: " << ans << '\n';
+  return 0;
+}
