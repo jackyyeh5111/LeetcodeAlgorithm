@@ -61,20 +61,14 @@ class Solution5 {
 #include <iterator>   // std::next
 #include <list>       // std::list
 
+void foo(int* t) {
+  std::cout << "foo &t: " << &t << '\n';
+  return;
+}
 int main() {
-  // vector<int> nums1{1, 7, 5};
-  // vector<int> nums2{2, 3, 5};
-  // Solution5 sol;
-  // int ans = sol.minAbsoluteSumDiff(nums1, nums2);
-  // std::cout << "ans: " << ans << '\n';
-
-  // return 0;
-
-  std::list<int> mylist;
-  for (int i = 0; i < 10; i++) mylist.push_back(i * 10);
-
-  std::cout << "The last element is " << *(mylist.end()) << '\n';
-  std::cout << "The last element is " << *std::next(mylist.end()) << '\n';
-
+  int n = 5;
+  int* a = &n;
+  std::cout << "&a: " << &a << '\n';
+  foo(a);
   return 0;
 }

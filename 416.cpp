@@ -1,5 +1,13 @@
 #include "utils.hpp"
 
+class SolutionTemp {
+ public:
+  bool canPartition(vector<int>& nums) {
+    int 
+  }
+    
+};
+
 /*
     ref:
     https://leetcode.com/problems/partition-equal-subset-sum/discuss/1624390/C%2B%2B-Brute-Force-To-Optimized-SolutionO(N)-Time-or-W-Explanation
@@ -59,32 +67,27 @@ class Solution3 {
 class Solution2 {
  public:
   bool canPartition(vector<int>& nums) {
-    int size = nums.size();
-    int sum = std::accumulate(nums.begin(), nums.end(), 0);
-
+    int n = nums.size();
+    int sum = accumulate(nums.begin(), nums.end(), 0);
     if (sum % 2 != 0) return false;
 
-    bool dp[size + 1][sum / 2 + 1];
-    for (int i = 0; i < size + 1; i++) {
-      for (int j = 0; j < sum / 2 + 1; j++) {
-        dp[i][j] = false;
-      }
-    }
+    sum /= 2;
+    nums.insert(nums.begin(), 0);  // dummy
+    vector<vector<bool>> dp(n + 1, vector<bool>(sum + 1, false));
 
     // init dp matrix
-    for (int i = 0; i < size + 1; i++) dp[i][0] = true;
+    for (int i = 0; i <= n; i++) dp[i][0] = true;
 
-    for (int i = 1; i < size + 1; i++) {
-      for (int j = 1; j < sum / 2 + 1; j++) {
-        if (nums[i - 1] > j)
+    for (int i = 1; i <= n; i++) {
+      for (int j = 0; j <= sum; j++) {
+        if (nums[i] > j)
           dp[i][j] = dp[i - 1][j];
         else
-          dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+          dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
       }
-      //   std::cout << dp[i][0] << '\n';
     }
 
-    return dp[size][sum / 2];
+    return dp[n][sum];
   }
 };
 
@@ -106,7 +109,7 @@ class Solution {
 };
 
 int main(int argc, char** argv) {
-  Solution4 sol;
+  SolutionTemp sol;
   bool ans;
   //   vector<int> nums{14, 9, 8, 4, 3, 2};
   //   bool ans = sol.canPartition(nums);

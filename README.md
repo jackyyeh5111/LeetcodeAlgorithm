@@ -10,9 +10,9 @@ Practice of leetcode
 【用途】針對「已經排序」的資料進行binary search。
 vector <int> v;
 sort(v.begin(), v.end());
-lower_bound：找出vector中「大於或等於」val的「最小值」的位置：
+lower_bound: 找出vector中「大於或等於」val的「最小值」的位置：
 auto it = lower_bound(v.begin(), v.end(), val);
-upper_bound：找出vector中「大於」val的「最小值」的位置：
+upper_bound: 找出vector中「大於」val的「最小值」的位置：
 auto it = upper_bound(v.begin(), v.end(), val);
 ```
 - range sum / subarray sum
@@ -31,11 +31,23 @@ for (int i = start; i <= middle; i++) {
     count += b - a;
 }
 ```
+- Longest/shortest substring/subarray 直覺想到 two pointers, dp
+- unordered_map default int value is 0.
+```c++
+unordered_map<int, int> um;
+if (um[2]) { do sth. } // 此刻 um[2] == 0
+```
+
+## Basic Concept 
+### Sort
+- [quicksort](quicksort.cpp)
+- Subsets | [78.cpp](78.cpp)
 
 ## Two pointers
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  |
+| 904| Fruit Into Baskets|[904.cpp](904.cpp)|M||  |
 
 ## Pattern: Subsets，子集类型，一般都是使用多重DFS
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
@@ -243,3 +255,10 @@ for (int i=1; i <= srt_len;i++) {
 | 315| Count of Smaller Numbers After Self|[315.cpp](315.cpp)|H|  |  | |
 | 327| Count of Range Sum|[327.cpp](327.cpp)|H| pass on local; but fail on leetcode?|  y| |
 | 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |
+
+2022.03.29
+- [904.cpp](904.cpp)
+    - Mistype `basket[fruits[right]]` to `basket[right]`.
+2022.03.30
+- [78.cpp](78.cpp)
+    - Mistype `i >> j & 1` to `i >> j`.

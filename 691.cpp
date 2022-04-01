@@ -35,85 +35,45 @@
     #####################################
  */
 
-// class Solution {
-//  public:
-//   int minStickers(vector<string>& stickers, string target) {
-//     int n = target.size();
-//     vector<int> dp(1 << n, INT_MAX);
-//     dp[0] = 0;
-
-//     for (int state = 0; state < (1 << n); state++) {
-//       if (dp[state] == INT_MAX) continue;
-//       for (string str : stickers) {
-//         int new_state = findNextStatusByUsingStr(state, target, str);
-//         dp[new_state] = min(dp[new_state], dp[state] + 1);
-
-//         cout << "i: " << bitset<6>(state) << " | j: " << bitset<6>(new_state)
-//              << '\n';
-//         cout << "dp[i]: " << dp[state] << " | dp[j]: " << dp[new_state] <<
-//         '\n';
-//       }
-//     }
-//     return dp[(1 << n) - 1] == INT_MAX ? -1 : dp[(1 << n) - 1];
-//   }
-
-//   int findNextStatusByUsingStr(int status, string target, string s) {
-//     int n = target.size();
-//     for (auto ch : s) {
-//       // loop over each character in target, if equals to ch and not filled,
-//       // then set as filled
-//       for (int k = 0; k < n; k++) {
-//         if (((status >> k) & 1) == 0 && target[k] == ch) {
-//           status = status + (1 << k);
-//           break;
-//         }
-//       }
-//     }
-//     return status;
-//   }
-// };
-
 class Solution {
  public:
   int minStickers(vector<string>& stickers, string target) {
     int n = target.size();
+    int num_status = 1 << n;
     vector<int> dp(1 << n, INT_MAX);
     dp[0] = 0;
 
-    for (int i = 0; i < (1 << n); i++) {
-      if (dp[i] == INT_MAX) continue;
-      for (auto sticker : stickers) {
-        int j = findNextStatus(i, target, sticker);
+    for (auto sticker : stickers) {
+      for (int i = 0; i < num_status; i++) {
+        if (dp[i] == INT_MAX) continue;
+        int j = findNextStatus(i, sticker, target);
         dp[j] = min(dp[j], dp[i] + 1);
-
-        // cout << "i: " << bitset<6>(i) << " | j: " << bitset<6>(j) << '\n';
-        // cout << "target: " << target << " | sticker: " << sticker << '\n';
-        // cout << "dp[i]: " << dp[i] << " | dp[j]: " << dp[j] << '\n';
       }
     }
 
-    return dp[(1 << n) - 1] == INT_MAX ? -1 : dp[(1 << n) - 1];
+    return dp[num_status - 1] == INT_MAX ? -1 : dp[num_status - 1];
   }
 
- private:
-  int findNextStatus(int status, const string target, const string s) {
-    int n = target.size();
-    int new_status = status;
+  int findNextStatus(int status, string sticker, string target) {
+    int size = target.size();
+    for (char ch : sticker) {
+      for (int i = 0; i < size; i++) {
+        if ((status >> i) & 1) continue;
 
-    // 這裏 for 迴圈的 order 很重要！ break 要在對的 loop 裡面！！
-    for (auto ch : s) {
-      for (int i = 0; i < n; i++) {
-        if (((new_status >> i) & 1) != 0) continue;
-
-        // string 的方向跟 bit 是相反過來的，雖然這裡寫反也不會怎樣
-        if (ch == target[n - 1 - i]) {
-          new_status += (1 << i);
+        /*
+          string 的方向跟 bit 是相反過來的，雖然這裡寫反也不會怎樣
+          if (ch == target[n - 1 - i]) {
+         */
+        if (ch == target[i]) {
+          status += (1 << i);
           break;
         }
       }
     }
 
-    //   /* 錯誤的 for loop order */
+    /* 錯誤的 for loop order
+       Character cannot be used more than once!
+    */
     //   // for (int i = 0; i < n; i++) {
     //   //   if (((status >> i) & 1) != 0) continue;
     //   //   for (auto ch : s) {
@@ -124,15 +84,13 @@ class Solution {
     //   //   }
     //   // }
 
-    return new_status;
+    return status;
   }
 };
 
 int main() {
   vector<string> stickers{"with", "example", "science"};
   string target = "thehat";
-  //   vector<string> stickers{"ab"};
-  //   string target = "b";
   Solution sol;
   int ans = sol.minStickers(stickers, target);
   cout << "ans: " << ans << '\n';
