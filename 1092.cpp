@@ -1,35 +1,86 @@
 #include "utils.hpp"
 
 /*
-Input: str1 = "abac", str2 = "cab"
-Output: "cabac"
+    xxxx i
+    ooo j
 
-// ZZZZ 必定會填入 a/b
-ZZZZZZZZZZZ a/b
+    definition:
+        dp[i][j]: min num of superseq
+    init:
+        dp[i][0] = i   for i = 1 .. n1
+        dp[0][j] = j   for j = 1 .. n2
+    transfer:
+        if (s1[i] == s2[j])
+            dp[i][j] = dp[i-1][j-1] + 1
+        else
+            dp[i][j] = min(dp[i][j-1], dp[i-1][j]) + 1
 
-XXXXX a
-YYY b
+    ex:
+         # c a b
+       # 1 2 3 4
+       a 2 3 3 4
+       b 3 4 ..
+       a 4 5 ..
+       c 5 5 ..
 
-if a == b:
-    dp[i][j] = dp[i-1][j-1] + 1
-else
-    dp[i][j] = min(dp[i][j-1]+1, dp[i-1][j]+1)
+      backtrack 不用想得太複雜，就在 matrix 上倒過來跑即可
 
-cab
-abac
-走上: 拿 str1
-走左: 拿 str2
+*/
+class Solution2 {
+ public:
+  string shortestCommonSupersequence(string str1, string str2) {
+    int n1 = str1.size();
+    int n2 = str2.size();
 
-0    1 2 3
-     c a b
-1  a 2 2 2
-2  b 3 3 3
-3  a 4 4 4
-4  c 4 5 5
+    vector<vector<int>> dp(n1 + 1, vector<int>(n2 + 1, 0));
+    vector<vector<int>> prev(n1 + 1, vector<int>(n2 + 1));
+    str1 = '#' + str1;
+    str2 = '#' + str2;
 
-backtrack 不用想得太複雜，就在 matrix 上倒過來跑即可
+    for (int i = 1; i <= n1; i++) {
+      prev[i][0] = 2;
+      dp[i][0] = i;
+    }
+    for (int j = 1; j <= n2; j++) {
+      prev[0][j] = 1;
+      dp[0][j] = j;
+    }
 
- */
+    for (int i = 1; i <= n1; i++) {
+      for (int j = 1; j <= n2; j++) {
+        if (str1[i] == str2[j]) {
+          dp[i][j] = dp[i - 1][j - 1] + 1;
+          prev[i][j] = 0;
+        } else if (dp[i][j - 1] < dp[i - 1][j]) {
+          dp[i][j] = dp[i][j - 1] + 1;
+          prev[i][j] = 1;
+        } else {
+          dp[i][j] = dp[i - 1][j] + 1;
+          prev[i][j] = 2;
+        }
+      }
+    }
+
+    int i = n1, j = n2;
+    string ans = "";
+    while (i >= 0 && j >= 0) {
+      if (prev[i][j] == 0) {
+        ans = str1[i] + ans;
+        --i, --j;
+      } else if (prev[i][j] == 1) {
+        ans = str2[j] + ans;
+        --j;
+      } else {
+        ans = str1[i] + ans;
+        --i;
+      }
+    }
+
+    ans.erase(0, 1);
+    return ans;
+  }
+};
+
 class Solution {
  public:
   string shortestCommonSupersequence(string str1, string str2) {
@@ -76,14 +127,14 @@ class Solution {
     if (i) ans = str1.substr(1, i) + ans;
     if (j) ans = str2.substr(1, j) + ans;
 
-    return ans;
+    return ans.substr();
   }
 };
 
 int main() {
   string str1 = "abac";
   string str2 = "cab";
-  Solution sol;
+  Solution2 sol;
   string ans = sol.shortestCommonSupersequence(str1, str2);
   std::cout << "ans: " << ans << '\n';
 

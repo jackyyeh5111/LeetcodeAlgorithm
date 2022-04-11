@@ -5,6 +5,14 @@
 buy2=-inf, sold2=0
 
 狀態轉移方程：
+    hold1[k] = max(hold1[k-1], -p)
+    sold1[k] = max(sold1[k-1], hold1[k-1] + p)
+    hold2[k] = max(hold2[k-1], sold1[k-1] - p)
+    sold2[k] = max(sold2[k-1], hold2[k-1] + p)
+    
+    由上所知，第 k 天狀態根據第 k-1 天來決定，所以我們可以簡化 dp array，改用 variable 
+    來儲存 k-1 狀態即可 ==========> 
+
     hold1 = max(hold1, -p)
     sold1 = max(sold1, hold1+p)
     hold2 = max(hold2, sold1-p)

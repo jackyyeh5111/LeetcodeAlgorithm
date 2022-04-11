@@ -11,7 +11,7 @@ class Solution {
       nums[i].
     */
     vector<int> dp(n, 0);
-    vector<int> prev(n, -1); // 新增 prev 紀錄前一個 num
+    vector<int> prev(n, -1);  // 新增 prev 紀錄前一個 num
 
     int max_subset_idx = -1, max_subset_num = -1;
     for (int i = 0; i < n; i++) {

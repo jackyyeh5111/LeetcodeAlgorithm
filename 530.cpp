@@ -1,5 +1,24 @@
 #include "utils.hpp"
 
+class Solution4 {
+ public:
+  int getMinimumDifference(TreeNode* root) {
+    inorder(root);
+    return min_diff;
+  }
+
+ private:
+  void inorder(TreeNode* root) {
+    if (!root) return;
+    if (root->left) inorder(root->left);
+    min_diff = min(min_diff, root->val - prev_val);
+    prev_val = root->val;
+    if (root->right) inorder(root->right);
+  }
+  int prev_val = INT_MIN / 2;
+  int min_diff = INT_MAX;
+};
+
 class Solution3 {
  public:
   int getMinimumDifference(TreeNode* root) {
@@ -71,13 +90,13 @@ class Solution {
 
 int main(int argc, char** argv) {
   // test case 1
-  //   vector<TreeNode*> vals{new TreeNode(4), new TreeNode(2), new TreeNode(6),
-  //                          new TreeNode(1), new TreeNode(3)};
-  //   TreeNode* root = initTreeNodes(vals);
+  // vector<TreeNode*> vals{new TreeNode(4), new TreeNode(2), new TreeNode(6),
+  //                        new TreeNode(1), new TreeNode(3)};
+  // TreeNode* root = initTreeNodes(vals);
 
-  Solution2 sol;
-  //   int ans = sol.getMinimumDifference(root);
-  //   std::cout << "ans: " << ans << '\n';
+  Solution3 sol;
+  // int ans = sol.getMinimumDifference(root);
+  // std::cout << "ans: " << ans << '\n';
 
   // test case 2
   vector<TreeNode*> vals2{

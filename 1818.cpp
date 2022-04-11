@@ -19,7 +19,7 @@ class Solution {
       const int diff = abs(nums1[i] - nums2[i]);
       ans += diff;
       if (diff <= gain) continue;
-      auto it = s.lower_bound(nums2[i]);
+      auto it = s.lower_bound(nums2[i]); // binary search
 
       if (it != s.end()) gain = max(gain, diff - abs(*it - nums2[i]));
       if (it != s.begin()) gain = max(gain, diff - abs(*prev(it) - nums2[i]));
@@ -31,7 +31,7 @@ class Solution {
 int main(int argc, char** argv) {
   vector<int> nums1{1, 7, 5};
   vector<int> nums2{2, 3, 5};
-  Solution sol;
+  Solution2 sol;
   int ans = sol.minAbsoluteSumDiff(nums1, nums2);
   std::cout << "ans: " << ans << '\n';
 

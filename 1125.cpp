@@ -2,7 +2,7 @@
 
 /*
     這題比 691 多了以下 constraint 可以玩味，並且不用考慮字串內重複的字元：
-        All the strings of people[}] are unique.
+        All the strings of people[] are unique.
 
     # definition
     dp[i]: the minimum number of people that consists of team.

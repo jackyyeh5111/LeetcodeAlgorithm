@@ -1,37 +1,77 @@
 #include "utils.hpp"
 
+/*
+ref:
+  https://hackmd.io/1_UvvM01T6W6R2cCbMGYdg
+ */
+
+/*
+  Example 1:
+
+  Input: s = "()"
+  Output: 1
+  Example 2:
+
+  Input: s = "(())"
+  Output: 2
+  Example 3:
+
+  Input: s = "()()"
+  Output: 2
+
+  Input: s = "(()())"
+  Output: 4
+
+  Input: s = "()(())"
+  Output: 4
+ */
+class Solution3 {
+ public:
+  int scoreOfParentheses(string s) {
+    stack<int> stk;
+    int cur = 0;
+    for (char ch : s) {
+      if (ch == '(') {
+        stk.push(cur);
+        cur = 0;
+      } else {  // ch == ')'
+        if (cur == 0)
+          cur = 1;
+        else
+          cur *= 2;
+        cur += stk.top();
+        stk.pop();
+      }
+    }
+
+    return cur;
+  }
+};
+
 /* ref:
     https://leetcode.com/problems/score-of-parentheses/discuss/141777/C++JavaPython-O(1)-Space
  */
 
-/* approach 3: 
-    直接用 number of layers，太神了吧！ 
-    ref:
-    https://hackmd.io/B5VUP8ZJQlGbW4VeJDSPwg
-    
+/* approach 3:
+    直接用 number of layers，太神了吧！
+
     Time: O(n)
     Space: O(1)
 */
 
-class Solution3 {
- public:
-  int scoreOfParentheses(string S) {
-    int res = 0, l = 0;
-    for (int i = 0; i < S.length(); ++i) {
-      if (S[i] == '(')
-        l++;
-      else
-        l--;
-      if (S[i] == ')' && S[i - 1] == '(') res += 1 << l;
-    }
-    return res;
-  }
-};
-
-/* approach 2: array 來充當 stack */
 class Solution2 {
  public:
-  int scoreOfParentheses(string S) {}
+  int scoreOfParentheses(string S) {
+    int l = 0, ans = 0;
+    int n = S.size();
+    for (int i = 0; i < n; i++) {
+      if (S[i] == '(') l++;
+      if (S[i] == ')') l--;
+      if (S[i] == ')' && S[i - 1] == '(') ans += (1 << l);
+    }
+
+    return ans;
+  }
 };
 
 /* approach 1: stack
@@ -57,8 +97,8 @@ class Solution {
 };
 
 int main(int argc, char** argv) {
-  std::string s = "(()(()()))";
-  Solution3 sol;
+  std::string s = "()()";
+  Solution2 sol;
   int ans = sol.scoreOfParentheses(s);
   std::cout << "ans: " << ans << '\n';
 

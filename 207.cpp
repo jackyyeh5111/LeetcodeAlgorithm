@@ -32,7 +32,8 @@ class Solution3 {
       }
     }
 
-    for (int num : in_dregree) if (num) return false;
+    for (int num : in_degree)
+      if (num) return false;
     return true;
   }
 
@@ -134,9 +135,9 @@ class Solution {
 
 int main() {
   int numCourses = 2;
-  //   vector<vector<int>> prerequisites = {{1, 0}, {0, 1}};
-  vector<vector<int>> prerequisites = {{1, 0}};
-  Solution2 sol;
+  vector<vector<int>> prerequisites = {{1, 0}, {0, 1}};
+  // vector<vector<int>> prerequisites = {{1, 0}};
+  SolutionTemp sol;
   bool ans = sol.canFinish(numCourses, prerequisites);
   std::cout << "ans: " << ans << '\n';
 

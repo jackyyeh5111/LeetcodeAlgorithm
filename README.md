@@ -33,15 +33,33 @@ for (int i = start; i <= middle; i++) {
 ```
 - Longest/shortest substring/subarray 直覺想到 two pointers, dp
 - unordered_map default int value is 0.
-```c++
-unordered_map<int, int> um;
-if (um[2]) { do sth. } // 此刻 um[2] == 0
-```
+    ```c++
+    unordered_map<int, int> um;
+    if (um[2]) { do sth. } // 此刻 um[2] == 0
+    ```
+- To get previous/next iterator
+    ```
+    next(it)
+    prev(it) 
+    ```
+- Set in C++ is implemented with BST. Its lowerbound/upperbound is implemented with binary search.
+- Whenever encounter index operation like the following
+    ```c++
+    for (int i= ...)
+        for (int j= ...)
+            `dp[i-1][j+nums[i]]`
+    ```
+    Please be careful about index boundary to avoid segmentation error.
 
 ## Basic Concept 
 ### Sort
 - [quicksort](quicksort.cpp)
 - Subsets | [78.cpp](78.cpp)
+### Search
+- [binary_search](binary_search.cpp)
+- [level_order_traversal](level_order_traversal.cpp)
+### Misc
+- [Catalan number](https://hackmd.io/4EJpycUQTv2dnqzVr8uTvA)
 
 ## Two pointers
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
@@ -59,6 +77,7 @@ if (um[2]) { do sth. } // 此刻 um[2] == 0
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 744| Find Smallest Letter Greater Than Target|[744.cpp](744.cpp)|Easy| binary search|  |
+| 1818| Minimum Absolute Sum Difference|[1818.cpp](1818.cpp)|Medium| binary search| |  <3|
 
 ## Stack
 - 以後看到 circular 要有直覺可以用 modulo operator
@@ -114,6 +133,19 @@ if (um[2]) { do sth. } // 此刻 um[2] == 0
 - 通常 dp 都是要求我們求得數量，如果要我們也列出過程，就加個 prev storage 即可 [(link)](https://youtu.be/Uk9JRbylA0c?t=1143)
 
 ### Basic (时间序列型)
+- 给出一个序列（数组/字符串），其中每一个元素可以认为“一天”，并且“今天”的状态只取决于“昨天”的状态。
+- 欲更新的狀態只跟前一個狀態有關係，可以節省 space O(n) -> O(1)，也就是儲存 space 用 array -> variable
+
+template:
+```c++
+// transfer function
+status_var = ..;
+for (int i = 0; i < n; i++) {
+    /* Do operation on status_var */
+    status_var = max(...); // or
+    status_var = min(...);
+}
+```
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
@@ -121,6 +153,17 @@ if (um[2]) { do sth. } // 此刻 um[2] == 0
 | 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|H| 好難！狀態轉移方程| Q | <3|
 
 ### Basic II (时间序列加强版)
+- 给出一个序列（数组/字符串），其中每一个元素可以认为“一天”：但“今天”的状态 和之前的“某一天”有关，需要挑选。
+
+template:
+```c++
+// transfer function
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+        ...
+    }
+}
+```
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
@@ -129,6 +172,25 @@ if (um[2]) { do sth. } // 此刻 um[2] == 0
 
 ### Basic III (双序列型)
 - dp[i][j] 一定是由 dp[i-1][j-1], dp[i-1][j], dp[i][j-1] 三者求得
+- 给出两个序列s和t（数组/字符串），让你对它们搞事情。
+    - Longest Common Subsequences 
+    - Shortest Common Supersequence
+    - Edit distances
+    - ...
+套路：
+定义dp[i][j]：表示针对s[1:i]和t[1:j]的子问题的求解。
+千方百计将dp[i][j]往之前的状态去转移：dp[i-1][j], dp[i][j-1], dp[i-1][j-1]
+最终的结果是dp[m][n]
+
+template:
+```c++
+// transfer function
+for (int i = 1; i <= n1; i++) {
+    for (int j = 1; j <= n2; j++) {
+        ...
+    }
+}
+```
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
@@ -136,9 +198,14 @@ if (um[2]) { do sth. } // 此刻 um[2] == 0
 | 1092| Shortest Common Supersequence|[1092.cpp](1092.cpp)|H| 往回找路徑還沒有很熟，去翻 algo| y|
 
 ### Basic IV (第I类区间型)
+- 给出一个序列，「明确」要求分割成K个连续区间，要你计算这些区间的某个最优性质
+- dp definition(這最難想)：`dp[i][k]` represents `s[1:i]` 分成k个区间，此时能够得到的最优解
+- 搜寻「最后一个」区间的起始位置j，将 `dp[i][k]` 分割成 `dp[j-1][k-1]` 和 `s[j:i]` 两部分: `XXXX [j XXX i]`
+
 template:
 ```c++
-for (int i=1; i <= srt_len;i++) {
+// transfer function
+for (int i=1; i <= str_len;i++) {
     for (int k=1; k <= min(i, K); k++) {
         for (int j=k; j <= i; j++) {
             dp[i][k] = min{ dp[j-1][k-1] + helper(s, j, i) }
@@ -153,6 +220,25 @@ for (int i=1; i <= srt_len;i++) {
 | 813| Largest Sum of Averages|[813.cpp](813.cpp)|M|| |<3|
 
 ### Basic V (第II类区间型)
+- 只给出一个序列S（数组/字符串），求一个针对这个序列的最优解。
+- 适用条件：这个最优解对于序列的index而言，具有「无后效性」。即无法设计dp[i]使得dp[i]仅依赖于dp[j] (j<i). 但是大区间的最优解，可以依赖小区间的最优解。
+- 套路：
+    - 定义dp[i][j]：表示针对s[i:j]的子问题的求解。
+    - 千方百计将大区间的dp[i][j]往小区间的dp[i’][j’]转移。
+    - 第一层循环是区间大小；第二层循环是起始点。
+    - 最终的结果是dp[1][N]
+
+template:
+```c++
+// transfer function
+for (int len = 2; len <= n; len++) {
+    for (int i = 1; i <= n - len + 1; i++) {
+        int j = i + len - 1;
+        ...
+    }
+}
+```
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
@@ -171,7 +257,6 @@ for (int i=1; i <= srt_len;i++) {
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 416| Partition Equal Subset Sum|[416.cpp](416.cpp)|Medium|recursive, dp, bit 
 | 494| Target Sum|[494.cpp](494.cpp)|Medium| dp, offset| | <3 |
 
 ### Unbounded Knapsack
@@ -204,8 +289,10 @@ for (int i=1; i <= srt_len;i++) {
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 144| Binary Tree Preorder Traversal|[144.cpp](144.cpp)|Easy| | | |
+| 144| Binary Tree Postorder Traversal|[144.cpp](144.cpp)|Easy| | | |
 | 530| Minimum Absolute Difference in BST|[530.cpp](530.cpp)|Easy| bst| | |
-| 1818| Minimum Absolute Sum Difference|[1818.cpp](1818.cpp)|Medium| bst| | |
+| 96| Unique Binary Search Trees|[96.cpp](96.cpp)|M| catalan number | | |
 
 ## Hash
 ### Rolling Hash
@@ -256,9 +343,61 @@ for (int i=1; i <= srt_len;i++) {
 | 327| Count of Range Sum|[327.cpp](327.cpp)|H| pass on local; but fail on leetcode?|  y| |
 | 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |
 
+## Note
 2022.03.29
 - [904.cpp](904.cpp)
     - Mistype `basket[fruits[right]]` to `basket[right]`.
 2022.03.30
 - [78.cpp](78.cpp)
     - Mistype `i >> j & 1` to `i >> j`.
+2022.04.01
+- [496.cpp](496.cpp)
+    ```c++
+    stack.top()
+    /* Do something */
+    stack.pop() // Always forget!
+    ```
+2022.04.04
+- [300.cpp](300.cpp)
+    - Mistype `dp[i] = max(dp[i], dp[j] + 1)` to `dp[i] = dp[j] + 1`. We have to check whenever updating dp array.
+2022.04.08
+- [1092.cpp](1092.cpp)
+    - Mistype less to less and equal symbol
+        ```c++
+        /* error while sub_str is 'ab' */
+        for (int i = 0; i <= len / 2; i++) { // --> for (int i = 0; i < len / 2; i++)
+            if (sub_str[i] != sub_str[len - 1 - i]) ++num_change;
+        }
+
+        ```
+2022.04.10
+- [494.cpp](494.cpp)
+    - Change iter variable inside iteration.
+    ```c++
+    // Do not change iter variable inside iteration
+    for (int i = 1; i <= n; i++) {
+    for (int j = -sum; j <= sum; j++) {
+        j += offset; // wrong here
+        ...
+    }
+    }
+    ```
+
+## New Word
+1. wrap around
+    - Note that the letters wrap around. For example, if target == 'z' and letters == ['a', 'b'], the answer is 'a'.
+2. such that
+    -  Return an array ans of length nums1.length `such that` ans[i] is the next greater element
+3. where
+    - You are given two distinct 0-indexed integer arrays nums1 and nums2, `where` nums1 is a subset of nums2.
+4. the first xxx number to its ... in the array
+    - The next greater number of a number x is the first greater number to its traversing-order next in the array
+5. The `Subscript` or Array Index Operator is `denoted` by '[]'. This operator is generally used with arrays to retrieve and manipulate the array elements.
+6. Given a set of `distinct` positive integers nums, return the largest subset answer `such that` every pair (answer[i], answer[j]) of elements in this subset `satisfies`: ...
+7. A subsequence is a sequence that can be `derived` from an array by deleting some or no elements without `changing the order` of the `remaining` elements.
+
+## Interview Question
+1. 416 | Partition Equal Subset Sum | Medium
+2. | 856| Score of Parentheses|[856.cpp](856.cpp)| Medium| Stack, stack as tree| | <3 |
+3. 1818
+4. 368

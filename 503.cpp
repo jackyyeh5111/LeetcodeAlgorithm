@@ -1,5 +1,33 @@
 #include "utils.hpp"
 
+/* Much more elegant than approach 1 */
+class Solution2 {
+ public:
+  vector<int> nextGreaterElements(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> ans(n, -1);
+    stack<int> stk;
+    helper(ans, stk, nums);
+    helper(ans, stk, nums);
+
+    return ans;
+  }
+
+  void helper(vector<int>& ans, stack<int>& stk, const vector<int>& nums) {
+    int n = nums.size();
+    for (int i = 0; i < n; i++) {
+      while (!stk.empty()) {
+        int top_idx = stk.top();
+        if (nums[top_idx] >= nums[i]) break;
+        ans[top_idx] = nums[i];
+        stk.pop();
+      }
+
+      stk.push(i);
+    }
+  }
+};
+
 /*
     ref:
    https://leetcode.com/problems/next-greater-element-ii/discuss/98270/JavaC%2B%2BPython-Loop-Twice
@@ -11,12 +39,6 @@
     - 不用多一個 for loop
     - 以後看到 circular 要有直覺可以用 modulo operator
  */
-class Solution {
- public:
-  vector<int> nextGreaterElements(vector<int>& nums) {
-
-  }
-};
 
 /* approach 1: stack
     看到這種 next great element, 就要有直覺用 stack
@@ -71,7 +93,7 @@ class Solution {
 
 int main(int argc, char** argv) {
   vector<int> nums{1, 2, 1};
-  Solution sol;
+  Solution2 sol;
   vector<int> ans = sol.nextGreaterElements(nums);
   print(ans);
 

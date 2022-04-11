@@ -1,5 +1,21 @@
 #include "utils.hpp"
 
+class SolutionTemp {
+ public:
+  char nextGreatestLetter(vector<char>& letters, char target) {
+    
+  }
+};
+
+class Solution4 {
+ public:
+  char nextGreatestLetter(vector<char>& letters, char target) {
+    int ans =
+        upper_bound(letters.begin(), letters.end(), target) - letters.begin();
+    return ans == letters.size() ? letters[0] : letters[ans];
+  }
+};
+
 class Solutio3 {
  public:
   char nextGreatestLetter(vector<char>& letters, char target) {

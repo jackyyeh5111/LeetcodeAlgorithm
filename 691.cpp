@@ -1,6 +1,8 @@
 #include "utils.hpp"
 
 /*
+  ref: https://hackmd.io/Y5KprctBRcCZW2faCMv5GA
+  
     # definition:
     dp[i]: the minimum number of stickers we have to use to achieve i status.
 
