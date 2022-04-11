@@ -17,33 +17,70 @@ target 3.
 */
 
 /* dfs */
+class Solution5 {
+ public:
+  int findTargetSumWays(vector<int>& nums, int target) {
+    int max_sum = accumulate(nums.begin(), nums.end(), 0);
+    return dfs(0, max_sum, nums, target, {});
+  }
+
+  int dfs(int idx, int max_sum, const vector<int>& nums, int target,
+          vector<int> prev) {
+    // print(prev);
+    if (max_sum < target) return false;
+    if (idx == nums.size() && target == 0) return true;
+
+    vector<int> minus = prev;
+    vector<int> plus = prev;
+    minus.push_back(-nums[idx]);
+    plus.push_back(nums[idx]);
+
+    return dfs(idx + 1, max_sum - nums[idx], nums, target - nums[idx], plus) +
+           dfs(idx + 1, max_sum - nums[idx], nums, target + nums[idx], minus);
+  }
+};
+
+/* dfs (wrong) */
 class Solution4 {
  public:
   int findTargetSumWays(vector<int>& nums, int target) {
     int max_sum = accumulate(nums.begin(), nums.end(), 0);
-    return dfs(0, max_sum, nums, target);
+    return dfs(0, max_sum, nums, target, {});
   }
 
-  int dfs(int idx, int max_sum, const vector<int>& nums, int target) {
+  int dfs(int idx, int max_sum, const vector<int>& nums, int target,
+          vector<int> prev) {
+    print(prev);
     if (max_sum < target) return false;
     if (idx == nums.size() - 1) {
+      // cout << "target: " << target << '\n';
+      // cout << "nums[idx]: " << nums[idx] << '\n';
       if (target == nums[idx]) {
-        return true;
-      } else if (target == -nums[idx]) {
+        prev.push_back(nums[idx]);
         return true;
       }
+      if (target == -nums[idx]) {
+        prev.push_back(-nums[idx]);
+        return true;
+      }
+
       return false;
     }
 
-    return dfs(idx + 1, max_sum - nums[idx], nums, target - nums[idx]) +
-           dfs(idx + 1, max_sum - nums[idx], nums, target + nums[idx]);
+    vector<int> minus = prev;
+    vector<int> plus = prev;
+    minus.push_back(-nums[idx]);
+    plus.push_back(nums[idx]);
+
+    return dfs(idx + 1, max_sum - nums[idx], nums, target - nums[idx], plus) +
+           dfs(idx + 1, max_sum - nums[idx], nums, target + nums[idx], minus);
   }
 };
 
 /*
 distac
-dp[i][j]: the number of different expressions that you can build using
-nums[1:i] to sum up j (j+bias)
+dp[i][j]: the number of different expressions that you can build using nums[1:i]
+to sum up j (j+bias)
 
    -3 -2 -1 0 1 2 3
 #           1
@@ -170,7 +207,7 @@ int main(int argc, char** argv) {
   vector<int> nums{1, 0};
   int target = 1;
 
-  Solution3 sol;
+  Solution5 sol;
   int ans;
   ans = sol.findTargetSumWays(nums, target);
   std::cout << "ans: " << ans << '\n';
