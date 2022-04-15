@@ -29,7 +29,7 @@ class Solution {
   }
 };
 
-/* Approach 2: dp
+/* Approach 2: dp (bottom-up)
     dp[i] = max(dp[i-1], dp[i-2] + nums[i])
 
     Sapce: O(n)
@@ -52,7 +52,7 @@ class Solution {
   }
 };
 
-/* Approach 1: recursion */
+/* Approach 1: recursion (top-down)*/
 class Solution {
  public:
   int rob(vector<int>& nums) {

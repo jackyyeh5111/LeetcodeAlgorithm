@@ -376,11 +376,44 @@ for (int len = 2; len <= n; len++) {
     ```c++
     // Do not change iter variable inside iteration
     for (int i = 1; i <= n; i++) {
-    for (int j = -sum; j <= sum; j++) {
-        j += offset; // wrong here
+        for (int j = -sum; j <= sum; j++) {
+            j += offset; // wrong here
+            ...
+        }
+    }
+    ```
+2022.04.11
+- [494.cpp](494.cpp)
+    - ±0 value is the same, 若以下操作會少考慮到其中一個情況
+    ```c++
+    if (idx == nums.size() - 1) {
+      if (target == nums[idx]) {
         ...
+      }
+      else if (target == -nums[idx]) {
+        ...
+      }
     }
-    }
+    ```
+2022.04.13
+- [322.cpp](322.cpp)
+    - integer overflow happend!!
+    ```c++
+    class Solution {
+    public:
+        int coinChange(vector<int>& coins, int amount) {
+            int n = coins.size();
+            vector<int> dp(amount+1, INT_MAX);
+            ...
+            for (int i=1; i <= n; i++) {
+                for (int j=coins[i]; j <= amount; j++) {
+                    dp[j] = min(dp[j], dp[j-coins[i]] + 1);
+                }
+            }
+            
+            return dp[amount] == INT_MAX ? -1 : dp[amount];
+        }
+    };
     ```
 
 ## New Word
