@@ -50,6 +50,9 @@ for (int i = start; i <= middle; i++) {
             `dp[i-1][j+nums[i]]`
     ```
     Please be careful about index boundary to avoid segmentation error.
+- circular 
+    - 直覺可以用 modulo operator
+    - We can split case to discuss that pick the first element or not like [198.cpp](198.cpp)
 
 ## Basic Concept 
 ### Sort
@@ -261,6 +264,15 @@ for (int len = 2; len <= n; len++) {
 
 ### Unbounded Knapsack
 - 按照順序迭代，很自然就會是 combination
+template:
+```c++
+/* 兩個迴圈已經有考慮到同個 coin 重複使用！ */
+for (int i = 0; i < coins.size(); i++) {
+    for (int j = coins[i]; j <= amount; j++) {
+    dp[j] = min(dp[j], dp[j - coins[i]] + 1);
+    }
+}
+```
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
@@ -268,11 +280,13 @@ for (int len = 2; len <= n; len++) {
 | 518| Coin Change 2|[518.cpp](518.cpp)|Medium| | | |
 
 ### Fibonacci numbers (dual status)
+- `adjacent` 關鍵字！ 很可能就是用 Fibonacci
+- 要注意 status initialization: `dp[1] = max(nums[0], nums[1])`，不要寫成 `dp[1] = nums[1]`
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 509| Fibonacci Number|[509.cpp](509.cpp)|Easy| | | |
-| 198| House Robber|[198.cpp](198.cpp)|Medium| | y(要多練習)| |
+| 198| House Robber|[198.cpp](198.cpp)|Medium| | | |
 | 213| House Robber II|[213.cpp](213.cpp)|Medium| | | |
 
 ### Palindromic Subsequence

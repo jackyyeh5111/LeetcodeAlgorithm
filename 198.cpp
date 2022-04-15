@@ -9,7 +9,7 @@
 
     Sapce: O(1)
 */
-class Solution {
+class Solution3 {
  public:
   int rob(vector<int>& nums) {
     int n = nums.size();
@@ -34,7 +34,7 @@ class Solution {
 
     Sapce: O(n)
 */
-class Solution {
+class Solution2 {
  public:
   int rob(vector<int>& nums) {
     int n = nums.size();
@@ -57,19 +57,16 @@ class Solution {
  public:
   int rob(vector<int>& nums) {
     int n = nums.size();
-    dp = vector<int>(n, 0);
     return rob(nums, n - 1);
   }
 
  private:
-  int rob(const vector<int>& nums, int i) {
-    if (i < 0) return 0;
-    if (dp[i] != 0) return dp[i];
-    dp[i] = max(rob(nums, i - 1), rob(nums, i - 2) + nums[i]);
-    return dp[i];
-  }
+  int rob(const vector<int>& nums, int idx) {
+    if (idx == 0) return nums[0];
+    if (idx == 1) return max(nums[0], nums[1]);
 
-  vector<int> dp;
+    return max(rob(nums, idx - 1), rob(nums, idx - 2) + nums[idx]);
+  }
 };
 
 int main() {
