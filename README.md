@@ -347,6 +347,8 @@ for (int i = 0; i < coins.size(); i++) {
 | 260| Single Number III|[260.cpp](260.cpp)|Medium| |  | |
 
 ### Bit Mask
+- 如果題目要求 `unique`，要有直覺 bit mask 可能為好解法，尤其是字串比對
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 1239| Maximum Length of a Concatenated String with Unique Characters|[1239.cpp](1239.cpp)|Medium| 錯了非常多次 |  | <3|
@@ -431,6 +433,9 @@ for (int i = 0; i < coins.size(); i++) {
         }
     };
     ```
+2022.04.21
+- [1239.cpp](1239.cpp) 
+    - ["aa","bb"] 沒考慮到字串內字母重複的狀況
 
 ## New Word
 1. wrap around

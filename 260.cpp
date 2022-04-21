@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-class Solution {
+class Solution3 {
  public:
   vector<int> singleNumber(vector<int>& nums) {
     int diff = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
@@ -35,7 +35,7 @@ class Solution {
     3. 將 nums 根據 x bit 分成兩堆，兩堆再各做一次 xor，即可找到此二數
  */
 
-class Solution {
+class Solution2 {
  public:
   vector<int> singleNumber(vector<int>& nums) {
     int diff = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
@@ -54,4 +54,43 @@ class Solution {
 
     return {digit1, digit2};
   }
+};
+
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int diff = 0;
+        for (int num : nums) {
+            diff ^= num;
+        }
+        
+        int diff_bit;
+        for (diff_bit=0; diff_bit < 32; diff_bit++) {
+            if (diff >> diff_bit & 1)
+                break;
+        }
+        
+        vector<int> set1, set2;
+        for (int num : nums) {
+            if (num >> diff_bit & 1)
+                set1.push_back(num);
+            else 
+                set2.push_back(num);
+        }
+        
+        vector<int> ans;
+        diff = 0;
+        for (int num : set1) {
+            diff ^= num;
+        }
+        ans.push_back(diff);
+        
+        diff = 0;
+        for (int num : set2) {
+            diff ^= num;
+        }
+        ans.push_back(diff);
+        
+        return ans;
+    }
 };

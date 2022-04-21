@@ -14,49 +14,44 @@
         0 0 ==> 1 1
         0 1     1 1
 */
-
 class Solution5 {
  public:
   int minFlips(vector<vector<int>>& mat) {
-    m = mat.size();
-    n = mat[0].size();
+    int m = mat.size();
+    int n = mat[0].size();
+    int num_bits = m * n;
+    int num_states = 1 << num_bits;
 
     int ans = INT_MAX;
-
-    for (int state = 0; state < (1 << (m * n)); state++) {
-      if (check(state, mat)) {
-        ans = min(ans, __builtin_popcount(state));
-      }
+    for (int i = 0; i < num_states; i++) {
+      if (check(i, num_bits, mat)) ans = min(ans, __builtin_popcount(i));
     }
 
     return ans == INT_MAX ? -1 : ans;
   }
 
- private:
-  int m, n;
-  bool check(int state, const vector<vector<int>>& mat) {
-    vector<vector<int>> flip_mat = mat;
-    vector<pair<int, int>> dirs{{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {0, 0}};
-    for (int i = 0; i < m * n; i++) {
-      if ((state >> i) & 1) {
-        int raw_r = i / n;
-        int raw_c = i % n;
-
-        for (auto dir : dirs) {
-          int r = raw_r + dir.second;
-          int c = raw_c + dir.first;
-
-          if (c < 0 || c >= n || r < 0 || r >= m) continue;
-
-          flip_mat[r][c] = 1 - flip_mat[r][c];
+  bool check(int bitmask, int num_bits, const vector<vector<int>>& mat) {
+    vector<vector<int>> convert = mat;
+    int m = mat.size();
+    int n = mat[0].size();
+    vector<pair<int, int>> edges{{0, 0}, {0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+    for (int i = 0; i < num_bits; i++) {
+      if (bitmask >> i & 1) {
+        for (auto edge : edges) {
+          int x = i % n + edge.first;
+          int y = i / n + edge.second;
+          if (x >= 0 && x < n && y >= 0 && y < m) {
+            convert[y][x] = 1 - convert[y][x];
+          }
         }
       }
     }
 
-    for (auto row : flip_mat)
-      for (int num : row)
-        if (num) return false;
-
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (convert[i][j]) return false;
+      }
+    }
     return true;
   }
 };
@@ -260,11 +255,11 @@ class Solution {
 };
 
 int main() {
-  vector<vector<int>> mat{{0}, {1}, {1}};
-  //   vector<vector<int>> mat{{1, 0, 0}, {1, 0, 0}};
-  //   vector<vector<int>> mat{{0, 0}, {0, 1}};
+  // vector<vector<int>> mat{{0}};
+  vector<vector<int>> mat{{1, 0, 0}, {1, 0, 0}};
+  // vector<vector<int>> mat{{0, 0}, {0, 1}};
 
-  Solution5 sol;
+  Solution6 sol;
   int ans = sol.minFlips(mat);
   cout << "ans: " << ans << '\n';
   return 0;
