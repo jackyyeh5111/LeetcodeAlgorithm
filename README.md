@@ -319,6 +319,7 @@ for (int i = 0; i < coins.size(); i++) {
 
 ## Topological Sort
 [link](https://leetcode.com/tag/topological-sort/)
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 207| Course Schedule|[207.cpp](207.cpp)|Medium| |  | <3|
@@ -337,6 +338,7 @@ for (int i = 0; i < coins.size(); i++) {
     - a^0 = a
     - Commutative property: a^a^b^c = c^a^b^a = b^c
 - num &= -num;  // find the rightmost different bit.
+    - 要注意 num = -2147483648 會 overflow
 - log2(num &= -num)： // find the idx of the rightmost set bit
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
