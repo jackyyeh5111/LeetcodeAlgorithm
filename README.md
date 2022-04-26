@@ -436,7 +436,17 @@ for (int i = 0; i < coins.size(); i++) {
 2022.04.21
 - [1239.cpp](1239.cpp) 
     - ["aa","bb"] 沒考慮到字串內字母重複的狀況
-
+    
+2022.04.23
+- [315.cpp](315.cpp) 
+    Forget to plus one to iterator
+    ```c++
+    auto pos = lower_bound(sorted_num.begin() + mid + 1,
+                           sorted_num.begin() + end + 1, nums[i]);
+    // Mistype ==>
+    auto pos = lower_bound(sorted_num.begin() + mid + 1,
+                           sorted_num.begin() + end, nums[i]);
+    ```
 ## New Word
 1. wrap around
     - Note that the letters wrap around. For example, if target == 'z' and letters == ['a', 'b'], the answer is 'a'.
@@ -449,6 +459,8 @@ for (int i = 0; i < coins.size(); i++) {
 5. The `Subscript` or Array Index Operator is `denoted` by '[]'. This operator is generally used with arrays to retrieve and manipulate the array elements.
 6. Given a set of `distinct` positive integers nums, return the largest subset answer `such that` every pair (answer[i], answer[j]) of elements in this subset `satisfies`: ...
 7. A subsequence is a sequence that can be `derived` from an array by deleting some or no elements without `changing the order` of the `remaining` elements.
+8. inclusive
+    - Range sum S(i, j) is defined as the sum of the elements in nums between `indices` i and j `inclusive`, where i <= j.
 
 ## Interview Question
 1. 416 | Partition Equal Subset Sum | Medium

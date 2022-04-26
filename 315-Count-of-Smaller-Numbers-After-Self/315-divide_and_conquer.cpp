@@ -1,4 +1,4 @@
-#include "utils.hpp"
+#include "../utils.hpp"
 
 /*
 A: [X X X X X Y Y Y Y Y]
@@ -32,6 +32,7 @@ class Solution3 {
       count[i] += (pos - (sorted_num.begin() + mid + 1));
     }
 
+    // 這裡的 sort 真是神來一筆！
     sort(sorted_num.begin() + start, sorted_num.begin() + end + 1);
   }
 };
@@ -101,7 +102,7 @@ class Solution {
 
 int main() {
   vector<int> nums{5, 2, 6, 1};
-  Solution2 sol;
+  Solution4 sol;
   vector<int> ans = sol.countSmaller(nums);
   print(ans);
 }

@@ -1,6 +1,75 @@
 #include "utils.hpp"
 
 /*
+  nums = [-2,5,-1], lower = -2, upper = 2
+
+  XXXXXYYYYY
+  XXXXX  YYYYY
+
+    nums =    X X X X X
+  presum =  0 Y Y Y Y Y (記得補零)
+
+  i => s.t.
+   upper >= presum[j] - presum[i-1] >= lower
+
+   presum[j] >= presum[i-1] + lower => count of larger number of self (315.cpp)
+   presum[j] <= presum[i-1] + upper
+ */
+class Solution3 {
+ public:
+  vector<int> presums;
+  int count = 0;
+  int lower_, upper_;
+  int countRangeSum(vector<int>& nums, int lower, int upper) {
+    int n = nums.size();
+    presums.resize(n + 1, 0);
+    lower_ = lower;
+    upper_ = upper;
+    for (int i = 0; i < n; i++) {
+      presums[i + 1] = presums[i] + nums[i];
+    }
+
+    divideAndConquer(nums, 1, n);  // n = 3
+    return count;
+  }
+
+  void divideAndConquer(const vector<int>& nums, int start, int end) {
+    if (start > end) return;
+    if (start == end) {
+      if (nums[start - 1] <= upper_ && nums[start - 1] >= lower_) {
+        ++count;
+        return;
+      }
+    }
+    int mid = (start + end) / 2;
+    divideAndConquer(nums, start, mid);
+    divideAndConquer(nums, mid + 1, end);
+
+    // binary search
+    /*
+      XXXXXYYYYY
+      [XXXXX] [YYYYY] ==> sorted range
+       s           e
+
+       lower = 2; upper = 4
+       1 2 3 4 5
+         l     u
+     */
+    auto begin = presums.begin();
+    for (int i = start; i <= mid; i++) {
+      auto l = lower_bound(begin + mid + 1, begin + end + 1,
+                           presums[i - 1] + lower_);
+      auto u = upper_bound(begin + mid + 1, begin + end + 1,
+                           presums[i - 1] + upper_);
+      count += (u - l);
+    }
+
+    // sorting range
+    std::sort(begin + start, begin + end + 1);
+  }
+};
+
+/*
   XXXXXXXXXX
    i    j
   要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
@@ -12,6 +81,8 @@
   presum =  0 Y Y Y Y Y (記得補零)
 
   i => s.t.
+   upper >= presum[j] - presum[i-1] >= lower
+
    presum[j] >= presum[i-1] + lower => count of larger number of self (315.cpp)
    presum[j] <= presum[i-1] + upper
  */
@@ -73,7 +144,7 @@ class Solution2 {
       presums[start + i] = temp[i];
     }
 
-    print (presums);
+    print(presums);
   }
 };
 
@@ -138,13 +209,12 @@ class Solution {
 // B: [XXXXX] C:[YYYYY]
 
 int main() {
-  vector<int> nums{0, -3, -3, 1, 1, 2};
-  Solution2 sol;
-  int ans = sol.countRangeSum(nums, 3, 5);
+  vector<int> nums{-2, 5, -1};
+  int lower = -2;
+  int upper = 2;
+  Solution3 sol;
+  int ans = sol.countRangeSum(nums, lower, upper);
   cout << "ans: " << ans << '\n';
 
-  nums = vector<int>{-2, 5, -1};
-  ans = sol.countRangeSum(nums, -2, 2);
-  cout << "ans: " << ans << '\n';
   return 0;
 }
