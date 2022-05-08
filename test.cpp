@@ -3,6 +3,6 @@
 int main() {
   string a = "a";
 
-  std::cout << a + 'b' << '\n';
+  std::cout << INT_MAX << '\n';
   return 0;
 }

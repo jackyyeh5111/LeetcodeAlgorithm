@@ -65,6 +65,8 @@ for (int i = start; i <= middle; i++) {
 - [Catalan number](https://hackmd.io/4EJpycUQTv2dnqzVr8uTvA)
 
 ## Two pointers
+- Longest/shortest substring/subarray 直覺想到 two pointers, dp
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  |
@@ -103,7 +105,7 @@ for (int i = start; i <= middle; i++) {
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  | 
+| 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  <3| 
 | 215| Kth Smallest Number|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
 
 ## Pattern: K-way merge，多路归并
@@ -119,6 +121,7 @@ for (int i = start; i <= middle; i++) {
 ## Sort 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 75| Sort Colors|[75.cpp](75.cpp)| Medium| three pointers|  | 
 | 148| Sort List|[148.cpp](148.cpp)| Medium| | n | 
 
 ## Bit Manipulation
@@ -355,10 +358,12 @@ for (int i = 0; i < coins.size(); i++) {
 | 1284| Minimum Number of Flips to Convert Binary Matrix to Zero Matrix|[1284.cpp](1284.cpp)|Hard| 史上錯最多次，我對 matrix 操作還要再熟練！|  |  <3|
 
 ## Divide and Conquer
+- Divide and Conquer 常常會根據小區間排序，通常可以用 merge sort 來加速
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 315| Count of Smaller Numbers After Self|[315.cpp](315.cpp)|H|  |  | |
-| 327| Count of Range Sum|[327.cpp](327.cpp)|H| pass on local; but fail on leetcode?|  y| |
+| 327| Count of Range Sum|[327.cpp](327.cpp)|H+| |  | <3|
 | 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |
 
 ## Note
@@ -439,7 +444,7 @@ for (int i = 0; i < coins.size(); i++) {
     
 2022.04.23
 - [315.cpp](315.cpp) 
-    Forget to plus one to iterator
+    Forget to plus one to iterator (c++ 左閉右開)
     ```c++
     auto pos = lower_bound(sorted_num.begin() + mid + 1,
                            sorted_num.begin() + end + 1, nums[i]);
@@ -447,6 +452,10 @@ for (int i = 0; i < coins.size(); i++) {
     auto pos = lower_bound(sorted_num.begin() + mid + 1,
                            sorted_num.begin() + end, nums[i]);
     ```
+2022.04.27
+- [327.cpp](327.cpp) 
+現在是對 presums 做運算，當 start == end 無法定義一組 index pair (i, j)
+
 ## New Word
 1. wrap around
     - Note that the letters wrap around. For example, if target == 'z' and letters == ['a', 'b'], the answer is 'a'.
@@ -465,5 +474,9 @@ for (int i = 0; i < coins.size(); i++) {
 ## Interview Question
 1. 416 | Partition Equal Subset Sum | Medium
 2. | 856| Score of Parentheses|[856.cpp](856.cpp)| Medium| Stack, stack as tree| | <3 |
+3. | 496| Next Greater Element I|[496.cpp](496.cpp)| Easy| Stack|  | 
+    follow-up:
+    1. | 503| Next Greater Element II|[503.cpp](503.cpp)| Medium| Stack| 
 3. 1818
 4. 368
+5. 327 very hard
