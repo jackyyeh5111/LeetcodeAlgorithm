@@ -2,7 +2,7 @@
 /* Modify from 744.cpp */
 class Solution {
  public:
-  char binarySearch(vector<char>& letters, char target) {
+  char binarySearch(vector<char> &letters, char target) {
     int size = letters.size();
     int left = 0, right = size - 1;
     while (left <= right) {
