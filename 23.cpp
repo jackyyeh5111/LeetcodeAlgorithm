@@ -11,138 +11,154 @@ using namespace std;
   time: O(nlog(k))
   space: O(1)
  */
-class Solution {
- public:
-  ListNode* mergeKLists(vector<ListNode*>& lists) {
-    return merge(lists, 0, lists.size() - 1);
-  }
-
- private:
-  ListNode* merge(vector<ListNode*>& lists, int left, int right) {
-    if (left > right) return nullptr;
-    if (left == right) return lists[left];
-
-    int mid = (left + right) / 2;
-    return mergeSort(merge(lists, left, mid), merge(lists, mid + 1, right));
-  }
-
-  ListNode* mergeSort(ListNode* list1, ListNode* list2) {
-    ListNode dummy;
-    ListNode* tail = &dummy;
-
-    while (list1 && list2) {
-      if (list1->val > list2->val) swap(list1, list2);
-      tail->next = list1;
-      list1 = list1->next;
-      tail = tail->next;
+class Solution4
+{
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        return merge(lists, 0, lists.size() - 1);
     }
 
-    tail->next = list1 ? list1 : list2;
+private:
+    ListNode *merge(vector<ListNode *> &lists, int left, int right)
+    {
+        if (left > right)
+            return nullptr;
+        if (left == right)
+            return lists[left];
 
-    return dummy.next;
-  }
+        int mid = (left + right) / 2;
+        return mergeSort(merge(lists, left, mid), merge(lists, mid + 1, right));
+    }
+
+    ListNode *mergeSort(ListNode *list1, ListNode *list2)
+    {
+        ListNode dummy;
+        ListNode *tail = &dummy;
+
+        while (list1 && list2) {
+            if (list1->val > list2->val)
+                swap(list1, list2);
+            tail->next = list1;
+            list1 = list1->next;
+            tail = tail->next;
+        }
+
+        tail->next = list1 ? list1 : list2;
+
+        return dummy.next;
+    }
 };
 
 /* Approach 2: min heap
   time: O(nlog(k))
   space: O(k)
  */
-class Solution {
- public:
-  ListNode* mergeKLists(vector<ListNode*>& lists) {
-    auto comp = [](ListNode* list1, ListNode* list2) {
-      return list1->val > list2->val;
-    };
+class Solution3
+{
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        auto comp = [](ListNode *list1, ListNode *list2) {
+            return list1->val > list2->val;
+        };
 
-    std::priority_queue<ListNode*, vector<ListNode*>, decltype(comp)> pq(comp);
-    for (auto list : lists) {
-      if (list) pq.push(list);
+        std::priority_queue<ListNode *, vector<ListNode *>, decltype(comp)> pq(
+            comp);
+        for (auto list : lists) {
+            if (list)
+                pq.push(list);
+        }
+
+        ListNode dummy;
+        ListNode *ans = &dummy;
+        while (!pq.empty()) {
+            ans->next = pq.top();
+            pq.pop();
+            ans = ans->next;
+            if (ans->next)
+                pq.push(ans->next);
+        }
+
+        return dummy.next;
     }
-
-    ListNode dummy;
-    ListNode* ans = &dummy;
-    while (!pq.empty()) {
-      ans->next = pq.top();
-      pq.pop();
-      ans = ans->next;
-      if (ans->next) pq.push(ans->next);
-    }
-
-    return dummy.next;
-  }
 };
 
 /* Brute force (iterative)
     Time: O(n^2)
 */
-class Solution2 {
- public:
-  ListNode* mergeKLists(vector<ListNode*>& lists) {
-    ListNode* ans = nullptr;
-    for (ListNode* list : lists) {
-      ListNode* tmp = new ListNode();
-      ListNode* tmp2 = tmp;
-      while (ans && list) {
-        if (ans->val <= list->val) {
-          tmp2->next = ans;
-          ans = ans->next;
-        } else {
-          tmp2->next = list;
-          list = list->next;
+class Solution2
+{
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        ListNode *ans = nullptr;
+        for (ListNode *list : lists) {
+            ListNode *tmp = new ListNode();
+            ListNode *tmp2 = tmp;
+            while (ans && list) {
+                if (ans->val <= list->val) {
+                    tmp2->next = ans;
+                    ans = ans->next;
+                } else {
+                    tmp2->next = list;
+                    list = list->next;
+                }
+
+                tmp2 = tmp2->next;
+            }
+
+            if (!ans)
+                tmp2->next = list;
+            if (!list)
+                tmp2->next = ans;
+
+            ans = tmp->next;
+            delete tmp;
         }
 
-        tmp2 = tmp2->next;
-      }
-
-      if (!ans) tmp2->next = list;
-      if (!list) tmp2->next = ans;
-
-      ans = tmp->next;
-      delete tmp;
+        return ans;
     }
-
-    return ans;
-  }
 };
 
 /* Brute force (recursive)*/
-class Solution {
- public:
-  ListNode* merge(ListNode* a, ListNode* b) {
-    if (!a) return b;
-    if (!b) return a;
-    ListNode* temp = NULL;
-    if (a->val <= b->val) {
-      a->next = merge(a->next, b);
-      temp = a;
-    } else {
-      b->next = merge(a, b->next);
-      temp = b;
-    }
-    return temp;
-  }
-
-  ListNode* mergeKLists(vector<ListNode*>& lists) {
-    ListNode* ans = nullptr;
-    for (ListNode* list : lists) {
-      ans = merge(ans, list);
+class Solution
+{
+public:
+    ListNode *merge(ListNode *a, ListNode *b)
+    {
+        if (!a)
+            return b;
+        if (!b)
+            return a;
+        ListNode *temp = NULL;
+        if (a->val <= b->val) {
+            a->next = merge(a->next, b);
+            temp = a;
+        } else {
+            b->next = merge(a, b->next);
+            temp = b;
+        }
+        return temp;
     }
 
-    return ans;
-  }
+    ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        ListNode *ans = nullptr;
+        for (ListNode *list : lists) {
+            ans = merge(ans, list);
+        }
+
+        return ans;
+    }
 };
 
-int main(int argc, char** argv) {
-  vector<vector<int>> Solution sol;
-  std::vector<int> nums{-1, 0, 1, 2, -1, -4};
-  //   std::cout << sol.removeDuplicates(nums) << '\n';
-  for (vector<int> ans : sol.threeSum(nums)) {
-    for (int n : ans) std::cout << n << ' ';
-    std::cout << '\n';
-  }
-  std::cout << '\n';
-
-  //   nums = {1};
-  //   std::cout << sol.maxSubArray(nums) << '\n';
-  return 0;
+int main(int argc, char **argv)
+{
+    vector<ListNode *> lists{initListNode({1, 4, 5}), initListNode({1, 3, 4}),
+                             initListNode({2, 6})};
+    Solution3 sol;
+    ListNode *ans = sol.mergeKLists(lists);
+    print(ans);
+    return 0;
 }

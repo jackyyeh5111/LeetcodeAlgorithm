@@ -56,13 +56,16 @@ for (int i = start; i <= middle; i++) {
 
 ## Basic Concept 
 ### Sort
-- [quicksort](quicksort.cpp)
+- [quicksort](tools/quicksort.cpp)
 - Subsets | [78.cpp](78.cpp)
 ### Search
-- [binary_search](binary_search.cpp)
-- [level_order_traversal](level_order_traversal.cpp)
+- [binary_search](tools/binary_search.cpp)
+- [level_order_traversal](tools/level_order_traversal.cpp)
+### Data Structure
+- [min_heap](tools/min_heap.cpp)
 ### Misc
 - [Catalan number](https://hackmd.io/4EJpycUQTv2dnqzVr8uTvA)
+- [Quick select](https://hackmd.io/VtJkono6QzK5JxNarnQ5mw)
 
 ## Two pointers
 - Longest/shortest substring/subarray 直覺想到 two pointers, dp
@@ -105,7 +108,7 @@ for (int i = start; i <= middle; i++) {
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  <3| 
+| 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort, quickselect, binary search|  <3| 
 | 215| Kth Smallest Number|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
 
 ## Pattern: K-way merge，多路归并
@@ -456,6 +459,18 @@ for (int i = 0; i < coins.size(); i++) {
 - [327.cpp](327.cpp) 
 現在是對 presums 做運算，當 start == end 無法定義一組 index pair (i, j)
 
+2022.05.19
+- [21.cpp](21.cpp) 
+    Pointers do not initialize object mem
+    ```c++
+    ListNode dummy;
+    ListNode *tail = &dummy;
+    
+    // Mistype ==>
+    ListNode *dummy;
+    ListNode *tail = dummy;
+    ```
+
 ## New Word
 1. wrap around
     - Note that the letters wrap around. For example, if target == 'z' and letters == ['a', 'b'], the answer is 'a'.
@@ -477,6 +492,7 @@ for (int i = 0; i < coins.size(); i++) {
 3. | 496| Next Greater Element I|[496.cpp](496.cpp)| Easy| Stack|  | 
     follow-up:
     1. | 503| Next Greater Element II|[503.cpp](503.cpp)| Medium| Stack| 
+4. | 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  <3| 
 3. 1818
 4. 368
 5. 327 very hard
