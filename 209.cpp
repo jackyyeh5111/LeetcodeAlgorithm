@@ -141,7 +141,7 @@ class Solution3 {
   }
 };
 
-class Solution {
+class Solution1 {
  public:
   int minSubArrayLen(int target, vector<int>& nums) {
     int left = 0, right = 0, sum = 0;
@@ -150,8 +150,8 @@ class Solution {
       sum += nums[right];
       while (sum >= target) {
         res = min(res, right - left + 1);
-        left++;
         sum -= nums[left];
+        left++;
       }
 
       right++;
@@ -162,14 +162,14 @@ class Solution {
 };
 
 int main(int argc, char** argv) {
-  Solution4 sol;
+  Solution1 sol;
 
   int target = 11;
   std::vector<int> nums{1, 1, 1, 1, 1, 1, 1, 1};
   std::cout << sol.minSubArrayLen(target, nums) << '\n';
 
-  target = 4;
-  nums = std::vector<int>{1, 4, 4};
+  target = 7;
+  nums = std::vector<int>{2, 3, 1, 2, 4, 3};
   std::cout << sol.minSubArrayLen(target, nums) << '\n';
   return 0;
 }
