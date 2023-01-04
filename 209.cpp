@@ -2,6 +2,7 @@
 
 /*
     ref:
+    https://hackmd.io/g-feI-lMStyvCab8Uo0gmg?both
     https://leetcode.com/problems/minimum-size-subarray-sum/discuss/59090/C%2B%2B-O(n)-and-O(nlogn)
 
   Approach: binary + presum
@@ -14,12 +15,18 @@
   XXXXXXXX
    i   j
 
-  presums[j] - presums[i-1] >= target ==>
-  presums[j] >= presums[i-1] + target ==>
-  presums[j] - target >= presums[i-1]
+  upper_bound:
+    presums[j] - presums[i-1] >= target ==>
+    presums[j] >= presums[i-1] + target ==>
+    presums[j] - target >= presums[i-1]
+
+    also:
+    presums[j] - presums[i] < target ==>
+    presums[j] - target < presums[i]
 
   Time complexity: O(nlogn)
  */
+
 class Solution5 {
  public:
   int minSubArrayLen(int target, vector<int>& nums) {
@@ -40,27 +47,28 @@ class Solution5 {
   }
 };
 
+/* 
+  presums[j] >= presums[i-1] + target
+  presums[j-1] < presums[i-1] + target
+ */
 class Solution4 {
  public:
   int minSubArrayLen(int target, vector<int>& nums) {
     int n = nums.size();
-    vector<int> presums;
-    presums.resize(n + 1, 0);
+    vector<int> presums(n + 1, 0);
     for (int i = 1; i <= n; i++) {
       presums[i] = presums[i - 1] + nums[i - 1];
     }
 
-    int ans = INT_MAX;
+    int res = INT_MAX;
     for (int i = 1; i <= n; i++) {
-      auto it = lower_bound(presums.begin() + i, presums.end(),
-                            presums[i - 1] + target);
-      if (it != presums.end()) {
-        int len = it - (presums.begin() + i - 1);
-        ans = min(ans, len);
-      }
+      int j =
+          lower_bound(presums.begin(), presums.end(), presums[i - 1] + target) -
+          presums.begin();
+      if (j != n + 1) res = min(res, j - i + 1);
     }
 
-    return ans == INT_MAX ? 0 : ans;
+    return res == INT_MAX ? 0 : res;
   }
 };
 
@@ -162,14 +170,19 @@ class Solution1 {
 };
 
 int main(int argc, char** argv) {
-  Solution1 sol;
+  SolutionTest sol;
 
   int target = 11;
-  std::vector<int> nums{1, 1, 1, 1, 1, 1, 1, 1};
+  std::vector<int> nums{1, 1};
   std::cout << sol.minSubArrayLen(target, nums) << '\n';
 
   target = 7;
   nums = std::vector<int>{2, 3, 1, 2, 4, 3};
   std::cout << sol.minSubArrayLen(target, nums) << '\n';
+
+  target = 7;
+  nums = std::vector<int>{2, 4, 0, 0, 3};
+  std::cout << sol.minSubArrayLen(target, nums) << '\n';
+
   return 0;
 }

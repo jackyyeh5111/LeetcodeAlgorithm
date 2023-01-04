@@ -6,31 +6,31 @@ Practice of leetcode
 
 ## Note
 - lower_bound & upper_bound (範例：[315.cpp](315.cpp))
-```
-【用途】針對「已經排序」的資料進行binary search。
-vector <int> v;
-sort(v.begin(), v.end());
-lower_bound: 找出vector中「大於或等於」val的「最小值」的位置：
-auto it = lower_bound(v.begin(), v.end(), val);
-upper_bound: 找出vector中「大於」val的「最小值」的位置：
-auto it = upper_bound(v.begin(), v.end(), val);
-```
+    ```
+    【用途】針對「已經排序」的資料進行binary search。
+    vector <int> v;
+    sort(v.begin(), v.end());
+    lower_bound: 找出vector中「大於或等於」val的「最小值」的位置：
+    auto it = lower_bound(v.begin(), v.end(), val);
+    upper_bound: 找出vector中「大於」val的「最小值」的位置：
+    auto it = upper_bound(v.begin(), v.end(), val);
+    ```
 - range sum / subarray sum
-```
-XXXXXXXXXX
-   i    j
-要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
-```
-- 區間是有排列，欲求得在此區間 [lower, upper] 的 num 數量
-```c++
-for (int i = start; i <= middle; i++) {
-    auto a = lower_bound(presums.begin() + middle + 1,
-                        presums.begin() + end + 1, presums[i] + lower_);
-    auto b = upper_bound(presums.begin() + middle + 1,
-                        presums.begin() + end + 1, presums[i] + upper_);
-    count += b - a;
-}
-```
+    ```
+    XXXXXXXXXX
+    i    j
+    要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
+    ```
+- 區間是有排列，欲求有多少個 element in [lower, upper] 區間
+    ```c++
+    for (int i = start; i <= middle; i++) {
+        auto a = lower_bound(presums.begin() + middle + 1,
+                            presums.begin() + end + 1, presums[i] + lower_);
+        auto b = upper_bound(presums.begin() + middle + 1,
+                            presums.begin() + end + 1, presums[i] + upper_);
+        count += b - a;
+    }
+    ```
 - Longest/shortest substring/subarray 直覺想到 two pointers, dp
 - unordered_map default int value is 0.
     ```c++
@@ -42,7 +42,7 @@ for (int i = start; i <= middle; i++) {
     next(it)
     prev(it) 
     ```
-- Set in C++ is implemented with BST. Its lowerbound/upperbound is implemented with binary search.
+- C++ std::set is implemented with BST. Its lowerbound/upperbound is implemented with binary search.
 - Whenever encounter index operation like the following
     ```c++
     for (int i= ...)
@@ -72,7 +72,7 @@ for (int i = start; i <= middle; i++) {
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  |
+| 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  <3 |
 | 904| Fruit Into Baskets|[904.cpp](904.cpp)|M||  |
 
 ## Pattern: Subsets，子集类型，一般都是使用多重DFS
@@ -109,7 +109,7 @@ for (int i = start; i <= middle; i++) {
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort, quickselect, binary search|  <3| 
-| 215| Kth Smallest Number|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
+| 215| Kth Largest Element in an Array|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
 
 ## Pattern: K-way merge，多路归并
 - 该问题的输入是排好序的数组，链表或是矩阵
@@ -493,6 +493,7 @@ for (int i = 0; i < coins.size(); i++) {
     follow-up:
     1. | 503| Next Greater Element II|[503.cpp](503.cpp)| Medium| Stack| 
 4. | 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  <3| 
+4. | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  <3 |
 3. 1818
 4. 368
 5. 327 very hard
