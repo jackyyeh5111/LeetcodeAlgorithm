@@ -45,9 +45,51 @@ class Solution {
   }
 };
 
+/*
+  2 2 [6 3 4 5] 2
+
+  res += num_sub_array * min_val
+  res += (2 * 3) * 3
+
+  prev smaller element => prev smaller or equal element
+  next smaller element
+
+  如果有 subarray 有重複 element，規定說最左邊的才算
+ */
+class SolutionTest {
+ public:
+  int sumSubarrayMins(vector<int>& arr) {
+    long res = 0;
+    constexpr int kMod = 1e9 + 7;
+    for (int i = 0; i < arr.size(); ++i) {
+      res += helper(arr, i);
+    }
+
+    return res % kMod;
+  }
+
+  int helper(const vector<int>& arr, int idx) {
+    // find the idx of prev smaller or equal element
+    int num = arr[idx];
+    int prev_idx, next_idx;
+    for (prev_idx = idx - 1; prev_idx >= 0; --prev_idx) {
+      if (arr[prev_idx] <= num) break;
+    }
+    // find the idx of next smaller element
+    for (next_idx = idx + 1; next_idx < arr.size(); ++next_idx) {
+      if (arr[next_idx] < num) break;
+    }
+
+    if (prev_idx < 0) prev_idx = 0;
+    if (next_idx == arr.size()) next_idx = arr.size() - 1;
+
+    return (idx - prev_idx) * (next_idx - idx) * num;
+  }
+};
+
 int main(int argc, char** argv) {
+  SolutionTest sol;
   std::vector<int> nums{3, 1, 2, 4};
-  Solution sol;
   int ans = sol.sumSubarrayMins(nums);
   std::cout << "ans: " << ans << '\n';
 

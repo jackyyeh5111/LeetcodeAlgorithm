@@ -1,5 +1,32 @@
 #include "utils.hpp"
 
+/* Instead of loop */
+class Solution3 {
+ public:
+  vector<int> nextGreaterElements(vector<int>& nums) {
+    stack<int> stk;
+    int n = nums.size();
+    vector<int> res(n, -1);
+
+    for (int i = 0; i < n * 2; i++) {
+      int ele = nums[i];
+      while (!stk.empty()) {
+        int top_idx = stk.top();
+        if (ele > nums[top_idx % n]) {
+          if (top_idx < n) res[top_idx] = ele;
+          stk.pop();
+          continue;
+        }
+
+        break;
+      }
+      stk.push(i);
+    }
+
+    return res;
+  }
+};
+
 /* Much more elegant than approach 1 */
 class Solution2 {
  public:
@@ -92,8 +119,8 @@ class Solution {
 };
 
 int main(int argc, char** argv) {
+  Solution3 sol;
   vector<int> nums{1, 2, 1};
-  Solution2 sol;
   vector<int> ans = sol.nextGreaterElements(nums);
   print(ans);
 

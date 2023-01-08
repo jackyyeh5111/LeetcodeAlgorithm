@@ -1,15 +1,8 @@
 #include "utils.hpp"
 
-class SolutionTemp {
- public:
-  bool canPartition(vector<int>& nums) {
-    int 
-  }
-    
-};
-
 /*
     ref:
+    https://hackmd.io/FYtK5m3IShaIFGOKLZSANg
     https://leetcode.com/problems/partition-equal-subset-sum/discuss/1624390/C%2B%2B-Brute-Force-To-Optimized-SolutionO(N)-Time-or-W-Explanation
  */
 
@@ -36,29 +29,25 @@ class Solution4 {
    problem using an array dp[sum/2+1] only. That is, since we only use the
    current index and previous index, the rest of the indexes are a waste of
    space and we can reduce it to O(sum/2) space.
-    - 而且，在iterate時從大到小會更省時間，直到 nums[i] 即停止，因為 sum
-   不可能比 nums[i] 本身還小
  */
 class Solution3 {
  public:
   bool canPartition(vector<int>& nums) {
-    int size = nums.size();
-    int sum = std::accumulate(nums.begin(), nums.end(), 0);
-
+    int n = nums.size();
+    int sum = accumulate(nums.begin(), nums.end(), 0);
     if (sum % 2 != 0) return false;
+    sum /= 2;
+    nums.insert(nums.begin(), 0);
 
-    vector<bool> dp(sum / 2 + 1, false);
+    vector<bool> dp(sum + 1, false);
     dp[0] = true;
 
-    for (int i = 0; i < size; i++) {
-      for (int j = sum / 2; j >= nums[i]; j--) {
+    for (int i = 1; i <= n; i++) {
+      for (int j = sum; j >= nums[i]; j--) {
         if (dp[j - nums[i]]) dp[j] = true;
       }
-
-      if (dp[sum / 2]) return true;
     }
-
-    return false;
+    return dp[sum];
   }
 };
 
@@ -95,9 +84,7 @@ class Solution2 {
 class Solution {
  public:
   bool canPartition(vector<int>& nums) {
-    int sum = 0;
-    sum = std::accumulate(nums.begin(), nums.end(), sum);
-
+    int sum = accumulate(nums.begin(), nums.end(), 0);
     return sum % 2 == 0 && dfs(nums, sum / 2, 0);
   }
 
@@ -108,20 +95,49 @@ class Solution {
   }
 };
 
+class SolutionTest {
+ public:
+  bool canPartition(vector<int>& nums) {
+    // definition
+    // dp[i][j]: whether nums[0..i-1] can add up to specific sum j
+    int n = nums.size();
+    int sum = accumulate(nums.begin(), nums.end(), 0);
+    if (sum % 2 != 0) return false;
+    sum /= 2;
+
+    // index trick
+    nums.insert(nums.begin(), 0);
+
+    // status initialization
+    vector<bool> dp(sum + 1, false);
+    dp[0] = true;
+
+    // transfer function
+    for (int i = 1; i <= n; i++) {
+      for (int j = sum; j >= nums[i]; j--) {
+        if (dp[j - nums[i]]) dp[j] = true;
+      }
+    }
+
+    // answer return
+    return dp[sum];
+  }
+};
+
 int main(int argc, char** argv) {
-  SolutionTemp sol;
+  SolutionTest sol;
   bool ans;
-  //   vector<int> nums{14, 9, 8, 4, 3, 2};
-  //   bool ans = sol.canPartition(nums);
-  //   std::cout << "ans: " << ans << '\n';
-
-  vector<int> nums2{1, 5, 11, 5};
-  ans = sol.canPartition(nums2);
+  vector<int> nums{1, 2, 5};
+  ans = sol.canPartition(nums);
   std::cout << "ans: " << ans << '\n';
 
-  vector<int> nums3{1, 2, 3, 5};
-  ans = sol.canPartition(nums3);
-  std::cout << "ans: " << ans << '\n';
+  // vector<int> nums2{1, 5, 11, 5};
+  // ans = sol.canPartition(nums2);
+  // std::cout << "ans: " << ans << '\n';
+
+  // vector<int> nums3{1, 2, 3, 5};
+  // ans = sol.canPartition(nums3);
+  // std::cout << "ans: " << ans << '\n';
 
   return 0;
 }

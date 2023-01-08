@@ -72,7 +72,7 @@ Practice of leetcode
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  <3 |
+| 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||   |<3|
 | 904| Fruit Into Baskets|[904.cpp](904.cpp)|M||  |
 
 ## Pattern: Subsets，子集类型，一般都是使用多重DFS
