@@ -1,20 +1,33 @@
 #include "utils.hpp"
 
-/* ref:
+/*
+ref:
     https://leetcode.com/problems/sum-of-subarray-minimums/discuss/170750/C++JavaPython-Stack-Solution
+
+  正常思維是先找到各個 subarray b，再去找最小值 min(b)；
+  這題反過來想，假設用當前 element 當成最小值，會對應到哪些 subarray
+
+  2 2 [6 3 4 5] 2
+         ^
+  num_sub_array = 2 * 3
+
+  res += num_sub_array * min_val
+  res += (2 * 3) * 3
+
+  prev smaller element => prev smaller or equal element
+  next smaller element
+
+  這題要注意的地方就是，若 subarray 有重複 element，需要規定說最左邊 or
+最右邊的才算
  */
+class Solution {
+ public:
+  int sumSubarrayMins(vector<int>& arr) {
+    
+  }
+};
 
-/* approach 1: Double increasing stacks
-
-    basic idea:
-    res = sum(A[i] * f(i))
-    where f(i) is the number of subarrays,
-    in which A[i] is the minimum.
-
-    真是聰明！
-
-    要小心，一邊 stack 比對是 <，一邊 stack 是 <=
-*/
+/* approach 2: Double increasing stacks */
 class Solution {
  public:
   int sumSubarrayMins(vector<int> A) {
@@ -45,18 +58,7 @@ class Solution {
   }
 };
 
-/*
-  2 2 [6 3 4 5] 2
-
-  res += num_sub_array * min_val
-  res += (2 * 3) * 3
-
-  prev smaller element => prev smaller or equal element
-  next smaller element
-
-  如果有 subarray 有重複 element，規定說最左邊的才算
- */
-class SolutionTest {
+class Solution1 {
  public:
   int sumSubarrayMins(vector<int>& arr) {
     long res = 0;
@@ -79,9 +81,6 @@ class SolutionTest {
     for (next_idx = idx + 1; next_idx < arr.size(); ++next_idx) {
       if (arr[next_idx] < num) break;
     }
-
-    if (prev_idx < 0) prev_idx = 0;
-    if (next_idx == arr.size()) next_idx = arr.size() - 1;
 
     return (idx - prev_idx) * (next_idx - idx) * num;
   }

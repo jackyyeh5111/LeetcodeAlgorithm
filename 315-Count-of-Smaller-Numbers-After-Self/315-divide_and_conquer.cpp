@@ -22,7 +22,7 @@ class Solution3 {
                         int start, int end) {
     if (start >= end) return;
 
-    int mid = (start + end) / 2;
+    int mid = start + (end - start) / 2;
     divideAndConquer(nums, sorted_num, start, mid);
     divideAndConquer(nums, sorted_num, mid + 1, end);
 
@@ -102,7 +102,7 @@ class Solution {
 
 int main() {
   vector<int> nums{5, 2, 6, 1};
-  Solution4 sol;
+  SolutionTest sol;
   vector<int> ans = sol.countSmaller(nums);
   print(ans);
 }

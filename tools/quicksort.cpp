@@ -12,8 +12,7 @@
    Take the last element as the pivot
    Top-down approach. (in-place)
  */
-void quickSort(vector<int> &nums, int low, int high, int high, int high,
-               int high, int high) {
+void quickSort(vector<int> &nums, int low, int high) {
   if (low >= high) return;
   int pivot = nums[high];
   int pi_idx = low;
@@ -32,7 +31,7 @@ void quickSort(vector<int> &nums, int low, int high, int high, int high,
 
 int main() {
   vector<int> nums{2, 1, 5, 4, 3};
-  quickSort2(nums, 0, 4);
+  quickSortTest(nums, 0, 4);
   print(nums);
   return 0;
 }

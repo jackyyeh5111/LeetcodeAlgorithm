@@ -124,14 +124,79 @@ Practice of leetcode
 ## Sort 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 75| Sort Colors|[75.cpp](75.cpp)| Medium| three pointers|  | 
+| 75| Sort Colors|[75.cpp](75.cpp)| Medium| |  | 
 | 148| Sort List|[148.cpp](148.cpp)| Medium| | n | 
+
+## Tree
+- BST 用 inorder traversal 一定是排序的
+- edges.length == n - 1
+- Tree 是沒有 cycle 的，可以結合 topological sort
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 144| Binary Tree Preorder Traversal|[144.cpp](144.cpp)|Easy| stack | | <3 |
+| 145| Binary Tree Postorder Traversal|[145.cpp](145.cpp)|Easy| | | |
+| 530| Minimum Absolute Difference in BST|[530.cpp](530.cpp)|Easy| bst| | |
+| 96| Unique Binary Search Trees|[96.cpp](96.cpp)|M| catalan number | | |
+
+## Hash
+### Rolling Hash
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|Hard| Rolling hash|  | <3|
+| 1554| Strings-Differ-by-One-Character|[1554.cpp](1554.cpp)|Hard| Rolling hash(Google interview)| | <3|
+| 49| Group Anagrams|[49.cpp](49.cpp)|M| | | <3|
+
+## Topological Sort
+[link](https://leetcode.com/tag/topological-sort/)
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 207| Course Schedule|[207.cpp](207.cpp)|Medium| |  | <3|
+| 210| Course Schedule II|[210.cpp](210.cpp)|Medium| |  | |
+| 310| Minimum Height Trees|[310.cpp](310.cpp)|Medium| 不要從中心往外走，反過來從外走向裡面, level traversal|  |  <3|
+| 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
 
 ## Bit Manipulation
 - string 的方向跟 bit 是相反過來的，要小心
     - ex: `str[str.size() - 1 - i])`
 - Bit &, |, 等 bit operator 優先順序很低，最保險就是全部都括號起來
     - ex: ```if (((status >> i) & 1) == 0)```
+- __builtin_popcount(bit_mask) // count the number of one’s(set bits) in an integer.
+    - std::bitset<32>(bit_mask).count() // same as above.
+
+#### XOR
+
+- XOR property
+    - a^a = 0
+    - a^0 = a
+    - Commutative property: a^a^b^c = c^a^b^a = b^c
+- num &= -num;  // find the rightmost different bit.
+    - 要注意 num = -2147483648 會 overflow
+- log2(num &= -num)： // find the idx of the rightmost set bit
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 137| Single Number II|[137.cpp](137.cpp)|Medium| |  | <3|
+| 260| Single Number III|[260.cpp](260.cpp)|Medium| |  | |
+
+#### Bit Mask
+- 如果題目要求 `unique`，要有直覺 bit mask 可能為好解法，尤其是字串比對
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 1239| Maximum Length of a Concatenated String with Unique Characters|[1239.cpp](1239.cpp)|Medium| 錯了非常多次 |  | <3|
+| 1284| Minimum Number of Flips to Convert Binary Matrix to Zero Matrix|[1284.cpp](1284.cpp)|Hard| 史上錯最多次，我對 matrix 操作還要再熟練！|  |  <3|
+
+## Divide and Conquer
+- Divide and Conquer 常常會根據小區間排序，通常可以用 merge sort 來加速
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 315| Count of Smaller Numbers After Self|[315.cpp](315.cpp)|H|  |  | |
+| 327| Count of Range Sum|[327.cpp](327.cpp)|H+| |  | <3|
+| 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |
 
 ## Dynamic programming
 - 动态规划的套路：从入门到精通到弃坑 [(slides)](https://docs.google.com/presentation/d/1oMZLZK8hpUNAUStWZmonG6lZQ4kl3lna3cWI_2yWLBg/edit#slide=id.p)
@@ -302,73 +367,6 @@ for (int i = 0; i < coins.size(); i++) {
 | 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
 | 5| Longest Palindromic Substring|[5.cpp](5.cpp)|M| 還有另一個O(n)的演算法還沒搞懂| y| <3 |
 
-## Tree
-- BST 用 inorder traversal 一定是排序的
-- edges.length == n - 1
-- Tree 是沒有 cycle 的，可以結合 topological sort
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 144| Binary Tree Preorder Traversal|[144.cpp](144.cpp)|Easy| | | |
-| 144| Binary Tree Postorder Traversal|[144.cpp](144.cpp)|Easy| | | |
-| 530| Minimum Absolute Difference in BST|[530.cpp](530.cpp)|Easy| bst| | |
-| 96| Unique Binary Search Trees|[96.cpp](96.cpp)|M| catalan number | | |
-
-## Hash
-### Rolling Hash
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|Hard| Rolling hash|  | <3|
-| 1554| Strings-Differ-by-One-Character|[1554.cpp](1554.cpp)|Hard| Rolling hash(Google interview)| | <3|
-| 49| Group Anagrams|[49.cpp](49.cpp)|M| | | <3|
-
-## Topological Sort
-[link](https://leetcode.com/tag/topological-sort/)
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 207| Course Schedule|[207.cpp](207.cpp)|Medium| |  | <3|
-| 210| Course Schedule II|[210.cpp](210.cpp)|Medium| |  | |
-| 310| Minimum Height Trees|[310.cpp](310.cpp)|Medium| 不要從中心往外走，反過來從外走向裡面, level traversal|  |  <3|
-| 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
-
-## Bit Manipulation
-- __builtin_popcount(bit_mask) // count the number of one’s(set bits) in an integer.
-    - std::bitset<32>(bit_mask).count() // same as above.
-
-### XOR
-
-- XOR property
-    - a^a = 0
-    - a^0 = a
-    - Commutative property: a^a^b^c = c^a^b^a = b^c
-- num &= -num;  // find the rightmost different bit.
-    - 要注意 num = -2147483648 會 overflow
-- log2(num &= -num)： // find the idx of the rightmost set bit
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 137| Single Number II|[137.cpp](137.cpp)|Medium| |  | <3|
-| 260| Single Number III|[260.cpp](260.cpp)|Medium| |  | |
-
-### Bit Mask
-- 如果題目要求 `unique`，要有直覺 bit mask 可能為好解法，尤其是字串比對
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 1239| Maximum Length of a Concatenated String with Unique Characters|[1239.cpp](1239.cpp)|Medium| 錯了非常多次 |  | <3|
-| 1284| Minimum Number of Flips to Convert Binary Matrix to Zero Matrix|[1284.cpp](1284.cpp)|Hard| 史上錯最多次，我對 matrix 操作還要再熟練！|  |  <3|
-
-## Divide and Conquer
-- Divide and Conquer 常常會根據小區間排序，通常可以用 merge sort 來加速
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 315| Count of Smaller Numbers After Self|[315.cpp](315.cpp)|H|  |  | |
-| 327| Count of Range Sum|[327.cpp](327.cpp)|H+| |  | <3|
-| 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |
-
 ## Note
 2022.03.29
 - [904.cpp](904.cpp)
@@ -470,6 +468,12 @@ for (int i = 0; i < coins.size(); i++) {
     ListNode *dummy;
     ListNode *tail = dummy;
     ```
+2023.01.22
+- [75-Sort-Colors/75-for-loop.cpp](75-Sort-Colors/75-for-loop.cpp)
+if condition 如果放在 for loop 開頭，會更直覺，不然 index ++i 很容易忘了計算 
+Note:
+    - 放在結尾是 if (i == p2) break;
+    - 放在開頭是 if (i > p2) break;
 
 ## New Word
 1. wrap around

@@ -18,7 +18,8 @@ class Solution {
       //   int freq = (left + right) / 2;
       int freq = right - (right - left) / 2;
       if (countFreqGreaterOrEqual(freq) >= k) {
-        left = freq; // 特別注意，不行 left = freq + 1; 因為 freq 仍然有可能是答案
+        left =
+            freq;  // 特別注意，不行 left = freq + 1; 因為 freq 仍然有可能是答案
       } else {
         right = freq - 1;
       }
@@ -42,3 +43,12 @@ class Solution {
     return res;
   }
 };
+
+int main(int argc, char** argv) {
+  std::vector<int> nums{2, 0, 2, 1, 1, 0};
+  Solution sol;
+  sol.sortColors(nums);
+  print(nums);
+
+  return 0;
+}

@@ -11,6 +11,39 @@
     5->6->7->8
         ^__|
  */
+class Solution2 {
+ public:
+  bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<int> in_degrees(numCourses);
+    unordered_map<int, vector<int>> pre_map;
+    for (const auto pre : prerequisites) {
+      ++in_degrees[pre[0]];
+      pre_map[pre[1]].push_back(pre[0]);
+    }
+
+    std::queue<int> que;
+    for (int i = 0; i < in_degrees.size(); ++i) {
+      if (in_degrees[i] == 0) que.push(i);
+    }
+
+    // bfs
+    while (!que.empty()) {
+      int course = que.front();
+      for (int pre_course : pre_map[course]) {
+        --in_degrees[pre_course];
+        if (in_degrees[pre_course] == 0) que.push(pre_course);
+      }
+
+      que.pop();
+    }
+
+    for (int deg : in_degrees)
+      if (deg != 0)
+        return false;  // deg < 0 if the node is visited more than twice.
+    return true;
+  }
+};
+
 class Solution {
  public:
   bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
