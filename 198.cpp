@@ -33,6 +33,10 @@ class Solution3 {
     dp[i] = max(dp[i-1], dp[i-2] + nums[i])
 
     Sapce: O(n)
+
+    nums{2, 7, 9, 3, 1};
+    dp:
+      2 7 11
 */
 class Solution2 {
  public:

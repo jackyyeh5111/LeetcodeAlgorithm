@@ -6,6 +6,7 @@ https://leetcode.com/problems/binary-tree-postorder-traversal/solutions/45551/pr
 https://leetcode.com/problems/binary-tree-preorder-traversal/discuss/45466/C%2B%2B-Iterative-Recursive-and-Morris-Traversal
 */
 
+/* Iterative (more general approach) */
 class Solution3 {
  public:
   vector<int> preorderTraversal(TreeNode* root) {
@@ -13,7 +14,7 @@ class Solution3 {
     vector<int> ans;
     stack<TreeNode*> stk;
     TreeNode* node = root;
-    while (node || !stk.empty()) {  // node: 1
+    while (node || !stk.empty()) {
       if (node) {
         ans.push_back(node->val);
         stk.push(node);

@@ -15,29 +15,27 @@ class Solution {
     if (n == 1) return nums[0];
     if (n == 2) return max(nums[0], nums[1]);
 
-    // case 1
-    int temp = max(nums[1], nums[2]);
-    int temp2 = nums[1];
-    for (int i = 3; i < n; i++) {
-      int new_temp = max(temp, temp2 + nums[i]);
-      temp2 = temp;
-      temp = new_temp;
+    // select the first hoouse
+    int temp0 = nums[0];
+    int temp1 = temp0;
+    for (int i = 2; i <= n - 2; ++i) {
+      int temp = temp1;
+      temp1 = max(temp1, temp0 + nums[i]);
+      temp0 = temp;
     }
+    int select_first = max(temp1, temp0);
 
-    int case1_ans = max(temp, temp2);
-
-    // case 2
-    temp = nums[0];
-    temp2 = nums[0];
-    for (int i = 2; i < n - 1; i++) {
-      int new_temp = max(temp, temp2 + nums[i]);
-      temp2 = temp;
-      temp = new_temp;
+    // select the second hoouse
+    temp0 = 0;
+    temp1 = nums[1];
+    for (int i = 2; i <= n - 1; ++i) {
+      int temp = temp1;
+      temp1 = max(temp1, temp0 + nums[i]);
+      temp0 = temp;
     }
+    int select_second = max(temp1, temp0);
 
-    int case2_ans = max(temp, temp2);
-
-    return max(case1_ans, case2_ans);
+    return max(select_first, select_second);
   }
 };
 

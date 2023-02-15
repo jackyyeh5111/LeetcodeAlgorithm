@@ -136,6 +136,7 @@ Practice of leetcode
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 144| Binary Tree Preorder Traversal|[144.cpp](144.cpp)|Easy| stack | | <3 |
 | 145| Binary Tree Postorder Traversal|[145.cpp](145.cpp)|Easy| | | |
+| 145| Binary Tree Inorder Traversal|[94.cpp](94.cpp)|Easy| | | |
 | 530| Minimum Absolute Difference in BST|[530.cpp](530.cpp)|Easy| bst| | |
 | 96| Unique Binary Search Trees|[96.cpp](96.cpp)|M| catalan number | | |
 
@@ -147,6 +148,8 @@ Practice of leetcode
 | 1044| Longest Duplicate Substring|[1044.cpp](1044.cpp)|Hard| Rolling hash|  | <3|
 | 1554| Strings-Differ-by-One-Character|[1554.cpp](1554.cpp)|Hard| Rolling hash(Google interview)| | <3|
 | 49| Group Anagrams|[49.cpp](49.cpp)|M| | | <3|
+| 1923| Longest Common Subpath|[1923.cpp](1923.cpp)|H| | | |
+
 
 ## Topological Sort
 [link](https://leetcode.com/tag/topological-sort/)
@@ -224,7 +227,7 @@ for (int i = 0; i < n; i++) {
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 121| Best Time to Buy and Sell Stock|[121.cpp](121.cpp)|E|||
-| 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|H| 好難！狀態轉移方程| Q | <3|
+| 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|H| |  | <3|
 
 ### Basic II (时间序列加强版)
 - 给出一个序列（数组/字符串），其中每一个元素可以认为“一天”：但“今天”的状态 和之前的“某一天”有关，需要挑选。
@@ -295,7 +298,7 @@ for (int i=1; i <= str_len;i++) {
 
 ### Basic V (第II类区间型)
 - 只给出一个序列S（数组/字符串），求一个针对这个序列的最优解。
-- 适用条件：这个最优解对于序列的index而言，具有「无后效性」。即无法设计dp[i]使得dp[i]仅依赖于dp[j] (j<i). 但是大区间的最优解，可以依赖小区间的最优解。
+- 适用条件：这个最优解对于序列的index而言，具有「无后效性」。即无法设计dp[i]使得dp[i]仅依赖于dp[j] (j<i)  但是大区间的最优解，可以依赖小区间的最优解。
 - 套路：
     - 定义dp[i][j]：表示针对s[i:j]的子问题的求解。
     - 千方百计将大区间的dp[i][j]往小区间的dp[i’][j’]转移。

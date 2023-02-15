@@ -1,5 +1,35 @@
 #include "utils.hpp"
 
+/* Iterative inorder traversal approach */
+class Solution5 {
+public:
+    int getMinimumDifference(TreeNode* root) {
+        int ans = INT_MAX;
+        int prev_val = -INT_MAX / 2;
+        stack<TreeNode*> stk;
+        TreeNode* node = root;
+
+        // inorder traversal
+        while(!stk.empty() || node) {
+            if (node) {
+                stk.push(node);
+                node = node->left;
+            }
+            else {
+                node = stk.top();
+                ans = min(node->val - prev_val, ans);
+                prev_val = node->val;
+                stk.pop();
+
+                node = node->right;
+            }
+
+        }
+
+        return ans;
+    }
+};
+
 class Solution4 {
  public:
   int getMinimumDifference(TreeNode* root) {

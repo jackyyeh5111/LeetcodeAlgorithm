@@ -42,11 +42,18 @@ class Solution3 {
     vector<bool> dp(sum + 1, false);
     dp[0] = true;
 
+    /* 切記，iterate j 必須 reverse iterate，如果 forward iterate 會重複使用同個
+     * element */
     for (int i = 1; i <= n; i++) {
       for (int j = sum; j >= nums[i]; j--) {
         if (dp[j - nums[i]]) dp[j] = true;
       }
     }
+
+    /* wrong (forward iterate) */
+    // for (int i = 0; i < nums.size(); ++i) {
+    //   for (int j = nums[i]; j <= sum; ++j) {
+
     return dp[sum];
   }
 };
@@ -92,35 +99,6 @@ class Solution {
     if (sum == 0) return true;
     if (idx >= nums.size() || sum < 0) return false;
     return dfs(nums, sum - nums[idx], idx + 1) || dfs(nums, sum, idx + 1);
-  }
-};
-
-class SolutionTest {
- public:
-  bool canPartition(vector<int>& nums) {
-    // definition
-    // dp[i][j]: whether nums[0..i-1] can add up to specific sum j
-    int n = nums.size();
-    int sum = accumulate(nums.begin(), nums.end(), 0);
-    if (sum % 2 != 0) return false;
-    sum /= 2;
-
-    // index trick
-    nums.insert(nums.begin(), 0);
-
-    // status initialization
-    vector<bool> dp(sum + 1, false);
-    dp[0] = true;
-
-    // transfer function
-    for (int i = 1; i <= n; i++) {
-      for (int j = sum; j >= nums[i]; j--) {
-        if (dp[j - nums[i]]) dp[j] = true;
-      }
-    }
-
-    // answer return
-    return dp[sum];
   }
 };
 

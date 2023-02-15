@@ -17,15 +17,79 @@
 
     ex:
          # c a b
-       # 1 2 3 4
-       a 2 3 3 4
-       b 3 4 ..
-       a 4 5 ..
-       c 5 5 ..
+       # 0 1 2 3
+       a 1 2 2 3
+       b 2 3 3 3
+       a 3 4 ..
+       c 4 5 ..
 
       backtrack 不用想得太複雜，就在 matrix 上倒過來跑即可
 
 */
+enum class bt {
+    from_s1,
+    from_s2,
+    from_both
+};
+class Solution3 {
+public:
+    string shortestCommonSupersequence(string str1, string str2) {
+        int n1 = str1.size();
+        int n2 = str2.size();
+        str1 = "#" + str1;
+        str2 = "#" + str2;
+
+        vector<vector<int>> dp(n1 + 1, vector<int>(n2 + 1));
+        for (int i = 1; i <= n1; ++i) dp[i][0] = i;
+        for (int j = 1; j <= n2; ++j) dp[0][j] = j;
+        vector<vector<bt>> prev(n1 + 1, vector<bt>(n2 + 1));
+        for (int i = 1; i <= n1; ++i) prev[i][0] = bt::from_s1;
+        for (int j = 1; j <= n2; ++j) prev[0][j] = bt::from_s2;
+
+        // transfer function
+        for (int i = 1; i <= n1; ++i) {
+            for (int j = 1; j <= n2; ++j) {
+                if (str1[i] == str2[j]) {
+                    prev[i][j] = bt::from_both;
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                }
+                else if (dp[i][j-1] < dp[i-1][j]) {
+                    prev[i][j] = bt::from_s2;
+                    dp[i][j] = dp[i][j-1] + 1;
+                }
+                else {
+                    prev[i][j] = bt::from_s1;
+                    dp[i][j] = dp[i-1][j] + 1;
+                }
+            }
+        }
+
+        // backtrace
+        string ans = "";
+        int i = n1, j = n2;
+        while(i != 0 || j != 0){
+            if (prev[i][j] == bt::from_s1) {
+                ans = str1[i] + ans;
+                --i;
+            }
+            else if (prev[i][j] == bt::from_s2) {
+                ans = str2[j] + ans;
+                --j;
+            }
+            else if (prev[i][j] == bt::from_both) {
+                ans = str1[i] + ans;
+                --i; --j;
+            }
+            else {
+              std::cout << "ERROR!\n";
+            }
+        }
+
+        return ans;
+    }
+};
+
+
 class Solution2 {
  public:
   string shortestCommonSupersequence(string str1, string str2) {
@@ -134,7 +198,7 @@ class Solution {
 int main() {
   string str1 = "abac";
   string str2 = "cab";
-  Solution2 sol;
+  SolutionTest sol;
   string ans = sol.shortestCommonSupersequence(str1, str2);
   std::cout << "ans: " << ans << '\n';
 

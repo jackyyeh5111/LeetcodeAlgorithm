@@ -43,7 +43,7 @@ class Solution {
 int main() {
   std::vector<int> coins = {1, 2, 5};
   int amount = 11;
-  Solution2 sol;
+  SolutionTest sol;
   int ans = sol.coinChange(coins, amount);
   std::cout << "ans: " << ans << '\n';
   return 0;

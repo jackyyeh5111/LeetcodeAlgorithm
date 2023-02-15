@@ -2,7 +2,7 @@
 
 /*
   ref: https://hackmd.io/Y5KprctBRcCZW2faCMv5GA
-  
+
     # definition:
     dp[i]: the minimum number of stickers we have to use to achieve i status.
 
@@ -32,7 +32,7 @@
 
     ex:
         // 在 "abc" 這個狀態的時候，我們無法得知 'a' 是從 "ac" or "ab"貢獻過來的
-        // 所以 dp 轉移方程必須從現在的狀態找未來的狀態
+        // 所以 dp 轉移方程必須從現在的狀態找未來的狀態 (太狠了！)
         "ac" + "ab" -> "abc"
     #####################################
  */
@@ -93,7 +93,7 @@ class Solution {
 int main() {
   vector<string> stickers{"with", "example", "science"};
   string target = "thehat";
-  Solution sol;
+  SolutionTest sol;
   int ans = sol.minStickers(stickers, target);
   cout << "ans: " << ans << '\n';
   return 0;

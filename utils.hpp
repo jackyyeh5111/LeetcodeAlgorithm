@@ -1,11 +1,13 @@
 #include <limits.h>
 
 #include <algorithm>
+#include <array>
 #include <bitset>
 #include <cmath>
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <list>
 #include <numeric>
 #include <queue>
 #include <set>
@@ -91,6 +93,12 @@ void print(vector<T> &vecs) {
   std::cout << '\n';
 }
 
+template <typename T>
+void print(list<T> &mylist) {
+  for (auto val : mylist) std::cout << val << ' ';
+  std::cout << '\n';
+}
+
 void print(ListNode *list) {
   ListNode *head = list;
   while (head) {
@@ -105,6 +113,14 @@ void print(stack<T> stk) {
   while (!stk.empty()) {
     std::cout << stk.top() << ' ';
     stk.pop();
+  }
+  std::cout << '\n';
+}
+
+template <typename T>
+void print(unordered_set<T> set) {
+  for (auto itr : set) {
+    cout << itr << " ";
   }
   std::cout << '\n';
 }
