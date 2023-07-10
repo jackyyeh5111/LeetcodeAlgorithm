@@ -3,9 +3,7 @@
 /*
     ref:
     https://www.youtube.com/watch?v=2aYIO0MR_F4
- */
 
-/*
     Approach: rolling hash
     Time: O(m * n)
 
@@ -21,32 +19,30 @@ typedef uint64_t ULL;
 class Solution {
  public:
   bool differByOne(vector<string>& dict) {
-    int base = 26;
-    int n = dict.size();
-    int m = dict[0].size();
-    vector<ULL> hashs(n);
-
-    // create rolling hash table.
-    for (int i = 0; i < n; i++) {
-      ULL h = 0;
-
-      /* 很容易理解，如果十進位 base 就是 10，往左一位就是 * base */
-      for (auto ch : dict[i]) h = h * base + (ch - 'a');
-      hashs[i] = h;
+    // init hashs
+    vector<ULL> hashs;
+    ULL base = 26;
+    int N = dict.size();
+    int M = dict[0].size();
+    for (auto str : dict) {
+      ULL hash = 0;
+      for (int i = 0; i < M; ++i) {
+        hash = hash * base + (str[i] - 'a');
+      }
+      hashs.push_back(hash);
     }
 
+    // remove each individual character
     ULL power = 1;
-    for (int j = m - 1; j >= 0; j--) {
-      unordered_set<ULL> set;
-      for (int i = 0; i < n; i++) {
-        ULL new_hash = hashs[i] - power * (dict[i][j] - 'a');
-        if (set.find(new_hash) != set.end()) return true;
-        set.insert(new_hash);
+    for (int j = M - 1; j >= 0; --j) {
+      unordered_set<ULL> us;
+      for (int i = 0; i < N; ++i) {
+        ULL hash = hashs[i] - power * (dict[i][j] - 'a');
+        if (us.find(hash) != us.end()) return true;
+        us.insert(hash);
       }
-
       power *= base;
     }
-
     return false;
   }
 };

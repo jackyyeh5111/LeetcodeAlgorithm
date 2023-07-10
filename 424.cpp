@@ -6,6 +6,10 @@
 /* visit 1
    ref:
    https://leetcode.com/problems/longest-repeating-character-replacement/discuss/934637/Clear-concise-C%2B%2B-solution-(Sliding-window-better-than-99-time-O(n))
+
+    k = 1
+      A A B C
+        l   r
  */
 
 using namespace std;
@@ -25,6 +29,8 @@ class Solution {
       max_char_freq = max(max_char_freq, um[s[r]]);
       r++;
 
+      // Note that here is not a while loop. Because our target is "longest"
+      // substring. Thus we can keep the longest window(right - left) here.
       if (r - l - max_char_freq > k) {
         um[s[l]]--;
         l++;

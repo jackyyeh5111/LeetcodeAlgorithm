@@ -1,5 +1,43 @@
 #include "utils.hpp"
 
+/* 
+  Optimized space complexity: O(n)
+ */
+class Solution2 {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        int n1 = text1.size();
+        int n2 = text2.size();
+        vector<int> prev(n2 + 1), cur(n2 + 1);
+
+        /* 
+               X a b c d e
+            X. 0 0 0 0 0 0
+            a  0 1 1 1 1 1
+            c  0 1 1 2 2 2
+            e. 0 1 1 2 2 3 
+
+
+            cur, prev vector
+                X a a c d e
+             X  0 0 0 0 0 0
+             a. 0 1 1  
+             c
+             e 
+         */
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= n2; j++) {
+                if (text1[i-1] == text2[j-1])
+                    cur[j] = prev[j-1] + 1;
+                else
+                    cur[j] = max(cur[j-1], prev[j]);
+            }
+            prev = cur;
+        }
+        return cur[n2];
+    }
+};
+
 class Solution {
  public:
   int longestCommonSubsequence(string text1, string text2) {

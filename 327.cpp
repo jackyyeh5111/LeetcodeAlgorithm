@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-/* 
+/*
   ref:
     https://hackmd.io/PBOExNTFQWaiwBHelfyIFw
  */

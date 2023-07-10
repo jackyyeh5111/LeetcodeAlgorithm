@@ -1,5 +1,51 @@
 #include "utils.hpp"
 
+/* 
+  Wrong answer!
+
+  Failed case:
+    numCourses = 4
+    prerequisites = [[2,0],[1,0],[3,1],[3,2],[1,3]]
+
+       --->   2
+    |         |
+    0 -> 1 -> 3
+        ^ __ | 
+
+    Visit node while in_degrees <= 0. This leads to multiple visits to "note 2".
+
+ */
+class Solution3 {
+public:
+    vector<int> in_degrees;
+    vector<vector<int>> next;
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+      in_degrees.resize(numCourses);
+      next.resize(numCourses);
+      for (auto pre : prerequisites) {
+        ++in_degrees[pre[0]];
+        next[pre[1]].push_back(pre[0]);
+      }
+
+      for (int i=0; i < numCourses; ++i) {
+        if (in_degrees[i] == 0)
+          dfs(i);
+      }
+      for (int in_degree : in_degrees) {
+        if (in_degree > 0)
+          return false;
+      }
+      return true;
+    }
+    void dfs(int course) {
+      --in_degrees[course];
+      if (in_degrees[course] > 0) // > 0: course conflict
+        return;
+      for (int next_course : next[course])
+        dfs(next_course);
+    }
+};
+
 /* Approach 1: DFS
 可以轉化為找環的問題
 
@@ -88,3 +134,4 @@ class Solution {
     return true;
   }
 };
+

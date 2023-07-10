@@ -1,5 +1,36 @@
 #include "utils.hpp"
 
+/* 
+  Omit max operation.
+ */
+class Solution2 {
+public:
+    int rob(vector<int>& nums) {
+        int N = nums.size();
+        if (N == 1) return nums[0];
+
+        int ans1, ans2;
+        // rob 1st
+        int d1 = 0, d2 = nums[0];
+        for (int i = 1; i < N - 1 ; ++i) {
+            int tmp = max(d1 + nums[i], d2);
+            d1 = d2;
+            d2 = tmp;
+        }
+        ans1 = d2; // Not required max(d1, d2)
+
+        d1 = 0;
+        d2 = nums[1];
+        for (int i = 2; i < N; ++i) {
+            int tmp = max(d1 + nums[i], d2);
+            d1 = d2;
+            d2 = tmp;
+        }
+        ans2 = d2;
+        return max(ans1, ans2);
+    }
+};
+
 /*
 
 N [          ]

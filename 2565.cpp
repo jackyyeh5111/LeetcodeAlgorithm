@@ -1,5 +1,11 @@
 #include "utils.hpp"
 
+/* 
+    TODO:
+        understand linear solution
+        https://leetcode.com/problems/subsequence-with-the-minimum-score/solutions/3174041/right-and-left-o-n/
+ */
+
 /*
     case 1:
         s = abc, t = abc
@@ -31,14 +37,18 @@ class Solution {
     // Create left and right array.
     int idx = 0;
     for (int i = 0; i < s_n; ++i) {
-      if (t[idx] == s[i]) lefts[idx] = i;
-      ++idx;
+      if (t[idx] == s[i]) {
+        lefts[idx] = i;
+        ++idx;
+      }
       if (idx == t_n) break;
     }
     idx = t_n - 1;
     for (int i = s_n - 1; i >= 0; --i) {
-      if (t[idx] == s[i]) rights[idx] = i;
-      --idx;
+      if (t[idx] == s[i]) {
+        rights[idx] = i;
+        --idx;
+      }
       if (idx == -1) break;
     }
 

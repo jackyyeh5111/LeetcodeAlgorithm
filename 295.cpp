@@ -1,5 +1,52 @@
 #include "utils.hpp"
 
+/* 
+    Visit 2: More simplified code
+
+    2 3 4
+    2 3 
+
+    L   S
+    1.  1
+
+    S.size() + 1 >= L.size() >= S.size()
+    balanced!
+ */
+
+class MedianFinder {
+public:
+    MedianFinder() {}
+    
+    void addNum(int num) {
+      if (!max_heap.empty() && num > max_heap.top())
+        min_heap.push(num);
+      else 
+        max_heap.push(num);
+
+      // check
+      if (max_heap.size() < min_heap.size()) 
+      {
+        max_heap.push(min_heap.top());
+        min_heap.pop();
+      }
+      if (max_heap.size() > min_heap.size() + 1) 
+      {
+        min_heap.push(max_heap.top());
+        max_heap.pop();
+      }
+    }
+    
+    double findMedian() {
+      int num_ele = max_heap.size() + min_heap.size();
+      if (num_ele % 2)
+        return max_heap.top();
+      return (max_heap.top() + min_heap.top()) / 2.0;
+    }
+  private:
+    priority_queue<int, vector<int>, greater<int>> min_heap;
+    priority_queue<int> max_heap;
+};
+
 /* Visit 1
 ref:
 https://leetcode.com/problems/find-median-from-data-stream/discuss/1048192/C%2B%2B-Easy-Understandable-Two-heaps-Intuitive-Solution.-O(logn)-add-O(1)-find

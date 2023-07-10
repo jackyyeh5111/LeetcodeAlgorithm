@@ -17,9 +17,12 @@ Practice of leetcode
     ```
 - range sum / subarray sum
     ```
-    XXXXXXXXXX
-    i    j
-    要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
+    nums: XXXXXXXXXX
+          i    j
+    - 如果 nums start from 1 idx
+      要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
+    - 如果 nums start from 0 idx (最好不要這樣，idx不好對應)
+      要求 [i, j] range sum，需直覺想到 presum[j+1] - presum[i]
     ```
 - 區間是有排列，欲求有多少個 element in [lower, upper] 區間
     ```c++
@@ -53,6 +56,9 @@ Practice of leetcode
 - circular 
     - 直覺可以用 modulo operator
     - We can split case to discuss that pick the first element or not like [198.cpp](198.cpp)
+- subarray v.s. subsequence
+    - subarray: 直覺可能用 dp, two pointers, divideAndConquer 來解
+    - subsequence: 直覺可能用 dp, dfs 來解
 
 ## Basic Concept 
 ### Sort
@@ -67,13 +73,26 @@ Practice of leetcode
 - [Catalan number](https://hackmd.io/4EJpycUQTv2dnqzVr8uTvA)
 - [Quick select](https://hackmd.io/VtJkono6QzK5JxNarnQ5mw)
 
+## Constraint checking
+[Time and Space Complexity mapping](https://www.hackerearth.com/practice/basic-programming/complexity-analysis/time-and-space-complexity/tutorial/)
+1. array 
+    1. 是否 sorted
+    2. 是否存在 duplicate number
+    3. 是否有 negative number
+    4. 是否有 upper_bound, lower_bound
+2. overflow, underflow
+3. graph
+    1. Node.val is unique for each node.
+    2. There are no repeated edges and no self-loops in the graph.
+    3. The Graph is connected and all nodes can be visited starting from the given node.
+
 ## Two pointers
 - Longest/shortest substring/subarray 直覺想到 two pointers, dp
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||   |<3|
-| 904| Fruit Into Baskets|[904.cpp](904.cpp)|M||  |
+| 904| Fruit Into Baskets|[904.cpp](904.cpp)|M| 錯超多次||  <3|
 
 ## Pattern: Subsets，子集类型，一般都是使用多重DFS
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
@@ -136,7 +155,7 @@ Practice of leetcode
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 144| Binary Tree Preorder Traversal|[144.cpp](144.cpp)|Easy| stack | | <3 |
 | 145| Binary Tree Postorder Traversal|[145.cpp](145.cpp)|Easy| | | |
-| 145| Binary Tree Inorder Traversal|[94.cpp](94.cpp)|Easy| | | |
+| 94| Binary Tree Inorder Traversal|[94.cpp](94.cpp)|Easy| | | |
 | 530| Minimum Absolute Difference in BST|[530.cpp](530.cpp)|Easy| bst| | |
 | 96| Unique Binary Search Trees|[96.cpp](96.cpp)|M| catalan number | | |
 
@@ -162,27 +181,39 @@ Practice of leetcode
 | 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
 
 ## Bit Manipulation
+ref: [A summary: how to use bit manipulation to solve problems easily and efficiently](https://leetcode.com/problems/sum-of-two-integers/solutions/84278/a-summary-how-to-use-bit-manipulation-to-solve-problems-easily-and-efficiently/?orderBy=hot)
 - string 的方向跟 bit 是相反過來的，要小心
     - ex: `str[str.size() - 1 - i])`
 - Bit &, |, 等 bit operator 優先順序很低，最保險就是全部都括號起來
     - ex: ```if (((status >> i) & 1) == 0)```
 - __builtin_popcount(bit_mask) // count the number of one’s(set bits) in an integer.
     - std::bitset<32>(bit_mask).count() // same as above.
-
-#### XOR
-
-- XOR property
-    - a^a = 0
-    - a^0 = a
-    - Commutative property: a^a^b^c = c^a^b^a = b^c
-- num &= -num;  // find the rightmost different bit.
-    - 要注意 num = -2147483648 會 overflow
-- log2(num &= -num)： // find the idx of the rightmost set bit
+- 可以用型別 integer 代表 32-bits mask
+- Do not use "Bitwise shift operators" for signed integer.
+- Basics:
+    - Set union A | B
+    - Set intersection A & B
+    - Set subtraction A & ~B
+    - Set negation ALL_BITS ^ A or ~A
+    - Set bit A |= 1 << bit
+    - Clear bit A &= ~(1 << bit)
+    - Test bit (A & 1 << bit) != 0
+    - Extract last bit A&-A or A&~(A-1) or x^(x&(x-1))
+    - Remove last bit A&(A-1)
+    - Get all 1-bits ~0
+    - XOR property
+        - a^a = 0
+        - a^0 = a
+        - Commutative property: a\^a\^b\^c = c\^a\^b\^a = b\^c
+    - num &= -num;  // find the rightmost different bit.
+        - 要注意 num = -2147483648 會 overflow
+    - log2(num &= -num)： // find the idx of the rightmost set bit
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 137| Single Number II|[137.cpp](137.cpp)|Medium| |  | <3|
 | 260| Single Number III|[260.cpp](260.cpp)|Medium| |  | |
+| 371| Sum of Two Integers|[371.cpp](371.cpp)|Medium| |  | |
 
 #### Bit Mask
 - 如果題目要求 `unique`，要有直覺 bit mask 可能為好解法，尤其是字串比對
@@ -201,6 +232,13 @@ Practice of leetcode
 | 327| Count of Range Sum|[327.cpp](327.cpp)|H+| |  | <3|
 | 53| Maximum Subarray|[53.cpp](53.cpp)|E|  |  | |
 
+## Greedy
+### Three pass
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 2565| Subsequence With the Minimum Score|[2565.cpp](2565.cpp)|H|  |  | |
+
 ## Dynamic programming
 - 动态规划的套路：从入门到精通到弃坑 [(slides)](https://docs.google.com/presentation/d/1oMZLZK8hpUNAUStWZmonG6lZQ4kl3lna3cWI_2yWLBg/edit#slide=id.p)
 - Thinking template [(link)](https://hackmd.io/5rkBMkh1TqisTJ3LAIb-Pg)
@@ -209,7 +247,7 @@ Practice of leetcode
 - 只要在 access index 有做運算的，(ex:  dp[j - coins[i]])，記得都要檢查邊界
 - 通常 dp 都是要求我們求得數量，如果要我們也列出過程，就加個 prev storage 即可 [(link)](https://youtu.be/Uk9JRbylA0c?t=1143)
 
-### Basic (时间序列型)
+### Basic I (时间序列型)
 - 给出一个序列（数组/字符串），其中每一个元素可以认为“一天”，并且“今天”的状态只取决于“昨天”的状态。
 - 欲更新的狀態只跟前一個狀態有關係，可以節省 space O(n) -> O(1)，也就是儲存 space 用 array -> variable
 
@@ -226,6 +264,8 @@ for (int i = 0; i < n; i++) {
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 53| Maximum Product Subarray|[53.cpp](53.cpp)|E|||
+| 53| Maximum Product Subarray|[53.cpp](53.cpp)|E|||
 | 121| Best Time to Buy and Sell Stock|[121.cpp](121.cpp)|E|||
 | 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|H| |  | <3|
 
@@ -343,7 +383,7 @@ template:
 /* 兩個迴圈已經有考慮到同個 coin 重複使用！ */
 for (int i = 0; i < coins.size(); i++) {
     for (int j = coins[i]; j <= amount; j++) {
-    dp[j] = min(dp[j], dp[j - coins[i]] + 1);
+        dp[j] = min(dp[j], dp[j - coins[i]] + 1);
     }
 }
 ```
@@ -369,6 +409,11 @@ for (int i = 0; i < coins.size(); i++) {
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
 | 5| Longest Palindromic Substring|[5.cpp](5.cpp)|M| 還有另一個O(n)的演算法還沒搞懂| y| <3 |
+
+## Graph
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 133| Clone Graph|[133.cpp](133.cpp)|M| | | |
 
 ## Note
 2022.03.29
@@ -478,20 +523,31 @@ Note:
     - 放在結尾是 if (i == p2) break;
     - 放在開頭是 if (i > p2) break;
 
-## New Word
-1. wrap around
-    - Note that the letters wrap around. For example, if target == 'z' and letters == ['a', 'b'], the answer is 'a'.
-2. such that
-    -  Return an array ans of length nums1.length `such that` ans[i] is the next greater element
-3. where
-    - You are given two distinct 0-indexed integer arrays nums1 and nums2, `where` nums1 is a subset of nums2.
-4. the first xxx number to its ... in the array
-    - The next greater number of a number x is the first greater number to its traversing-order next in the array
-5. The `Subscript` or Array Index Operator is `denoted` by '[]'. This operator is generally used with arrays to retrieve and manipulate the array elements.
-6. Given a set of `distinct` positive integers nums, return the largest subset answer `such that` every pair (answer[i], answer[j]) of elements in this subset `satisfies`: ...
-7. A subsequence is a sequence that can be `derived` from an array by deleting some or no elements without `changing the order` of the `remaining` elements.
-8. inclusive
-    - Range sum S(i, j) is defined as the sum of the elements in nums between `indices` i and j `inclusive`, where i <= j.
+2023.03.25
+- 207. Course Schedule
+    - 如果要對「每一個」元素都計數，那請用 vector<int> 來當作計數器，而不要用 unordered_map，因為這樣還需要額外 for loop 初始化每個元素的計數
+        ```
+        // unordered_map as counter
+        unordered_map<int, int> in_degrees;
+        for (int i=0; i < numCourses; ++i) in_degrees[i] = 0;
+
+        // vector as counter
+        vector<int> in_degrees(numCourses, 0);
+        ```
+    - 從 queue 取出元素時，請使用 front()，因為 queue 是 FIFO
+        ```
+        int ele = queue.front(); // correct
+        int ele = queue.back(); // incorrect
+        queue.pop();
+        ```
+2023.04.11
+- 1143. Longest Common Subsequence
+dp 只需要在意當下狀態的計算，`dp[i-1][j-1]` 就已經計算過了。
+```c++
+dp[i][j] = max(max(dp[i][j-1], dp[i-1][j]), dp[i-1][j-1]); // redundant
+dp[i][j] = max(dp[i][j-1], dp[i-1][j]); // correct
+
+```
 
 ## Interview Question
 1. 416 | Partition Equal Subset Sum | Medium

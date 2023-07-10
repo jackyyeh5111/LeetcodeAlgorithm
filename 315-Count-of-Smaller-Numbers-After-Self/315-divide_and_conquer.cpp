@@ -1,5 +1,65 @@
 #include "../utils.hpp"
 
+/* O(n) sorting algo */
+class Solution4 {
+public:
+    vector<int> count;
+    vector<int> countSmaller(vector<int>& nums) {
+        int N = nums.size();
+        count.resize(N);
+        vector<int> sorted_nums = nums;
+        divideAndConquer(nums, sorted_nums, 0, N-1);
+        return count;
+    }
+    void divideAndConquer(const vector<int> &nums, vector<int> &sorted_nums, int start, int end) {
+        if (start >= end) return;
+        
+        // divide
+        int mid = start + (end - start) / 2; // start = 0, end = 1
+        divideAndConquer(nums, sorted_nums, start, mid); // (0, 0)
+        divideAndConquer(nums, sorted_nums, mid + 1, end); // (1, 1)
+
+        // update count
+        for (int i = start; i <= mid; i++) {
+            auto pos = lower_bound(sorted_nums.begin() + mid + 1, sorted_nums.begin() + end + 1, nums[i]);
+            count[i] += pos - (sorted_nums.begin() + mid + 1);
+        }
+
+        // combine (sorted two subarrays together): O(n)
+        int left = start, right = mid + 1;
+        vector<int> tmp(end - start + 1);
+        int idx = 0;
+        while(left <= mid && right <= end) {
+            int ele;
+            if (sorted_nums[left] < sorted_nums[right]) {
+                ele = sorted_nums[left];
+                left++;
+            }
+            else {
+                ele = sorted_nums[right];
+                right++;
+            }
+            tmp[idx] = ele;
+            idx++;
+        }
+
+        while(left <= mid) {
+            tmp[idx] = sorted_nums[left];
+            left++;
+            idx++;
+        }
+
+        while(right <= end) {
+            tmp[idx] = sorted_nums[right];
+            right++;
+            idx++;
+        }  
+
+        for (int i = 0; i < tmp.size(); i++) 
+            sorted_nums[i + start] = tmp[i];
+    }
+};
+
 /*
 A: [X X X X X Y Y Y Y Y]
 B: [X X X X X] C:[Y Y Y Y Y]
