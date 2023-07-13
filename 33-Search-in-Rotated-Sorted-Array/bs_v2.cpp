@@ -8,7 +8,7 @@ public:
             if (nums[mid] == target)
                 return mid;
             
-            // Here we have to use <= instead of <.
+            // Here we have to use <= instead of <
             bool left_cont = nums[left] <= nums[mid] ? true : false; 
             if (left_cont) {
                 if (target >= nums[left] && target <= nums[mid])
@@ -17,7 +17,7 @@ public:
                     left = mid + 1;
             }
             else {
-                // Here we have to use > instead of >=.
+                // Here we have to use > instead of >=
                 if (target > nums[mid] && target <= nums[right])
                     left = mid + 1;
                 else
