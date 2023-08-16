@@ -6,10 +6,9 @@
 using namespace std;
 
 /* ref:
-   https://hackmd.io/c8UyhXjgTVaQ882GcaDkKQ
    https://leetcode.com/problems/insert-interval/discuss/844523/C%2B%2B-Super-Clean-Clear-Short-and-Simple-Solution-O(n)-time-O(1)-space
  */
-/* visit 1 */
+
 class Solution {
  public:
   vector<vector<int>> insert(vector<vector<int>>& intervals,

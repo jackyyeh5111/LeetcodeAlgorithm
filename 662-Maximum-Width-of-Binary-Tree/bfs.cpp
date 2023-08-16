@@ -1,38 +1,70 @@
-/**
-    Overflow
+/* 
+    pass. Use long long and minus first_id.
  */
-class Solution {
+class Solution2 {
 public:
-    unordered_map<int, pair<int, int>> level_nodes;
     int widthOfBinaryTree(TreeNode* root) {
-        queue<pair<TreeNode*, int>> que;
+        int ans = 0;
+        
+        // bfs traversal
+        queue<pair<TreeNode*, long long>> que;
         que.push({root, 1});
-        int level = 0;
-
-        // level order traversal
+        
         while(!que.empty()) {
-            int num_nodes = que.size();
-            level_nodes[level].first = que.front().second; // leftmost
-            level_nodes[level].second = que.back().second; // rightmost
-            for (int i = 0; i < num_nodes; i++) {
+            long long width = que.back().second - que.front().second + 1;
+            ans = max(ans, (int)width);
+            int num_level = que.size();
+            long long first_id = -1;
+            for (int i = 0; i < num_level; i++) {
                 TreeNode* node = que.front().first;
-                int id = que.front().second;
+                long long id = que.front().second;
                 que.pop();
-
-                if (node->left) que.push({node->left, id * 2});
-                if (node->right) que.push({node->right, id * 2 + 1});
+                if (node->left) {
+                    if (first_id == -1)
+                        first_id = id * 2;
+                    que.push({node->left, id * 2 - first_id}); // minus first_id
+                }
+                if (node->right) {
+                    if (first_id == -1)
+                        first_id = id * 2 + 1;
+                    que.push({node->right, id * 2 + 1 - first_id}); // minus first_id
+                }
             }
-            level++;
-        }
-
-        int ans = -1;
-        for (int i = 0; i < level; i++) {
-            ans = max(ans, level_nodes[i].second - level_nodes[i].first + 1);
         }
         return ans;
     }
 };
 
+
+/**
+    Overflow
+ */
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        int ans = 0;
+        
+        // bfs traversal
+        queue<pair<TreeNode*, int>> que;
+        que.push({root, 1});
+        
+        while(!que.empty()) {
+            int width = que.back().second - que.front().second + 1;
+            ans = max(ans, width);
+            int num_level = que.size();
+            for (int i = 0; i < num_level; i++) {
+                TreeNode* node = que.front().first;
+                int id = que.front().second;
+                que.pop();
+                if (node->left)
+                    que.push({node->left, id * 2});
+                if (node->right)
+                    que.push({node->right, id * 2 + 1});
+            }
+        }
+        return ans;
+    }
+};
 /* 
     level_nodes: {
         1: [leftmost node id, rightmost node id]

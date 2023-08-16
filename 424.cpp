@@ -31,6 +31,12 @@ class Solution {
 
       // Note that here is not a while loop. Because our target is "longest"
       // substring. Thus we can keep the longest window(right - left) here.
+
+      /*
+        The window size increases only when maxFrequency finds a new maximum.
+        For this, we always want the following condition to hold true:
+          window_size - max_char_freq <= k
+       */
       if (r - l - max_char_freq > k) {
         um[s[l]]--;
         l++;

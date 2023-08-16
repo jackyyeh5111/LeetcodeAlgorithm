@@ -3,8 +3,6 @@
 #include <iostream>
 
 using namespace std;
-// a declaration for our function template (we don't need the definition any more)
-
 vector<string> split(string s, char delimiter) {
     vector<string> tokens;
     int start = 0;

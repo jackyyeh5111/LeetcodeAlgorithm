@@ -2,30 +2,24 @@
 
 /*
     用 string(size = 26，每個 index 對應到一個字元的出現數量) 當作 hash key
+    有可能同一個 char 次數超過 9，就根據 ascii code 給
  */
-class Solution3 {
- public:
-  vector<vector<string>> groupAnagrams(vector<string>& strs) {
-    unordered_map<string, vector<string>> hash;
-    for (string str : strs) {
-      string key(26, '0');
-      for (char ch : str) {
-        key[ch - 'a']++;
-      }
-
-      if (hash.find(key) == hash.end())
-        hash[key] = vector<string>{str};
-      else
-        hash[key].push_back(str);
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> dict;
+        for (string str : strs) {
+            string key(26, '0');
+            for (char ch : str)
+                key[ch - 'a']++;
+            dict[key].push_back(str);
+        }
+        
+        vector<vector<string>> ans;
+        for (auto pair : dict) 
+            ans.push_back(pair.second);
+        return ans;
     }
-
-    vector<vector<string>> ans;
-    for (auto pair : hash) {
-      ans.push_back(pair.second);
-    }
-
-    return ans;
-  }
 };
 
 /*

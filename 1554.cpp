@@ -1,5 +1,51 @@
 #include "utils.hpp"
 
+/* 
+  Solution with mod
+
+    clarification:
+    1. [abc, abc] -> not the case. dict[i] should be unique
+    2. dict[i].size() == dict[j].size()
+    
+    abc -> 100
+    abd -> 101
+    aef -> 123
+
+    abc -> 1 * 26^2 + 2 * 26^1 + 3
+ */
+class Solution2 {
+public:
+    bool differByOne(vector<string>& dict) {
+        if (dict.size() < 2)
+            return false;
+        
+        // construct hashs
+        vector<long long> hashs;
+        long long BASE = 26;
+        long long mod = 1e9 + 7;
+        for (string word : dict) {
+            long long hash = 0;
+            for (char ch : word)
+                hash = ((hash * BASE) % mod + (ch - 'a')) % mod;
+            hashs.push_back(hash);
+        }
+
+        // compare if collision happens
+        long long power = 1;
+        for (int mask_pos = dict[0].size() - 1; mask_pos >= 0 ; mask_pos--) {
+            unordered_set<long long> vals;
+            for (int i = 0; i < dict.size(); i++) {
+                long long mask_hash = (hashs[i] - ((dict[i][mask_pos] - 'a') * power) % mod) % mod;
+                if (vals.count(mask_hash))
+                    return true;
+                vals.insert(mask_hash);
+            }
+            power = (power * BASE) % mod;
+        }
+        return false;
+    }
+};
+
 /*
     ref:
     https://www.youtube.com/watch?v=2aYIO0MR_F4
