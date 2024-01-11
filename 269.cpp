@@ -1,5 +1,78 @@
 #include "utils.hpp"
 
+/* 
+    More elegant!
+
+    If conflict happens, there are cycles among the alien rule.
+
+    wrd
+    wre
+
+    in_degrees = {
+        z: 1
+        x: 1
+    }
+    map = {
+        z: [x]
+        x: [z]
+    }
+
+    z -> x
+    x -> z
+ */
+class Solution2 {
+public:
+    string alienOrder(vector<string>& words) {
+        unordered_map<char, int> in_degrees;
+        unordered_map<char, vector<char>> nexts;
+        
+        // initialzie in_degrees
+        for (string word : words)
+            for (char ch : word)
+                in_degrees[ch] = 0;
+
+        for (int i = 0; i < words.size() - 1; i++) {
+            string w1 = words[i];
+            string w2 = words[i + 1];
+            int j = 0, len = min(w1.size(), w2.size());
+            for (; j < len; j++) {
+                if (w1[j] != w2[j]) break;
+            }
+            if (j == len) {
+                if (w1.size() > w2.size())
+                    return "";       
+                continue;
+            }
+
+            char ch1 = w1[j], ch2 = w2[j];
+            in_degrees[ch2]++;
+            nexts[ch1].push_back(ch2);
+        }
+
+        // topological sort
+        queue<char> que;
+        for (auto it = in_degrees.begin(); it != in_degrees.end(); it++) {
+            if (it->second == 0)
+                que.push(it->first);
+        }
+        
+        string ans = "";
+        while(!que.empty()) {
+            char ch = que.front();
+            que.pop();
+            ans += ch;
+            for (char next_ch : nexts[ch]) {
+                in_degrees[next_ch]--;
+                if (in_degrees[next_ch] == 0)
+                    que.push(next_ch);
+            }
+        }
+        return ans.size() == in_degrees.size() ? ans : "";
+    }
+};
+
+ */
+
 /* ref:
     https://www.youtube.com/watch?v=yfGJFDkyEmE
  */

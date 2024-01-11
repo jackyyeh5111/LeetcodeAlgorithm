@@ -1,3 +1,23 @@
+/* 
+    More elegant!
+ */
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> vec{nums[0]};
+        for (int i = 1; i < nums.size(); i++) {
+            int num = nums[i];
+            if (num > vec.back()) {
+                vec.push_back(num);
+                continue;
+            }
+            auto pos = lower_bound(vec.begin(), vec.end(), num);
+            *pos = num; // more elegant
+        }
+        return vec.size();
+    }
+};
+
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {

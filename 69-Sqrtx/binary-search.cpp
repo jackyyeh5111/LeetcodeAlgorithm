@@ -1,3 +1,27 @@
+/* 
+    Slightly adjust the thought.
+    Then we do not have to check the return value.
+ */
+class Solution3 {
+public:
+    int mySqrt(int x) {
+        if (x == 0)
+            return 0;
+        int left = 1, right = x / 2;
+        while(left < right) { // left: 2, right: 2
+            int mid = right - (right - left) / 2; // change here
+            int temp = x / mid; // 2
+            if (mid == temp)
+                return mid;
+            if (mid < temp)
+                left = mid;
+            else 
+                right = mid - 1;
+        }
+        return left;
+    }
+};
+
 class Solution2 {
 public:
     int mySqrt(int x) {
