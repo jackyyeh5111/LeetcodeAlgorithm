@@ -1,87 +1,45 @@
-/* Approach 2: BFS
-    BFS的算法思想是拓扑排序：从外围往核心进发。我们每次在图中找入度为0的点，然后移除。
-    如果最后没有入度为0的点，但是图中仍有点存在，那么这些剩下来的点一定是交错成环的。
-
-    (7, 3)
-    (7, 8)
-    (8, 7)
-
-    1->2->3->4
-        ^
-    5->6->7->8
-        ^__|
- */
-class Solution2 {
- public:
-  bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-    vector<int> in_degrees(numCourses);
-    unordered_map<int, vector<int>> pre_map;
-    for (const auto pre : prerequisites) {
-      ++in_degrees[pre[0]];
-      pre_map[pre[1]].push_back(pre[0]);
-    }
-
-    std::queue<int> que;
-    for (int i = 0; i < in_degrees.size(); ++i) {
-      if (in_degrees[i] == 0) que.push(i);
-    }
-
-    // bfs
-    while (!que.empty()) {
-      int course = que.front();
-      for (int pre_course : pre_map[course]) {
-        --in_degrees[pre_course];
-        if (in_degrees[pre_course] == 0) que.push(pre_course);
-      }
-
-      que.pop();
-    }
-
-    for (int deg : in_degrees)
-      if (deg != 0)
-        return false;  // deg < 0 if the node is visited more than twice.
-    return true;
-  }
-};
-
 class Solution {
  public:
   bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-    vector<int> in_degrees(numCourses, 0);
-    unordered_map<int, vector<int>> premap;
+    vector<int> in_degree(numCourses, 0);  // <course, count>
+    vector<vector<int>> next_courses(numCourses);
+
+    // initialize
     for (auto pre : prerequisites) {
-      premap[pre[0]].push_back(pre[1]);
-      in_degrees[pre[1]]++;
+      in_degree[pre[0]]++;
+      next_courses[pre[1]].push_back(pre[0]);
     }
 
     queue<int> que;
-    int num_visit = 0;
     for (int i = 0; i < numCourses; i++) {
-      if (in_degrees[i] == 0) {
-        que.push(i);
-        num_visit++;
-      }
+      if (in_degree[i] == 0) que.push(i);
     }
 
-    /*
-        1->2->3->4
-              ^
-        5->6->7->8
-              ^__|
-    */
+    // topological sort
+    int count = 0;
     while (!que.empty()) {
-      int label = que.front();
-      for (int next_label : premap[label]) {
-        in_degrees[next_label]--;
-        if (in_degrees[next_label] == 0) {
-          que.push(next_label);
-          num_visit++;
-        }
-      }
-
+      int course = que.front();
       que.pop();
-    }
+      count++;
 
-    return num_visit == numCourses;
+      // remove course node
+      for (int next_course : next_courses[course]) {
+        in_degree[next_course]--;
+        if (in_degree[next_course] == 0) que.push(next_course);
+      }
+    }
+    return count == numCourses;
   }
 };
+
+/*
+    clarification:
+
+    structure:
+        1. in_degree<int, int> // <course, count>
+        2. next_course<int, vector<int>>
+
+    0 -> 1 -> 2
+         ^
+         3
+ */

@@ -34,13 +34,13 @@ class Solution {
       que.pop();
 
       for (auto nb : cur->neighbors) {
-        if (cloned.find(nb->val) == cloned.end()) {
+        if (cloned.count(nb->val) == 0) {
           cloned[nb->val] = new Node(nb->val);
           que.push(nb);
         }
         cloned[cur->val]->neighbors.push_back(cloned[nb->val]);
       }
     }
-    return cloned[1];
+    return cloned[node->val];
   }
 };

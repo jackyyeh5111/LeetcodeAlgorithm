@@ -2,26 +2,23 @@
     More elegant dfs approach.
 */
 class Solution2 {
-public:
-    unordered_map<int, Node*> cloned;
-    Node* cloneGraph(Node* node) {
-        if (!node)
-            return nullptr;
-        if (cloned.find(node->val) != cloned.end())
-            return cloned[node->val];
-        
-        // dfs
-        cloned[node->val] = new Node(node->val);
-        for (Node* neighbor : node->neighbors) {
-            if (cloned.find(neighbor->val) == cloned.end()) {
-                cloned[neighbor->val] = cloneGraph(neighbor);
-            }
-            cloned[node->val]->neighbors.push_back(cloned[neighbor->val]);
-        }
-        return cloned[node->val];
-    }
-};
+ public:
+  unordered_map<int, Node*> cloned;  // [1]
+  Node* cloneGraph(Node* node) {
+    if (!node) return nullptr;
+    // have visited
+    if (cloned.count(node->val)) return cloned[node->val];
 
+    cloned[node->val] = new Node(node->val);
+
+    // check adjacent nodes
+    for (Node* nb : node->neighbors) {
+      Node* cloned_nb = cloneGraph(nb);  // 2
+      cloned[node->val]->neighbors.push_back(cloned_nb);
+    }
+    return cloned[node->val];
+  }
+};
 
 /*
 // Definition for a Node.
@@ -45,26 +42,22 @@ public:
 */
 
 class Solution {
-public:
-    unordered_map<int, Node*> cloned;
-    Node* cloneGraph(Node* node) {
-        if (!node) return nullptr;
-        dfs(node);
-        return cloned[1];
+ public:
+  unordered_map<int, Node*> cloned;
+  Node* cloneGraph(Node* node) {
+    if (!node) return nullptr;
+    dfs(node);
+    return cloned[1];
+  }
+
+  void dfs(Node* node) {
+    if (cloned.find(node->val) != cloned.end()) return;
+
+    Node* new_node = new Node(node->val);
+    cloned[node->val] = new_node;
+    for (Node* neighbor : node->neighbors) {
+      dfs(neighbor);
+      new_node->neighbors.push_back(cloned[neighbor->val]);
     }
-    
-    void dfs(Node* node) {
-        if (cloned.find(node->val) != cloned.end())
-            return;
-        
-        Node* new_node = new Node(node->val);
-        cloned[node->val] = new_node;
-        for (Node* neighbor : node->neighbors) {
-            dfs(neighbor);
-            new_node->neighbors.push_back(cloned[neighbor->val]);
-        }
-    }
+  }
 };
-
-
-

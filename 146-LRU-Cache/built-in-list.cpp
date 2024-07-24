@@ -1,4 +1,6 @@
-/* More elegant */
+/* More elegant 
+    doubly linked list!
+*/
 class LRUCache {
 public:
     int capacity;
