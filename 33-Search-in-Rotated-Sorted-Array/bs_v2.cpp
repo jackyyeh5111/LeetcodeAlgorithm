@@ -1,30 +1,48 @@
-class Solution2 {
+/* 
+    [0, 1], target = 1
+     m
+     l 
+        r
+
+    Find which left or right portion is sorted, then check if target belong to that portion.
+
+    case 1:
+        [4,5,6,7,0,1,2], target = 0
+               m
+         l
+                     r
+    case 2:
+        [6,7,0,1,2,4,5], target = 0
+               m
+         l
+                     r
+    
+ */
+class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int N = nums.size();
-        int left = 0, right = N - 1;
+        int left = 0, right = nums.size() - 1;
         while(left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target)
                 return mid;
-            
-            // Here we have to use <= instead of <
-            bool left_cont = nums[left] <= nums[mid] ? true : false; 
-            if (left_cont) {
+            // left portion is sorted
+            else if (nums[left] <= nums[mid]) {
                 if (target >= nums[left] && target <= nums[mid])
                     right = mid;
                 else
                     left = mid + 1;
             }
+            // right portion is sorted
             else {
-                // Here we have to use > instead of >=
-                if (target > nums[mid] && target <= nums[right])
+                if (target >= nums[mid] && target <= nums[right])
                     left = mid + 1;
                 else
                     right = mid;
             }
         }
-        return target == nums[left] ? left : -1;
+
+        return nums[left] == target ? left : -1;
     }
 };
 

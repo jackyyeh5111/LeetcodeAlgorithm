@@ -44,13 +44,47 @@ stringstream ss;
 ss << "year" << ' ' << 2017;              // accept char, string and number(int, float, double)
 ss.str();                                 // convert sstream to string
 
+/* split */
+vector<string> split(const string &str, char delimiter) {
+    vector<string> tokens;
+    int start = 0;;
+    for (int i = 0; i < str.size(); i++) {
+        if (str[i] == delimiter) {
+            tokens.push_back(str.substr(start, i - start));
+            start = i + 1;
+        }
+    }
+    tokens.push_back(str.substr(start));
+    return tokens;
+}
+
+/* split 2 */
+#include <sstream>
 string input = "abc,def,ghi";             // to implement the function like split(",") in Java
-istringstream ss(input);
+stringstream ss(input);                   // equal to ss << input
 string token;
 
-while(getline(ss, token, ',')) {            // if the delimiter is '\' we should use '\\' to explicitly specify the delimiter
+while(getline(ss, token, ',')) {
     cout << token << '\n';
 }
+
+/* Building Complex Strings */
+ss << "Name: " << name << ", Age: " << age;
+std::string result = ss.str();
+
+/* convert type conveniently */
+std::string data = "42 3.14 Hello";
+std::stringstream ss(data);
+
+int intValue;
+double doubleValue;
+std::string strValue;
+
+ss >> intValue >> doubleValue >> strValue;
+
+std::cout << "Integer: " << intValue << std::endl;
+std::cout << "Double: " << doubleValue << std::endl;
+std::cout << "String: " << strValue << std::endl;
 
 /********************** array ***************************/
 int nums[10] = {0};
@@ -91,6 +125,9 @@ struct cmp{
     }
 } cmpObj;
 sort(v.begin(), v.end(), cmpObj);   // sort with self-defined comparator
+
+std::cout << "The smallest element is " << *std::min_element(myints,myints+7) << '\n';
+std::cout << "The largest element is "  << *std::max_element(myints,myints+7) << '\n';
 
 /********************** unordered_map, map, unordered_set, set ***************************/
 #include<unordered_map>
@@ -152,6 +189,7 @@ pq.push(val);
 pq.top();                                      // access first element
 pq.pop();                                      // pop out first value, does not return element !!!!!
 
+/* build min heap!!! */
 struct cmp{
   bool operator()(Node* a, Node* b){
     return a -> x > b -> x;                    // build min heap               
@@ -178,11 +216,13 @@ cout << pr.second << endl;        // access second value
 #include<stdlib.h>
 #include<time.h>
 srand((unsigned)time(0));  // initialize rand seed
-(rand()%(b-a))+ a;         // random number from [a, b)
+(rand()%(b-a))+ a;         // random number from [a, b) -> open loop
 (rand()%(b-a+1))+ a;       // random number from [a, b]
-(rand()%(b-a))+ a + 1;     // random number from (a, b)
+(rand()%(b+a)) - a;         // random number from [-a, b)
 rand() % len + a;          // [a, len + a)
-rand()/double(RAND_MAX);   // random floating number from [0.0, 1.0]
+rand()/double(RAND_MAX);   // random floating number from [0.0, 1.0] -> closed loop
+rand()/double(RAND_MAX) * (2 * a) - a;   // random floating number from [-a, a]
+
 // c++ 11 supports default_random_engine
 default_random_engine eng;
 eng() % len;               // [0, len)
@@ -272,3 +312,4 @@ public:
 Node* p = new Node(x, y);
 p -> x;                   // access class members;
 p -> print();             // access class member function;
+

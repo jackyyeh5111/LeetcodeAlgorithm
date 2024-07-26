@@ -1,91 +1,6 @@
 # LeetcodeAlgorithm
 Practice of leetcode
 
-## Question
-- How to tell which method is the most suitable for the question? dp or divide and conquer?
-
-## Note
-- lower_bound & upper_bound (範例：[315.cpp](315.cpp))
-    ```
-    【用途】針對「已經排序」的資料進行binary search。
-    vector <int> v;
-    sort(v.begin(), v.end());
-    lower_bound: 找出vector中「大於或等於」val的「最小值」的位置：
-    auto it = lower_bound(v.begin(), v.end(), val);
-    upper_bound: 找出vector中「大於」val的「最小值」的位置：
-    auto it = upper_bound(v.begin(), v.end(), val);
-    ```
-- range sum / subarray sum
-    ```
-    nums: XXXXXXXXXX
-          i    j
-    - 如果 nums start from 1 idx
-      要求 [i, j] range sum，需直覺想到 presum[j] - presum[i-1]
-    - 如果 nums start from 0 idx (最好不要這樣，idx不好對應)
-      要求 [i, j] range sum，需直覺想到 presum[j+1] - presum[i]
-    ```
-- 區間是有排列，欲求有多少個 element in [lower, upper] 區間
-    ```c++
-    for (int i = start; i <= middle; i++) {
-        auto a = lower_bound(presums.begin() + middle + 1,
-                            presums.begin() + end + 1, presums[i] + lower_);
-        auto b = upper_bound(presums.begin() + middle + 1,
-                            presums.begin() + end + 1, presums[i] + upper_);
-        count += b - a;
-    }
-    ```
-- Longest/shortest substring/subarray 直覺想到 two pointers, dp
-- unordered_map default int value is 0.
-    ```c++
-    unordered_map<int, int> um;
-    if (um[2]) { do sth. } // 此刻 um[2] == 0
-    ```
-- To get previous/next iterator
-    ```
-    next(it)
-    prev(it) 
-    ```
-- C++ std::set is implemented with BST. Its lowerbound/upperbound is implemented with binary search.
-- Whenever encounter index operation like the following
-    ```c++
-    for (int i= ...)
-        for (int j= ...)
-            `dp[i-1][j+nums[i]]`
-    ```
-    Please be careful about index boundary to avoid segmentation error.
-- circular 
-    - 直覺可以用 modulo operator
-    - We can split case to discuss that pick the first element or not like [198.cpp](198.cpp)
-- subarray v.s. subsequence
-    - subarray: 直覺可能用 dp, two pointers, divideAndConquer 來解
-    - subsequence: 直覺可能用 dp, dfs 來解
-
-## Basic Concept 
-### Sort
-- [quicksort](tools/quicksort.cpp)
-- Subsets | [78.cpp](78.cpp)
-### Search
-- [binary_search](tools/binary_search.cpp)
-- [level_order_traversal](tools/level_order_traversal.cpp)
-### Data Structure
-- [min_heap](tools/min_heap.cpp)
-### Misc
-- [Catalan number](https://hackmd.io/4EJpycUQTv2dnqzVr8uTvA)
-- [Quick select](https://hackmd.io/VtJkono6QzK5JxNarnQ5mw)
-
-## Constraint checking
-[Time and Space Complexity mapping](https://www.hackerearth.com/practice/basic-programming/complexity-analysis/time-and-space-complexity/tutorial/)
-1. array 
-    1. 是否 sorted
-    2. 是否存在 duplicate number
-    3. 是否有 negative number
-    4. 是否有 upper_bound, lower_bound
-2. overflow, underflow
-3. graph
-    1. Node.val is unique for each node.
-    2. There are no repeated edges and no self-loops in the graph.
-    3. The Graph is connected and all nodes can be visited starting from the given node.
-
 ## Two pointers
 - Longest/shortest substring/subarray 直覺想到 two pointers, dp
 
@@ -94,13 +9,27 @@ Practice of leetcode
 | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||   |<3|
 | 904| Fruit Into Baskets|[904.cpp](904.cpp)|M| 錯超多次||  <3|
 
-## Pattern: Subsets，子集类型，一般都是使用多重DFS
+## Pattern: Subsets
+Usually solved by DFS
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 78| Subsets|[78.cpp](78.cpp)|Medium|recursive,iteration, bit manipulation|  |
 | 416| Partition Equal Subset Sum|[416.cpp](416.cpp)|Medium|recursive, dp, bit manipulation|   | <3 |
 
 ## Binary search
+```
+vector <int> v;
+sort(v.begin(), v.end());
+// lower_bound: 找出vector中「大於或等於」val的「最小值」的位置：
+// return the iterator pointing to the first element >= target
+auto it = lower_bound(v.begin(), v.end(), val);
+
+// upper_bound: 找出vector中「大於」val的「最小值」的位置：
+// return the iterator pointing to the first element > target
+auto it = upper_bound(v.begin(), v.end(), val);
+```
+
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 744| Find Smallest Letter Greater Than Target|[744.cpp](744.cpp)|Easy| binary search|  |
@@ -130,7 +59,7 @@ Practice of leetcode
 | 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort, quickselect, binary search|  <3| 
 | 215| Kth Largest Element in an Array|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
 
-## Pattern: K-way merge，多路归并
+## Pattern: K-way merge
 - 该问题的输入是排好序的数组，链表或是矩阵
 - 如果问题让咱们合并多个排好序的集合，或是需要找这些集合中最小的元素
 
@@ -146,7 +75,18 @@ Practice of leetcode
 | 75| Sort Colors|[75.cpp](75.cpp)| Medium| |  | 
 | 148| Sort List|[148.cpp](148.cpp)| Medium| | n | 
 
-## Tree
+## Graph
+### Topological Sort
+[link](https://leetcode.com/tag/topological-sort/)
+
+| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
+| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
+| 207| Course Schedule|[207.cpp](207.cpp)|Medium| |  | <3|
+| 210| Course Schedule II|[210.cpp](210.cpp)|Medium| |  | |
+| 310| Minimum Height Trees|[310.cpp](310.cpp)|Medium| 不要從中心往外走，反過來從外走向裡面, level traversal|  |  <3|
+| 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
+
+### Tree
 - BST 用 inorder traversal 一定是排序的
 - edges.length == n - 1
 - Tree 是沒有 cycle 的，可以結合 topological sort
@@ -169,16 +109,6 @@ Practice of leetcode
 | 49| Group Anagrams|[49.cpp](49.cpp)|M| | | <3|
 | 1923| Longest Common Subpath|[1923.cpp](1923.cpp)|H| | | |
 
-
-## Topological Sort
-[link](https://leetcode.com/tag/topological-sort/)
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 207| Course Schedule|[207.cpp](207.cpp)|Medium| |  | <3|
-| 210| Course Schedule II|[210.cpp](210.cpp)|Medium| |  | |
-| 310| Minimum Height Trees|[310.cpp](310.cpp)|Medium| 不要從中心往外走，反過來從外走向裡面, level traversal|  |  <3|
-| 269| Alien Dictionary|[269.cpp](269.cpp)|Medium| |  | |
 
 ## Bit Manipulation
 ref: [A summary: how to use bit manipulation to solve problems easily and efficiently](https://leetcode.com/problems/sum-of-two-integers/solutions/84278/a-summary-how-to-use-bit-manipulation-to-solve-problems-easily-and-efficiently/?orderBy=hot)
@@ -361,7 +291,7 @@ for (int len = 2; len <= n; len++) {
 | 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
 | 312| Burst Balloons|[312.cpp](312.cpp)|H| | | |
 
-### 状态压缩
+### Status compression 状态压缩
 - 記著，只要狀態數量皆小於 32 bits 能夠表示的最大數，那麼可以用 `int` 來當作 bit mask 紀錄狀態，節省space
 
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
@@ -410,153 +340,6 @@ for (int i = 0; i < coins.size(); i++) {
 | 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
 | 5| Longest Palindromic Substring|[5.cpp](5.cpp)|M| 還有另一個O(n)的演算法還沒搞懂| y| <3 |
 
-## Graph
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 133| Clone Graph|[133.cpp](133.cpp)|M| | | |
-
-## Note
-2022.03.29
-- [904.cpp](904.cpp)
-    - Mistype `basket[fruits[right]]` to `basket[right]`.
-2022.03.30
-- [78.cpp](78.cpp)
-    - Mistype `i >> j & 1` to `i >> j`.
-2022.04.01
-- [496.cpp](496.cpp)
-    ```c++
-    stack.top()
-    /* Do something */
-    stack.pop() // Always forget!
-    ```
-2022.04.04
-- [300.cpp](300.cpp)
-    - Mistype `dp[i] = max(dp[i], dp[j] + 1)` to `dp[i] = dp[j] + 1`. We have to check whenever updating dp array.
-2022.04.08
-- [1092.cpp](1092.cpp)
-    - Mistype less to less and equal symbol
-        ```c++
-        /* error while sub_str is 'ab' */
-        for (int i = 0; i <= len / 2; i++) { // --> for (int i = 0; i < len / 2; i++)
-            if (sub_str[i] != sub_str[len - 1 - i]) ++num_change;
-        }
-
-        ```
-2022.04.10
-- [494.cpp](494.cpp)
-    - Change iter variable inside iteration.
-    ```c++
-    // Do not change iter variable inside iteration
-    for (int i = 1; i <= n; i++) {
-        for (int j = -sum; j <= sum; j++) {
-            j += offset; // wrong here
-            ...
-        }
-    }
-    ```
-2022.04.11
-- [494.cpp](494.cpp)
-    - ±0 value is the same, 若以下操作會少考慮到其中一個情況
-    ```c++
-    if (idx == nums.size() - 1) {
-      if (target == nums[idx]) {
-        ...
-      }
-      else if (target == -nums[idx]) {
-        ...
-      }
-    }
-    ```
-2022.04.13
-- [322.cpp](322.cpp)
-    - integer overflow happend!!
-    ```c++
-    class Solution {
-    public:
-        int coinChange(vector<int>& coins, int amount) {
-            int n = coins.size();
-            vector<int> dp(amount+1, INT_MAX);
-            ...
-            for (int i=1; i <= n; i++) {
-                for (int j=coins[i]; j <= amount; j++) {
-                    dp[j] = min(dp[j], dp[j-coins[i]] + 1);
-                }
-            }
-            
-            return dp[amount] == INT_MAX ? -1 : dp[amount];
-        }
-    };
-    ```
-2022.04.21
-- [1239.cpp](1239.cpp) 
-    - ["aa","bb"] 沒考慮到字串內字母重複的狀況
-    
-2022.04.23
-- [315.cpp](315.cpp) 
-    Forget to plus one to iterator (c++ 左閉右開)
-    ```c++
-    auto pos = lower_bound(sorted_num.begin() + mid + 1,
-                           sorted_num.begin() + end + 1, nums[i]);
-    // Mistype ==>
-    auto pos = lower_bound(sorted_num.begin() + mid + 1,
-                           sorted_num.begin() + end, nums[i]);
-    ```
-2022.04.27
-- [327.cpp](327.cpp) 
-現在是對 presums 做運算，當 start == end 無法定義一組 index pair (i, j)
-
-2022.05.19
-- [21.cpp](21.cpp) 
-    Pointers do not initialize object mem
-    ```c++
-    ListNode dummy;
-    ListNode *tail = &dummy;
-    
-    // Mistype ==>
-    ListNode *dummy;
-    ListNode *tail = dummy;
-    ```
-2023.01.22
-- [75-Sort-Colors/75-for-loop.cpp](75-Sort-Colors/75-for-loop.cpp)
-if condition 如果放在 for loop 開頭，會更直覺，不然 index ++i 很容易忘了計算 
-Note:
-    - 放在結尾是 if (i == p2) break;
-    - 放在開頭是 if (i > p2) break;
-
-2023.03.25
-- 207. Course Schedule
-    - 如果要對「每一個」元素都計數，那請用 vector<int> 來當作計數器，而不要用 unordered_map，因為這樣還需要額外 for loop 初始化每個元素的計數
-        ```
-        // unordered_map as counter
-        unordered_map<int, int> in_degrees;
-        for (int i=0; i < numCourses; ++i) in_degrees[i] = 0;
-
-        // vector as counter
-        vector<int> in_degrees(numCourses, 0);
-        ```
-    - 從 queue 取出元素時，請使用 front()，因為 queue 是 FIFO
-        ```
-        int ele = queue.front(); // correct
-        int ele = queue.back(); // incorrect
-        queue.pop();
-        ```
-2023.04.11
-- 1143. Longest Common Subsequence
-dp 只需要在意當下狀態的計算，`dp[i-1][j-1]` 就已經計算過了。
-```c++
-dp[i][j] = max(max(dp[i][j-1], dp[i-1][j]), dp[i-1][j-1]); // redundant
-dp[i][j] = max(dp[i][j-1], dp[i-1][j]); // correct
-
-```
-
-## Interview Question
-1. 416 | Partition Equal Subset Sum | Medium
-2. | 856| Score of Parentheses|[856.cpp](856.cpp)| Medium| Stack, stack as tree| | <3 |
-3. | 496| Next Greater Element I|[496.cpp](496.cpp)| Easy| Stack|  | 
-    follow-up:
-    1. | 503| Next Greater Element II|[503.cpp](503.cpp)| Medium| Stack| 
-4. | 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort|  <3| 
-4. | 209| Minimum Size Subarray Sum|[209.cpp](209.cpp)|M||  <3 |
-3. 1818
-4. 368
-5. 327 very hard
+## Design
+- hashmap & array
+    - 380. Insert Delete GetRandom O(1)
