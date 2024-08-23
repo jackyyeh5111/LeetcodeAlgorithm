@@ -86,6 +86,27 @@ std::cout << "Integer: " << intValue << std::endl;
 std::cout << "Double: " << doubleValue << std::endl;
 std::cout << "String: " << strValue << std::endl;
 
+// Searches the string for the first/last character that matches "any" of the characters specified in its arguments.
+// string::find_first_of, string::find_last_of
+void SplitFilename (const std::string& str)
+{
+  std::cout << "Splitting: " << str << '\n';
+  std::size_t found = str.find_last_of("/\\"); // multiple characters to match
+  std::cout << " path: " << str.substr(0,found) << '\n';
+  std::cout << " file: " << str.substr(found+1) << '\n';
+}
+
+int main ()
+{
+  std::string str1 ("/usr/bin/man");
+  std::string str2 ("c:\\windows\\winhelp.exe");
+
+  SplitFilename (str1);
+  SplitFilename (str2);
+
+  return 0;
+}
+
 /********************** array ***************************/
 int nums[10] = {0};
 [array to vector]  vector<int> vec(&nums[0], &nums[10]);
@@ -258,6 +279,20 @@ for (int i=1; i<10; ++i) vec.push_back(i);  // 1 2 3 4 5 6 7 8 9
 rotate(vec.begin(),vec.begin()+3,vec.end());// 4 5 6 7 8 9 1 2 3
 
 /************************ Node ***************************/
+
+// this-> is important!!! Do not skip. Do not know why.
+struct Node {
+    int key;
+    int value;
+    Node *next;
+    Node(int key=-1, int value=-1) {
+        this->key = key;
+        this->value = value;
+        this->next = nullptr;
+    }
+};
+
+// this-> is important!!! Do not skip. Do not know why.
 class ListNode{
 public:
     int val;
@@ -313,3 +348,39 @@ Node* p = new Node(x, y);
 p -> x;                   // access class members;
 p -> print();             // access class member function;
 
+
+// tree structure
+- bst
+
+                       [6]  
+                /              \
+             [2]                 [8]   
+           /     \             /     \
+        [0]       [4]       [7]       [9]    
+
+- n-ary tree
+                 [           ]
+             /         |         \
+           [1]        [2]        [3]             
+         /     \
+      [4]      [5]
+- skew tree
+                 [3]  
+                / 
+             [2] 
+            /
+         [1]
+- trie
+["cat", "dig", "dog", "dogs"]
+Each node represents a character or a part of a string. The root node represents starting point of prefix tree, represneting an empty string
+For each end of a string, we can add a flag "end" to the node.
+
+                    [ root ]
+                   /         \
+               [d]            [c]
+             /      \           \   
+          [o]       [i]          [a]       
+            \          \            \   
+     end -> [g]        [g] <- end    [t]  <- end 
+              \
+       end -> [s]

@@ -1,24 +1,44 @@
+struct TrieNode {
+    bool isWord;
+    unordered_map<char, TrieNode*> children;
+    TrieNode() : isWord(false), children(unordered_map<char, TrieNode*>()) {}
+};
+
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
-        unordered_set<string> us(wordDict.begin(), wordDict.end());
-        int N = s.size();
-        vector<bool> dp(N);
-        dp[0] = true;
-        for (int i = 0; i < N; i++) {
-            for (int j = i; j < N; j++) {
-                if (!dp[i]) 
-                    continue;
-                string substr = s.substr(i, j - i + 1);
-                if (us.find(substr) == us.end())
-                    continue;
-                dp[j + 1] = true;
+        TrieNode* root = new TrieNode();
+        for (string word : wordDict) {
+            TrieNode* curr = root;
+            for (char c : word) {
+                if (curr->children.find(c) == curr->children.end()) {
+                    curr->children[c] = new TrieNode();
+                }
+                curr = curr->children[c];
+            }
+
+            curr->isWord = true;
+        }
+
+        vector<bool> dp(s.length());
+        for (int i = 0; i < s.length(); i++) {
+            if (i == 0 || dp[i - 1]) {
+                TrieNode* curr = root;
+                for (int j = i; j < s.length(); j++) {
+                    char c = s[j];
+                    if (curr->children.find(c) == curr->children.end()) {
+                        // No words exist
+                        break;
+                    }
+
+                    curr = curr->children[c];
+                    if (curr->isWord) {
+                        dp[j] = true;
+                    }
+                }
             }
         }
-        return dp[N];
+
+        return dp[s.length() - 1];
     }
 };
-/* 
-    leetcode
-    T        T
- */

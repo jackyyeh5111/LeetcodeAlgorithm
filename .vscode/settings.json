@@ -87,6 +87,17 @@
         "stop_token": "cpp",
         "thread": "cpp",
         "cfenv": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "charconv": "cpp",
+        "span": "cpp",
+        "source_location": "cpp",
+        "format": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "shared_mutex": "cpp",
+        "stdfloat": "cpp",
+        "any": "cpp",
+        "csignal": "cpp",
+        "cplusplus-cheet-sheet": "c"
     }
 }

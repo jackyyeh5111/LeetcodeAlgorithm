@@ -25,6 +25,22 @@ ref:
   Input: s = "()(())"
   Output: 4
  */
+
+/* 
+  cur = 3
+  ((())()) = 6
+  stk: 0
+
+  ( S1+S2+S3 )
+  see '(' => 
+    1. push score into stack
+    2. score = 0
+  see ')' =>
+    1. update score
+    2. add stack top score
+    3. stack pop
+ 
+ */
 class Solution3 {
  public:
   int scoreOfParentheses(string s) {

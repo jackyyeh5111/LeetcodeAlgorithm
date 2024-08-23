@@ -30,8 +30,11 @@ int main() {
         double fpx = f_prime(x);
 
         // Update the estimate using Newton-Raphson formula
-        double x1 = x - fx / fpx;
+        // double x1 = x - fx / fpx;
+        float lr = 0.01;
+        double x1 = x - lr * fx;
 
+        std::cout << "error: " << std::fabs(x1 - x) << std::endl;
         // Check for convergence
         if (std::fabs(x1 - x) < tol) {
             std::cout << "Root found: " << std::setprecision(10) << x1 << std::endl;

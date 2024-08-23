@@ -48,16 +48,6 @@ auto it = upper_bound(v.begin(), v.end(), val);
 | 901| Online Stock Span|[901.cpp](901.cpp)| Medium| Stack| | |
 | 907| Sum of Subarray Minimums|[907cpp](907cpp)| Medium| Double Stack to decide number of subarray | | |
 
-## Top K Elements
-注意这种模式下，咱们不需要去排序数组，因为堆具有这种良好的局部有序性，这对咱们需要解决问题就够了
-- 用 heap (In c++, By default a max heap is created ordered by first element of pair.)
-- 如果你需要求最大/最小/最频繁的前K个元素
-- 如果你需要通过排序去找一个特定的数
-
-| #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
-| ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
-| 347| Top K Frequent Elements|[347.cpp](347.cpp)| Medium| Heap, bucket sort, quickselect, binary search|  <3| 
-| 215| Kth Largest Element in an Array|[215.cpp](215.cpp)| Medium| Heap, bucket sort|  | 
 
 ## Pattern: K-way merge
 - 该问题的输入是排好序的数组，链表或是矩阵
@@ -339,7 +329,70 @@ for (int i = 0; i < coins.size(); i++) {
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 516| Longest Palindromic Subsequence|[516.cpp](516.cpp)|M| | | |
 | 5| Longest Palindromic Substring|[5.cpp](5.cpp)|M| 還有另一個O(n)的演算法還沒搞懂| y| <3 |
+- 215. Kth Largest Element in an Array
+
+## Array
+### Two pointers
+- 75. Sort Colors
+#### binary search 
+ref: [binary search](https://www.notion.so/jackyyeh/Binary-Search-0a7341ffbb7f4b468b42c7d98613b1b6)
+- 15. 3Sum
+- 16. 3Sum Closest
+- 259. 3Sum Smaller
+- 153. Find Minimum in Rotated Sorted Array
+- 33. Search in Rotated Sorted Array
+- 347-Top K Frequent Elements
+- 2557-Maximum Number of Integers to Choose From a Range II
+
+### Prefix sum
+- 560. Subarray Sum Equals K (hashmap)
+    - 437. Path Sum III (tree extension)
+
+### Divide and conquer
+Divide and Conquer 常常會根據小區間排序，通常可以用 merge sort 來加速
+- 327. Count of Range Sum
+- 315. Count of Smaller Numbers After Self
+
+## Top K Elements
+注意这种模式下，咱们不需要去排序数组，因为堆具有这种良好的局部有序性，这对咱们需要解决问题就够了
+- 如果你需要求最大/最小/最频繁的前K个元素
+- 如果你需要通过排序去找一个特定的数
+- Algo
+    1. heap
+    2. Quick select: average:O(n) / worst: O(n^2) ([ref](https://www.notion.so/jackyyeh/Quick-Sort-51e71fa025f84187b689d05e614ba6ef))
+    3. bucket sort?
+
+Problems:
+- 347. Top K Frequent Elements
+- 215. Kth Largest Element in an Array:  Heap, bucket sort
+
+## Graph
+### Topological Sort
+- 207. Course Schedule
+### Tree
+```
+BST 用 inorder traversal 一定是排序的
+edges.length == n - 1
+Tree 是沒有 cycle 的，可以結合 topological sort
+```
+- record parent nodes:
+    - 863. All Nodes Distance K in Binary Tree
+- cycle check:
+    - 1192. Critical Connections in a Network
+- BST
+    - 99. Recover Binary Search Tree
+    - dp:
+        - 96. Unique Binary Search Trees
+- bottom up
+    - 98. Validate Binary Search Tree
+    - 110. Balanced Binary Tree
+- Iterative traversal ([link](https://www.notion.so/jackyyeh/Tree-Traversal-4ce368e87c854801b6199ebb47ac90c3))
+
+## Greedy
+- 763. Partition Labels
 
 ## Design
 - hashmap & array
     - 380. Insert Delete GetRandom O(1)
+- Data structure
+    - 155. Min Stack

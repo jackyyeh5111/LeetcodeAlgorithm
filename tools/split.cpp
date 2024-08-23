@@ -3,42 +3,39 @@
 #include <iostream>
 
 using namespace std;
-// vector<string> split(string s, char delimiter) {
-//     vector<string> tokens;
-//     int start = 0;
-//     for (int i = 0; i < s.size(); i++) {
-//         char ch = s[i];
-//         if (ch == delimiter) {
-//             tokens.push_back(s.substr(start, i - start));
-//             start = i + 1;
-//         }
-//     }
-//     tokens.push_back(s.substr(start, s.size() - start));
-//     return tokens;
-// }
 
 vector<string> split(const string &str, char delimiter) {
+    int start = 0;
     vector<string> tokens;
-    int start = 0;;
-    for (int i = 0; i < str.size(); i++) {
-        if (str[i] == delimiter) {
-            tokens.push_back(str.substr(start, i - start));
-            start = i + 1;
-        }
+    for (int end = 0; end < str.size(); end++) {
+        if (str[end] != delimiter) continue;
+        string token = str.substr(start, end - start);
+        tokens.push_back(token);
+        start = end + 1;
     }
-    tokens.push_back(str.substr(start));
+
+    // handle the last token
+    string token = str.substr(start);
+    tokens.push_back(token);
     return tokens;
 }
 
 int main() {
-    cout << "Your input: ";
-    
-    string input;
-    getline(cin, input);
-    int num_input = stoi(input);
+    cout << "# input value: ";
+    string num_input;
+    getline(cin, num_input);
 
-    getline(cin, input);
-    vector<string> tokens = split(input, ' ');
-    print(tokens);
+    cout << "array to split: ";
+    string arr;
+    getline(cin, arr);
+    vector<string> split_arr = split(arr, ',');
+
+    // print out
+    for (int i = 0; i < split_arr.size(); i++) {
+        cout << split_arr[i];
+        if (i != split_arr.size() - 1) cout << ' ';
+    }
+    cout << endl;
+
     return 0;
 }
