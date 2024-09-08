@@ -1,20 +1,27 @@
-/*
-    O(m^2 * n), Use hashset, to insert all possible combinations adding a
-   character "*". For example: If dict[i] = "abc", insert ("*bc", "a*c" and
-   "ab*").
- */
 class Solution {
- public:
-  bool differByOne(vector<string>& dict) {
-    unordered_set<string> Set;
-    for (string str : dict) {
-      for (int i = 0; i < str.size(); i++) {
-        string encoded = str;
-        encoded[i] = '*';
-        if (Set.count(encoded)) return true;
-        Set.insert(encoded);
-      }
+public:
+    bool differByOne(vector<string>& dict) {
+        unordered_set<string> encoded_set;
+        for (const string& str : dict) {
+            for (int idx = 0; idx < str.size(); idx++) {
+                string encoded = str;
+                encoded[idx] = '*';
+                if (encoded_set.count(encoded)) return true;
+                encoded_set.insert(encoded);
+            }
+        }
+        return false;
     }
-    return false;
-  }
 };
+
+/* 
+    Approach 1:
+        sort and check => O(nlogn * m)
+ 
+    Approach 2:
+        hashmap:
+            *bcd: [abcd]
+            a*cd: [abcd]
+            ab*d: [abcd]
+            abc*: [abcd]
+ */

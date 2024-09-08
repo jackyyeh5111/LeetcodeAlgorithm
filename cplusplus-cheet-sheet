@@ -28,7 +28,15 @@ str.substr(start, length);                    // [start, start + length - 1]    
 
 str.append("abc");
 str.append(1, 'a');                          // append character
-size_t found = str.find("ab");               // return pos where "ab" first occur in str.  NOTE: the return pos is size_t !!!
+
+
+str.pop_back();  // "hello!" -> "hello"  Erases the last character of the string effectively.
+
+// find matched string
+size_t found = str.find("ab", start_pos);               // return pos where "ab" first occur in str.  NOTE: the return pos is size_t !!!
+
+// find matched character
+size_t found = str.find('#', start_pos);               // return pos where '# first occur in str.
 if (found!=string::npos)  cout << "found";   // 
 
 str.erase(2);                                // erase substring starting from 2.   [2, )    str changes !!!!!!!!!  str = "12"
@@ -45,16 +53,41 @@ ss << "year" << ' ' << 2017;              // accept char, string and number(int,
 ss.str();                                 // convert sstream to string
 
 /* split */
+// double while loop, not having to handle the last token
+vector<string> split(const string& str, char delimiter) {
+    vector<string> tokens;
+    int start = 0, end = 0;
+    while(end < str.size()) {
+        // keep going until char euqals delimiter or encounter '\n'
+        while(end < str.size() && str[end] != delimiter)
+            end++;
+        // ignoring continuous delimiter
+        // ex: 1,,2,,,,,3 -> 1 2 3 
+        if (end - start > 0)
+            tokens.push_back(str.substr(start, end - start));
+        end++;
+        start = end;
+    }
+
+    return tokens;
+}
+
+
+/* split */
 vector<string> split(const string &str, char delimiter) {
     vector<string> tokens;
-    int start = 0;;
-    for (int i = 0; i < str.size(); i++) {
-        if (str[i] == delimiter) {
-            tokens.push_back(str.substr(start, i - start));
-            start = i + 1;
-        }
+    int end = 0;
+    while(end < str.size()) {
+        int start = end;
+        // keep going until run into '\n' or delimiter
+        while(end < str.size() && str[end] != delimiter)
+            end++;
+
+        // skip empty string
+        if (start != end)
+            tokens.push_back(str.substr(start, end - start));
+        end++;
     }
-    tokens.push_back(str.substr(start));
     return tokens;
 }
 
@@ -150,6 +183,14 @@ sort(v.begin(), v.end(), cmpObj);   // sort with self-defined comparator
 std::cout << "The smallest element is " << *std::min_element(myints,myints+7) << '\n';
 std::cout << "The largest element is "  << *std::max_element(myints,myints+7) << '\n';
 
+// remove duplicate in banned vector
+set<int> tmp(banned.begin(), banned.end());
+banned.assign(tmp.begin(), tmp.end());
+
+// argmax, argmin
+int argmax = std::distance(myint.begin(), std::max_element(myint.begin(), myint.end()));
+int argmin = std::distance(myint.begin(), std::min_element(myint.begin(), myint.end()));
+
 /********************** unordered_map, map, unordered_set, set ***************************/
 #include<unordered_map>
 unordered_map<int, string> Map;                         // O(1) or constant time complexity
@@ -209,6 +250,10 @@ priority_queue<int> pq;                        // max heap by default
 pq.push(val);
 pq.top();                                      // access first element
 pq.pop();                                      // pop out first value, does not return element !!!!!
+
+priority_queue<int> max_heap; // max heap
+priority_queue<int, vector<int>, std::greater<int>> min_heap; // min heap
+    
 
 /* build min heap!!! */
 struct cmp{
@@ -315,15 +360,13 @@ public:
     }
 };
 
-class TrieNode{
-public:
-    char ch; 
-    bool isWord;
-    TrieNode* next[26];
-    TrieNode(char ch){
-        this->ch = ch;
-        this->isWord = false;
-        memset(next, 0, sizeof(next));
+class TrieNode {
+public: 
+    int num_branch = 26;
+    vector<TrieNode*> next;
+    bool is_end = false;
+    TrieNode() {
+        next.resize(num_branch, nullptr);
     }
 };
 
@@ -348,8 +391,20 @@ Node* p = new Node(x, y);
 p -> x;                   // access class members;
 p -> print();             // access class member function;
 
+/* std algorithm */
+
+// count_if
+auto isMaxFreq = [max_freq](const auto &pair){return pair.second == max_freq;};
+int num_char_max_freq = count_if(char_freq.begin(), char_freq.end(), isMaxFreq);
+
+// any_of
+if ( std::any_of(foo.begin(), foo.end(), [](int i){return i<0;}) )
+    std::cout << "There are negative elements in the range.\n";
+
 
 // tree structure
+Think about empty tree, leaf node, skewed tree, bst or not, self-cycle or not
+
 - bst
 
                        [6]  
@@ -359,18 +414,31 @@ p -> print();             // access class member function;
         [0]       [4]       [7]       [9]    
 
 - n-ary tree
+
                  [           ]
              /         |         \
            [1]        [2]        [3]             
          /     \
       [4]      [5]
 - skew tree
+
                  [3]  
                 / 
              [2] 
             /
          [1]
 - trie
+
+class TrieNode {
+public: 
+    int num_branch = 26;
+    vector<TrieNode*> next;
+    bool is_end = false;
+    TrieNode() {
+        next.resize(num_branch, nullptr);
+    }
+};
+
 ["cat", "dig", "dog", "dogs"]
 Each node represents a character or a part of a string. The root node represents starting point of prefix tree, represneting an empty string
 For each end of a string, we can add a flag "end" to the node.
@@ -384,3 +452,75 @@ For each end of a string, we can add a flag "end" to the node.
      end -> [g]        [g] <- end    [t]  <- end 
               \
        end -> [s]
+- topological sort
+
+    0 -> 1 -> 2 -> 3
+              ˅    ^ 
+              4 -> 5
+
+- disjoint set (union find)
+The Union-Find algorithm, also known as Disjoint Set Union (DSU), is a data structure that efficiently handles dynamic connectivity problems by managing a collection of disjoint sets. It supports two primary operations: Find and Union. 
+1. The Find operation determines the representative or root of the set containing a particular element, allowing us to check if two elements are in the same set. 
+2. The Union operation merges two sets by linking their roots, effectively combining them into one.
+
+## init ##
+  nodes: 1 2 3 4 5 6
+parents: 1 2 3 4 5 6
+
+## connected components ##
+  nodes: 1 2 3 4 5 6
+parents: 1 1 1 2 5 5
+
+                 [1]
+               /     \
+            [2]      [3]
+            /
+          [4]
+
+                 [5]
+                  |     
+                 [6]   
+
+## Tricks ##
+trick 1: union by rank
+
+Initially, all elements are single element subsets.
+0 1 2 
+
+Do Union(0, 1)  
+   1       2  
+  /
+ 0 
+Do Union(1, 2)
+         2  
+        /
+      1           
+    /
+  0
+    ==>
+      1   
+    /  \
+   0    2
+trick 2: path compression
+Do Find(0)
+         2              2
+        /             /   \
+      1         =>  1      0   
+    /
+  0
+    
+- graph
+    X X X X X 
+    X O O X X
+    X X O X X
+    X X O X X
+    X X X O X
+
+- backtrack with dfs
+
+nums: [1, 2]
+                       []  
+                /              \
+             [1] (pick 1)        []  (not pick 1)
+           /     \             /     \
+        [1,2]       [1]       [2]       []    

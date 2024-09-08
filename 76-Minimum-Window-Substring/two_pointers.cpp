@@ -1,73 +1,57 @@
 /* 
-    s = abc, t = ac
+   num_unique_char = 0
+   hashmap:
+    A:-1
+    B:0
+   
+    ACBDAB
+    l
+      r
 
-    right pointer move one step for a time, left pointer move as much as possible
+    output = "AB"
 
-    abcac
-       L
-       R
-
-    num_char = 0
-    map = {
-        a: 0
-        c: 1
-    }
+      s = ACBD
+      t = AB
+    ans = ACB
  */
 
 class Solution {
 public:
     string minWindow(string s, string t) {
-        unordered_map<char, int> letters;
-        for (char ch : t)
-            letters[ch]++;
-        
-        int right = 0, left = 0;
-        int min_len = INT_MAX;
-        int start = 0;
-        int num_char = t.size();
+        // create hashmap for t
+        unordered_map<char, int> char_to_cnt;
+        for (char ch : t) char_to_cnt[ch]++;
 
-        // sliding window
-        /* 
-            abcac
-            L
-              R
+        // two pointers loop through s
+        int num_unique_char = char_to_cnt.size();
+        int ans_start = 0, min_len = INT_MAX;
+        int left = 0;
+        for (int right = 0; right < s.size(); right++) {
+            // process right pointer
+            if (char_to_cnt.count(s[right])) {
+                char_to_cnt[s[right]]--;
+                if (char_to_cnt[s[right]] == 0)
+                    num_unique_char--;
+            }
 
-            num_char = 0
-            map = {
-                a: 0
-                c: 1
-            }
-         */
-        for (right=0; right < s.size(); right++) {
-            // letter exist in t
-            if (letters.find(s[right]) != letters.end()) {
-                letters[s[right]]--;
-                if (letters[s[right]] >= 0)
-                    num_char--;
-            }
-            
-            if (num_char == 0) {
-                // move left pointer as much as possible
-                while(left <= right && num_char == 0) {
-                    if (letters.find(s[left]) != letters.end()) {
-                        letters[s[left]]++;
-                        if (letters[s[left]] > 0)
-                            num_char++;
-                    }
-                    left++;
+            while(num_unique_char == 0) {
+                int len = right - left + 1;
+                if (len < min_len) {
+                    ans_start = left;
+                    min_len = len;
                 }
 
-                // check min_len
-                int str_len = right - left + 2;
-                if (min_len > str_len) {
-                    min_len = str_len;
-                    start = left - 1;
+                // process left pointer
+                if (char_to_cnt.count(s[left])) {
+                    char_to_cnt[s[left]]++;
+                    if (char_to_cnt[s[left]] == 1)
+                        num_unique_char++;
                 }
-
+                left++;
             }
         }
 
-        return min_len == INT_MAX ? "" : s.substr(start, min_len);
+        return min_len == INT_MAX ? "" : s.substr(ans_start, min_len);
     }
 };
 

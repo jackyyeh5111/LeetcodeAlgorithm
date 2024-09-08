@@ -1,37 +1,28 @@
-#include <cmath>
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-
-/*
-    ref:
-    904.cpp
- */
-using namespace std;
-
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        unordered_map<int, int> umap;
-        int cnt = 0;
-        int l = 0;
-        int r = 0;
-        int n  = s.size();
         int ans = 0;
-        while (r < n) {
-            if (umap[s[r]] == 1) cnt ++;
-            umap[s[r]]++;
-            r++;
-            while(l < r && cnt > 0) {
-                umap[s[l]]--;
-                if (umap[s[l]] == 1) cnt --;
-                l++;
+        int left = 0;
+        unordered_map<int, int> char_to_cnt;
+        for (int right = 0; right < s.size(); right++) {
+            char_to_cnt[s[right]]++;
+            while(char_to_cnt[s[right]] == 2) {
+                char_to_cnt[s[left]]--;
+                left++;
             }
-            
-            ans = max(ans, r-l);
+            ans = max(ans, right - left + 1);
         }
-        
         return ans;
-        
     }
 };
+
+/* 
+    hashmap:
+        a: 1
+        b: 0
+        c: 1
+
+    abcab
+     l
+       r
+ */

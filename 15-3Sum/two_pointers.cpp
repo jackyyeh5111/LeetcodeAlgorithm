@@ -6,6 +6,51 @@
 using namespace std;
 
 /* 
+    1. sort
+    2. for loop with base pointer. for each iteration, use two pointers pointing to elements.
+       When moving pointers, make sure cur element is not the same as the previous one
+
+    [-1 0 1]
+    -1 0 0 1 1 2
+           l  
+     b
+         r
+ 
+    more elegant code.
+ */
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int base = 0;
+        vector<vector<int> > ans;
+        for (int base=0; base < nums.size(); base++) {
+            if (nums[base] > 0) break; // early stop
+            if (base != 0 && nums[base] == nums[base - 1]) continue;
+            twoSum(nums, base, ans);
+        }
+        return ans;
+    }
+    void twoSum(const vector<int> &nums, int base, vector<vector<int>> &ans) {
+        int left = base + 1;
+        int right = nums.size() - 1;
+        while (left < right) {
+            int sum = nums[left] + nums[right] + nums[base];
+            if (sum > 0) right--;
+            else if (sum < 0) left++;
+            else {
+                ans.push_back({nums[base], nums[left], nums[right]});
+                left++;
+                right--;
+                while(left < right && nums[left] == nums[left-1])
+                    left++;
+            }
+        }
+    }
+
+};
+
+/* 
   Ref: https://www.youtube.com/watch?v=9nG3tEJ6-8k&t=3s
 
   Note:

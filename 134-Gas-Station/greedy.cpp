@@ -18,6 +18,16 @@ public:
 };
 
 /* 
+    [XXXXZZZZ][ZZYYYYZZ]
+     -3          +3
+
+     gas = [1,2,3,4,5], 
+    cost = [3,4,5,1,2]
+
+    total_gain: 0
+      cur_gain: 6
+           ans: 3
+
     Clarification:
     1. non-negative number in both arrays
     2. total_gain >= 0

@@ -98,6 +98,7 @@
         "stdfloat": "cpp",
         "any": "cpp",
         "csignal": "cpp",
-        "cplusplus-cheet-sheet": "c"
+        "cplusplus-cheet-sheet": "c",
+        "time.h": "c"
     }
 }

@@ -1,31 +1,35 @@
-/*      
-    dp[i]: subarray with the largest product that ends at nums[i]
 
-    X [X X i] X X 
-    dpmax[i] = max(dpmax[i-1] * nums[i], dpmin[i-1] * nums[i], nums[i])
-    dpmin[i] = min(dpmax[i-1] * nums[i], dpmin[i-1] * nums[i], nums[i])
+/* 
+    1 -2
+    
+    if nums[j] > 0:
+        multiply by max history subarray(including previous element) product
+    if nums[j] < 0:
+        multiply by min history subarray(including previous element) product
+    if nums[j] == 0:
+        reset min, max history product to 0
 
-        [1, -2, 3,  0, 5 -2]
-    max: 1  -2. 3   0. 5  0   
-    min: 1  -2  -6  0  0 -10     
-*/
-class Solution2 {
+        2 3 0 -2  4
+    min 2 3 0 -2 -8
+    max 2 6 0  0  4
+ */
+class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int N = nums.size();
-        vector<int> dpmax(N, INT_MIN), dpmin(N, INT_MAX);
-        dpmax[0] = nums[0];
-        dpmin[0] = nums[0];
-        
-        int ans = nums[0];
-        for (int i = 1; i < N; ++i) {
-            dpmax[i] = max(max(dpmax[i-1] * nums[i], dpmin[i-1] * nums[i]), nums[i]);
-            dpmin[i] = min(min(dpmax[i-1] * nums[i], dpmin[i-1] * nums[i]), nums[i]);
-            ans = max(ans, dpmax[i]);
+        int min_product = 1; // -2
+        int max_product = 1; // 6
+        int ans = nums[0]; // 6
+        for (int idx = 0; idx < nums.size(); idx++) {
+            int num = nums[idx]; // 3
+            int prev_min_product = min_product;
+            min_product = min({num, num * min_product, num * max_product});
+            max_product = max({num, num * prev_min_product, num * max_product});
+            ans = max(ans, max_product);
         }
         return ans;
     }
 };
+
 
 /*
     wrong answer!

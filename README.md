@@ -185,7 +185,6 @@ for (int i = 0; i < n; i++) {
 | #    | Title             | Solution | Difficult |         Note           | Question | Favorite |
 | ---- |-------------------|----------|-----------|------------------------| ---- | ---- |
 | 53| Maximum Product Subarray|[53.cpp](53.cpp)|E|||
-| 53| Maximum Product Subarray|[53.cpp](53.cpp)|E|||
 | 121| Best Time to Buy and Sell Stock|[121.cpp](121.cpp)|E|||
 | 123| Best Time to Buy and Sell Stock III|[123.cpp](123.cpp)|H| |  | <3|
 
@@ -331,9 +330,13 @@ for (int i = 0; i < coins.size(); i++) {
 | 5| Longest Palindromic Substring|[5.cpp](5.cpp)|M| 還有另一個O(n)的演算法還沒搞懂| y| <3 |
 - 215. Kth Largest Element in an Array
 
+--------------------------------------------------------------------------------
+
 ## Array
+
 ### Two pointers
 - 75. Sort Colors
+
 #### binary search 
 ref: [binary search](https://www.notion.so/jackyyeh/Binary-Search-0a7341ffbb7f4b468b42c7d98613b1b6)
 - 15. 3Sum
@@ -369,6 +372,7 @@ Problems:
 ## Graph
 ### Topological Sort
 - 207. Course Schedule
+
 ### Tree
 ```
 BST 用 inorder traversal 一定是排序的

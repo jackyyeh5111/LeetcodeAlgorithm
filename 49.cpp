@@ -7,20 +7,24 @@
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string, vector<string>> dict;
-        for (string str : strs) {
-            string key(26, '0');
-            for (char ch : str)
-                key[ch - 'a']++;
-            dict[key].push_back(str);
+        unordered_map<string, vector<string>> anagrams;
+        for (const string& str : strs) {
+            anagrams[encode(str)].push_back(str);
         }
-        
+
         vector<vector<string>> ans;
-        for (auto pair : dict) 
-            ans.push_back(pair.second);
+        for (const auto &anagram : anagrams)
+            ans.push_back(anagram.second);
         return ans;
     }
+    string encode(const string &str) {
+        string encoded(26, '0'); // 00...0
+        for (char ch : str)
+            encoded[ch - 'a']++;
+        return encoded;
+    }
 };
+
 
 /*
     用 bitmap 當作 hash key

@@ -1,34 +1,34 @@
 /* 
-    Time limit exceed
-    自己想的！
+    3 1 2 4
+    
+    3 => 1 x 1 = 1
+    XX1YY => 3 x 3 = 9 possible subarray with minimum 1
+    3 3 => if duplicate number exists, use only one array (extend left pointer only)
+    l
+
+    min([3]) = 3
+    min([3, 1]) = 1
+    min([3, 1, 2]) = 1
+    min([3, 1, 2, 4]) = 1
  */
 class Solution {
 public:
     int sumSubarrayMins(vector<int>& arr) {
-      long ans = 0;
-      long modulo = 1e9 + 7;
-      for (int i = 0; i < arr.size(); i++) {
-        // search left
-        int num_left = 0;
-        for (int j = i - 1; j >= 0; j--) {
-          if (arr[j] <= arr[i])
-            break;
-          num_left++;
+        long sum = 0;
+        long modulo = 1e9 + 7;
+        for (int idx = 0; idx < arr.size(); idx++) {
+            int left = idx - 1, right = idx + 1;
+            while(left >= 0 && arr[left] >= arr[idx])
+                left--;
+            while(right < arr.size() && arr[right] > arr[idx])
+                right++;
+            long num_arr = (right - idx) * (idx - left);
+            sum = (sum + (num_arr * arr[idx]) % modulo) % modulo;
         }
-
-        // search right
-        int num_right = 0;
-        for (int j = i + 1; j < arr.size(); j++) {
-          if (arr[j] < arr[i])
-            break;
-          num_right++;
-        }
-
-        ans += ((long)arr[i] * (1 + num_left + num_right + num_left * num_right)) % modulo;
-      }
-      return (int)(ans % modulo);
+        return (int)(sum % modulo);
     }
 };
+
 
 /* 
     Clarification:

@@ -27,11 +27,11 @@ class Solution {
       return false;
 
     // not visited
-    status[course] = 1;  // update status
+    status[course] = 1;  // visiting
     for (int next_course : adj[course]) {
       if (!dfs(next_course)) return false;
     }
-    status[course] = 2;  // update status
+    status[course] = 2;  // visited
     return true;
   }
 };

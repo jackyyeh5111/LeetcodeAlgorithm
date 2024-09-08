@@ -1,40 +1,46 @@
 #include "utils.hpp"
-
 /* 
-  Visit 3: more elegant
+    1 2 3 4 5
+      ^
+    max_heap: 1 2 3
+    min_heap: 4 5
+
+    requirements:
+        1. max_heap.size >= min_heap.size
+        2. max_heap.size - min_heap.size < 2
  */
 class MedianFinder {
 public:
     priority_queue<int> max_heap;
-    priority_queue<int, vector<int>, greater<int>> min_heap;
+    priority_queue<int, vector<int>, std::greater<int>> min_heap;
     MedianFinder() {
-        
+            
     }
     
     void addNum(int num) {
-        max_heap.push(num);
+        if (max_heap.empty() || max_heap.top() >= num) 
+            max_heap.push(num);
+        else
+            min_heap.push(num);
         
-        // balance
-        if (max_heap.size() > min_heap.size() + 1) {
-            min_heap.push(max_heap.top());
-            max_heap.pop();
-        }
-
-        // swap top?
-        if(!min_heap.empty() && max_heap.top() > min_heap.top()) {
-            int tmp = max_heap.top();
-            max_heap.pop();
+        // check meet requirements or not?
+        if (max_heap.size() < min_heap.size()) {
             max_heap.push(min_heap.top());
             min_heap.pop();
-            min_heap.push(tmp);
+        }
+        if (max_heap.size() - min_heap.size() >= 2) {
+            min_heap.push(max_heap.top());
+            max_heap.pop();
         }
     }
     
     double findMedian() {
-        int num_element = max_heap.size() + min_heap.size();
-        return num_element % 2 ? max_heap.top() : (max_heap.top() + min_heap.top() ) / 2.0;
+        int total_size = min_heap.size() + max_heap.size();
+        if (total_size % 2) return (double)max_heap.top();
+        else return (max_heap.top() + min_heap.top()) / 2.0;
     }
 };
+
 
 /**
     addNum: 1 2 3 4

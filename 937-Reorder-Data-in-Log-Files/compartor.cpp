@@ -1,30 +1,44 @@
-/* 
-    Be careful to use stable sort!
- */
 class Solution {
 public:
     vector<string> reorderLogFiles(vector<string>& logs) {
-        auto comp = [](const string &s1, const string &s2) {
+        vector<string> letter_logs, digit_logs;
+        for (const string &log : logs) {
+            if (isDigitLog(log))
+                digit_logs.push_back(log);
+            else
+                letter_logs.push_back(log);
+        }
+        
+        // sort
+        sortLetterLogs(letter_logs);
+        
+        vector<string> output = std::move(letter_logs);
+        output.insert(output.end(), digit_logs.begin(), digit_logs.end());
+        return output;
+    }
+    void sortLetterLogs(vector<string>& letter_logs) {
+        auto comp = [](const string& s1, const string& s2) {
             int pos1 = s1.find(' ');
             int pos2 = s2.find(' ');
-            char ch1 = s1[pos1 + 1];
-            char ch2 = s2[pos2 + 1];
-            bool is_digit1 = ch1 >= '0' && ch1 <= '9';
-            bool is_digit2 = ch2 >= '0' && ch2 <= '9';
-            if (is_digit1 && is_digit2)
-                return false; // <----
-            if (!is_digit1 && is_digit2)
-                return true;
-            if (is_digit1 && !is_digit2)
-                return false;
-            
-            // both of strings are letter logs
-            string substr1 = s1.substr(pos1 + 1);
-            string substr2 = s2.substr(pos2 + 1);
-            return substr1 == substr2 ? s1 < s2 : substr1 < substr2;
+
+            string identifier1 = s1.substr(0, pos1);
+            string identifier2 = s2.substr(0, pos2);
+
+            string content1 = s1.substr(pos1+1);
+            string content2 = s2.substr(pos2+1);
+            return content1 == content2 ? identifier1 < identifier2 : content1 < content2;
         };
-        stable_sort(logs.begin(), logs.end(), comp);
-        return logs;
+        sort(letter_logs.begin(), letter_logs.end(), comp);
+    }
+
+    bool isDigitLog(const string &log) {
+        int pos = log.find(' ');
+        char ch = log[pos+1];
+        return ch >= '0' && ch <= '9';
     }
 };
 
+/* 
+    letter_logs
+    digit_logs
+ */

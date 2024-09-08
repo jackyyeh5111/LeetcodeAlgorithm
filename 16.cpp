@@ -1,42 +1,30 @@
 class Solution {
 public:
     int threeSumClosest(vector<int>& nums, int target) {
-        int min_diff = INT_MAX / 2;
         sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size() - 2; i++) {
-            for (int j = i + 1; j < nums.size() - 1; j++) {
-                int num = binary_search(nums, i, j, target);
-                int sum = nums[i] + nums[j] + num;
-                if (abs(sum - target) < abs(min_diff))
-                    min_diff = sum - target;
+        int ans = nums[0] + nums[1] + nums[2];
+        for (int base = 0; base < nums.size() - 2; base++) {
+            int left = base + 1;
+            int right = nums.size() - 1;
+            while(left < right) {
+                int sum = nums[left] + nums[right] + nums[base];
+                
+                // update answer
+                if (abs(sum - target) < abs(ans - target))
+                    ans = sum;
+
+                if (sum < target) left++;
+                else right--;
             }
         }
-        return target + min_diff;
-    }
-    int binary_search(const vector<int>& nums, int i, int j, int target) {
-        int left = j + 1;
-        int right = nums.size() - 1;
-        target -= (nums[i] + nums[j]);
-        while (left < right) {
-            int mid = right - (right - left) / 2;
-            // left: [left, mid)
-            // right: [mid, right]
-
-            if (nums[mid] <= target)
-                left = mid;
-            else
-                right = mid - 1;
-        }
-        if (left == nums.size() - 1 || abs(nums[left] - target) < abs(nums[left+1] - target))
-            return nums[left];
-        return nums[left+1];
+        return ans;
     }
 };
 
 /* 
     target: 1
-    modified target: 6
-    -4 -1 1 2
-     i  j  
-          l r
+    modified target: 5
+    -4 XXXXXX
+     B   
+       l    r
  */

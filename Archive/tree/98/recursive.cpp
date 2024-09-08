@@ -11,22 +11,24 @@
  */
 class Solution {
 public:
-    TreeNode* pre_node = nullptr;
     bool isValidBST(TreeNode* root) {
-        // inorder traversal to check
-        if (!root)
-            return true;
-
-        if (!isValidBST(root->left))
-            return false;
-        
-        if (pre_node && pre_node->val >= root->val)
-            return false;
-        
-        pre_node = root;
-        if (!isValidBST(root->right))
-            return false;
-        
-        return true;
+        // iterative approach
+        return dfs(root, nullptr, nullptr);
+    }
+    bool dfs(TreeNode* node, TreeNode* low, TreeNode* high) {
+        if (!node) return true;
+        if (low && node->val <= low->val) return false;
+        if (high && node->val >= high->val) return false;
+        return dfs(node->left, low, node) && dfs(node->right, node, high);
     }
 };
+
+/* 
+
+                       [6] (#, #)
+                /              \
+             [2] (#, 6)          [8] (6, #)
+           /     \             /     \
+        [0]       [4]       [7] (6, 8)    [9] (8, #)   
+
+ */

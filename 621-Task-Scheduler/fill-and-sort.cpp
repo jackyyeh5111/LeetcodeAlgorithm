@@ -1,45 +1,37 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        // count tasks
-        const int NUM_ALPHABET = 26;
-        vector<int> counter(NUM_ALPHABET, 0);
-        for (char task : tasks)
-            counter[task - 'A']++;
-        
-        // sort counter
-        sort(counter.begin(), counter.end());
-
-        int max_freq = counter.back();
-        int num_with_max_freq = 0;
-        for (int i = counter.size() - 1; i >= 0; i--) {
-            if (counter[i] != max_freq)
-                break;
-            num_with_max_freq++;
+        unordered_map<char, int> char_freq;
+        int max_freq = 0;
+        for (char task : tasks) {
+            char_freq[task]++;
+            max_freq = max(max_freq, char_freq[task]);
         }
-        int min_interval = (max_freq - 1) * (n + 1) + num_with_max_freq;
-    
-        if (tasks.size() > min_interval)
-            return tasks.size();
-        else
-            return min_interval;
+        
+        int num_char_max_freq = count_if(char_freq.begin(), char_freq.end(), 
+                [max_freq](const auto &pair){return pair.second == max_freq;});
+        
+        int min_interval = (max_freq - 1) * (n + 1) + num_char_max_freq;
+        return tasks.size() < min_interval ? min_interval : tasks.size();
     }
 };
 
 /* 
-    A B X
-    A B X
-    A B
-
-    n = 2
-    num_with_max_freq = 2
-    min_interval = (max_freq - 1) * (n + 1) + num_with_max_freq
-    total_task_cnt = 10
-    if (total_task_cnt > min_interval)
-        return total_task_cnt
+    n = 4
+    ABCDEF
+    ABCDEF
+    AB
 
     A:3
     B:3
     C:2
     D:2
+    E:2
+    F:2
+
+    min_interval = (max_freq - 1) * (n + 1) + num_char_max_freq
+    if task.size < min_interval:
+        return min_interval
+    else
+        return task.size
  */
