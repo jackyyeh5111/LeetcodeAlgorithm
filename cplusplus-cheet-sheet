@@ -183,6 +183,11 @@ sort(v.begin(), v.end(), cmpObj);   // sort with self-defined comparator
 std::cout << "The smallest element is " << *std::min_element(myints,myints+7) << '\n';
 std::cout << "The largest element is "  << *std::max_element(myints,myints+7) << '\n';
 
+// assign
+vector<int> first{1, 2, 3, 4}
+vector<int> second;
+second.assign(first.begin() + 1, first.end() - 1); // second = {2, 3}
+
 // remove duplicate in banned vector
 set<int> tmp(banned.begin(), banned.end());
 banned.assign(tmp.begin(), tmp.end());
@@ -524,3 +529,11 @@ nums: [1, 2]
              [1] (pick 1)        []  (not pick 1)
            /     \             /     \
         [1,2]       [1]       [2]       []    
+- min_heap
+
+          1  
+        /   \
+      2      3     
+    /   \
+  4      5
+  

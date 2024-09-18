@@ -1,48 +1,41 @@
 class Solution {
 public:
     vector<int> partitionLabels(string s) {
-        // step create hashmap
-        unordered_map<char, pair<int, int>> hashmap;
-        for (int i =0; i < s.size(); i++) {
-            char ch = s[i];
-            if (hashmap.count(ch))
-                hashmap[ch].second = i;
-            else
-                hashmap[ch] = make_pair(i, i);
+        // create hashmap
+        unordered_map<char, int> char_to_end; 
+        for (int idx = 0; idx < s.size(); idx++) {
+            char_to_end[s[idx]] = max(char_to_end[s[idx]], idx);
         }
 
-        // step 2: greedy partition
-        vector<int> ans;
+        // greedy algo
         int start = 0;
-        int end = hashmap[s[0]].second;
-        for (int i = 1; i < s.size(); i++) {
-            char ch = s[i];
-            if (hashmap[ch].first > end) {
-                ans.push_back(end - start + 1);
-                start = i;
-                end = hashmap[ch].second;
+        int end = 0;
+        vector<int> output;
+        for (int idx = 0; idx < s.size(); idx++) {
+            if (idx > end) {
+                output.push_back(end - start + 1);
+                start = idx;
             }
-            else {
-                end = max(end, hashmap[ch].second);
-            }
+            end = max(end, char_to_end[s[idx]]);
         }
-        ans.push_back(end - start + 1);
-        return ans;
+        output.push_back(end - start + 1);
+        return output;
     }
 };
 
 /* 
-    hashmap = {
-        a: [0, 2]
-        b: [1, 3]
-        c: [4, 4]
+    [aba][c]
+            ^
+    start = 3
+    end = 3
+    output: [3, 1]
+    
+    hashmap = { // char -> end
+        a: 2
+        b: 1
+        c: 3
     }
 
-    end = 3
-
-    ababc
-        ^
- 
-    1) create hashmap to store start and end index of characters
+    1) create hashmap to store end index of characters
     2) iterate string once, greedy partition
  */

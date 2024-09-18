@@ -1,0 +1,92 @@
+""" 
+    ref: https://github.com/AbdulMalikDev/PythonCheatSheet
+"""
+
+
+""" 
+    String
+"""
+
+# ** split Function **
+# The split() method breaks up a string at the specified separator and returns
+# a list of strings.
+text = 'Python is a fun programming language'
+
+# split the text from space
+print(text.split(' '))
+# Output: ['Python', 'is', 'a', 'fun', 'programming', 'language']
+
+# convert string to list
+s="abcd"
+s=list(s)
+print(s)
+# Output: ['a', 'b', 'c', 'd']
+
+# ** count Function **
+# The count() method returns the number of occurrences of a substring in the given string.
+# Example
+message = 'python is popular programming language'
+# number of occurrence of 'p'
+print('Number of occurrence of p:', message.count('p')) # Output: Number of occurrence of p: 4
+
+# The find() method returns the index of first occurrence of the substring (if found). If not found, it returns -1.
+# check the index of 'fun'
+print(message.find('fun')) # Output: 12
+
+# The isalpha() method returns True if all characters in the string are alphabets. If not, it returns False
+name = "Monica"
+print(name.isalpha()) #output true
+
+# other important functions
+string.upper() # The upper() method converts all lowercase characters in a string into uppercase characters and returns it.
+string.lower() # The lower() method converts all uppercase characters in a string into lowercase characters and returns it.
+string.islower() # The islower() method returns True if all cased characters in the string are lowercase and there is at least one cased character, False otherwise.
+string.isdigit() 
+string.isupper() # The isupper() method returns True if all cased characters in the string are uppercase and there is at least one cased character, False otherwise.
+
+""" 
+    heap
+"""
+import heapq
+
+# Example heap (make sure it's a valid heap)
+heap = [3, 1, 4, 1, 5, 9]
+heapq.heapify(heap)  # Convert list to a valid heap
+heapq.heappush(heap, 10)
+
+# Pop elements until heap is empty
+while heap:
+    smallest = heapq.heappop(heap)
+    print(smallest)
+
+# max heap
+heapq.heappush(heap, -value) # all we have to do is negate the value
+               
+""" 
+    set
+"""
+set = {1,2,3}
+
+set.add(item)
+set.remove(item)
+
+""" 
+    Sort
+"""
+
+# ex1: 
+    strings = ['apple', 'banana', 'kiwi', 'grape']
+    # Custom sort by length of string
+    sorted_strings = sorted(strings, key=lambda x: len(x)) # Output: ['kiwi', 'grape', 'apple', 'banana']
+
+# ex2:
+    people = [('John', 25), ('Jane', 22), ('Doe', 25), ('Alice', 30)]
+
+    # Custom sort by age, and then by name if ages are the same
+    sorted_people = sorted(people, key=lambda x: (x[1], x[0])) # Output: [('Jane', 22), ('Doe', 25), ('John', 25), ('Alice', 30)]
+
+""" 
+    ASCII
+"""
+ord(str) # returns ascii value of the character , Example ord("a") = 97
+chr(int) # return character of given ascii value , Example chr(97) = "a"

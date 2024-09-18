@@ -5,13 +5,14 @@
 using namespace std;
 
 vector<string> split(const string &str, char delimiter) {
-    /* 
-        1,23,,,3,,4,
-     */
     vector<string> tokens;
+    /* 
+        1,2,,33,,4,
+     */
     int end = 0;
     while(end < str.size()) {
         int start = end;
+        // keep going until run into delimiter or newline
         while(end < str.size() && str[end] != delimiter)
             end++;
         if (start < end)

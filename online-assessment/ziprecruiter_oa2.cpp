@@ -16,11 +16,12 @@ class Solution {
     for (int i = 0; i < times.size(); i++) {
       while (ptr_processing < i && times[i] >= finished_times[ptr_processing]) {
         // udpate ptr_processing
-        if (times[ptr_processing] != finished_times[ptr_processing])
+        if (finished_times[ptr_processing] - times[ptr_processing] > waiting_time)
           queue_size--;
         ptr_processing++;
       }
 
+      cout << "queue_size: " << queue_size << '\n';
       if (queue_size > num_max_waiting) {
         finished_times[i] = times[i];
         continue;
