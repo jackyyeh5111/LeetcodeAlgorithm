@@ -64,22 +64,51 @@ class SegmentManager {
 
  private:
   // Inserts a key into the segment map if it doesn't exist
-  // Initializes its value based on previous segment or 0 if it's the first segment  
+  // Initializes its value based on previous segment or 0 if it's the first segment
   void insertEntry(int key) {
     // get first element that <= key in segments in O(logn)
     auto it_start = segments.lower_bound(key);
-    if (it_start == segments.begin()) { // insert at begin
+    if (it_start == segments.begin()) {  // insert at begin
       if (segments.empty() || it_start->first != key) segments[key] = 0;
-    } else if (it_start == segments.end()) { // insert at end
+    } else if (it_start == segments.end()) {  // insert at end
       segments[key] = 0;
-    } else if (it_start->first != key) { // insert at middle
+    } else if (it_start->first != key) {  // insert at middle
       if (it_start->first != key) segments[key] = std::prev(it_start)->second;
     }
   }
+
+  // Removes redundant entries where consecutive segments have the same intensity
+  void removeRedundantEntries(const std::map<int, int>::iterator &it_start,
+                              const std::map<int, int>::iterator &it_end) {
+    auto iter = it_start;
+    auto next_end = std::next(it_end);
+
+    while (iter != next_end) {
+      if (iter == segments.begin()) {  // Skip the first element
+        ++iter;
+        continue;
+      }
+
+      // If the current intensity is the same as the previous one, it's redundant
+      if (iter->second == std::prev(iter)->second) {
+        iter = segments.erase(iter);  // Erase and move to the next valid iterator
+      } else {
+        ++iter;
+      }
+    }
+  }
+
+  void removeZeroStartEntry() {
+    auto iter = segments.begin();
+    while (iter != segments.end() && iter->second == 0) {
+      iter = segments.erase(iter);  // Erase and move to the next valid iterator
+    }
+  }
+  
   void modify(int from, int to, int amount, bool isAdd) {
     if (from >= to) return;
 
-    // insert entry if the key doest not exist in segments
+    // Ensure both boundary entries exist in the map
     insertEntry(from);
     insertEntry(to);
 
@@ -94,27 +123,11 @@ class SegmentManager {
       }
     }
 
-    // remove redundant entries
-    auto iter = it_start;
-    auto next_end = next(it_end);
-    while (iter != next_end) {
-      if (iter == segments.begin()) {  // Skip the first element
-        ++iter;
-        continue;
-      }
-      // Check if current element's intensity is the same as the previous one
-      if (iter->second == prev(iter)->second) {
-        iter = segments.erase(iter);  // Erase and get the next valid iterator
-      } else {
-        ++iter;
-      }
-    }
+    // Clean up redundant entries where consecutive segments have the same
+    removeRedundantEntries(it_start, it_end);
 
-    // remove starting entry if it has value zero.
-    iter = segments.begin();
-    while (iter != segments.end() && iter->second == 0) {
-      iter = segments.erase(iter);  // Erase and get the next valid iterator
-    }
+    // Remove starting entries if they have value 0
+    removeZeroStartEntry();
   }
 };
 
