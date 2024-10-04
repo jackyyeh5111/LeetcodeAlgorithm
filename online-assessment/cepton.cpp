@@ -38,7 +38,8 @@
    range.
         3. set(from, to, amount) will set the intensity within the given range,
    disregarding previous values.
-        4. Do nothing if parameter from >= to
+        4. Do nothing if parameter from >= to.
+        5. Segments got unlimited size.
  */
 #include <iostream>
 #include <map>
@@ -51,7 +52,7 @@ class SegmentManager {
   SegmentManager() {}
   void add(int from, int to, int amount) { modify(from, to, amount, true); }
   void set(int from, int to, int amount) { modify(from, to, amount, false); }
-
+  void clear() { segments.clear(); }
   void printSegments() {
     std::cout << "[";
     for (auto it = segments.begin(); it != segments.end(); ++it) {
@@ -62,56 +63,29 @@ class SegmentManager {
   }
 
  private:
+  // Inserts a key into the segment map if it doesn't exist
+  // Initializes its value based on previous segment or 0 if it's the first segment  
+  void insertEntry(int key) {
+    // get first element that <= key in segments in O(logn)
+    auto it_start = segments.lower_bound(key);
+    if (it_start == segments.begin()) { // insert at begin
+      if (segments.empty() || it_start->first != key) segments[key] = 0;
+    } else if (it_start == segments.end()) { // insert at end
+      segments[key] = 0;
+    } else if (it_start->first != key) { // insert at middle
+      if (it_start->first != key) segments[key] = std::prev(it_start)->second;
+    }
+  }
   void modify(int from, int to, int amount, bool isAdd) {
     if (from >= to) return;
 
-    /*
-        Call: add(10, 30, 1) => [[10,1],[30,0]]
-        Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
-        Call: add(10, 40, -2) => [[10,-1],[20,0],[30,-1],[40,0]]
-
-        Call: add(10, 30, 1) => [[10,1], [30,0]]
-        Call: add(10, 20, 1) => [[10,2], [20,1], [30,0]]
-     */
-
-    // Get the intensity value before `from`
-    auto it_start = segments.lower_bound(from);
-    if (it_start == segments.begin()) {
-      if (segments.empty() || it_start->first != from) segments[from] = 0;
-    } else if (it_start == segments.end()) {
-      segments[from] = 0;
-    } else if (it_start->first != from) {
-      if (it_start->first != from) segments[from] = std::prev(it_start)->second;
-    }
-
-    // if (it == segments.begin() || it == segments.end() || it->first != from)
-    // {
-    //   int previous_value = (it == segments.begin()) ? 0 :
-    //   std::prev(it)->second; segments[from] = previous_value; it =
-    //   segments.find(from);  // Update iterator to new segment
-    // }
-
-    // Now handle the `to` boundary
-    auto it_end = segments.lower_bound(to);
-    if (it_end == segments.begin()) {
-      if (segments.empty() || it_end->first != to) segments[to] = 0;
-    } else if (it_end == segments.end()) {
-      segments[to] = 0;
-    } else if (it_end->first != to) {
-      if (it_end->first != to) segments[to] = std::prev(it_end)->second;
-    }
-
-    // if (it == segments.begin() || it == segments.end() || it->first != to) {
-    //   int previous_value = (it == segments.begin()) ? 0 :
-    //   std::prev(it)->second; segments[to] = previous_value;
-    // }
-
-    // std::cout << "after handle\n";
-    // printSegments();
+    // insert entry if the key doest not exist in segments
+    insertEntry(from);
+    insertEntry(to);
 
     // Apply changes to the range [from, to)
-    it_start = segments.lower_bound(from);
-    it_end = segments.lower_bound(to);
+    auto it_start = segments.lower_bound(from);
+    auto it_end = segments.lower_bound(to);
     for (auto iter = it_start; iter != it_end; ++iter) {
       if (isAdd) {
         iter->second += amount;
@@ -120,34 +94,27 @@ class SegmentManager {
       }
     }
 
-    // std::cout << "apply changes\n";
-    // printSegments();
-
-    // Clean up: remove redundant entries where intensity stays the same
-    // std::cout << "end: " << it_end->first << '\n';
-    // std::cout << next(it_end) == segments.end();
-    // auto iter = it_start;
-    for (auto iter = it_start; iter != it_end; ++iter) {
-      if (iter == segments.begin()) continue;
+    // remove redundant entries
+    auto iter = it_start;
+    auto next_end = next(it_end);
+    while (iter != next_end) {
+      if (iter == segments.begin()) {  // Skip the first element
+        ++iter;
+        continue;
+      }
+      // Check if current element's intensity is the same as the previous one
       if (iter->second == prev(iter)->second) {
-        iter = segments.erase(iter);  // Erase and advance iterator
+        iter = segments.erase(iter);  // Erase and get the next valid iterator
+      } else {
+        ++iter;
       }
     }
-    if (prev(it_end)->second == it_end->second) segments.erase(it_end);
 
-    // handle edge case
-    if (!segments.empty() && segments.begin()->second == 0)
-      segments.erase(segments.begin());
-    if (segments.size() == 1 && segments.begin()->second == 0)
-      segments.erase(segments.begin());
-
-    // auto prev = segments.begin();
-    // for (auto iter = std::next(segments.begin()); iter != segments.end();) {
-    //   if (iter->second == prev->second) {
-    //     iter = segments.erase(iter);  // Erase and advance iterator
-    //   } else {
-    //     prev = iter++;
-    //   }
+    // remove starting entry if it has value zero.
+    iter = segments.begin();
+    while (iter != segments.end() && iter->second == 0) {
+      iter = segments.erase(iter);  // Erase and get the next valid iterator
+    }
   }
 };
 
@@ -157,15 +124,17 @@ int main() {
   // Test cases as described
   manager.printSegments();  // Start: []
 
-  //   manager.add(10, 30, 1);   // Call: add(10, 30, 1)
-  //   manager.printSegments();  // Expected: [[10,1],[30,0]]
+  std::cout << "\n--- test case 1 ----\n\n";
+  manager.clear();
+  manager.add(10, 30, 1);   // Call: add(10, 30, 1)
+  manager.printSegments();  // Expected: [[10,1],[30,0]]
+  manager.add(20, 40, 1);   // Call: add(20, 40, 1)
+  manager.printSegments();  // Expected: [[10,1],[20,2],[30,1],[40,0]]
+  manager.add(10, 40, -2);  // Call: add(10, 40, -2)
+  manager.printSegments();  // Expected: [[10,-1],[20,0],[30,-1],[40,0]]
 
-  //   manager.add(20, 40, 1);   // Call: add(20, 40, 1)
-  //   manager.printSegments();  // Expected: [[10,1],[20,2],[30,1],[40,0]]
-
-  //   manager.add(10, 40, -2);  // Call: add(10, 40, -2)
-  //   manager.printSegments();  // Expected: [[10,-1],[20,0],[30,-1],[40,0]]
-
+  std::cout << "\n--- test case 2 ----\n\n";
+  manager.clear();
   manager.add(10, 30, 1);
   manager.printSegments();
   manager.add(20, 40, 1);
@@ -173,6 +142,11 @@ int main() {
   manager.add(10, 40, -1);
   manager.printSegments();
   manager.add(10, 40, -1);
+  manager.printSegments();
+
+  std::cout << "\n--- test case 3 ----\n\n";
+  manager.clear();
+  manager.add(10, 30, 0);
   manager.printSegments();
 
   return 0;
