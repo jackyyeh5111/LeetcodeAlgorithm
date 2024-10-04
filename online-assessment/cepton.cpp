@@ -26,6 +26,7 @@
         Call: add(10, 40, -1) => [[20,1],[30,0]]
         Call: add(10, 40, -1) => [[10,-1],[20,0],[30,-1],[40,0]]
 
+
         Call: add(10, 30, 1) => [[10,1], [15,1], [30,0]]
             - leave previous only
             - begin != 0
@@ -48,26 +49,20 @@ class SegmentManager {
 
  public:
   SegmentManager() {}
-
-  // Function to add intensity to a range [from, to)
   void add(int from, int to, int amount) { modify(from, to, amount, true); }
-
-  // Function to set intensity to a value in a range [from, to)
   void set(int from, int to, int amount) { modify(from, to, amount, false); }
 
-  // Print current segments
   void printSegments() {
     std::cout << "[";
-    for (const auto& entry : segments) {
-      std::cout << "[" << entry.first << "," << entry.second << "],";
+    for (auto it = segments.begin(); it != segments.end(); ++it) {
+      std::cout << "[" << it->first << "," << it->second << "]";
+      if (next(it) != segments.end()) std::cout << ",";
     }
     std::cout << "]" << std::endl;
   }
 
  private:
-  // Helper function to modify intensity, either by adding or setting values.
   void modify(int from, int to, int amount, bool isAdd) {
-    // Ensure from < to
     if (from >= to) return;
 
     /*
@@ -99,11 +94,11 @@ class SegmentManager {
     // Now handle the `to` boundary
     auto it_end = segments.lower_bound(to);
     if (it_end == segments.begin()) {
-      if (segments.empty() || it_end->first != from) segments[from] = 0;
+      if (segments.empty() || it_end->first != to) segments[to] = 0;
     } else if (it_end == segments.end()) {
-      segments[from] = 0;
-    } else if (it_end->first != from) {
-      if (it_end->first != from) segments[from] = std::prev(it_end)->second;
+      segments[to] = 0;
+    } else if (it_end->first != to) {
+      if (it_end->first != to) segments[to] = std::prev(it_end)->second;
     }
 
     // if (it == segments.begin() || it == segments.end() || it->first != to) {
@@ -111,7 +106,12 @@ class SegmentManager {
     //   std::prev(it)->second; segments[to] = previous_value;
     // }
 
+    // std::cout << "after handle\n";
+    // printSegments();
+
     // Apply changes to the range [from, to)
+    it_start = segments.lower_bound(from);
+    it_end = segments.lower_bound(to);
     for (auto iter = it_start; iter != it_end; ++iter) {
       if (isAdd) {
         iter->second += amount;
@@ -120,13 +120,20 @@ class SegmentManager {
       }
     }
 
+    // std::cout << "apply changes\n";
+    // printSegments();
+
     // Clean up: remove redundant entries where intensity stays the same
+    // std::cout << "end: " << it_end->first << '\n';
+    // std::cout << next(it_end) == segments.end();
+    // auto iter = it_start;
     for (auto iter = it_start; iter != it_end; ++iter) {
       if (iter == segments.begin()) continue;
       if (iter->second == prev(iter)->second) {
         iter = segments.erase(iter);  // Erase and advance iterator
       }
     }
+    if (prev(it_end)->second == it_end->second) segments.erase(it_end);
 
     // handle edge case
     if (!segments.empty() && segments.begin()->second == 0)
