@@ -1,45 +1,46 @@
+/* 
+  Question:
+    We are looking for a program that manages “intensity” by segments. Segments are intervals from -infinity to infinity, we liked you to implement functions that updates intensity by an integer amount for a given range. All intensity starts with 0. Please implement these two functions:
+
+    add(from, to, amount)  
+    set(from, to, amount)
+    You should implement the functions based on your own interpretation of the problem and document any assumptions you make. 
+
+    Here is an example sequence (data stored as an array of start point and value for each segment.):
+    Start: []
+    Call: add(10, 30, 1) => [[10,1],[30,0]]
+    Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
+    Call: add(10, 40, -2) => [[10,-1],[20,0],[30,-1],[40,0]]
+
+    Start: []
+    Call: add(10, 30, 1) => [[10,1],[30,0]]
+    Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
+    Call: add(10, 40, -1) => [[20,1],[30,0]]
+    Call: add(10, 40, -1) => [[10,-1],[20,0],[30,-1],[40,0]]
+ */
 /*
-    ### Questions ###
+    Overview:
+      This C++ code defines a SegmentManager class that manages the intensity of 
+      segments within specified ranges. The key operations are add and set, which 
+      modify the intensity of values within a half-open interval [from, to). 
+      Intensities are stored using a std::map where the keys represent segment boundaries, 
+      and the values are the intensities at those points.
 
-    We are looking for a program that manages “intensity” by segments. Segments
-    are intervals from -infinity to infinity, we liked you to implement
-   functions that updates intensity by an integer amount for a given range. All
-   intensity starts with 0. Please implement these two functions:
+    Reason I use std::map to represent segments:
+      std::map maintains keys in sorted order, enabling quick lookups, 
+      modifications, and erase in logarithmic time O(logn). 
+      It allows for sparse representation of ranges, storing only key boundary 
+      points where changes occur, which minimizes memory usage. 
 
-        add(from, to, amount)
-        set(from, to, amount)
-
-    You should implement the functions based on your own interpretation of the
-    problem and document any assumptions you make.
-
-    Here is an example sequence (data stored as an array of start point and
-    value for each segment.):
-
-        Start: []
-        Call: add(10, 30, 1) => [[10,1],[30,0]]
-        Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
-        Call: add(10, 40, -2) => [[10,-1],[20,0],[30,-1],[40,0]]
-
-        Start: []
-        Call: add(10, 30, 1) => [[10,1],[30,0]]
-        Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
-        Call: add(10, 40, -1) => [[20,1],[30,0]]
-        Call: add(10, 40, -1) => [[10,-1],[20,0],[30,-1],[40,0]]
-
-
-        Call: add(10, 30, 1) => [[10,1], [15,1], [30,0]]
-            - leave previous only
-            - begin != 0
-
-    ### Assumptions ###
+    Assumptions:
         1. Segments are defined by two points [from, to), where the intensity
-   changes within the half-open interval.
+           changes within the half-open interval.
         2. add(from, to, amount) will increase the intensity within the given
-   range.
+           range.
         3. set(from, to, amount) will set the intensity within the given range,
-   disregarding previous values.
-        4. Do nothing if parameter from >= to.
-        5. Segments got unlimited size.
+           disregarding previous values.
+        4. Segments have unlimited size.
+        5. Do nothing if parameter value from >= to.
  */
 #include <iostream>
 #include <map>
@@ -66,7 +67,8 @@ class SegmentManager {
   // Inserts a key into the segment map if it doesn't exist
   // Initializes its value based on previous segment or 0 if it's the first segment
   void insertEntry(int key) {
-    // get first element that <= key in segments in O(logn)
+    // get first element that <= key in segments.
+    // lower_bound in map can find key in O(logn)
     auto it_start = segments.lower_bound(key);
     if (it_start == segments.begin()) {  // insert at begin
       if (segments.empty() || it_start->first != key) segments[key] = 0;
@@ -104,7 +106,7 @@ class SegmentManager {
       iter = segments.erase(iter);  // Erase and move to the next valid iterator
     }
   }
-  
+
   void modify(int from, int to, int amount, bool isAdd) {
     if (from >= to) return;
 
@@ -160,6 +162,14 @@ int main() {
   std::cout << "\n--- test case 3 ----\n\n";
   manager.clear();
   manager.add(10, 30, 0);
+  manager.printSegments();
+  manager.add(1, 10, 1);
+  manager.printSegments();
+  manager.set(5, 9, 2);
+  manager.printSegments();
+  manager.add(6, 10, 2);
+  manager.printSegments();
+  manager.set(-1, 3, 0);
   manager.printSegments();
 
   return 0;
