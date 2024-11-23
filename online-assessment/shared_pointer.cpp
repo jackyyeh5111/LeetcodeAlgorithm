@@ -1,99 +1,95 @@
 #include <iostream>
 
+using namespace std;
+
 template <typename T>
 class SharedPointer {
 private:
-    T* ptr;  // raw pointer to the object
-    int* ref_count;  // reference count
+    T* ptr; // ptr to managed object
+    std::atomic<int>* ref_count;
 
+    void release() {
+        (*ref_count)--;
+        if (*ref_count == 0) {    
+            delete ptr;
+            delete ref_count;
+            std::cout << "release managed object\n";
+        }
+        ptr = nullptr;
+        ref_count = nullptr;
+    }
 public:
-    // Constructor
-    explicit SharedPointer(T* p = nullptr) : ptr(p), ref_count(new int(1)) {
-        if (ptr == nullptr) {
-            *ref_count = 0;
-        }
+     // default constructor
+    SharedPointer(T* p = nullptr) : ptr(p), ref_count(new std::atomic<int>(1)) {}
+    
+    // copy constructor
+    SharedPointer(const SharedPointer& other) : ptr(other.ptr), ref_count(other.ref_count) {
+        (*ref_count)++;
     }
 
-    // Copy constructor
-    SharedPointer(const SharedPointer<T>& sp) {
-        ptr = sp.ptr;
-        ref_count = sp.ref_count;
-        (*ref_count)++;  // Increase the reference count
+    // move constructor
+    SharedPointer(SharedPointer&& other) : ptr(other.ptr), ref_count(other.ref_count) {
+        other.ptr = nullptr;
+        other.ref_count = nullptr;
     }
 
-    // Assignment operator
-    SharedPointer<T>& operator=(const SharedPointer<T>& sp) {
-        if (this != &sp) {
-            // Decrease the old reference count
-            // If no one is referencing the old object, delete it
-            if (--(*ref_count) == 0) {
-                delete ptr;
-                delete ref_count;
-            }
+    // deconstructor
+    ~SharedPointer() {
+        release();
+    }
+    // copy assignment
+    SharedPointer& operator=(const SharedPointer& other) {
+        if (this == &other) return *this;  // Avoid self-assignment
 
-            // Copy new data
-            ptr = sp.ptr;
-            ref_count = sp.ref_count;
-            (*ref_count)++;  // Increase the new reference count
-        }
+        release();
+        ptr = other.ptr;
+        ref_count = other.ref_count;
+        (*ref_count)++;
+        return *this;
+    }
+    // move assignment
+    SharedPointer& operator=(SharedPointer&& other) {
+        if (this == &other) return *this;  // Avoid self-assignment
+
+        release();
+        ptr = other.ptr;
+        ref_count = other.ref_count;
+        other.ptr = nullptr;
+        other.ref_count = nullptr;
+
         return *this;
     }
 
-    // Destructor
-    ~SharedPointer() {
-        if (--(*ref_count) == 0) {
-            delete ptr;
-            delete ref_count;
-        }
-    }
-
-    // Dereference operator
-    T& operator*() const {
+    // dereference
+    T& operator*() {
         return *ptr;
     }
-
-    // Arrow operator
-    T* operator->() const {
+    // arrow operator  
+    T* operator->() {
         return ptr;
     }
 
-    // Get the raw pointer
-    T* get() const {
-        return ptr;
-    }
-
-    // Get reference count
     int use_count() const {
         return *ref_count;
     }
-
-    // Reset the shared pointer
-    void reset(T* p = nullptr) {
-        if (--(*ref_count) == 0) {
-            delete ptr;
-            delete ref_count;
-        }
-        ptr = p;
-        ref_count = new int(1);
-    }
 };
 
-// Example usage
+// Usage Example
 int main() {
-    SharedPointer<int> sp1(new int(10));  // Creating shared pointer
-    std::cout << "sp1 count: " << sp1.use_count() << std::endl;  // Output: 1
-    std::cout << "sp1 value: " << *sp1 << std::endl;  // Output: 10
+  SharedPointer<int> sp1(new int(42));
+  std::cout << "Value: " << *sp1 << ", Reference Count: " << sp1.use_count()
+            << std::endl;
 
-    {
-        SharedPointer<int> sp2 = sp1;  // Copy constructor, both point to the same object
-        std::cout << "sp1 count: " << sp1.use_count() << std::endl;  // Output: 2
-        std::cout << "sp2 count: " << sp2.use_count() << std::endl;  // Output: 2
-    }
+  // sp1 = std::move(sp1);  
 
-    std::cout << "sp1 count after sp2 goes out of scope: " << sp1.use_count() << std::endl;  // Output: 1
+  {
+    SharedPointer<int> sp2 = sp1;  // Copy constructor
+    std::cout << "Value: " << *sp2 << ", Reference Count: " << sp1.use_count()
+              << std::endl;
+  }  // sp2 goes out of scope here, ref_count decrements
 
-    sp1.reset();  // Reset the pointer, ref_count becomes 0, memory is freed
-    std::cout << "sp1 count after reset: " << sp1.use_count() << std::endl;  // Output: 1 (but points to nullptr)
+  std::cout << "Reference Count after sp2 goes out of scope: "
+            << sp1.use_count() << std::endl;
 
-    return 0;
+  return 0;
 }

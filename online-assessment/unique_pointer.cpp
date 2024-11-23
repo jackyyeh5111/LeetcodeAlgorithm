@@ -8,7 +8,24 @@ private:
 
 public:
     // Constructor
+    // explicit keyword avoids unintended type conversion.
+    /* 
+        ex: 
+            UniquePointer<int> func() {
+                return new int(42);  // Implicit conversion from int* to UniquePointer<int>
+            }
+     */
     explicit UniquePointer(T* p = nullptr) : ptr(p) {}
+
+    /* 
+        error:
+            cannot initialize a member subobject of type 'int *' with an lvalue of
+      type 'const int *'
+            - ptr: int *
+            -   p: const int * 
+
+     */
+    // explicit UniquePointer(const T* p = nullptr) : ptr(p) {}
 
     // Destructor
     ~UniquePointer() {
@@ -16,6 +33,18 @@ public:
     }
 
     // Delete copy constructor and assignment operator (No copying allowed)
+    /* 
+        Why const is important?
+        It would not prevent assignments from const UniquePointer objects.
+        ex:
+            UniquePointer<int> up1(new int(42));
+            UniquePointer<int> up2(new int(100));
+
+            const UniquePointer<int> up3(new int(55));
+
+            // up1 = up2;  // Error: Copy assignment is deleted (as expected)
+            up1 = up3;    // This would compile because const isn't handled!
+     */
     UniquePointer(const UniquePointer&) = delete;
     UniquePointer& operator=(const UniquePointer&) = delete;
 
@@ -65,12 +94,18 @@ public:
 
 // Usage Example
 int main() {
-    UniquePointer<int> uptr(new int(42));
+    UniquePointer<int> uptr(new int(42)); // new int(42) means dynamically allocate memory for integer
+    // UniquePointer<int> uptr = new int(42); // new int(42) means dynamically allocate memory for integer
+    // int *tmp = 42; // error: cannot initialize a variable of type 'int *' with an rvalue of
+    // UniquePointer<int> uptr(tmp);
+    
     std::cout << *uptr << std::endl;
 
     // UniquePointer<int> uptr2 = uptr;  // Compilation error due to deleted copy constructor
-    UniquePointer<int> uptr2 = std::move(uptr);  // Ownership transferred
+    UniquePointer<int> uptr2(std::move(uptr)); 
+    // UniquePointer<int> uptr2 = std::move(uptr);  // Ownership transferred
     std::cout << *uptr2 << std::endl;
+    std::cout << uptr2->aa() << std::endl;
 
     return 0;
 }

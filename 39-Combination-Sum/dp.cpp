@@ -7,8 +7,8 @@ public:
         for (int cand : candidates) {
             for (int i = cand; i <= target; i++) {
                 for (vector<int> comb : dp[i - cand]) {
-                    comb.push_back(cand);
-                    dp[i].push_back(comb);
+                    dp[i].emplace_back(vec);  // Use emplace_back to avoid an extra copy.
+                    dp[i].back().push_back(cand);  // Add the current candidate to the last vector.
                 }
             }
         }

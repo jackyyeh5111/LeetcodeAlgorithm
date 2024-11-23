@@ -1,3 +1,35 @@
+/* 
+    Another thought by chatGPT.
+ */
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        if (hand.size() % groupSize != 0) return false;
+
+        // Sort the hand to maintain order
+        sort(hand.begin(), hand.end());
+        
+        // Use a map to count frequencies
+        map<int, int> freq;
+        for (int num : hand) freq[num]++;
+
+        // Iterate through each number in the hand
+        for (auto it = freq.begin(); it != freq.end(); ++it) {
+            int count = it->second;
+            if (count > 0) {
+                // Try to create a sequence starting from current number
+                for (int i = 1; i < groupSize; i++) {
+                    int nextNum = it->first + i;
+                    if (freq[nextNum] < count) return false;
+                    freq[nextNum] -= count;
+                }
+            }
+        }
+        return true;
+    }
+};
+
+
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {

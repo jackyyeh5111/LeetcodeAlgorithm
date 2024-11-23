@@ -1,4 +1,72 @@
 #include "utils.hpp"
+
+class Solution {
+public:
+    int maxCount(vector<int>& banned, int n, long long maxSum) {
+        // remove duplicate in banned vector
+        set<int> tmp(banned.begin(), banned.end());
+        banned.assign(tmp.begin(), tmp.end());
+
+        // create presums array
+        sort(banned.begin(), banned.end());
+        vector<long long> presums(banned.size() + 1, 0);
+        for (int idx = 1 ; idx <= banned.size(); idx++)
+            presums[idx] = presums[idx - 1] + banned[idx - 1];
+
+        // binary search
+        int left = 0, right = n;
+        while(left < right) {
+            int mid = right - (right - left) / 2;
+            if (isOK(presums, banned, mid, maxSum))
+                left = mid;
+            else
+                right = mid - 1;
+        }
+
+        int num_banned = upper_bound(banned.begin(), banned.end(), left) - banned.begin();
+
+        return left - num_banned;
+    }
+    bool isOK(const vector<long long> &presums, const vector<int> &banned, long long num, long long maxSum) {
+        long long sum = (1 + num) * num / 2;
+        /* 
+            num=3
+            2 3 8
+                ^
+         */
+         int idx = upper_bound(banned.begin(), banned.end(), num) - banned.begin();
+         sum -= presums[idx];
+         return sum <= maxSum;
+    }
+};
+
+/* 
+    Approach 2: O(mlogm + log(n)*log(m))
+        m = banned.size()
+        mlogm : Sorting banned vector
+        log(n) * log(m): binary search in range of n nested with binary search in banned vector
+    
+    Approach 1: brute force. O(n)
+        sum = 0
+        count = 0
+        for i from 1 to n:
+            if i is not in banned
+                sum += i
+                count++
+            if sum > maxSum
+                break
+ 
+    i=1 check 1,4,6
+    i=2 check 1,4,6
+    ...
+
+    sum(1..n) = (1 + n) * n / 2
+    i=1 => sum = 1
+    i=2 => sum = 3
+ */
+
+
+
 /*
     arr =       1 2 3
     presums:  0 1 3 6

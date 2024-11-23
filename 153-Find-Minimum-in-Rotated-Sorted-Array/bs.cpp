@@ -1,22 +1,38 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        int left = 0, right = nums.size() - 1;
-        int mid = 0;
-        while(left <= right) {
-            mid = left + (right - left) / 2;
-            if (nums[mid] < nums[(mid - 1) % nums.size()])
-                break;
-
-            if (nums[mid] < nums[right])
-                right = mid;
-            else
+        int size = nums.size();
+        int left = 0;
+        int right = size - 1;
+        /* 
+            3 4 5 1 2
+                  m
+                  l
+                    r
+         */
+        while(left < right) {
+            int mid = left + (right - left) / 2;
+            int prev = mid == 0 ? size - 1 : mid - 1;
+            if (nums[mid] < nums[prev])
+                return nums[mid];
+            // check if right portion is increasing
+            else if (nums[mid] < nums[right]) {
+                right = mid - 1;
+            }
+            else {
                 left = mid + 1;
+            }
         }
-        return nums[mid];
+        return nums[left];
+
     }
 };
-
+/* 
+    1 0
+    l
+      r
+    m
+ */
 /* 
     Summary: Based on following cases, if right portion(nums[mid:right]) is increasing array, 
              minimum value can be found in left portion.

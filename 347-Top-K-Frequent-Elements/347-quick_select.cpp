@@ -1,5 +1,46 @@
 #include "../utils.hpp"
 
+/* 
+  quickSelect do not have to return anything
+ */
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> counter;
+        for (int num : nums) counter[num]++;
+        vector<pair<int, int>> arrs;
+        for (const auto& pair : counter) {
+            arrs.push_back(make_pair(pair.second, pair.first));
+        }
+
+        vector<int> ans;
+        quickSelect(arrs, 0, arrs.size() - 1, k);
+        for (int i = arrs.size() - k; i < arrs.size(); i++) {
+            ans.push_back(arrs[i].second);
+        }
+        return ans;
+    }
+    void quickSelect(vector<pair<int, int>>& nums, int start, int end, int k) {
+        if (start >= end) return;
+        int pivot = nums[end].first;
+        int ptr = start;
+        for (int i = start; i <= end - 1; i++) {
+            if (nums[i].first < pivot) {
+                swap(nums[i], nums[ptr]);
+                ptr++;
+            }
+        }
+        swap(nums[ptr], nums[end]);
+        if (nums.size() - ptr == k) return;
+        else if (nums.size() - ptr < k) {
+            quickSelect(nums, start, ptr - 1, k);
+        }
+        else if (nums.size() - ptr > k) {
+            quickSelect(nums, ptr + 1, end, k);
+        }
+    }
+};
+
 /*
     quicksort
     Use the last element as pivot. Simplify comparisons compared to Solution1.

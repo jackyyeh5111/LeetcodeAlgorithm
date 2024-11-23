@@ -75,18 +75,35 @@ set.remove(item)
 """
 
 # ex1: 
-    strings = ['apple', 'banana', 'kiwi', 'grape']
-    # Custom sort by length of string
-    sorted_strings = sorted(strings, key=lambda x: len(x)) # Output: ['kiwi', 'grape', 'apple', 'banana']
+strings = ['apple', 'banana', 'kiwi', 'grape']
+# Custom sort by length of string
+sorted_strings = sorted(strings, key=lambda x: len(x)) # Output: ['kiwi', 'grape', 'apple', 'banana']
 
 # ex2:
-    people = [('John', 25), ('Jane', 22), ('Doe', 25), ('Alice', 30)]
+people = [('John', 25), ('Jane', 22), ('Doe', 25), ('Alice', 30)]
 
-    # Custom sort by age, and then by name if ages are the same
-    sorted_people = sorted(people, key=lambda x: (x[1], x[0])) # Output: [('Jane', 22), ('Doe', 25), ('John', 25), ('Alice', 30)]
+# Custom sort by age, and then by name if ages are the same
+sorted_people = sorted(people, key=lambda x: (x[1], x[0])) # Output: [('Jane', 22), ('Doe', 25), ('John', 25), ('Alice', 30)]
 
 """ 
     ASCII
 """
 ord(str) # returns ascii value of the character , Example ord("a") = 97
 chr(int) # return character of given ascii value , Example chr(97) = "a"
+
+""" 
+    Any, All
+"""
+numbers = [1, 2, 3, 4, 5]
+all_positive = all(n > 0 for n in numbers)
+all_positive = any(n > 0 for n in numbers)
+
+""" 
+    defaultdict
+"""
+from collections import defaultdict
+
+names = ['Jacky', 'Alice', 'Jacky', 'Bob']
+name_count = defaultdict(int)
+for name in names:
+    name_count[name] += 1

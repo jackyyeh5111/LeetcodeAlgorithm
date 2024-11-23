@@ -8,51 +8,56 @@
  */
 
 class Solution2 {
- public:
-  vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
-    if (n == 1) return {0};
-    unordered_map<int, vector<int>> map;
-    vector<int> in_degrees(n, 0);
-    for (const auto edge : edges) {
-      in_degrees[edge[0]]++;
-      in_degrees[edge[1]]++;
-      map[edge[0]].push_back(edge[1]);
-      map[edge[1]].push_back(edge[0]);
-    }
-
-    int count = 0;
-    queue<int> que;
-    for (int i = 0; i < n; i++) {
-      if (in_degrees[i] == 1) {
-        que.push(i);
-        count++;
-      }
-    }
-
-    while (!que.empty() && count < n) {
-      int size = que.size();
-      for (int i = 0; i < size; i++) {
-        int label = que.front();
-        que.pop();
-        for (int next_label : map[label]) {
-          in_degrees[next_label]--;
-          if (in_degrees[next_label] == 1) {
-            que.push(next_label);
-            count++;
-          }
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        if (n == 1) return {0};
+        vector<vector<int>> adjs(n);
+        vector<int> inDegrees(n, 0);
+        for (const auto&edge :edges) {
+            inDegrees[edge[0]]++;
+            inDegrees[edge[1]]++;
+            adjs[edge[0]].push_back(edge[1]);
+            adjs[edge[1]].push_back(edge[0]);
         }
-      }
-    }
 
-    vector<int> ans;
-    while (!que.empty()) {
-      ans.push_back(que.front());
-      que.pop();
-    }
+        queue<int> que;
+        for (int i = 0; i < n; i++) {
+            if (inDegrees[i] == 1)
+                que.push(i);
+        }
+        
+        int cnt = 0;
+        while(!que.empty()) {
+            int size = que.size();
+            cnt += size;
+            if (cnt == n) break;
+            for (int i = 0; i < size; i++) {
+                int node = que.front();
+                que.pop();
+                for (int adj_node : adjs[node]) {
+                    inDegrees[adj_node]--;
+                    if (inDegrees[adj_node] == 1)
+                        que.push(adj_node);
+                }
+            }
+        }
 
-    return ans;
-  }
+        vector<int> ans;
+        while(!que.empty()) {
+            ans.push_back(que.front());
+            que.pop();
+        }
+        return ans;
+    }
 };
+
+/* 
+    1 - 2 - 3 - 4
+            |
+            5
+            |
+            6
+ */
 
 /* Approach 1: Topological sort
     不要從中心往外走，反過來從外走向裡面，就是 Topological sort了！

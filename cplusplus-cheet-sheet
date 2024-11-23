@@ -228,6 +228,7 @@ if(Set.find(1) != Set.end()) cout << "found" << endl;   // find val  equivalent 
 for(iter = Set.begin(); iter != Set.end(); ++iter)      // traverse
     cout << *iter <<endl;
 
+// Sets are containers that store unique elements following a specific order.
 set<int>::iterator it = Set.upper_bound(val);           //Return iterator pointing to first element after val             > val
 set<int>::iterator it = Set.lower_bound(val);           //Return iterator pointing to first element not goes before val   >= val
 
@@ -243,13 +244,25 @@ set<Node*, cmp> s;                                      //intialize ordered set 
 #include <queue>
 #include <priority_queue>
 stack<int> s;
-queue<int> q;
 s.top();                                       // access the top element
 s.push();
 s.pop();
-q.front();                                     // access the first element in queue
-q.pop();                                       // does not return element !!!!!
-q.empty();
+
+/* queue *
+/* 
+  Underlying Container: By default, std::queue uses std::deque as its underlying container, 
+  though you can specify another container type like std::list.
+
+  std::queue does not allow random access to elements or direct insertion/removal at arbitrary positions. It only provides access to the front and back.
+ *//
+queue<int> q;
+q.empty()
+q.size()
+q.front()
+q.back()
+q.push_back()
+q.pop_front()
+
 
 priority_queue<int> pq;                        // max heap by default
 pq.push(val);
@@ -524,6 +537,7 @@ Do Find(0)
 - backtrack with dfs
 
 nums: [1, 2]
+
                        []  
                 /              \
              [1] (pick 1)        []  (not pick 1)
