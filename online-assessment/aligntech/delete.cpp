@@ -1,92 +1,98 @@
 #include <iostream>
+#include <vector>
+#include <cmath>
+#include <stdexcept>
 
-using namespace std;
+struct Point3D {
+    double x, y, z;
+};
 
-template <typename T>
-class SharedPointer {
- private:
-  T* ptr;  // ptr to managed object
-  std::atomic<int>* ref_count;
-
-  void release() {
-    (*ref_count)--;
-    if (*ref_count == 0) {
-      delete ptr;
-      delete ref_count;
-      std::cout << "release managed object\n";
+// Function to calculate the Mean Squared Error (MSE) for a plane
+double calculateError(const std::vector<Point3D>& points, double a, double b, double c, double d) {
+    double error = 0.0;
+    for (const auto& point : points) {
+        double distance = a * point.x + b * point.y + c * point.z + d;
+        error += distance * distance;
     }
-    ptr = nullptr;
-    ref_count = nullptr;
-  }
+    return error / points.size();
+}
 
- public:
-  // default constructor
-  SharedPointer(T* p = nullptr) : ptr(p), ref_count(new std::atomic<int>(1)) {}
+// Gradient descent to fit a plane: ax + by + cz + d = 0
+void fitPlaneGradientDescent(const std::vector<Point3D>& points, double& a, double& b, double& c, double& d,
+                             double learning_rate = 0.01, int max_iters = 10000, double tolerance = 1e-6) {
+    // init
+    a = 1.0;
+    b = 1.0;
+    c = 1.0;
+    d = 1.0;
+    
+    for (int iter = 0; iter < max_iters; iter++) {
+      // 1) compute gradients
+      /* 
+        Plane = ax + by + cz + b = 0
+        Loss  = Sigma(y_gt - y_pred) ^ 2
+              = Sigma(residual) ^ 2
 
-  // copy constructor
-  SharedPointer(const SharedPointer& other)
-      : ptr(other.ptr), ref_count(other.ref_count) {
-    (*ref_count)++;
-  }
+        da / DL = 2 * residual * x
+        db / DL = 2 * residual * y
+        dc / DL = 2 * residual * z
+        dd / DL = 2 * residual * 1
+       */
+      double da = 0.0, db = 0.0, dc = 0.0, dd = 0.0;
+      double total_loss = 0.0;
+      for (const auto& pt : points) {
+        double residual = a * pt.x + b * pt.y + c * pt.z + d;
+        total_loss += residual * residual;
 
-  // move constructor
-  SharedPointer(SharedPointer&& other)
-      : ptr(other.ptr), ref_count(other.ref_count) {
-    other.ptr = nullptr;
-    other.ref_count = nullptr;
-  }
+        da = residual * pt.x;
+        db = residual * pt.y;
+        dc = residual * pt.z;
+        dd = residual;
+      }
 
-  // deconstructor
-  ~SharedPointer() { release(); }
-  // copy assignment
-  SharedPointer& operator=(const SharedPointer& other) {
-    if (this == &other) return *this;  // Avoid self-assignment
+      // [Optional] Average the gradients
+      int n = points.size()
+      da /= n;
+      db /= n;
+      dc /= n;
+      dd /= n;
 
-    release();
-    ptr = other.ptr;
-    ref_count = other.ref_count;
-    (*ref_count)++;
-    return *this;
-  }
-  // move assignment
-  SharedPointer& operator=(SharedPointer&& other) {
-    if (this == &other) return *this;  // Avoid self-assignment
 
-    release();
-    ptr = other.ptr;
-    ref_count = other.ref_count;
-    other.ptr = nullptr;
-    other.ref_count = nullptr;
+      // 2) update weights
+      a -= learning_rate * da;
+      b -= learning_rate * db;
+      c -= learning_rate * dc;
+      d -= learning_rate * dd;
 
-    return *this;
-  }
+      // 3) check for conergence
+      std::cout << "iter: " << iter << " => total_loss: " << total_loss << '\n';
+      if (total_loss < tolerance)
+        break;
+    }
+}
 
-  // dereference
-  T& operator*() { return *ptr; }
-  // arrow operator
-  T* operator->() { return ptr; }
-
-  int use_count() const { return *ref_count; }
-};
-
-class Base {
- public:
-  virtual void func() { cout << "Base\n"; }
-};
-class Derived : public Base {
- public:
-  void func() override { cout << "Derived\n"; }
-};
-// void callFunc(Base & b) { b.func(); }
-// void callFunc(Base* b) { b->func(); }
-void callFunc(Base &b) { b.func(); }
-
-// Usage Example
 int main() {
+    // Example points
+    std::vector<Point3D> points = {
+        {1.0, 2.0, 3.0},
+        {2.0, 3.0, 5.0},
+        {3.0, 4.0, 6.0},
+        {4.0, 5.0, 7.0},
+        {1.0, 1.0, 2.0}
+    };
 
-//   Derived d;
-    Base*  obj = new Derived(); // object slicing
-  callFunc(*obj);  // Output: "Derived"
+    try {
+        double a, b, c, d;
+        fitPlaneGradientDescent(points, a, b, c, d);
 
-  return 0;
+        std::cout << "Fitted Plane Equation: "
+                  << a << "x + " << b << "y + " << c << "z + " << d << " = 0\n";
+
+        double error = calculateError(points, a, b, c, d);
+        std::cout << "Mean Squared Error: " << error << "\n";
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return 0;
 }
