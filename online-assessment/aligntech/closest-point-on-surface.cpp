@@ -15,10 +15,14 @@ double dotProduct(const Point& a, const Point& b) {
     return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-Point crossProduct(const Point& a, const Point& b) {
-    return {a.y * b.z - a.z * b.y,
-            a.z * b.x - a.x * b.z,
-            a.x * b.y - a.y * b.x};
+Point crossProduct(const Point& pt1, const Point& pt2) {
+    /* 
+        pt1 = (x1, y1, z1)
+        pt2 = (x2, y2, z2)
+     */
+    return {pt1.y * pt2.z - pt1.z * pt2.y,
+            pt1.z * pt2.x - pt1.x * pt2.z,
+            pt1.x * pt2.y - pt1.y * pt2.x};
 }
 
 // Clamp a value between min and max
@@ -30,7 +34,7 @@ double clamp(double value, double min, double max) {
 Point closestPointOnSegment(const Point& p, const Point& a, const Point& b) {
     Point ab = subtract(b, a);
     double t = dotProduct(subtract(p, a), ab) / dotProduct(ab, ab);
-    t = clamp(t, 0.0, 1.0);
+    t = clamp(t, 0.0, 1.0); // important! because we are looking for point lying on segment
     return {a.x + t * ab.x, a.y + t * ab.y, a.z + t * ab.z};
 }
 
