@@ -112,7 +112,7 @@ int main() {
     qt.insert(Point(7, 1));
 
     // Query a range
-    BoundingBox range(3, 7, 2, 6);
+    BoundingBox range(3, 7, 2, 10);
     std::vector<Point> found;
     qt.query(range, found);
 

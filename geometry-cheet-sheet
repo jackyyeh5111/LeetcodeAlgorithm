@@ -1,0 +1,90 @@
+/*
+    Cross product 2D
+
+ */
+int orientation(const Point& p1, const Point& p2, const Point& p3) {
+    /*     
+        Returns:
+            0 -> collinear
+            1 -> counterclockwise
+            2 -> clockweise
+
+        vec1: (p2.x - p1.x, p2.y - p1.y)
+        vec2: (p3.x - p2.x, p3.y - p2.y)
+        do cross product to check orientation
+     */
+  int crossProd = (p2.x - p1.x) * (p3.y - p2.y) - (p3.x - p2.x) * (p2.y - p1.y);
+  if (crossProd == 0) return 0;
+  else if (crossProd > 0) return 1; // counterclockwise
+  else return 2; // clockwise
+}
+
+/* 
+    Cross product 3D
+ */
+Point crossProduct(const Point& pt1, const Point& pt2) {
+    /* 
+        pt1 = (x1, y1, z1)
+        pt2 = (x2, y2, z2)
+     */
+    return {pt1.y * pt2.z - pt1.z * pt2.y,
+            -(pt1.x * pt2.z - pt1.z * pt2.x),
+            pt1.x * pt2.y - pt1.y * pt2.x};
+}
+
+
+/* 
+    find the bottom-most point as start point
+ */
+auto comp = [](const Point& p1, const Point& p2) {
+return p1.y < p2.y || (p1.y == p2.y && p1.x < p2.x);
+};
+Point start = *std::min_element(points.begin(), points.end(), comp);
+
+/* 
+    sort by polar angle based on start point
+ */
+#include <cmath>
+std::sort(points.begin(), points.end(), [start](const Point& p1, const Point& p2) {
+    double angle1 = std::atan2(p1.y - start.y, p1.x - start.x);
+    double angle2 = std::atan2(p2.y - start.y, p2.x - start.x);
+    if (angle1 == angle2) {
+        // euclidean distance
+        int dist1 = (p1.x - start.x) * (p1.x - start.x) + (p1.y - start.y) * (p1.y - start.y);
+        int dist2 = (p2.x - start.x) * (p2.x - start.x) + (p2.y - start.y) * (p2.y - start.y);
+        return dist1 < dist2;
+    }
+    return angle1 < angle2;
+});
+
+// Define a 3x3 matrix class to represent the model-view-projection matrices
+class Matrix3x3 {
+public:
+    float m[3][3];
+
+    // Constructor to initialize the matrix
+    Matrix3x3() {
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+                m[i][j] = 0.0f;
+    }
+
+    // Matrix multiplication
+    Matrix3x3 operator*(const Matrix3x3& other) const {
+        Matrix3x3 result;
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+                for (int k = 0; k < 3; ++k)
+                    result.m[i][j] += m[i][k] * other.m[k][j];
+        return result;
+    }
+
+    // Transform a 3D point using this matrix (for MVP transformation)
+    std::vector<float> transform(const std::vector<float>& point) const {
+        std::vector<float> result(3, 0.0f);
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+                result[i] += m[i][j] * point[j];
+        return result;
+    }
+};

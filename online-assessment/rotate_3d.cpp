@@ -1,40 +1,35 @@
 #include <iostream>
-#include <vector>
+#include <stdexcept>
 
 using namespace std;
 
-// Function to rotate a 3D point using a rotation matrix
-vector<double> rotatePoint(const vector<double>& point, const vector<vector<double>>& rotationMatrix) {
-    // Ensure the point is 3D and the rotation matrix is 3x3
-    if (point.size() != 3 || rotationMatrix.size() != 3 || rotationMatrix[0].size() != 3) {
-        throw invalid_argument("Point must be 3D and rotation matrix must be 3x3.");
-    }
-    
-    vector<double> rotatedPoint(3, 0.0);
-    
+// Function to rotate a 3D point using a rotation matrix (using raw array)
+void rotatePoint(const double point[3], const double rotationMatrix[3][3], double rotatedPoint[3]) {
     // Matrix multiplication: rotatedPoint = rotationMatrix * point
     for (int i = 0; i < 3; ++i) {
+        rotatedPoint[i] = 0.0;
         for (int j = 0; j < 3; ++j) {
             rotatedPoint[i] += rotationMatrix[i][j] * point[j];
         }
     }
-    
-    return rotatedPoint;
 }
 
 int main() {
-    // Example point
-    vector<double> point = {1.0, 0.0, 0.0};
+    // Example point (3D point)
+    double point[3] = {1.0, 0.0, 0.0};
     
     // Example rotation matrix (90 degrees about the Z-axis)
-    vector<vector<double>> rotationMatrix = {
-        {0.0, -1.0, 0.0},
+    double rotationMatrix[3][3] = {
+        {0.0,  1.0, 0.0},
         {1.0,  0.0, 0.0},
         {0.0,  0.0, 1.0}
     };
     
+    double rotatedPoint[3];  // Array to store the rotated point
+    
     try {
-        vector<double> rotatedPoint = rotatePoint(point, rotationMatrix);
+        // Call the rotation function
+        rotatePoint(point, rotationMatrix, rotatedPoint);
         
         // Print the rotated point
         cout << "Rotated Point: (" 

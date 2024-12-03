@@ -45,6 +45,10 @@ void earClippingTriangulation(std::vector<Point> polygon, std::vector<std::vecto
     int n = polygon.size();
     if (n < 3) return;
 
+    /* 
+        sort by polar angle first!!
+     */
+
     // Use indices to track remaining vertices
     std::vector<int> indices(n);
     for (int i = 0; i < n; ++i) indices[i] = i;

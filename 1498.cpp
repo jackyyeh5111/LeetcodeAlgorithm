@@ -1,59 +1,47 @@
 class Solution {
 public:
     int numSubseq(vector<int>& nums, int target) {
-        int N = nums.size();
         sort(nums.begin(), nums.end());
-        int left = 0, right = N - 1;
-        int ans = 0;
-        const int mod = 1e9 + 7;
+        int size = nums.size();
+        long modulo = 1e9 + 7;
 
-        vector<int> power(N);
-        power[0] = 1;
-        for (int i = 1; i < N; i++)
-            power[i] = power[i-1] * 2 % mod;
+        // create power lookup table in advance (avoid pow() operation out of range)
+        vector<long> powers(size);
+        powers[0] = 1.0;
+        for (int i = 1; i < size; i++) {
+            powers[i] = (powers[i - 1] * 2) % modulo;
+        }
 
-        while(left <= right) { // left = 2, right = 1
-            if (nums[left] + nums[right] > target) // 11 > 9
+        // starting at left element, how many subsequences can meet requirements?
+        // two pointers approach
+        long ans = 0;
+        int left = 0, right = size - 1;
+        while(left <= right) {
+            if (nums[left] + nums[right] > target)
                 right--;
             else {
-                // subsequences that contains left idx and at most right idx
-                ans = (ans % mod + power[right - left] % mod) % mod;
+                ans = (ans + powers[right - left]) % modulo;
                 left++;
             }
         }
-        return ans;
+        return (int)ans;
     }
 };
 
 /* 
-    [3 5 6 7]
+    Note: Sorting does not affect result
 
-    min: 2
-    max: 2
-    sum: 4
-    tgt: 4
-    # non-empty subsequences: 3 + 1 
- */
+    target: 3
+    arr: [1 1 2 2]
+          l
+                r
 
-/* 
-    clarification:
-    1. [3] min: 3, max: 3
-    
-    edge:
-    1. no empty nums
+    When start at left element, how many subsequences can meet requirements?
+        ans: 2^(right - left)
 
-    nums: [1 2 5 3]
-    nums: [1 2 3 5]
-             l
-             r
- 
-    subsequences: [1 2 3]
-
-    min: 2
-    max: 2
-    sum: 4
-    tgt: 4
-    # non-empty subsequences: 3 + 1
- */
-
-
+    edge case: // array only got one element
+        target: 3
+        arr: [1]
+              l
+              r
+*/

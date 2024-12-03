@@ -1,98 +1,81 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <stdexcept>
-
-struct Point3D {
-    double x, y, z;
+using namespace std;
+struct Point {
+  int x, y;
 };
 
-// Function to calculate the Mean Squared Error (MSE) for a plane
-double calculateError(const std::vector<Point3D>& points, double a, double b, double c, double d) {
-    double error = 0.0;
-    for (const auto& point : points) {
-        double distance = a * point.x + b * point.y + c * point.z + d;
-        error += distance * distance;
-    }
-    return error / points.size();
+/*
+    // A utility function to find the orientation of three points
+    // Returns:
+    // 0 -> p1, p2, p3 are collinear
+    // 1 -> Counterclockwise
+    // 2 -> Clockweise
+
+    Idea is to use slope!!
+    ref: https://www.geeksforgeeks.org/orientation-3-ordered-points/
+ */
+int orientation(const Point& p1, const Point& p2, const Point& p3) {
+  // vec1: (p2.x - p1.x, p2.y - p1.y)
+  // vec2: (p3.x - p2.x, p3.y - p2.y)
+  // do cross product to check orientation
+  int crossProd = (p2.x - p1.x) * (p3.y - p2.y) - (p3.x - p2.x) * (p2.y - p1.y);
+  if (crossProd == 0) return 0;
+  else if (crossProd > 0) return 1; // counterclockwise
+  else return 2; // clockwise
 }
 
-// Gradient descent to fit a plane: ax + by + cz + d = 0
-void fitPlaneGradientDescent(const std::vector<Point3D>& points, double& a, double& b, double& c, double& d,
-                             double learning_rate = 0.01, int max_iters = 10000, double tolerance = 1e-6) {
-    // init
-    a = 1.0;
-    b = 1.0;
-    c = 1.0;
-    d = 1.0;
+/* 
+  Function to find the convex hull of a set of points
+  Clarification:
+      1. Have to consider if number of point < 3? 
+      2. What is all points are collinear?
+      3. Is possible points vec got duplicate point?
+ */
+void convexHull(std::vector<Point>& points, std::vector<Point>& hull) {
+    // 1) find bottom-most point as start
+    Point start = *std::min_element(points.begin(), points.end(), [](const Point& p1, const Point& p2){
+        if (p1.y == p2.y) return p1.x < p2.x;
+        return p1.y < p2.y;
+    });
+
+    // 2) sort by polar angle based on strat
+    sort(points.begin(), points.end(), [start](const Point& p1, const Point& p2){
+        double angle1 = atan2(p1.y - start.y, p1.x - start.x);
+        double angle2 = atan2(p2.y - start.y, p2.x - start.x);
+        if (angle1 == angle2) { // return point that closer to start
+            int dist1 = (p1.x - start.x) * (p1.x - start.x) + (p1.y - start.y) * (p1.y - start.y);
+            int dist2 = (p2.x - start.x) * (p2.x - start.x) + (p2.y - start.y) * (p2.y - start.y);
+            return dist1 < dist2;
+        }
+        return angle1 < angle2;
+    });
     
-    for (int iter = 0; iter < max_iters; iter++) {
-      // 1) compute gradients
-      /* 
-        Plane = ax + by + cz + b = 0
-        Loss  = Sigma(y_gt - y_pred) ^ 2
-              = Sigma(residual) ^ 2
-
-        da / DL = 2 * residual * x
-        db / DL = 2 * residual * y
-        dc / DL = 2 * residual * z
-        dd / DL = 2 * residual * 1
-       */
-      double da = 0.0, db = 0.0, dc = 0.0, dd = 0.0;
-      double total_loss = 0.0;
-      for (const auto& pt : points) {
-        double residual = a * pt.x + b * pt.y + c * pt.z + d;
-        total_loss += residual * residual;
-
-        da = residual * pt.x;
-        db = residual * pt.y;
-        dc = residual * pt.z;
-        dd = residual;
-      }
-
-      // [Optional] Average the gradients
-      int n = points.size()
-      da /= n;
-      db /= n;
-      dc /= n;
-      dd /= n;
-
-
-      // 2) update weights
-      a -= learning_rate * da;
-      b -= learning_rate * db;
-      c -= learning_rate * dc;
-      d -= learning_rate * dd;
-
-      // 3) check for conergence
-      std::cout << "iter: " << iter << " => total_loss: " << total_loss << '\n';
-      if (total_loss < tolerance)
-        break;
+    // 3) convex hull algo
+    for (const auto& pt : points) {
+        while(hull.size() >= 2) {
+            // check if turning counterclockwise
+            int size = hull.size();
+            if (orientation(hull[size - 2], hull[size - 1], pt) == 1)
+                break;
+            hull.pop_back();
+        }
+        hull.push_back(pt);
     }
+}
+
+// Helper function to print the convex hull points
+void printHull(const std::vector<Point>& hull) {
+  for (const auto& point : hull) {
+    std::cout << "(" << point.x << ", " << point.y << ")\n";
+  }
 }
 
 int main() {
-    // Example points
-    std::vector<Point3D> points = {
-        {1.0, 2.0, 3.0},
-        {2.0, 3.0, 5.0},
-        {3.0, 4.0, 6.0},
-        {4.0, 5.0, 7.0},
-        {1.0, 1.0, 2.0}
-    };
+  char heap[] = "hello";
+  heap[0] = 'a';
 
-    try {
-        double a, b, c, d;
-        fitPlaneGradientDescent(points, a, b, c, d);
-
-        std::cout << "Fitted Plane Equation: "
-                  << a << "x + " << b << "y + " << c << "z + " << d << " = 0\n";
-
-        double error = calculateError(points, a, b, c, d);
-        std::cout << "Mean Squared Error: " << error << "\n";
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-    }
-
-    return 0;
+  return 0;
 }

@@ -23,39 +23,36 @@ class Solution4 {
   }
 };
 
-/* Approach 3: DP - Space Optimized  */
-/*
-    - Instead of creating a 2-D array dp[n+1][sum/2+1], we can solve this
-   problem using an array dp[sum/2+1] only. That is, since we only use the
-   current index and previous index, the rest of the indexes are a waste of
-   space and we can reduce it to O(sum/2) space.
+/* Approach 3: DP - Space Optimized 
+    arr: 1 2 3 4
+    
+           0 1 2 3 4 5
+    {1}    T T F F F F
+    {1 2}  T T T T F F    
+    {1 2 3}
+
+    sum: 10
+    target: 5
  */
-class Solution3 {
- public:
-  bool canPartition(vector<int>& nums) {
-    int n = nums.size();
-    int sum = accumulate(nums.begin(), nums.end(), 0);
-    if (sum % 2 != 0) return false;
-    sum /= 2;
-    nums.insert(nums.begin(), 0);
-
-    vector<bool> dp(sum + 1, false);
-    dp[0] = true;
-
-    /* 切記，iterate j 必須 reverse iterate，如果 forward iterate 會重複使用同個
-     * element */
-    for (int i = 1; i <= n; i++) {
-      for (int j = sum; j >= nums[i]; j--) {
-        if (dp[j - nums[i]]) dp[j] = true;
-      }
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum & 1) return false;
+        
+        int target = sum / 2;
+        vector<bool> dp(target+1);
+        dp[0] = true;
+        for (int num : nums) {
+            vector<bool> next_dp = dp;
+            for (int i = num; i <= target; i++) {
+                if (dp[i-num])
+                    next_dp[i] = true;
+            }
+            dp = std::move(next_dp);
+        }
+        return dp[target];
     }
-
-    /* wrong (forward iterate) */
-    // for (int i = 0; i < nums.size(); ++i) {
-    //   for (int j = nums[i]; j <= sum; ++j) {
-
-    return dp[sum];
-  }
 };
 
 /* Approach 2: DP */

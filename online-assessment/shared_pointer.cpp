@@ -48,6 +48,7 @@ public:
         return *this;
     }
     // move assignment
+    // move constructor vs. move assignment: need release in move assignment
     SharedPointer& operator=(SharedPointer&& other) {
         if (this == &other) return *this;  // Avoid self-assignment
 

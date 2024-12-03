@@ -1,3 +1,27 @@
+/* 
+    Visit 2
+    More intuitive!!
+ */
+class MyCalendar {
+public:
+    map<int, int> calendar; // endTime, startTime
+    MyCalendar() {
+        
+    }
+    
+    bool book(int startTime, int endTime) {
+        auto it = calendar.upper_bound(startTime);
+        if (it != calendar.begin()) {
+            if (startTime < prev(it)->second) return false;
+        }
+        if (it != calendar.end()) {
+            if (endTime > it->first) return false;
+        }
+        calendar[startTime] = endTime;
+        return true;
+    }
+};
+
 class MyCalendar {
     map<int,int>mp;
 public:

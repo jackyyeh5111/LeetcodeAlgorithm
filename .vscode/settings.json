@@ -99,6 +99,8 @@
         "any": "cpp",
         "csignal": "cpp",
         "cplusplus-cheet-sheet": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "text_encoding": "cpp",
+        "geometry-cheet-sheet": "cpp"
     }
 }

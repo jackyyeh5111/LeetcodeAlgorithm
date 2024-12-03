@@ -1,33 +1,6 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-std::vector<std::vector<int>> convolve2D_Answer(const std::vector<std::vector<int>>& input, const std::vector<std::vector<int>>& kernel) {
-    int inputRows = input.size();
-    int inputCols = input[0].size();
-    int kernelRows = kernel.size();
-    int kernelCols = kernel[0].size();
-    
-    // Output matrix size (assuming no padding)
-    int outputRows = inputRows - kernelRows + 1;
-    int outputCols = inputCols - kernelCols + 1;
-    
-    std::vector<std::vector<int>> output(outputRows, std::vector<int>(outputCols, 0));
-
-    // Apply convolution
-    for (int i = 0; i < outputRows; ++i) {
-        for (int j = 0; j < outputCols; ++j) {
-            int sum = 0;
-            for (int ki = 0; ki < kernelRows; ++ki) {
-                for (int kj = 0; kj < kernelCols; ++kj) {
-                    sum += input[i + ki][j + kj] * kernel[ki][kj];
-                }
-            }
-            output[i][j] = sum;
-        }
-    }
-
-    return output;
-}
 
 std::vector<std::vector<int>> convolve2D(const std::vector<std::vector<int>>& input, const std::vector<std::vector<int>>& kernel) {
     int input_row = input.size();

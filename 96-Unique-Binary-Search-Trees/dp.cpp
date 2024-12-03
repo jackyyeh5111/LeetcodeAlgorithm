@@ -1,6 +1,20 @@
-#include "utils.hpp"
-
-/*
+class Solution {
+public:
+    int numTrees(int n) {
+        vector<int> dp(n+1);
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int k = 1; k <= i; k++) {
+                dp[i] += dp[k-1] * dp[i-(k+1)+1];
+            }
+        }
+        return dp[n];
+    }
+};
+/* 
+        0 1 2 3 4
+    dp: 1 1
 
     1 2 ... n
 
@@ -14,26 +28,3 @@
     dp[k] = dp[k-1] * dp[n-(k+1)+1]
 
  */
-class Solution {
- public:
-  int numTrees(int n) {
-    vector<int> dp(n + 1, 0);
-    dp[0] = 1;
-
-    for (int i = 1; i <= n; i++) {
-      for (int j = 1; j <= i; j++) {
-        dp[i] += dp[j - 1] * dp[i - j];
-      }
-    }
-
-    return dp[n];
-  }
-};
-
-int main() {
-  Solution sol;
-  int n = 3;
-  int ans = sol.numTrees(n);
-  std::cout << "ans: " << ans << '\n';
-  return 0;
-}

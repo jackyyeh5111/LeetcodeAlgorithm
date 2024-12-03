@@ -61,7 +61,22 @@ while heap:
 
 # max heap
 heapq.heappush(heap, -value) # all we have to do is negate the value
-               
+
+""" 
+    stack
+"""
+stack.pop(char)
+stack.append(char)
+
+""" 
+    queue
+"""
+queue = deque([root])
+level.append(node.val)
+node = queue.popleft()
+level.appendleft(node.val)
+node = queue.popleft()
+
 """ 
     set
 """
@@ -107,3 +122,10 @@ names = ['Jacky', 'Alice', 'Jacky', 'Bob']
 name_count = defaultdict(int)
 for name in names:
     name_count[name] += 1
+
+""" 
+    Python 2D dp array
+"""
+rows, cols = 3, 4
+dp = [[0] * cols for _ in range(rows)]
+print(dp)
