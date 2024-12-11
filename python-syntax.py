@@ -56,7 +56,8 @@ heapq.heappush(heap, 10)
 
 # Pop elements until heap is empty
 while heap:
-    smallest = heapq.heappop(heap)
+    smallest = heap[0] # only check top element
+    smallest = heapq.heappop(heap) # return and remove top element from heap
     print(smallest)
 
 # max heap
@@ -71,11 +72,11 @@ stack.append(char)
 """ 
     queue
 """
-queue = deque([root])
-level.append(node.val)
+queue = deque()
+queue.appendleft(1)
 node = queue.popleft()
-level.appendright(node.val)
-node = queue.popright()
+queue.append(2)
+node = queue.pop()
 
 """ 
     set

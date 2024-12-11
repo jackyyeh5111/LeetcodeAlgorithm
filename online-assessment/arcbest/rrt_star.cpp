@@ -15,7 +15,7 @@ struct Point {
 struct Node {
     Point point;
     std::shared_ptr<Node> parent;
-    double cost;
+    double cost; // add cost here
 
     Node(Point p, std::shared_ptr<Node> parent = nullptr, double cost = 0) 
         : point(p), parent(parent), cost(cost) {}

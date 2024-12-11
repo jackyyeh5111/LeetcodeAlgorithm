@@ -45,7 +45,28 @@ Point steer(const Point& from, const Point& to, double maxStep) {
     double theta = std::atan2(to.y - from.y, to.x - from.x);
     return Point(from.x + maxStep * std::cos(theta), from.y + maxStep * std::sin(theta));
 }
+/* 
+bool isCollisionFree(const Point& start, const Point& end) {
+    // Check for collisions along the line segment from start to end.
+    // Example: Define some circular obstacles.
+    const std::vector<Point> obstacles = {{4, 4}, {6, 6}};
+    const double obstacleRadius = 1.0;
+    const int steps = 10; // Number of points to sample along the line segment
 
+    for (int i = 0; i <= steps; ++i) {
+        double t = static_cast<double>(i) / steps;
+        Point intermediate(start.x + t * (end.x - start.x), start.y + t * (end.y - start.y));
+
+        for (const Point& obs : obstacles) {
+            if (distance(intermediate, obs) < obstacleRadius) {
+                return false; // Collision detected
+            }
+        }
+    }
+
+    return true; // No collisions
+}
+ */
 bool isCollisionFree(const Point& start, const Point& end) {
     // For simplicity, assume the space is empty.
     // Add obstacle collision logic here.
