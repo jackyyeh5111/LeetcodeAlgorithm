@@ -74,8 +74,8 @@ stack.append(char)
 queue = deque([root])
 level.append(node.val)
 node = queue.popleft()
-level.appendleft(node.val)
-node = queue.popleft()
+level.appendright(node.val)
+node = queue.popright()
 
 """ 
     set

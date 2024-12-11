@@ -4,25 +4,25 @@
   Time: O(nlog(n-k))
 */
 class Solution {
- public:
-  vector<int> topKFrequent(vector<int> &nums, int k) {
-    std::unordered_map<int, int> map;
-    std::priority_queue<std::pair<int, int>> pq;
-    for (int num : nums) map[num]++;
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> counter;
+        for (int num : nums) counter[num]++;
 
-    int n = map.size();
-    vector<int> ans;
-    for (auto it = map.begin(); it != map.end(); it++) {
-      pq.push({it->second, it->first});
+        // init max_heap
+        priority_queue<pair<int, int>> max_heap;
+        for (const auto& [num, freq] : counter) {
+            max_heap.emplace(freq, num);
+        }
 
-      if (pq.size() > n - k) {
-        ans.push_back(pq.top().second);
-        pq.pop();
-      }
+        vector<int> ans(k);
+        for (int i = 0; i < k; i++) {
+            auto [freq, num] = max_heap.top();
+            max_heap.pop();
+            ans[i] = num;
+        }
+        return ans;
     }
-
-    return ans;
-  }
 };
 
 int main(int argc, char **argv) {

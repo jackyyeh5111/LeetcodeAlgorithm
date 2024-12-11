@@ -101,6 +101,7 @@
         "cplusplus-cheet-sheet": "c",
         "time.h": "c",
         "text_encoding": "cpp",
-        "geometry-cheet-sheet": "cpp"
+        "geometry-cheet-sheet": "cpp",
+        "climits": "cpp"
     }
 }
