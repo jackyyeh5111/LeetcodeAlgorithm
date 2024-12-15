@@ -50,12 +50,17 @@ public:
     Pair operator-(const Pair & other) const {
         return Pair(first - other.first, second - other.second);
     }
+
+    friend std::ostream& operator<<(std::ostream& stream, const Pair& other) {
+        std::cout << "(" << other.first << ", " << other.second << ") ";
+        return stream;
+    }
 };
 
 // Function to print a vector of Pair objects
 void printPairs(const std::vector<Pair>& pairs) {
     for (const auto& p : pairs) {
-        std::cout << "(" << p.first << ", " << p.second << ") ";
+        std::cout << p;
     }
     std::cout << std::endl;
 }

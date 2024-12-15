@@ -11,9 +11,10 @@ public:
     // explicit keyword avoids unintended type conversion.
     /* 
         ex: 
-            UniquePointer<int> func() {
-                return new int(42);  // Implicit conversion from int* to UniquePointer<int>
-            }
+            int* int_ptr = new int(42);
+            // If some exception happens in the middle, memory leak happens!!
+            UniquePointer<Data> uptr = int_ptr;  // Implicit conversion from int* to UniquePointer<int>
+
      */
     explicit UniquePointer(T* p = nullptr) : ptr(p) {}
 
@@ -49,6 +50,9 @@ public:
     UniquePointer& operator=(const UniquePointer&) = delete;
 
     // Move constructor (transfers ownership)
+    /* 
+         If an operation can throw an exception, containers avoid using it to maintain internal consistency and fall back to copying instead.
+     */
     UniquePointer(UniquePointer&& other) noexcept : ptr(other.ptr) {
         other.ptr = nullptr;  // Reset the other pointer to avoid double deletion
     }

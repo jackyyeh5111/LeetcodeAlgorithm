@@ -20,7 +20,8 @@ private:
     }
 public:
      // default constructor
-    SharedPointer(T* p = nullptr) : ptr(p), ref_count(new std::atomic<int>(1)) {}
+    explicit SharedPointer(T* p = nullptr) : ptr(p), ref_count(new std::atomic<int>(1)) {}
+    SharedPointer() = delete;
     
     // copy constructor
     SharedPointer(const SharedPointer& other) : ptr(other.ptr), ref_count(other.ref_count) {
