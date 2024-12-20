@@ -12,7 +12,7 @@ vector<string> split(const string &str, char delimiter) {
         while(end < str.size() && str[end] != delimiter)
             end++;
         if (start < end)
-            tokens.push_back(str.substr(start, end - start));
+            tokens.emplace_back(str.substr(start, end - start));
         end++;
     }
     return tokens;

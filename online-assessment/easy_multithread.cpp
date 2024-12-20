@@ -1,33 +1,43 @@
 #include <iostream>
 #include <thread>
+#include <mutex>
 #include <vector>
 
-// A simple function that will be run by multiple threads
-void printMessage(int threadID, int numIterations) {
-    for (int i = 0; i < numIterations; ++i) {
-        std::cout << "Thread " << threadID << " is working on iteration " << i << std::endl;
+class ThreadSafeCounter {
+  private:
+    int counter ;
+    mutable std::mutex mtx;
+  public:
+    ThreadSafeCounter() : counter(0) {}
+    void increment() {
+      std::lock_guard<std::mutex> lock(mtx);
+      ++counter;
+    }
+    int getCount() const {
+      std::lock_guard<std::mutex> lock(mtx);
+      return counter;
+    }
+};
+
+void worker(ThreadSafeCounter& counter, int iterations) {
+    for (int i = 0; i < iterations; ++i) {
+        counter.increment();
     }
 }
 
 int main() {
-    const int numThreads = 4;
-    const int numIterations = 5;
+    ThreadSafeCounter counter;
+    int iterations = 10000;
 
-    // Vector to store the threads
-    std::vector<std::thread> threads;
+    // Create multiple threads
+    std::thread t1(worker, std::ref(counter), iterations);
+    std::thread t2(worker, std::ref(counter), iterations);
 
-    // Creating multiple threads
-    for (int i = 0; i < numThreads; ++i) {
-        // Each thread runs the printMessage function
-        threads.push_back(std::thread(printMessage, i, numIterations));
-    }
+    t1.join();
+    t2.join();
 
-    // Join threads to the main thread (wait for all threads to finish)
-    for (auto& th : threads) {
-        th.join(); // Ensures the main thread waits for each thread to complete
-    }
-
-    std::cout << "All threads completed." << std::endl;
+    // Output the final counter value
+    std::cout << "Final Counter Value: " << counter.getCount() << std::endl;
 
     return 0;
 }

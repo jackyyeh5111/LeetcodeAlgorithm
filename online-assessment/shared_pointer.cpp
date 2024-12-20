@@ -72,7 +72,7 @@ public:
     }
 
     int use_count() const {
-        return *ref_count;
+        return ref_count ? *ref_count : 0;
     }
 };
 

@@ -102,6 +102,23 @@
         "time.h": "c",
         "text_encoding": "cpp",
         "geometry-cheet-sheet": "cpp",
-        "climits": "cpp"
+        "climits": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp",
+        "stacktrace": "cpp",
+        "barrier": "cpp",
+        "latch": "cpp",
+        "csetjmp": "cpp",
+        "coroutine": "cpp",
+        "forward_list": "cpp",
+        "fstream": "cpp",
+        "future": "cpp",
+        "scoped_allocator": "cpp",
+        "cuchar": "cpp",
+        "expected": "cpp",
+        "generator": "cpp",
+        "print": "cpp",
+        "spanstream": "cpp",
+        "syncstream": "cpp"
     }
 }

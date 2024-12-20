@@ -13,7 +13,19 @@ void printBoard(const vector<vector<int>> &board) {
 }
 
 /* 
-    board = 2 // visiting
+    vector<vector<int>> board = {
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 1, 0, 0, 0},
+        {0, 1, 2, 1, 1, 1},
+        {0, 1, 2, 1, 2, 2},
+        {0, 1, 2, 2, 1, 0}
+    };
+
+    思路:
+      1. 踩到 board != 2 回傳 true/false (這比較麻煩)
+      2. 在當前節點，檢查四個方向，modify current node if needed.
+
+    board = 2
     board = 3 // visiting
     board = 4 // visited, and not surrounding by 1
  */
@@ -53,12 +65,10 @@ void dfs(vector<vector<int>> &board, int row, int col) {
 void goBoard(vector<vector<int>> &board) {
     int num_r = board.size();
     int num_c = board[0].size();
-    vector<vector<int>> visited(num_r, vector<int>(num_c));
     for (int r = 0; r < num_r; r++) {
         for (int c = 0; c < num_c; c++) {
-            if (visited[r][c] != 0 || board[r][c] != 2)
-                continue;
-            dfs(board, r, c);
+            if (board[r][c] == 2)
+                dfs(board, r, c);
         }
     }
 
